@@ -20,3 +20,90 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+// Для авторизации через соц сети -
+// https://laravel.com/docs/7.x/socialite
+
+
+// Админ
+
+    // Индекс Админа
+    Route::get('/admin', 'AdminController@index')->name('admin_panel')->middleware('can:admin_rights');
+
+    // Управление пользователями
+    Route::get('/admin/users_control', 'AdminController@users_controll')->name('users_controll')->middleware('can:admin_rights');
+        // Изменить пользователя
+        Route::get('/admin/users_control/edit/{user_id}', 'AdminController@user_edit')->name('user_edit')->middleware('can:admin_rights');
+            // Применить изменения пользователя
+            Route::post('/admin/users_control/edit/{user_id}/apply', 'AdminController@user_edit_apply')->name('user_edit_apply')->middleware('can:admin_rights');
+
+        // Удалить пользователя
+        Route::get('/admin/users_control/detele/{user_id}', 'AdminController@user_delete')->name('user_delete')->middleware('can:admin_rights');
+    
+    // Управление группами
+    Route::get('groups', 'GroupsController@index')->name('groups_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Добавить группу 
+        Route::get('groups/add_group', 'GroupsController@add_group')->name('add_group')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+            // Автокомплит студентов 
+            Route::post('/autocomplete/fetch', 'GroupsController@fetch')->name('autocomplete.fetch')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+            // Применить добавление группы
+            Route::post('groups/add_group/apply', 'GroupsController@add_group_apply')->name('add_group_apply')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+        // Удалить группу
+        Route::get('groups/delete_group/{group_id}', 'GroupsController@delete_group')->name('delete_group')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+        // Изменить группу
+        Route::get('groups/edit_group/{group_id}', 'GroupsController@edit_group')->name('edit_group')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+            // Применить изменения группы
+            Route::post('groups/edit_group/{group_id}/apply', 'GroupsController@apply_edit_group')->name('apply_edit_group')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+
+//////////
+
+// Студент
+    // Индекс Студента
+    Route::get('/student', 'StudentController@index')->name('student_panel')->middleware('can:student_rights');
+    // Личная информация студента
+    Route::get('/student/information', 'StudentController@student_information')->name('student_information')->middleware('can:student_rights');
+        // Применить изменения студента
+        Route::post('/student/information/apply', 'StudentController@student_information_apply')->name('student_information_apply')->middleware('can:student_rights');
+//////////
+
+// Учитель
+    // Индекс Учителя
+    Route::get('/teacher', 'TeacherController@index')->name('teacher_panel')->middleware('can:teacher_rights');
+        // Личная информация учителя
+        Route::get('/teacher/information', 'TeacherController@teacher_information')->name('teacher_information')->middleware('can:teacher_rights');
+
+    // Управление студентами (АДМИН + УЧИТЕЛЬ)
+    Route::get('/students_controll', 'StudentController@students_controll')->name('students_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Редактирование студента
+        Route::get('/students_controll/{student_id}', 'StudentController@students_controll_edit')->name('students_controll_edit')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Применитть редактироавние
+        Route::post('/students_controll/{student_id}/apply', 'StudentController@students_controll_apply')->name('students_controll_apply')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+//////////
+
+
+// Курсы 
+    // Управление Курсами (АДМИН + УЧИТЕЛЬ)
+    Route::get('/courses_controll', 'CoursesController@index')->name('courses_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Создание Курса
+        Route::get('/courses_controll/new_course', 'CoursesController@new_course')->name('new_course')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Создание Курса POST
+        Route::post('/courses_controll/new_course/create', 'CoursesController@create_course')->name('create_course')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+//////////
+
+// Тесты
+    // Управление Тестами (АДМИН + УЧИТЕЛЬ)
+    Route::get('/tests_controll', 'TestsController@index')->name('tests_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Создание Теста
+        Route::get('/tests_controll/new_test', 'TestsController@new_test')->name('new_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Создание Теста POST
+        Route::post('/tests_controll/new_test/create', 'TestsController@create_test')->name('create_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+//////////
+
+
+

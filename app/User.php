@@ -16,7 +16,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name', 'email', 'password', 'role',
     ];
 
     /**
@@ -36,4 +36,35 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    
+    // Проверка, является ли пользователь администратором
+    public function isAdmin(){
+        if($this->role == 'admin')
+        {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    // Студентом
+    public function isStudent(){
+        if($this->role == 'student')
+        {
+            return true;
+        } else{
+            return false;
+        }
+    }
+
+    // Учитилем
+    public function isTeacher(){
+        if($this->role == 'teacher')
+        {
+            return true;
+        } else{
+            return false;
+        }
+    }
 }

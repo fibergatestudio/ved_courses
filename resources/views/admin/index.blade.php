@@ -3,7 +3,10 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-3">
+            @include('layouts.admin_sidebar')
+        </div>
+        <div class="col-md-9">
             <div class="card">
                 <div class="card-header">{{ __('Панель') }}</div>
 
@@ -15,7 +18,7 @@
                     @endif
 
                     @if(Auth::user()->role == "admin")
-                        is Admin
+                        Для управления используйте меню слева.
                     @elseif(Auth::user()->role == "teacher")
                         is Teacher
                     @elseif(Auth::user()->role == "student")
@@ -24,7 +27,6 @@
                         no ROLE or WRONG role
                     @endif
 
-                    {{ __('You are logged in!') }}
                 </div>
             </div>
         </div>

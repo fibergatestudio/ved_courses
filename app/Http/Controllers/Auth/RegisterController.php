@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -64,10 +65,30 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
+        //dd($data);
+
+        //Добавляем пользователя
+        $user = User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => Hash::make($data['password']),
+            'role' => $data['role'],
         ]);
+
+        // Если пользователь - студент 
+        if($data['role'] == "student"){
+            // Создаем для него запись в стундентах
+            DB::table('students')->insert(
+                ['user_id' => $user->id,]
+            );
+        // Если пользователь - учитель
+        } else if ($data['role'] == "teacher"){
+            // Создаем для него запись в учителях
+            DB::table('teachers')->insert(
+                ['user_id' => $user->id,]
+            );
+        }
+
+        return $user;
     }
 }
