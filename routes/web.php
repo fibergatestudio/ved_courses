@@ -103,6 +103,11 @@ Route::get('/home', 'HomeController@index')->name('home');
         // Создание Теста POST
         Route::post('/tests_controll/new_test/create', 'TestsController@create_test')->name('create_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
+        //Просмотр теста
+        Route::get('/tests_controll/view_test/{test_id}', 'TestsController@view_test')->name('view_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        //Отрпавить тест
+        Route::post('/tests_controll/view_test/{test_id}/submit', 'TestsController@test_submit')->name('test_submit')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
 //////////
 
 

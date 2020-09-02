@@ -17,7 +17,7 @@ class CreateTestsTable extends Migration
             $table->id();
             $table->string('name')->nullable();
             $table->string('description')->nullable();
-            $table->string('test_info')->nullable();
+            $table->text('test_info')->nullable();
             $table->string('views')->nullable();
             $table->string('finished_count')->nullable();
             $table->string('creator_id')->nullable();

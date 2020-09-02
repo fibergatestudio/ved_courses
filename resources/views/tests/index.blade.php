@@ -48,6 +48,9 @@
                                 <td></td>
                                 <td>{{ $test->creator_id }}</td>
                                 <td>
+                                    <a href="{{ route('view_test',[ 'test_id' => $test->id ]) }}">
+                                        <button class="btn btn-success">Просмотреть</button>
+                                    </a>
                                     <a href="">
                                         <button class="btn btn-success">Изменить</button>
                                     </a>
