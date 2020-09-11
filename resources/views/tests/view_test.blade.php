@@ -30,9 +30,9 @@
                     @foreach($test_qa as $question)
                         <?php //var_dump($question); ?>
                         <div class="row col-md-12">
-                            <div class="col-md-4">Вопрос № {{ $i }} </div>
+                            <div class="col-md-2">Вопрос № {{ $i }} </div>
                             <input type="hidden" class="form-control col-md-4" name="question[]" value="{{ $question->question }}" >
-                            <p class="form-control col-md-4">{{ $question->question }}</p>
+                            <p class="form-control col-md-3">{{ $question->question }}</p>
                             <select class="form-control col-md-4" name="answer[]">
                                 <option default>Выберите Ответ</option>
                                 @foreach($question->answer as $answer)

@@ -102,11 +102,19 @@ Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/tests_controll/new_test', 'TestsController@new_test')->name('new_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
         // Создание Теста POST
         Route::post('/tests_controll/new_test/create', 'TestsController@create_test')->name('create_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
-
+        // Создание Обычного Теста POST
+        Route::get('/tests_controll/new_simple_test', 'TestsController@new_simple_test')->name('new_simple_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Создание Обычного Теста POST
+        Route::post('/tests_controll/new_simple_test/create', 'TestsController@create_simple_test')->name('create_simple_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        //Просмотр обычного теста
+        Route::get('/tests_controll/view_test/{test_id}', 'TestsController@view_simple_test')->name('view_simple_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
         //Просмотр теста
-        Route::get('/tests_controll/view_test/{test_id}', 'TestsController@view_test')->name('view_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        Route::get('/tests_controll/view_sort/{test_id}', 'TestsController@view_test')->name('view_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
         //Отрпавить тест
         Route::post('/tests_controll/view_test/{test_id}/submit', 'TestsController@test_submit')->name('test_submit')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+        // Drag and drop test
+        Route::get('/tests_controll/view_sort/{test_id}', 'TestsController@view_sort')->name('view_sort')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
 //////////
 
