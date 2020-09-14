@@ -40,6 +40,7 @@ class GroupsController extends Controller
 
         $all_info = $request->all();
 
+       // dd($all_info);
         // Создаем аррей студентов
         $students_array = array();
 
@@ -47,7 +48,12 @@ class GroupsController extends Controller
             // Получаем информацию о студенте
             $stud_info = DB::table('students')->where('full_name', $student)->first();
             // Заносим данные в аррей
-            array_push($students_array, $stud_info->user_id);
+            if(isset($stud_info)){
+                array_push($students_array, $stud_info->user_id);
+            } else {
+                return redirect()->back()->with('message_error', 'Студента не существует!');
+            }
+            
         }
 
 

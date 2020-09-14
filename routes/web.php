@@ -40,6 +40,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
         // Удалить пользователя
         Route::get('/admin/users_control/detele/{user_id}', 'AdminController@user_delete')->name('user_delete')->middleware('can:admin_rights');
+
+        // Подтвердить Учителя(перевод из студентов)
+        Route::get('/admin/users_control/edit/{user_id}/confirm', 'AdminController@teacher_apply')->name('teacher_apply')->middleware('can:admin_rights');
     
     // Управление группами
     Route::get('groups', 'GroupsController@index')->name('groups_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);

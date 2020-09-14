@@ -151,7 +151,7 @@ class TestsController extends Controller
     function test_submit(Request $request, $test_id){
 
         $all_info = $request->all();
-        dd($all_info);
+        //dd($all_info);
 
         $current_test = DB::table('tests')->where('id', $test_id)->first();
         $finished_count = $current_test->finished_count + 1;

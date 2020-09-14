@@ -38,7 +38,7 @@
                             <input type="text" class="form-control" name="role" value="{{ $teacher_info->role }}" disabled>
                         </div>
                         <br>
-                        <button type="submit" class="btn btn-success">Применить</button>
+                        <!-- <button type="submit" class="btn btn-success">Применить</button> -->
                     </form>
                         <a href="{{ route('teacher_panel') }}">
                             <button class="btn btn-danger">Назад</button>

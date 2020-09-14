@@ -24,15 +24,19 @@
                     @endif
                     <form action="{{ route('test_submit', ['test_id' => $test_info->id]) }}" method="POST">
                     @csrf
-                    <?php $i = 1; ?>
+                    <!-- <?php $i = 1; ?>
                     @foreach($test_qa as $question)
                     <div class="row col-md-12 pb-5">
                             <div class="col-md-7">
-                                <div class="">
-                                    <p class="form-control col-sm">{{ $i }}. {{ $question->question }}</p>
+                                <div class="col-sm">
+
                                     <input type="hidden" id="true_answer{{ $question->id }}" name="answer{{ $question->id }}" value="">
-                                    <div id="answer{{ $question->id }}" class="list-group" style="background-color: #8080804a; min-width: 200px; min-height: 40px;"> </div>
-                                    <p class="form-control col-sm">{{ $question->question_end }}</p>
+
+                                    <div style="display: inline;">
+                                        <p style="display: inline;">{{ $i }}. {{ $question->question }}</p>
+                                        <div id="answer{{ $question->id }}" class="test-text-style"></div>
+                                        <p style="display: inline;">{{ $question->question_end }}. </p>
+                                    </div>
                                 </div>
                             </div>
                             <hr>
@@ -101,7 +105,84 @@
 
                     </script>
                     <?php $i++; ?>
+                    @endforeach -->
+
+                    <?php $n = 1; ?>
+                    <?php $q = 1; ?>
+                    <div class="row col-md-12 pb-5">
+                    @foreach($test_qa as $question)
+                        
+                                <input type="hidden" id="true_answer{{ $question->id }}" name="answer{{ $question->id }}" value="">
+                                <p style="display: inline;">{{ $question->question }}</p>
+                                <div id="answer{{ $question->id }}" class="test-text-style text-center"></div>
+                                <p style="display: inline;">{{ $question->question_end }}. </p>
+
+                        <!-- <div class="col-md-5"></div> -->
+                    <?php $q++; ?>
                     @endforeach
+                    @foreach($test_qa as $question)
+                            <div class="col-md-7"></div>
+                            <div class="col-md-5">
+                                <p>Ответы на {{ $n }}й вопрос </p>
+                                <div id="answers{{ $question->id }}" class="row">
+                                    @foreach($question->answer as $answer)
+                                        <div style="background-color: bisque;" class="col-md p-0">
+                                            <input type="hidden" name="answers[]" value="<?php echo $answer; ?>">
+                                            {{ $answer }} 
+                                        </div>
+                                    @endforeach
+                                </div>
+                            </div>
+                    <?php $n++; ?>
+
+                    <script>
+                        //
+                        //
+                        var id = {{ json_encode($question->id) }};
+                        var answer = 'answer' + id;
+                        var answers = 'answers' + id;
+
+                        var answers_el = document.getElementById(answers);
+                        var sortable = Sortable.create(answers_el, {
+                        group: {
+                            name: answers,
+                            put: answer,
+                            pull: function (to, from) {
+                                if(to.el.children.length = 0){
+                                    return;
+                                } 
+                            }
+                        },
+                        animation: 100
+                        });
+
+                        var answer_el = document.getElementById(answer);
+                        Sortable.create(answer_el, {
+                        group: {
+                            name: answer,
+                            //put: answers,
+                            put: function(to, from){
+                                //console.log("FROM: " + from.el.id + "TO: " + to.el.id);
+                                var from_id = from.el.id.replace(/\D+/g, '');
+                                var to_id = to.el.id.replace(/\D+/g, '');
+                                if(from_id == to_id){
+
+                                    var true_answer = '#true_answer' + to_id;
+                                    $(true_answer).val("test");
+
+                                    console.log(to.el);
+                                    return to.el.children.length < 1;
+                                }
+                            }
+                        },
+                        animation: 100
+                        });
+
+
+                    </script>
+                    @endforeach
+                    </div>
+
 
                         <a href="{{ route('tests_controll') }}">
                             <button class="btn btn-danger">Назад</button>

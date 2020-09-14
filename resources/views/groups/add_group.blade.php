@@ -35,6 +35,11 @@
             {{ session()->get('message_success') }}
         </div>
     @endif
+    @if(session()->has('message_error'))
+        <div class="alert alert-warning">
+            {{ session()->get('message_error') }}
+        </div>
+    @endif
     <div class="row justify-content-center">
         <div class="col-md-3">
             @if(Auth::user()->role == "admin")

@@ -16,6 +16,7 @@ class CreateTeachersTable extends Migration
         Schema::create('teachers', function (Blueprint $table) {
             $table->id();
             $table->string('user_id');
+            $table->string('status')->default('unconfirmed');
             //Информация о учителе
             // // //
             $table->timestamps();

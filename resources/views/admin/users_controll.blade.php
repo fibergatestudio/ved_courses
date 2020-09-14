@@ -29,6 +29,7 @@
                                 <th>Логин</th>
                                 <th>Email</th>
                                 <th>Роль</th>
+                                <th>Временный студент</th>
                                 <th></th>
 
                             </tr>
@@ -40,6 +41,7 @@
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
                                 <td>{{ $user->role }}</td>
+                                <td>{{ $user->is_temporal }}</td>
                                 <td>
                                     <a href="{{ route('user_edit', ['user_id' => $user->id]) }}">
                                         <button class="btn btn-success">Изменить</button>

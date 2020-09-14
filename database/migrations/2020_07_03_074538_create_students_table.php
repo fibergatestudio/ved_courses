@@ -26,6 +26,7 @@ class CreateStudentsTable extends Migration
             //Привязанный учитель
             $table->string('assigned_teacher_id')->nullable();
             //
+            $table->string('is_temporal')->nullable();
             $table->timestamps();
         });
     }

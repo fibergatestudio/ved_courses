@@ -10927,4 +10927,11 @@ a.text-dark:focus {
     border-color: #dee2e6;
   }
 }
+.test-text-style{
+    background-color: #8080804a;
+    min-width: 50px;
+    height: 25px;
+    display: inline-flex;
+    width: auto;
+}
 

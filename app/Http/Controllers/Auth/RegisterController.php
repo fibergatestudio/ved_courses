@@ -67,25 +67,38 @@ class RegisterController extends Controller
     {
         //dd($data);
 
-        //Добавляем пользователя
-        $user = User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-            'role' => $data['role'],
-        ]);
-
         // Если пользователь - студент 
         if($data['role'] == "student"){
+
+            //Добавляем пользователя
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => $data['role'],
+            ]);
+
             // Создаем для него запись в стундентах
             DB::table('students')->insert(
                 ['user_id' => $user->id,]
             );
         // Если пользователь - учитель
         } else if ($data['role'] == "teacher"){
+
+            //Добавляем пользователя
+            $user = User::create([
+                'name' => $data['name'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => 'student',
+            ]);
             // Создаем для него запись в учителях
-            DB::table('teachers')->insert(
-                ['user_id' => $user->id,]
+            // DB::table('teachers')->insert(
+            //     ['user_id' => $user->id,]
+            // );
+            DB::table('students')->insert(
+                ['user_id' => $user->id,
+                'is_temporal' => 'true',]
             );
         }
 
