@@ -14,17 +14,16 @@
                         </div>
                     @endif
 
+                    {{ __('Вы вошли в аккаунт ') }}
                     @if(Auth::user()->role == "admin")
-                        is Admin
+                        Администратора
                     @elseif(Auth::user()->role == "teacher")
-                        is Teacher
+                        Учителя
                     @elseif(Auth::user()->role == "student")
-                        is student
+                        Студента
                     @else
                         no ROLE or WRONG role
                     @endif
-
-                    {{ __('You are logged in!') }}
                 </div>
             </div>
         </div>
