@@ -10929,7 +10929,7 @@ a.text-dark:focus {
 }
 .test-text-style{
     background-color: #8080804a;
-    min-width: 50px;
+    width: 50px !important;
     height: 25px;
     display: inline-flex;
     width: auto;
