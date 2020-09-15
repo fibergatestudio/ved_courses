@@ -114,7 +114,7 @@
                         
                                 <input type="hidden" id="true_answer{{ $question->id }}" name="answer{{ $question->id }}" value="">
                                 <p style="display: inline;">{{ $question->question }}</p>
-                                <p id="answer{{ $question->id }}" class="test-text-style text-center"></p>
+                                <div id="answer{{ $question->id }}" class="test-text-style text-center"></div>
                                 <p style="display: inline;">{{ $question->question_end }}. </p>
 
                         <!-- <div class="col-md-5"></div> -->
