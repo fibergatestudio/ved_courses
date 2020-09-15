@@ -34,7 +34,7 @@
                                 <th>Описание</th>
                                 <th>Просмотров</th>
                                 <th>Пройден (раз)</th>
-                                <th>Содздатель (id)</th>
+                                <th>Содздатель (id,name)</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -46,7 +46,7 @@
                                 <td>{{ $course->description }}</td>
                                 <td></td>
                                 <td></td>
-                                <td>{{ $course->creator_id }}</td>
+                                <td>{{ $course->creator_id }} {{ $course->creator_name }}</td>
                                 <td>
                                     <a href="">
                                         <button class="btn btn-success">Изменить</button>
