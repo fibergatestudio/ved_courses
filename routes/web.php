@@ -13,9 +13,8 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', 'HomePageController@welcome');
+    Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
 
 Auth::routes();
 
@@ -90,11 +89,11 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Курсы 
     // Управление Курсами (АДМИН + УЧИТЕЛЬ)
-    Route::get('/courses_controll', 'CoursesController@index')->name('courses_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+    Route::get('/courses_controll', 'CoursesController@index')->name('courses_controll')->middleware('can:admin_rights');
         // Создание Курса
-        Route::get('/courses_controll/new_course', 'CoursesController@new_course')->name('new_course')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        Route::get('/courses_controll/new_course', 'CoursesController@new_course')->name('new_course')->middleware('can:admin_rights');
         // Создание Курса POST
-        Route::post('/courses_controll/new_course/create', 'CoursesController@create_course')->name('create_course')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        Route::post('/courses_controll/new_course/create', 'CoursesController@create_course')->name('create_course')->middleware('can:admin_rights');
 
 //////////
 

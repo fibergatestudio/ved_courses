@@ -18,7 +18,8 @@ class CreateAdminUser extends Migration
                 'name' => 'admin',
                 'email'=> 'admin@mail.com',
                 'password' => Hash::make('qwerty'),
-                'role' => 'admin'
+                'role' => 'admin',
+                'status' => 'confirmed'
             ]
         ];
 

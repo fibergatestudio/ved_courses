@@ -76,11 +76,12 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'role' => $data['role'],
+                'status' => 'confirmed'
             ]);
 
             // Создаем для него запись в стундентах
             DB::table('students')->insert(
-                ['user_id' => $user->id,]
+                ['user_id' => $user->id,'status' => 'confirmed',]
             );
         // Если пользователь - учитель
         } else if ($data['role'] == "teacher"){
@@ -90,15 +91,13 @@ class RegisterController extends Controller
                 'name' => $data['name'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
-                'role' => 'student',
+                'role' => 'teacher',
+                'status' => 'unconfirmed',
             ]);
             // Создаем для него запись в учителях
-            // DB::table('teachers')->insert(
-            //     ['user_id' => $user->id,]
-            // );
-            DB::table('students')->insert(
+            DB::table('teachers')->insert(
                 ['user_id' => $user->id,
-                'is_temporal' => 'true',]
+                'status' => 'unconfirmed',]
             );
         }
 

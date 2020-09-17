@@ -4,7 +4,12 @@
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-3">
-            @include('layouts.teacher_sidebar')
+
+            @if(Auth::user()->role == "admin")
+                @include('layouts.admin_sidebar')
+            @elseif(Auth::user()->role == "teacher")
+                    @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
+            @endif
         </div>
         <div class="col-md-9">
             <div class="card">

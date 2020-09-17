@@ -37,6 +37,10 @@
                             <input type="hidden" class="form-control" name="role" value="{{ $user->role }}">
                             <input type="text" class="form-control" value="{{ $user->role }}" disabled>
                         </div>
+                        <div class="form-group">
+                            <label>Роль</label>
+                            <input type="text" class="form-control" value="{{ $user->status }}" disabled>
+                        </div>
                         <!-- <div class="form-group">
                             <label>Роль</label>
 
@@ -47,11 +51,6 @@
                             </select>
                         </div> -->
                         <hr>
-                        @if($temporal_student == 'true')
-                            <div class="form-group">
-                                Временный студент: Требуется подтверждение
-                            </div>
-                        @endif
                         @if($student_info != '')
                         <div class="form-group">
                             <label>ФИО</label>
@@ -77,9 +76,12 @@
                         <br>
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
+
+                        @if($user->status != 'confirmed')
                         <a href="{{ route('teacher_apply', ['user_id' => $user->id]) }}">
                             <button class="btn btn-primary">Подтвердить</button>
                         </a>
+                        @endif
                         <a href="{{ route('users_controll') }}">
                             <button class="btn btn-danger">Назад</button>
                         </a>

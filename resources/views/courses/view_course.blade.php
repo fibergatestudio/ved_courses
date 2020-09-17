@@ -80,38 +80,58 @@
                 </div>
             @endif
 
-                <div class="content">
-                <h3>Курсы</h3>
+            <div class="content">
+                @guest
+                <div class="alert alert-danger">
+                    Незарегистрированым пользователям доступено только 1е занятие
+                </div>
+                @endguest
+                <h3>Занятия Курса № {{ $course_id }}</h3>
 
                 <div class="card-columns">
-                @if($courses == '[]')
-                    Курсы отсутствуют
-                @endif
-                @foreach($courses as $course)
-                    <a href="{{ url('view_course', ['course_id' => $course->id] ) }}">
+                    <a href="">
                         <div class="card bg">
                             <div class="card-body text-center">
-                            <p class="card-text"><h4>{{ $course->name }}</h4></p>
+                            <p class="card-text"><h4>Занятие 1</h4></p>
                             </div>
                         </div>
                     </a>
-                @endforeach
+                    @guest
+                    <div class="bg">
 
-                </div>
-                <!-- <div class="title m-b-md">
-                    Laravel
-                </div>
+                            <div class="card bg">
+                                <div class="card-body text-center">
+                                <p class="card-text"><h4>Занятие 2</h4></p>
+                                </div>
+                            </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div> -->
+                            <div class="card bg">
+                                <div class="card-body text-center">
+                                <p class="card-text"><h4>Занятие 3</h4></p>
+                                </div>
+                            </div>
+                    </div>
+                    @else
+                        @if($user_info->status == 'confirmed')
+                            <a href="">
+                                <div class="card bg">
+                                    <div class="card-body text-center">
+                                    <p class="card-text"><h4>Занятие 2</h4></p>
+                                    </div>
+                                </div>
+                            </a>
+                            <a href="">
+                                <div class="card bg">
+                                    <div class="card-body text-center">
+                                    <p class="card-text"><h4>Занятие 3</h4></p>
+                                    </div>
+                                </div>
+                            </a>
+                        @endif
+                    @endguest
+                </div>
+                
+                <a href="{{ url('/') }}"><button class="btn btn-success text-center">Назад</button></a>
             </div>
         </div>
     </body>

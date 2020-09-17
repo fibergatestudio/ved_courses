@@ -12,6 +12,7 @@ class TeacherController extends Controller
 
     public function index(){
 
+        //$teacher_id = 'test';
 
         return view('teacher.index');
     }

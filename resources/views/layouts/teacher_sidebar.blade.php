@@ -8,18 +8,17 @@
             <li class="p-1">
                 <a href="{{ route('teacher_panel') }}"><button class="btn btn-success w-100 p-3">Главная</button></a>
             </li>
+
             <li class="p-1">
-                <a href="{{ route('courses_controll') }}"><button class="btn btn-success w-100 p-3">Управление Курсами</button></a>
+                <a href="{{ route('tests_controll') }}"><button class="btn btn-success w-100 p-3" @if(isset($status)) @if($status == 'unconfirmed') disabled @endif @endif>Управление Тестами</button></a>
             </li>
             <li class="p-1">
-                <a href="{{ route('tests_controll') }}"><button class="btn btn-success w-100 p-3">Управление Тестами</button></a>
+                <a href="{{ route('groups_controll') }}"><button class="btn btn-success w-100 p-3" @if(isset($status)) @if($status == 'unconfirmed') disabled @endif @endif>Управление Групами</button></a>
             </li>
             <li class="p-1">
-                <a href="{{ route('groups_controll') }}"><button class="btn btn-success w-100 p-3">Управление Групами</button></a>
+                <a href="{{ route('students_controll') }}"><button class="btn btn-success w-100 p-3" @if(isset($status)) @if($status == 'unconfirmed') disabled @endif @endif>Управление Студентами</button></a>
             </li>
-            <li class="p-1">
-                <a href="{{ route('students_controll') }}"><button class="btn btn-success w-100 p-3">Управление Студентами</button></a>
-            </li>
+
             <li class="p-1">
                 <a href="{{ route('teacher_information') }}"><button class="btn btn-success w-100 p-3">Личная информация</button></a>
             </li>

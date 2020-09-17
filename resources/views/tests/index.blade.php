@@ -12,7 +12,7 @@
             @if(Auth::user()->role == "admin")
                 @include('layouts.admin_sidebar')
             @elseif(Auth::user()->role == "teacher")
-                @include('layouts.teacher_sidebar')
+               @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
             @endif
         </div>
         <div class="col-md-9">

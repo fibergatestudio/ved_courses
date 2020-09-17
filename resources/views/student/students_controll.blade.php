@@ -12,7 +12,7 @@
             @if(Auth::user()->role == "admin")
                 @include('layouts.admin_sidebar')
             @elseif(Auth::user()->role == "teacher")
-                @include('layouts.teacher_sidebar')
+               @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
             @endif
         </div>
         <div class="col-md-9">
@@ -36,6 +36,7 @@
                                 <th>Номер Группы</th>
                                 <th>Номер студенческого</th>
                                 <th>Назначеный Препод.</th>
+                                <th>Статус</th>
                                 <th></th>
 
                             </tr>
@@ -88,6 +89,7 @@
                                         {{ $student->assigned_teacher_id }}
                                     @endif
                                 </td>
+                                <td>{{ $student->status }} </td>
                                 <td>
                                     <a href="{{ route('students_controll_edit',['student_id' => $student->user_id]) }}">
                                         <button class="btn btn-success">Изменить</button>

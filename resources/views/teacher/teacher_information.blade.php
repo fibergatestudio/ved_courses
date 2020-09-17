@@ -9,7 +9,7 @@
     @endif
     <div class="row justify-content-center">
         <div class="col-md-3">
-            @include('layouts.teacher_sidebar')
+           @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
         </div>
         <div class="col-md-9">
             <div class="card">
