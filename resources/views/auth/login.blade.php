@@ -10,6 +10,14 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+                        <div class="form-group row">
+                            <div class="col text-center">
+                                <p>Войти при помощи:</p>
+                                <a href="{{ route('login.social', ['provider' => 'google']) }}" class="btn btn-outline-danger">Gmail</a>
+                                <a href="{{ route('login.social', ['provider' => 'facebook']) }}" class="btn btn-outline-primary">Facebook</a>
+                                <p>или</p>
+                            </div>
+                        </div>
 
                         <div class="form-group row">
                             <label for="email" class="col-md-4 col-form-label text-md-right">{{ __('E-Mail') }}</label>

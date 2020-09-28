@@ -12,6 +12,15 @@
                         @csrf
 
                         <div class="form-group row">
+                            <div class="col text-center">
+                                <p>Зарегистрироваться при помощи:</p>
+                                <a href="{{ route('login.social', ['provider' => 'google', 'signup' => 'signup']) }}" class="btn btn-outline-danger">Gmail</a>
+                                <a href="{{ route('login.social', ['provider' => 'facebook', 'signup' => 'signup']) }}" class="btn btn-outline-primary">Facebook</a>
+                                <p>или</p>
+                            </div>
+                        </div>
+
+                        <div class="form-group row">
                             <label for="surname" class="col-md-4 col-form-label text-md-right">{{ __('Фамилия') }}</label>
 
                             <div class="col-md-6">
