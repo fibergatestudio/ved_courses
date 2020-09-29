@@ -15,9 +15,8 @@ class SocialiteController extends Controller
     public function redirect($provider, $signup = null)
     {
         if ($signup == 'signup') {
-            Session::put('signup','signup');
-        }
-        else {
+            Session::put('signup', 'signup');
+        } else {
             Session::forget('signup');
         }
         return Socialite::driver($provider)->redirect();
@@ -30,33 +29,47 @@ class SocialiteController extends Controller
         if (isset($signup)) {
             //Registration
             if (!$userInfo) {
-                return redirect()->route('register')->with('error','Ошибка регистрации. Повторите регистрацию.');
+                return redirect()->route('register')->with('error', 'Ошибка регистрации. Повторите регистрацию.');
             }
             $user = User::where('provider_id', $userInfo->id)->first();
             if ($user) {
-                return redirect()->route('login')->with('error','Пользователь с такой учетной записью уже зарегистрирован. Войдите.');
+                return redirect()->route('login')->with('error', 'Пользователь с такой учетной записью уже зарегистрирован. Войдите.');
             }
             //Добавляем пользователя - поумолчанию студент
-            $user = User::create([
-                'name' => $userInfo['given_name'],
-                'surname' => $userInfo['family_name'],
-                'email' => $userInfo['email'],
-                'provider' => $provider,
-                'provider_id' => $userInfo['id'],
-                'role' => 'student',
-                'status' => 'confirmed'
-            ]);
+            switch ($provider) {
+                case 'google':
+                    $user = User::create([
+                        'name' => $userInfo['given_name'],
+                        'surname' => $userInfo['family_name'],
+                        'email' => $userInfo->getEmail(),
+                        'provider' => $provider,
+                        'provider_id' => $userInfo->getId(),
+                        'role' => 'student',
+                        'status' => 'confirmed'
+                    ]);
+                    break;
+
+                case 'facebook':
+                    $user = User::create([
+                        'name' => $userInfo->getName(),
+                        'email' => $userInfo->getEmail(),
+                        'provider' => $provider,
+                        'provider_id' => $userInfo->getId(),
+                        'role' => 'student',
+                        'status' => 'confirmed'
+                    ]);
+                    break;
+            }
             // Создаем для него запись в стундентах
             $student_id = DB::table('students')->insertGetId(
-                ['user_id' => $user->id,'status' => 'confirmed',]
+                ['user_id' => $user->id, 'status' => 'confirmed',]
             );
-            return redirect()->route('login.role',['user_id' => $user->id, 'student_id' => $student_id]);
-        }
-        else {
+            return redirect()->route('login.role', ['user_id' => $user->id, 'student_id' => $student_id]);
+        } else {
             //Login
             $user = User::where('provider_id', $userInfo->id)->first();
             if (!$user) {
-                return redirect()->route('login')->with('error','Пользователь с такой учетной записью не найден. Зарегистрируйтесь.');
+                return redirect()->route('login')->with('error', 'Пользователь с такой учетной записью не найден. Зарегистрируйтесь.');
             }
             auth()->login($user);
             return redirect()->to(RouteServiceProvider::HOME);
@@ -65,7 +78,7 @@ class SocialiteController extends Controller
 
     public function role($user_id, $student_id)
     {
-       return view('auth.role', compact('user_id', 'student_id'));
+        return view('auth.role', compact('user_id', 'student_id'));
     }
 
     public function setRole($user_id, $student_id, Request $request)
@@ -80,8 +93,10 @@ class SocialiteController extends Controller
                 $user->status = 'unconfirmed';
                 $student = DB::table('students')->where('id', $student_id)->delete();
                 DB::table('teachers')->insert(
-                    ['user_id' => $user_id,
-                    'status' => 'unconfirmed',]
+                    [
+                        'user_id' => $user_id,
+                        'status' => 'unconfirmed',
+                    ]
                 );
                 break;
             default:
