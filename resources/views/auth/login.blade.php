@@ -3,6 +3,13 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
+        @if (session('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+    </div>
+    <div class="row justify-content-center">
         <div class="col-md-8">
             <div class="card">
                 <div class="card-header">{{ __('Вход') }}</div>
@@ -10,6 +17,7 @@
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
+
                         <div class="form-group row">
                             <div class="col text-center">
                                 <p>Войти при помощи:</p>
