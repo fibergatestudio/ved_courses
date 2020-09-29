@@ -74,7 +74,9 @@ class RegisterController extends Controller
 
             //Добавляем пользователя
             $user = User::create([
+                'surname' => $data['surname'],
                 'name' => $data['name'],
+                'patronymic' => $data['patronymic'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'role' => $data['role'],
@@ -90,7 +92,9 @@ class RegisterController extends Controller
 
             //Добавляем пользователя
             $user = User::create([
+                'surname' => $data['surname'],
                 'name' => $data['name'],
+                'patronymic' => $data['patronymic'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'role' => 'teacher',
