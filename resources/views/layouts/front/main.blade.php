@@ -6,39 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>@yield('title')</title>
-    <link rel="stylesheet" href={{ asset('css/app.css') }}>
-    <link rel="stylesheet" href={{ asset('css/slick.css') }} />
-    <link rel="stylesheet" href={{ asset('css/style.css') }}>
+    <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/slick.css') }}"/>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
 </head>
 
 <body>
 
     <!-- Burger-menu (begin)-->
-    <ul class="menu_title-wrapper">
-        <li class="menu_title-inner">
-            <div class="menu_burger-clone">
-                <span></span>
-                <span></span>
-                <span></span>
-                <span></span>
-            </div>
-        </li>
-        <li class="menu_title-inner">
-            <a class="menu_title-link" href="##">Про ресурс</a>
-        </li>
-        <li class="menu_title-inner">
-            <a class="menu_title-link" href="##">Тематичні напрями</a>
-        </li>
-        <li class="menu_title-inner">
-            <a class="menu_title-link" href="##">Студент</a>
-        </li>
-        <li class="menu_title-inner">
-            <a class="menu_title-link" href="##">Викладач</a>
-        </li>
-        <li class="menu_title-inner">
-            <a class="menu_title-link" href="##" data-toggle="modal" data-target="#exampleModal">Увійти</a>
-        </li>
-    </ul>
+    @include('layouts.front.includes.burger_menu')
     <!-- Burger-menu (end)-->
 
 
@@ -55,7 +31,7 @@
                 </div> -->
                 <div class="modal-body">
                     <ul class="nav nav-tabs" id="myTab" role="tablist">
-                        <img class="entrance-logo" src="assets/img/entrance-logo.svg" alt="logo">
+                        <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
                         <li class="nav-item">
                             <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                                 aria-controls="home" aria-selected="true">Увійти</a>
@@ -74,41 +50,41 @@
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-google-small.png"
+                                                <source srcset="{{ asset('img/login-google-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-google.png" alt="img">
+                                                    src="{{ asset('img/login-google.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-facebook-small.png"
+                                                <source srcset="{{ asset('img/login-facebook-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-facebook.png" alt="img">
+                                                    src="{{ asset('img/login-facebook.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-instagram-small.png"
+                                                <source srcset="{{ asset('img/login-instagram-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-instagram.png" alt="img">
+                                                    src="{{ asset('img/login-instagram.pn') }}g" alt="img">
                                         </a></picture>
                                     </div>
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-mono-small.png"
+                                                <source srcset="{{ asset('img/login-mono-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-mono.png" alt="img">
+                                                    src="{{ asset('img/login-mono.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-privatebank-small.png"
+                                                <source srcset="{{ asset('img/login-privatebank-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-privatebank.png" alt="img">
+                                                    src="{{ asset('img/login-privatebank.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                 </div>
@@ -137,41 +113,41 @@
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-google-small.png"
+                                                <source srcset="{{ asset('img/login-google-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-google.png" alt="img">
+                                                    src="{{ asset('img/login-google.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-facebook-small.png"
+                                                <source srcset="{{ asset('img/login-facebook-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-facebook.png" alt="img">
+                                                    src="{{ asset('img/login-facebook.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-instagram-small.png"
+                                                <source srcset="{{ asset('img/login-instagram-small.pn') }}g"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-instagram.png" alt="img">
+                                                    src="{{ asset('img/login-instagram.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-mono-small.png"
+                                                <source srcset="{{ asset('img/login-mono-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-mono.png" alt="img">
+                                                    src="{{ asset('img/login-mono.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                     <div class="entrance-social_item">
                                         <a href="##">
                                             <picture>
-                                                <source srcset="assets/img/login-privatebank-small.png"
+                                                <source srcset="{{ asset('img/login-privatebank-small.png') }}"
                                                     media="(max-width:768px"> <img class="entrance-social_image"
-                                                    src="assets/img/login-privatebank.png" alt="img">
+                                                    src="{{ asset('img/login-privatebank.png') }}" alt="img">
                                         </a></picture>
                                     </div>
                                 </div>
@@ -202,45 +178,9 @@
     <!-- registration modal-page (end) -->
 
     <header class="header">
-
-
         <div class="topWhite-layer">
             <div class="container">
-                <div class="header-menu">
-                    <div class="header-menu_inner">
-                        <nav class="header-menu_left">
-                            <ul>
-                                <li><a class="top-btn" href="##"><span>Про ресурс</span></a></li>
-                                <li><a class="top-btn" href="##"><span>Тематичні напрямки</span></a></li>
-                            </ul>
-                        </nav>
-                    </div>
-                    <div class="header-menu_inner">
-                        <div class="header-menu_center">
-                            <img class="header-menu_logo" src="assets/img/logo.png" alt="logo">
-                        </div>
-                    </div>
-                    <div class="header-menu_inner">
-                        <nav class="header-menu_right">
-                            <ul>
-                                <li><a class="top-btn" href="##"><span>Студент</span></a></li>
-                                <li><a class="top-btn" href="##"><span>Викладач</span></a></li>
-                                <li><a class="top-btn" href="##" data-toggle="modal"
-                                        data-target="#exampleModal"><span>Увійти</span></a></li>
-                            </ul>
-                        </nav>
-
-                        <!-- Burger-btn (begin) -->
-                        <div class="menu_burger">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <!-- Burger-btn (end) -->
-
-                    </div>
-                </div>
+                @include('layouts.front.includes.header_menu')
                 <div class="header-text">
                     <div class="header-text-top">
                         Virtual education
@@ -263,7 +203,7 @@
             <div class="direction-wrapper">
                 <div class="direction-inner">
                     <div class="direction-inner_top">
-                        <img class="direction-inner_img" src="assets/img/direction_1.jpg" alt="img">
+                        <img class="direction-inner_img" src="{{ asset('img/direction_1.jpg') }}" alt="img">
                         <a class="image-btn" href="##">
                             <span>Підкатегорії</span>
                             <div class="image-btn_arrow"></div>
@@ -283,7 +223,7 @@
                 </div>
                 <div class="direction-inner">
                     <div class="direction-inner_top">
-                        <img class="direction-inner_img" src="assets/img/direction_2.jpg" alt="img">
+                        <img class="direction-inner_img" src="{{ asset('img/direction_2.jpg') }}" alt="img">
                         <a class="image-btn" href="##">
                             <span>Підкатегорії</span>
                             <div class="image-btn_arrow"></div>
@@ -303,7 +243,7 @@
                 </div>
                 <div class="direction-inner">
                     <div class="direction-inner_top">
-                        <img class="direction-inner_img" src="assets/img/direction_3.jpg" alt="img">
+                        <img class="direction-inner_img" src="{{ asset('img/direction_3.jpg') }}" alt="img">
                         <a class="image-btn" href="##">
                             <span>Підкатегорії</span>
                             <div class="image-btn_arrow"></div>
@@ -332,7 +272,7 @@
             <div class="popular-wrapper">
                 <div class="popular-inner">
                     <div class="popular-inner_top">
-                        <img class="popular-inner_img" src="assets/img/popular_1.jpg" alt="img">
+                        <img class="popular-inner_img" src="{{ asset('img/popular_1.jpg') }}" alt="img">
                         <a class="image-btn popular-btn" href="##">
                             <span>перейти до курсів</span>
                             <div class="image-btn_arrow"></div>
@@ -346,7 +286,7 @@
                 </div>
                 <div class="popular-inner">
                     <div class="popular-inner_top">
-                        <img class="popular-inner_img" src="assets/img/popular_2.jpg" alt="img">
+                        <img class="popular-inner_img" src="{{ asset('img/popular_2.jpg') }}" alt="img">
                         <a class="image-btn popular-btn" href="##">
                             <span>перейти до курсів</span>
                             <div class="image-btn_arrow"></div>
@@ -360,7 +300,7 @@
                 </div>
                 <div class="popular-inner">
                     <div class="popular-inner_top">
-                        <img class="popular-inner_img" src="assets/img/popular_3.jpg" alt="img">
+                        <img class="popular-inner_img" src="{{ asset('img/popular_3.jpg') }}" alt="img">
                         <a class="image-btn popular-btn" href="##">
                             <span>перейти до курсів</span>
                             <div class="image-btn_arrow"></div>
@@ -374,7 +314,7 @@
                 </div>
                 <div class="popular-inner">
                     <div class="popular-inner_top">
-                        <img class="popular-inner_img" src="assets/img/popular_4.jpg" alt="img">
+                        <img class="popular-inner_img" src="{{ asset('img/popular_4.jpg') }}" alt="img">
                         <a class="image-btn popular-btn" href="##">
                             <span>перейти до курсів</span>
                             <div class="image-btn_arrow"></div>
@@ -409,9 +349,9 @@
                     <a class="main-menu_btn" href="#anchor_faq"><span>Поширені запитання</span></a>
                 </div>
                 <div class="main-menu_inner">
-                    <div class="main-menu_social"><a href="##"><img src="assets/img/facebook.png" alt="img"></a></div>
-                    <div class="main-menu_social"><a href="##"><img src="assets/img/instagram.png" alt="img"></a></div>
-                    <div class="main-menu_social"><a href="##"><img src="assets/img/linkedin.png" alt="img"></a></div>
+                    <div class="main-menu_social"><a href="##"><img src="{{ asset('img/facebook.png') }}" alt="img"></a></div>
+                    <div class="main-menu_social"><a href="##"><img src="{{ asset('img/instagram.png') }}" alt="img"></a></div>
+                    <div class="main-menu_social"><a href="##"><img src="{{ asset('img/linkedin.pn') }}g" alt="img"></a></div>
                 </div>
             </div>
             <h4 class="main-title_middle" id="anchor_course">Про цей курс</h4>
@@ -923,6 +863,7 @@
                         проходження з сертифікатом в такому випадку не можна.</p>
                 </div>
             </div>
+        </div>
     </section>
     <section class="partners">
         <div class="direction-separator popular-separator">
@@ -932,7 +873,7 @@
         <div class="container">
             <div class="partners-wrapper">
                 <div class="partners-inner">
-                    <div class="partners-inner_top"> <img src="assets/img/partners-img.jpg" alt="img"><a href="##"></a>
+                    <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a href="##"></a>
                     </div>
                     <div class="partners-inner_title">Lorem Ipsum has been</div>
                     <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever since
@@ -940,7 +881,7 @@
                         since the</div>
                 </div>
                 <div class="partners-inner">
-                    <div class="partners-inner_top"> <img src="assets/img/partners-img.jpg" alt="img"><a href="##"></a>
+                    <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a href="##"></a>
                     </div>
                     <div class="partners-inner_title">Lorem Ipsum has been</div>
                     <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever since
@@ -948,7 +889,7 @@
                         since the</div>
                 </div>
                 <div class="partners-inner">
-                    <div class="partners-inner_top"> <img src="assets/img/partners-img.jpg" alt="img"><a href="##"></a>
+                    <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a href="##"></a>
                     </div>
                     <div class="partners-inner_title">Lorem Ipsum has been</div>
                     <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever since
@@ -961,7 +902,7 @@
             <div class="partners-slider-wrapper">
                 <div class="partners-slider-inner">
                     <div class="partners-inner">
-                        <div class="partners-inner_top"> <img src="assets/img/partners-img.jpg" alt="img"><a
+                        <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a
                                 href="##"></a></div>
                         <div class="partners-inner_title">Lorem Ipsum has been</div>
                         <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever
@@ -969,7 +910,7 @@
                             text ever since the</div>
                     </div>
                     <div class="partners-inner">
-                        <div class="partners-inner_top"> <img src="assets/img/partners-img.jpg" alt="img"><a
+                        <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a
                                 href="##"></a></div>
                         <div class="partners-inner_title">Lorem Ipsum has been</div>
                         <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever
@@ -977,7 +918,7 @@
                             text ever since the</div>
                     </div>
                     <div class="partners-inner">
-                        <div class="partners-inner_top"> <img src="assets/img/partners-img.jpg" alt="img"><a
+                        <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a
                                 href="##"></a></div>
                         <div class="partners-inner_title">Lorem Ipsum has been</div>
                         <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever
@@ -993,78 +934,7 @@
 
     </section>
 
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-wrapper">
-                <ul class="footer-inner">
-                    <li>
-                        <a href="##">Про ресурс</a>
-                    </li>
-                    <li>
-                        <a href="##">Тематичні напрями</a>
-                    </li>
-                    <li>
-                        <a href="##">Кабінет</a>
-                    </li>
-                    <li>
-                        <a href="##">Викладач</a>
-                    </li>
-                    <li>
-                        <a href="##">Вхід</a>
-                    </li>
-                </ul>
-                <ul class="footer-inner">
-                    <li>
-                        <a href="##">Серйозна та організована злочинності</a>
-                    </li>
-                    <li>
-                        <a href="##">Кібер-злочинність</a>
-                    </li>
-                    <li>
-                        <a href="##">Боротьба з тероризмом</a>
-                    </li>
-                    <li>
-                        <a href="##">Основні права</a>
-                    </li>
-                    <li>
-                        <a href="##">Співпраця між правоохоронними органами, обмін інформацією та сумісність</a>
-                    </li>
-                    <li>
-                        <a href="##">Лідерство та інші навички</a>
-                    </li>
-                </ul>
-                <ul class="footer-inner">
-                    <li>
-                        <a href="##">Вища освіта та дослідження</a>
-                    </li>
-                    <li>
-                        <a href="##">Громадський порядок та профілактика</a>
-                    </li>
-                    <li>
-                        <a href="##">Правоохоронні технології, криміналістика і конкретні області</a>
-                    </li>
-                    <li>
-                        <a href="##">Союзні місії (СSDP)</a>
-                    </li>
-                    <li>
-                        <a href="##">Програма обміну СEPOL</a>
-                    </li>
-                    <li>
-                        <a href="##">Віртуальний навчальний центр з прав інтелектуальної власності</a>
-                    </li>
-                </ul>
-                <ul class="footer-inner">
-                    <li>
-                        <a class="footer-phone" href="##">Завжди на зв'язку <br> <span>(098) 123 45 67</span></a>
-                    </li>
-                    <li>
-                        <a class="footer-mail" href="##">Напишіть нам <br> <span>mail@gmail.com</span></a>
-                    </li>
-
-                </ul>
-            </div>
-        </div>
-    </footer>
+    @include('layouts.front.includes.footer')
 
     <script src="{{ asset('js/slick.min.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
