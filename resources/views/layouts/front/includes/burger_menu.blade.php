@@ -13,16 +13,47 @@
     <li class="menu_title-inner">
         <a class="menu_title-link" href="##">Тематичні напрями</a>
     </li>
-    <li class="menu_title-inner">
-        <a class="menu_title-link" href="##">Студент</a>
-    </li>
-    <li class="menu_title-inner">
-        <a class="menu_title-link" href="##">Викладач</a>
-    </li>
-    <!--<li class="menu_title-inner">
-        <a class="menu_title-link" href="##" data-toggle="modal" data-target="#exampleModal">Увійти</a>
-    </li>-->
-    <li class="menu_title-inner">
-        <a class="menu_title-link" href="{{ route('login') }}">Увійти</a>
-    </li>
+    @guest
+        <li class="menu_title-inner">
+            <a class="menu_title-link" href="##">Студент</a>
+        </li>
+        <li class="menu_title-inner">
+            <a class="menu_title-link" href="##">Викладач</a>
+        </li>
+        <!--<li class="menu_title-inner">
+            <a class="menu_title-link" href="##" data-toggle="modal" data-target="#exampleModal">Увійти</a>
+        </li>-->
+        <li class="menu_title-inner">
+            <a class="menu_title-link" href="{{ route('login') }}">Увійти</a>
+        </li>
+    @endguest
+    @auth
+        @if( Auth::user()->role == "admin")
+
+        @endif
+        @if( Auth::user()->role == "teacher")
+
+        @endif
+        @if( Auth::user()->role == "student")
+            <li class="menu_title-inner">
+                <a class="menu_title-link" href="##">Викладач</a>
+            </li>
+            <li class="menu_title-inner menu_title-innerStudent">
+                <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
+            </li>
+            <li class="menu_title-inner">
+                <a class="menu_title-link" href="##">Панель курсів</a>
+            </li>
+            <li class="menu_title-inner">
+                <a class="student-menu-link" href="##">Профіль</a>
+            </li>
+            <li class="menu_title-inner">
+                <a class="menu_title-link" href="##">Налаштування</a>
+            </li>
+        @endif
+        <li class="menu_title-inner">
+            <a class="menu_title-link" href="{{ route('logout') }}" onclick="event.preventDefault();
+            document.getElementById('logout-form').submit();">Вийти</a>
+        </li>
+    @endauth
 </ul>
