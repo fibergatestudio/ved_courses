@@ -13,7 +13,7 @@ class HomePageController extends Controller
 
         $courses = DB::table('courses')->get();
 
-        return view('layouts.front.main', compact('courses'));
+        return view('front.main', compact('courses'));
     }
 
     public function view_course($course_id){
