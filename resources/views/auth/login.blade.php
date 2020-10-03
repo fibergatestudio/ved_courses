@@ -89,19 +89,16 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                <label class="entrance-label p-0" for="remember">
-                                    {{ __('Запомнить меня') }}
-                                </label>
+                                <label class="entrance-label p-0" for="remember">Запам'ятати мене</label>
                             </div>
                             <p> <a class="btn btn-link" href="{{ route('password.request') }}">
-                                Забыли пароль?
+                                Забули пароль?
                             </a></p>
                             <div class="modal-footer">
                                 <button type="submit" class="btn-entrance btn btn-secondary"
                                     data-dismiss="modal">Увійти</button>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </div>

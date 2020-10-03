@@ -3,6 +3,8 @@
 @section('content')
 <div class="modal-dialog" role="document">
     <div class="modal-content">
+        <form method="POST" action="{{ route('register') }}">
+            @csrf
         <!-- <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
@@ -68,24 +70,65 @@
                         </div>
                         <div class="entrance-separator"></div>
                         <p>або</p>
-                        <label class="entrance-label ">Прізвище</label>
-                        <input class="entrance-input capitalize-letter" type="email" placeholder="Іванов">
-                        <label class="entrance-label">Ім'я</label>
-                        <input class="entrance-input capitalize-letter" type="email" placeholder="Іван">
-                        <label class="entrance-label">По батькові</label>
-                        <input class="entrance-input capitalize-letter" type="email" placeholder="Іванович">
-                        <label class="entrance-label">Електронна адреса</label>
-                        <input class="entrance-input" type="email" placeholder="mail@mail.com">
+
+                        <label for="surname" class="entrance-label">Прізвище</label>
+                        <input id="surname" type="text" class="entrance-input capitalize-letter @error('surname') is-invalid @enderror" name="surname" value="{{ old('surname') }}" placeholder="Іванов" required autocomplete="surname" autofocus>
+                        @error('surname')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+
+                        <label for="name" class="entrance-label">Ім'я</label>
+                        <input id="name" type="text" class="entrance-input capitalize-letter @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" placeholder="Іван" required autocomplete="name">
+                        @error('name')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+
+                        <label for="patronymic" class="entrance-label">По батькові</label>
+                        <input id="patronymic" type="text" class="entrance-input capitalize-letter @error('patronymic') is-invalid @enderror" name="patronymic" value="{{ old('patronymic') }}" placeholder="Іванович" required autocomplete="patronymic">
+                        @error('patronymic')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+
+                        <label for="email" class="entrance-label">Електронна адреса</label>
+                        <input id="email" type="email" class="entrance-input @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" placeholder="mail@mail.com" required autocomplete="email">
+                        @error('email')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+
+                        <label for="password" class="entrance-label">Пароль</label>
+                        <input id="password" type="password" class="entrance-input @error('password') is-invalid @enderror" name="password" placeholder="********" required autocomplete="new-password">
+                        @error('password')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+
+                        <label for="password-confirm" class="entrance-label">Підтвердіть пароль</label>
+                        <input id="password-confirm" type="password" class="entrance-input" name="password_confirmation" placeholder="********" required autocomplete="new-password">
+
+                        <label for="role" class="entrance-label">Роль</label>
+                        <select id="role" class="entrance-input" name="role" required >
+                            <option value="student">Студент</option>
+                            <option value="teacher">Вчитель</option>
+                        </select>
+
                         <div class="modal-footer">
-                            <button type="button" class="btn-entrance btn btn-secondary"
+                            <button type="submit" class="btn-entrance btn btn-secondary"
                                 data-dismiss="modal">Зареєструватися</button>
                         </div>
                     </div>
-
-
                 </div>
             </div>
         </div>
+        </form>
     </div>
 </div>
 @endsection
