@@ -29,10 +29,35 @@
     @endguest
     @auth
         @if( Auth::user()->role == "admin")
-
+            <li class="menu_title-inner menu_title-innerStudent">
+                <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
+            </li>
+            <li class="menu_title-inner">
+            <a class="menu_title-link" href="{{ route('home') }}">Панель курсів</a>
+            </li>
+            <li class="menu_title-inner">
+                <a class="student-menu-link" href="##">Профіль</a>
+            </li>
+            <li class="menu_title-inner">
+                <a class="menu_title-link" href="##">Налаштування</a>
+            </li>
         @endif
         @if( Auth::user()->role == "teacher")
-
+            <li class="menu_title-inner">
+                <a class="menu_title-link" href="##">Студент</a>
+            </li>
+            <li class="menu_title-inner menu_title-innerStudent">
+                <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
+            </li>
+            <li class="menu_title-inner">
+                <a class="menu_title-link" href="{{ route('home') }}">Панель курсів</a>
+            </li>
+            <li class="menu_title-inner">
+                <a class="student-menu-link" href="##">Профіль</a>
+            </li>
+            <li class="menu_title-inner">
+                <a class="menu_title-link" href="##">Налаштування</a>
+            </li>
         @endif
         @if( Auth::user()->role == "student")
             <li class="menu_title-inner">
@@ -42,7 +67,7 @@
                 <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="##">Панель курсів</a>
+                <a class="menu_title-link" href="{{ route('home') }}">Панель курсів</a>
             </li>
             <li class="menu_title-inner">
                 <a class="student-menu-link" href="##">Профіль</a>
