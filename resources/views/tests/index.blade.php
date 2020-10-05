@@ -37,6 +37,7 @@
                                 <th>Просмотров</th>
                                 <th>Пройден (раз)</th>
                                 <th>Содздатель (id)</th>
+                                <th>Активен</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -49,11 +50,12 @@
                                 <td></td>
                                 <td></td>
                                 <td>{{ $test->creator_id }}</td>
+                                <td>{{ $test->is_enabled }}</td>
                                 <td>
                                     <a href="{{ url('/tests_controll/view_sort/'. $test->id) }}">
                                         <button class="btn btn-success">Просмотреть</button>
                                     </a>
-                                    <a href="">
+                                    <a href="{{ url('/tests_controll/'. $test->id .'/edit') }}">
                                         <button class="btn btn-success">Изменить</button>
                                     </a>
                                     <a href="">

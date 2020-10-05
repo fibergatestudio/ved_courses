@@ -13,6 +13,8 @@
                 @include('layouts.admin_sidebar')
             @elseif(Auth::user()->role == "teacher")
                @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
+            @elseif(Auth::user()->role == "student")
+                @include('layouts.student_sidebar')
             @endif
         </div>
         <div class="col-md-9">
@@ -61,6 +63,7 @@
 @section('scripts')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+
 
 <script>
 $(document).ready(function(){

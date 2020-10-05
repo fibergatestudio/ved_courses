@@ -40,9 +40,10 @@ class GroupsController extends Controller
 
         $all_info = $request->all();
 
-       // dd($all_info);
+        //dd($all_info);
         // Создаем аррей студентов
         $students_array = array();
+        
 
         foreach($request->student_name as $student){
             // Получаем информацию о студенте

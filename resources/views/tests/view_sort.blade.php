@@ -11,6 +11,8 @@
                 @include('layouts.admin_sidebar')
             @elseif(Auth::user()->role == "teacher")
                @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
+            @elseif(Auth::user()->role == "student")
+                @include('layouts.student_sidebar')
             @endif
         </div>
         <div class="col-md-9">
@@ -22,7 +24,7 @@
                             {{ session('status') }}
                         </div>
                     @endif
-                    <form action="{{ route('test_submit', ['test_id' => $test_info->id]) }}" method="POST">
+                    <form id="mainform" action="{{ route('test_submit', ['test_id' => $test_info->id]) }}" method="POST">
                     @csrf
                     <!-- <?php $i = 1; ?>
                     @foreach($test_qa as $question)
@@ -109,6 +111,12 @@
 
                     <?php $n = 1; ?>
                     <?php $q = 1; ?>
+                    <script>
+
+                    var testresponse = []; 
+                        
+                    </script>
+
                     <div class="row col-md-12 pb-5">
                     @foreach($test_qa as $question)
                         
@@ -180,16 +188,25 @@
 
 
                     </script>
+                    
+                    <script>
+
+                    var id = {{ json_encode($question->id) }};
+                    var answer = 'answer' + id;
+                    testresponse.push(answer);
+
+                    //var ttasnwer = '#answer' + id + ':not(:empty)';
+
+                    </script>
                     @endforeach
                     </div>
 
-
-                        <a href="{{ route('tests_controll') }}">
-                            <button class="btn btn-danger">Назад</button>
-                        </a>
-
                         <button type="submit" class="btn btn-success">Отправить</button>
                     </form>
+                    
+                    <a href="{{ route('tests_controll') }}">
+                            <button class="btn btn-danger">Назад</button>
+                        </a>
 
                 </div>
             </div>
@@ -218,7 +235,33 @@
 <!-- <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script> -->
 
 
+<script>
 
+    var ttasnwer = '#answer' + id + ':not(:empty)';
+
+    //  Bind the event handler to the "submit" JavaScript event
+    $('#mainform').submit(function (event) {
+
+    console.log( testresponse );
+
+        $.each(testresponse, function(index){
+
+            var nameid = '#answer' + index + ':not(:empty)';
+            console.log("INDEX: " + nameid );
+            var completename = $(nameid).length;
+            console.log(completename);
+
+            if(completename === 0){
+                event.preventDefault(); 
+                alert('Выбраны не все ответы!');
+                console.log("Has empty field")
+                return false;
+            }
+        });
+
+    });
+
+</script>
 
 
 @endsection

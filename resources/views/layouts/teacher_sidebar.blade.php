@@ -16,9 +16,11 @@
                 <a href="{{ route('groups_controll') }}"><button class="btn btn-success w-100 p-3" @if(isset($status)) @if($status == 'unconfirmed') disabled @endif @endif>Управление Групами</button></a>
             </li>
             <li class="p-1">
-                <a href="{{ route('students_controll') }}"><button class="btn btn-success w-100 p-3" @if(isset($status)) @if($status == 'unconfirmed') disabled @endif @endif>Управление Студентами</button></a>
+                <a href="{{ route('students_controll') }}"><button class="btn btn-success w-100 p-3" disabled>Управление Студентами</button></a>
             </li>
-
+            <li class="p-1">
+                <a href="{{ route('assigned_students') }}"><button class="btn btn-success w-100 p-3" @if(isset($status)) @if($status == 'unconfirmed') disabled @endif @endif>Ваши Студенты</button></a>
+            </li>
             <li class="p-1">
                 <a href="{{ route('teacher_information') }}"><button class="btn btn-success w-100 p-3">Личная информация</button></a>
             </li>

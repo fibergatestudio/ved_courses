@@ -66,6 +66,29 @@ class TestsController extends Controller
         return redirect('tests_controll')->with('message_success', 'Тест успешно создан!');
     }
 
+    public function edit_test($test_id){
+
+        //dd($test_id);
+
+        $test_info = DB::table('tests')->where('id', $test_id)->first();
+
+        return view('tests.edit_test', compact('test_id', 'test_info') );
+    }
+
+    public function edit_test_apply( $test_id, Request $request){
+
+        //dd($request->all());
+        
+        DB::table('tests')->where('id', $test_id)->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'is_enabled' => $request->is_enabled,
+        ]);
+
+
+        return redirect()->back()->with('message_success', 'Тест успешно обновлен!');
+    }
+
     public function new_simple_test(){
 
         return view('tests.create_simple_test');
@@ -150,6 +173,7 @@ class TestsController extends Controller
 
     function test_submit(Request $request, $test_id){
 
+        // Получаем всю POST инфу
         $all_info = $request->all();
         //dd($all_info);
 
@@ -157,8 +181,16 @@ class TestsController extends Controller
         $finished_count = $current_test->finished_count + 1;
         //dd($finished_count);
 
+        // Обновляем кол-во сданных тестов
         DB::table('tests')->where('id', $test_id)->update([
             'finished_count' => $finished_count,
+        ]);
+
+        // Записываем в ЛОГ данные о сданном тесте
+        DB::table('tests_log')->insert([
+            'user_id' => Auth::user()->id,
+            'test_id' => $test_id,
+            'completed' => 'true',
         ]);
 
         return redirect('tests_controll')->with('message_success', 'Тест успешно сдан!');

@@ -110,24 +110,24 @@
                                 <p class="card-text"><h4>Занятие 3</h4></p>
                                 </div>
                             </div>
-                    </div>
+                    </div> 
+                    <div class="text-center">Для достука по всем урокам залогиньтесь</div>
                     @else
-                        @if($user_info->status == 'confirmed')
-                            <a href="">
-                                <div class="card bg">
-                                    <div class="card-body text-center">
-                                    <p class="card-text"><h4>Занятие 2</h4></p>
-                                    </div>
+                        @if($user_info->status == 'confirmed')<a href="">@endif
+                            <div class="card bg">
+                                <div class="card-body text-center">
+                                <p class="card-text"><h4>Занятие 2</h4></p>
                                 </div>
-                            </a>
-                            <a href="">
-                                <div class="card bg">
-                                    <div class="card-body text-center">
-                                    <p class="card-text"><h4>Занятие 3</h4></p>
-                                    </div>
+                            </div>
+                        @if($user_info->status == 'confirmed')</a>@endif
+                        @if($user_info->status == 'confirmed')<a href="">@endif
+                            <div class="card bg">
+                                <div class="card-body text-center">
+                                <p class="card-text"><h4>Занятие 3</h4></p>
                                 </div>
-                            </a>
-                        @endif
+                            </div>
+                        @if($user_info->status == 'confirmed')</a>@endif
+                        @if($user_info->status != 'confirmed')<div class="text-center">Пользователь не подтвержден, доступ к урокам ограничен</div>@endif
                     @endguest
                 </div>
                 

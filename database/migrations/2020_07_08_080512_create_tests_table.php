@@ -21,6 +21,7 @@ class CreateTestsTable extends Migration
             $table->string('views')->nullable();
             $table->string('finished_count')->nullable();
             $table->string('creator_id')->nullable();
+            $table->string('is_enabled')->nullable();
             $table->timestamps();
         });
     }

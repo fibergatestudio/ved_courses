@@ -12,7 +12,7 @@
                 <a href="#"><button class="btn btn-success w-100 p-3" disabled>Мои Курсы</button></a>
             </li>
             <li class="p-1">
-                <a href="#"><button class="btn btn-success w-100 p-3" disabled>Мои Тесты</button></a>
+                <a href="{{ route('student_tests') }}"><button class="btn btn-success w-100 p-3">Мои Тесты</button></a>
             </li>
             <li class="p-1">
                 <a href="{{ route('student_information') }}"><button class="btn btn-success w-100 p-3">Личная информация</button></a>

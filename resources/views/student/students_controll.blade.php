@@ -17,7 +17,9 @@
         </div>
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header">{{ __('Управлене студентами') }}</div>
+                <div class="card-header">{{ __('Управлене студентами') }} 
+                    <a href="{{ route('import_students') }}" class="btn btn-success">Загрузить Студентов</a>
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
