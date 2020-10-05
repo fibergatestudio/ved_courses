@@ -23,7 +23,10 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 // Для авторизации через соц сети -
 // https://laravel.com/docs/7.x/socialite
-
+    Route::get('/login/{provider}/{signup?}', 'Auth\SocialiteController@redirect')->where(['provider' => 'google|facebook', 'signup' => 'signup'])->name('login.social');
+    Route::get('/login/{provider}/callback', 'Auth\SocialiteController@callback')->where('provider','google|facebook');
+    Route::get('/login/role/{user_id}/{student_id}', 'Auth\SocialiteController@role')->name('login.role');
+    Route::post('/login/role/{user_id}/{student_id}/set', 'Auth\SocialiteController@setRole')->name('login.setrole');
 
 // Админ
 
@@ -42,12 +45,12 @@ Route::get('/home', 'HomeController@index')->name('home');
 
         // Подтвердить Учителя(перевод из студентов)
         Route::get('/admin/users_control/edit/{user_id}/confirm', 'AdminController@teacher_apply')->name('teacher_apply')->middleware('can:admin_rights');
-    
+
     // Управление группами
     Route::get('groups', 'GroupsController@index')->name('groups_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);
-        // Добавить группу 
+        // Добавить группу
         Route::get('groups/add_group', 'GroupsController@add_group')->name('add_group')->middleware(['can:admin_rights' || 'can:teacher_rights']);
-            // Автокомплит студентов 
+            // Автокомплит студентов
             Route::post('/autocomplete/fetch', 'GroupsController@fetch')->name('autocomplete.fetch')->middleware(['can:admin_rights' || 'can:teacher_rights']);
             // Применить добавление группы
             Route::post('groups/add_group/apply', 'GroupsController@add_group_apply')->name('add_group_apply')->middleware(['can:admin_rights' || 'can:teacher_rights']);
@@ -98,7 +101,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 //////////
 
 
-// Курсы 
+// Курсы
     // Управление Курсами (АДМИН + УЧИТЕЛЬ)
     Route::get('/courses_controll', 'CoursesController@index')->name('courses_controll')->middleware('can:admin_rights');
         // Создание Курса

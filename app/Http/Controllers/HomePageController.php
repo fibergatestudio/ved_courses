@@ -8,12 +8,12 @@ use Auth;
 
 class HomePageController extends Controller
 {
-    
+
     public function welcome(){
 
         $courses = DB::table('courses')->get();
-        
-        return view('welcome', compact('courses'));
+
+        return view('front.main', compact('courses'));
     }
 
     public function view_course($course_id){
@@ -27,7 +27,7 @@ class HomePageController extends Controller
 
             return view('courses.view_course', compact('course_id', 'user_info'));
         } else {
-            
+
             return view('courses.view_course', compact('course_id'));
         }
         //dd($auth_id);
