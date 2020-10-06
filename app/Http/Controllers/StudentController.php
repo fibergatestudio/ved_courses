@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Auth;
 use DB;
 
+use App\User;
 use App\Imports\StudentsImport;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Storage;
@@ -24,10 +25,10 @@ class StudentController extends Controller
         //dd($student_id);
 
         $student_info = DB::table('users')->where('id', $student_id)->first();
-
         $student_full_info = DB::table('students')->where('user_id', $student_id)->first();
+        $photo = Auth::user()->getMedia('photos')->last()->getUrl('thumb');
 
-        return view('student.student_information', compact('student_info', 'student_full_info'));
+        return view('student.student_information', compact('student_info', 'student_full_info', 'photo'));
     }
 
     public function student_information_apply(Request $request){
@@ -36,10 +37,11 @@ class StudentController extends Controller
         //dd($all_info);
 
         $user_id = Auth::user()->id;
+        $full_name = trim($request->surname . ' ' . $request->name . ' ' . $request->patronymic);
 
         // Проверяем на существующего студента (Если есть в записях базы)
         $check_for_stud = DB::table('students')->where([
-            ['full_name', '=', $request->full_name],
+            ['full_name', '=', $full_name],
             ['user_id', '=', '-']
             ])->first();
 
@@ -50,29 +52,43 @@ class StudentController extends Controller
             //Удаляем текущие данные
             DB::table('students')->where('user_id', $user_id)->delete();
             // Обновляем данные и присваиваем студента к юзеру.
-            DB::table('students')->where('full_name', $request->full_name)->update([
+            DB::table('students')->where('full_name', $full_name)->update([
                 'user_id' => $user_id,
-                'full_name' => $request->full_name,
+                'full_name' => $full_name,
                 'university_name' => $request->university_name,
                 'course_number' => $request->course_number,
                 'group_number' => $request->group_number,
                 'student_number' => $request->student_number,
             ]);
             //Обновляем статус на "подтвержден"
-            DB::table('users')->where('id', $user_id)->update(['status' => 'confirmed']);
+            DB::table('users')->where('id', $user_id)->update([
+                'status' => 'confirmed',
+                'surname' => $request->surname,
+                'name' => $request->name,
+                'patronymic' => $request->patronymic,
+            ]);
 
         // Если студент не совпал - обновляем инфуормацию. (Все еще будет нуждаться в подтверждении)
         } else {
             
             DB::table('students')->where('user_id', $user_id)->update([
-                'full_name' => $request->full_name,
+                'full_name' => $full_name,
                 'university_name' => $request->university_name,
                 'course_number' => $request->course_number,
                 'group_number' => $request->group_number,
                 'student_number' => $request->student_number,
             ]);
+            DB::table('users')->where('id', $user_id)->update([
+                'surname' => $request->surname,
+                'name' => $request->name,
+                'patronymic' => $request->patronymic,
+            ]);
         }
 
+        if (isset($request->photo)) {
+            $user = User::where('id', $user_id)->first();
+            $user->addMediaFromRequest('photo')->toMediaCollection('photos');
+        }
 
         // DB::table('students')->where('user_id', $request->student_id)->update([
         //     'full_name' => $request->full_name,
@@ -84,6 +100,34 @@ class StudentController extends Controller
 
         return redirect()->back()->with('message_success', 'Информация обновлена!');
 
+    }
+
+    public function student_information_change_password(Request $request){
+        /*$validatedData = $request->validate([
+            'oldpass' => 'required|min:8',
+            'password' => 'required|string|min:8',
+            'password_confirmation' => 'required|same:password',
+        ],[
+            'oldpass.required' => 'Old password is required',
+            'oldpass.min' => 'Old password needs to have at least 8 characters',
+            'password.required' => 'Password is required',
+            'password.min' => 'Password needs to have at least 8 characters',
+            'password_confirmation.required' => 'Passwords do not match'
+        ]);*/
+
+        $current_password = \Auth::User()->password;
+        if(\Hash::check($request->input('oldpass'), $current_password))
+        {
+            $user_id = \Auth::User()->id;
+            $obj_user = User::find($user_id);
+            $obj_user->password = \Hash::make($request->input('password'));
+            $obj_user->save();
+            return redirect()->back()->with('message_success', 'Пароль оновлен!');
+        }
+        else
+        {
+            return redirect()->back()->with('message_error', 'Введіть правильний пароль');
+        }
     }
 
     // Управление студентами

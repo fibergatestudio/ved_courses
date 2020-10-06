@@ -14,8 +14,8 @@ class AddSurnamePatronimicToUsersTable extends Migration
     public function up()
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('surname')->after('id')->nullable();
-            $table->string('patronymic')->after('name')->nullable();
+            if (!Schema::hasColumn('users', 'surname')) $table->string('surname')->after('id')->nullable();
+            if (!Schema::hasColumn('users', 'patronymic')) $table->string('patronymic')->after('name')->nullable();
         });
     }
 
