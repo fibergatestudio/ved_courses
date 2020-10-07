@@ -26,7 +26,7 @@ class StudentController extends Controller
 
         $student_info = DB::table('users')->where('id', $student_id)->first();
         $student_full_info = DB::table('students')->where('user_id', $student_id)->first();
-        $photo = Auth::user()->getMedia('photos')->last()->getUrl('thumb');
+        $photo = Auth::user()->getMedia('photos')->last() ? Auth::user()->getMedia('photos')->last()->getUrl('thumb') : '';
 
         return view('student.student_information', compact('student_info', 'student_full_info', 'photo'));
     }
