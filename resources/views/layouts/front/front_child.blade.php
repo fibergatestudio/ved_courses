@@ -17,8 +17,8 @@
     @include('layouts.front.includes.burger_menu')
     <!-- Burger-menu (end)-->
 
-    <header class="header">
-        <div class="topWhite-layer">
+    <header class="header header-narrow">
+        <div class="topWhite-layer topWhite-layer-narrow">
             <div class="container">
                 @include('layouts.front.includes.header_menu')
                 @yield('header')

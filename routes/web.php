@@ -14,6 +14,11 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomePageController@welcome');
+Route::get('/simulator', 'HomePageController@simulator');
+Route::get('/welcome', 'HomePageController@welcome_page');
+Route::get('/welcome2', 'HomePageController@welcome2_page');
+Route::get('/student_profile', 'HomePageController@student_profile');
+
     Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
 
 Auth::routes();
@@ -120,7 +125,7 @@ Route::get('/home', 'HomeController@index')->name('home');
         Route::get('/tests_controll/new_test', 'TestsController@new_test')->name('new_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
         // Создание Теста POST
         Route::post('/tests_controll/new_test/create', 'TestsController@create_test')->name('create_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
-            // Редактирование теста 
+            // Редактирование теста
             Route::get('/tests_controll/{test_id}/edit', 'TestsController@edit_test')->name('edit_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
             // Применение редатирование теста POST
             Route::post('/tests_controll/{test_id}/edit_apply', 'TestsController@edit_test_apply')->name('edit_test_apply')->middleware(['can:admin_rights' || 'can:teacher_rights']);

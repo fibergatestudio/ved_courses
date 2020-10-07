@@ -1,4 +1,5 @@
 (function () {
+
     let burgerButton = document.querySelector('.menu_burger');
     let burgerButtonClone = document.querySelector('.menu_burger-clone');
     let burgerMenu = document.querySelector('.menu_title-wrapper');
@@ -75,6 +76,32 @@
 
 })();
 
+(function () {
+
+    var form = document.querySelector('.profile-item_text');
+    var fakeForm = document.querySelector('.profile-grid_fakeform');
+
+    if (form !== null )
+    {
+        fakeForm.addEventListener('click', func);
+        form.addEventListener('focusout', func2);
+    };
+
+    function func() {
+         form.classList.toggle('active');
+         fakeForm.classList.toggle('active');
+    };
+
+    function func2() {
+        if (form.getElementsByTagName('textarea').value !== null) {
+            form.classList.toggle('active');
+            fakeForm.classList.toggle('active');
+        }
+    };
+
+
+
+})();
 
 
 
