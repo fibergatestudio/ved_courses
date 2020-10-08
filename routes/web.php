@@ -13,13 +13,14 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', 'HomePageController@welcome');
-Route::get('/simulator', 'HomePageController@simulator');
-Route::get('/welcome', 'HomePageController@welcome_page');
-Route::get('/welcome2', 'HomePageController@welcome2_page');
-Route::get('/student_profile', 'HomePageController@student_profile');
 
-    Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
+Route::get('/', 'HomePageController@welcome');
+Route::get('/simulator', 'HomePageController@simulator')->name('simulator');
+Route::get('/student_courses', 'HomePageController@welcome_page')->name('welcome_page')->middleware('auth');
+Route::get('/student_ended', 'HomePageController@welcome2_page')->name('welcome2_page')->middleware('auth');
+Route::get('/student_profile', 'HomePageController@student_profile')->name('student_profile')->middleware('auth');
+
+Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
 
 Auth::routes();
 

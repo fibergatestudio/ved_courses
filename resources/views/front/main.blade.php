@@ -48,7 +48,7 @@
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_2.jpg') }}" alt="img">
-                    <a class="image-btn" href="##">
+                    <a class="image-btn" href="{{ route('simulator') }}">
                         <span>Підкатегорії</span>
                         <div class="image-btn_arrow"></div>
                     </a>

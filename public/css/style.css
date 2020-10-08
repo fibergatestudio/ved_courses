@@ -31,6 +31,10 @@
     .bootstrap-restyling .modal-dialog {
         max-width: 65%;
     }
+
+    .sign-bg {
+        min-height: 100vh;
+    }
 }
 
 @media (max-width:482px) {
@@ -59,4 +63,8 @@
 .modal-content .student-menu-wrapper {
     flex-direction: column;
     align-items: center;
+}
+
+.radius {
+    border-radius: 9px 9px 0px 0px;
 }

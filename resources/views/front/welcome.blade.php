@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('title')
-    Welcome
+Курси в процесі
 @endsection
 
 @section('header')
@@ -16,14 +16,14 @@
     <div class="container">
 
         <div class="main-menu main-menuWelcome">
-            <div class="main-menu_inner main-menu_innerWelcom active">
+            <div class="main-menu_inner main-menu_innerWelcom">
                 <a class="main-menu_btn" href="##"><span>Головна</span></a>
             </div>
-            <div class="main-menu_inner main-menu_innerWelcom">
-                <a class="main-menu_btn" href="##"><span>Курси в процесі</span></a>
+            <div class="main-menu_inner main-menu_innerWelcom active">
+            <a class="main-menu_btn" href="{{ route('welcome_page') }}"><span>Курси в процесі</span></a>
             </div>
             <div class="main-menu_inner main-menu_innerWelcom">
-                <a class="main-menu_btn" href="##"><span>Пройдені курси</span></a>
+                <a class="main-menu_btn" href="{{ route('welcome2_page') }}"><span>Пройдені курси</span></a>
             </div>
             <div class="main-menu_inner main-menu_innerWelcom">
                 <div class="main-menu_social"><a href="##"><img src="{{ asset('img/facebook.png') }}" alt="img"></a></div>
