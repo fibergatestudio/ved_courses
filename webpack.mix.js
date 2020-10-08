@@ -17,5 +17,5 @@ mix.styles('resources/css/style.css','public/css/style.css');
 mix.styles('resources/css/sign.css','public/css/sign.css');
 mix.styles('resources/css/slick.css','public/css/slick.css');
 mix.js('resources/js/main.js', 'public/js');
-mix.js('resources/js/slick.min.js', 'public/js');
+mix.copy('resources/js/slick.min.js', 'public/js/slick.min.js');
 mix.copyDirectory('resources/img', 'public/img');

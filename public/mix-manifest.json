@@ -2,8 +2,8 @@
     "/js/app.js": "/js/app.js",
     "/css/app.css": "/css/app.css",
     "/js/main.js": "/js/main.js",
-    "/js/slick.min.js": "/js/slick.min.js",
     "/css/style.css": "/css/style.css",
     "/css/sign.css": "/css/sign.css",
-    "/css/slick.css": "/css/slick.css"
+    "/css/slick.css": "/css/slick.css",
+    "/js/slick.min.js": "/js/slick.min.js"
 }
