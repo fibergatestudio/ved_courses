@@ -32,7 +32,7 @@
                     <p>цікавитесь, чому проходите курси, або що сподіваєтеся вивчити.</p>
                 </div>
                 <form class="profile-grid_form">
-                <textarea class="profile-item_text" spellcheck="false"></textarea>
+                    <textarea id="profile-text" class="profile-item_text" spellcheck="false"></textarea>
                 </form>
 
             </div>

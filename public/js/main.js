@@ -178,25 +178,33 @@
 (function () {
   var form = document.querySelector('.profile-item_text');
   var fakeForm = document.querySelector('.profile-grid_fakeform');
+  var textArea = document.getElementById('profile-text');
+
+  if (textArea.value) {
+    form.classList.add('active');
+    fakeForm.classList.remove('active');
+  }
 
   if (form !== null) {
     fakeForm.addEventListener('click', func);
-    form.addEventListener('focusout', func2);
+    textArea.addEventListener('blur', func2);
+    textArea.addEventListener('keyup', func2);
   }
 
   ;
 
   function func() {
-    form.classList.toggle('active');
-    fakeForm.classList.toggle('active');
+    form.classList.add('active');
+    fakeForm.classList.remove('active');
+    textArea.focus();
   }
 
   ;
 
   function func2() {
-    if (form.getElementsByTagName('textarea').value !== null) {
-      form.classList.toggle('active');
-      fakeForm.classList.toggle('active');
+    if (!textArea.value) {
+      form.classList.remove('active');
+      fakeForm.classList.add('active');
     }
   }
 
