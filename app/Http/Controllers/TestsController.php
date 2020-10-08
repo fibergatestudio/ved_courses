@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Redirect;
 
 class TestsController extends Controller
 {
@@ -21,7 +22,34 @@ class TestsController extends Controller
         return view('tests.create_test');
     }
 
-    
+
+    // Новое создание тестов (под вертску)
+    public function new_test_info(){
+
+        return view('tests.create_test_info');
+    }
+
+    public function create_new_test_info(Request $request){
+
+        $test_info_id = DB::table('tests_info')->insertGetId([
+            'name' => $request->name,
+            'description' => $request->description,
+        ]);
+
+        //dd($test_info_id);
+
+        //return redirect('new_test_info_questions'); //->with('message_success', 'Описание теста успешно создано!');
+        return \Redirect::route('new_test_questions', $test_info_id)->with('message', 'State saved correctly!!!');
+    }
+
+    public function new_test_questions($test_info_id){
+
+        return view('tests.create_test_questions');
+    }
+    // Конец создания новых тестов
+
+
+
     public function create_test(Request $request){
 
         $all_info = $request->all();

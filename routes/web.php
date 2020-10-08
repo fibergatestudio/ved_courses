@@ -115,6 +115,20 @@ Route::get('/home', 'HomeController@index')->name('home');
 //////////
 
 // Тесты
+
+    // Новое создание тестов
+        // Создание Теста
+        Route::get('/tests_controll/new_test_info', 'TestsController@new_test_info')->name('new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+        // Создание Теста POST
+        Route::post('/tests_controll/new_test_info/create', 'TestsController@create_new_test_info')->name('create_new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+        // Добавление вопросов.
+        Route::get('/tests_controll/new_test_info/{test_info_id}/add_questions', 'TestsController@new_test_questions')->name('new_test_questions')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+    //
+
+
+
     // Управление Тестами (АДМИН + УЧИТЕЛЬ)
     Route::get('/tests_controll', 'TestsController@index')->name('tests_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);
         // Создание Теста
