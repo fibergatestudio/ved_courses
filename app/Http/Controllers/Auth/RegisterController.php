@@ -80,7 +80,7 @@ class RegisterController extends Controller
                 'email' => $data['email'],
                 'password' => Hash::make($data['password']),
                 'role' => $data['role'],
-                'status' => 'confirmed'
+                'status' => 'unconfirmed'
             ]);
 
             // Создаем для него запись в стундентах
