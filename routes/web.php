@@ -14,7 +14,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', 'HomePageController@welcome');
-    Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
+Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
+Route::get('/student/information', 'StudentController@student_information' )->name('student_information');
 
 Auth::routes();
 

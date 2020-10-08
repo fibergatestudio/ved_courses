@@ -41,8 +41,7 @@ class User extends Authenticatable implements HasMedia
         'email_verified_at' => 'datetime',
     ];
 
-    public function registerMediaConversions(Media $media = null)
-    {
+    public function registerMediaConversions(Media $media = null){
         $this->addMediaConversion('thumb')
             ->width(50)
             ->height(50);

@@ -25,17 +25,17 @@
                 @auth
                     @if( Auth::user()->role == "admin")
                     <li><a class="top-btn top-btn--user" href="##" data-toggle="modal" data-target="#adminPanelModal"><span class="student--user">{{ auth()->user()->name }}</span></a></li>
-                    @include('layouts.front.includes.modals.admin_panel')
                     @endif
                     @if( Auth::user()->role == "teacher")
                         <li><a class="top-btn" href="##"><span>Студент</span></a></li>
                         <li><a class="top-btn top-btn--user" href="##" data-toggle="modal" data-target="#teacherPanelModal"><span class="student--user">{{ auth()->user()->name }}</span></a></li>
-                        @include('layouts.front.includes.modals.teacher_panel')
                     @endif
                     @if( Auth::user()->role == "student")
                         <li><a class="top-btn" href="##"><span>Викладач</span></a></li>
                         <li><a class="top-btn top-btn--user" href="##" data-toggle="modal" data-target="#studentPanelModal"><span class="student--user">{{ auth()->user()->name }}</span></a></li>
-                        @include('layouts.front.includes.modals.student_panel')
+                    @endif
+                    @if( Auth::user()->getMedia('photos')->last())
+                        <style>.student--user:after { background-image: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb') }}) !important; }</style>
                     @endif
                 @endauth
             </ul>
@@ -52,3 +52,15 @@
 
     </div>
 </div>
+
+@auth
+    @if( Auth::user()->role == "admin")
+        @include('layouts.front.includes.modals.admin_panel')
+    @endif
+    @if( Auth::user()->role == "teacher")
+        @include('layouts.front.includes.modals.teacher_panel')
+    @endif
+    @if( Auth::user()->role == "student")
+        @include('layouts.front.includes.modals.student_panel')
+    @endif
+@endauth

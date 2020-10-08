@@ -5,17 +5,24 @@
 @endsection
 
 @section('header')
-<div class="header-text">
-    <div class="header-text-top">
-        Virtual education
-    </div>
-    <div class="header-text-middle">
-        Пізнай світ по-новому
-    </div>
-    <a class="header-btn" href="##">
-        <span>перейти до курсів</span>
-    </a>
-</div>
+    <header class="header">
+        <div class="topWhite-layer">
+            <div class="container">
+                @include('layouts.front.includes.header_menu')
+                <div class="header-text">
+                    <div class="header-text-top">
+                        Virtual education
+                    </div>
+                    <div class="header-text-middle">
+                        Пізнай світ по-новому
+                    </div>
+                    <a class="header-btn" href="##">
+                        <span>перейти до курсів</span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </header>
 @endsection
 
 @section('content')

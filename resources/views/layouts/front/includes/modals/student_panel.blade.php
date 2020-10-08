@@ -1,5 +1,5 @@
-<div class="bootstrap-restylingStudent modal fade show" id="studentPanelModal" tabindex="-1" role="dialog"
-    aria-labelledby="studentPanelModalLabel" aria-modal="true" style="padding-right: 16px; display: none;">
+<div class="bootstrap-restylingStudent modal fade" id="studentPanelModal" tabindex="-1" role="dialog"
+    aria-labelledby="studentPanelModalLabel" aria-modal="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <ul class="student-menu-wrapper">
@@ -10,7 +10,7 @@
                     <a class="student-menu-link" href="##">Профіль</a>
                 </li>
                 <li class="student-menu-inner">
-                    <a class="student-menu-link" href="##">Налаштування</a>
+                    <a class="student-menu-link" href="{{ route('student_information') }}">Налаштування</a>
                 </li>
                 <li class="student-menu-inner">
                     <a class="student-menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();

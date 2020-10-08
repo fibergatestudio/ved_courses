@@ -26,12 +26,28 @@ class StudentController extends Controller
 
         $student_info = DB::table('users')->where('id', $student_id)->first();
         $student_full_info = DB::table('students')->where('user_id', $student_id)->first();
-        $photo = Auth::user()->getMedia('photos')->last() ? Auth::user()->getMedia('photos')->last()->getUrl('thumb') : '';
 
-        return view('student.student_information', compact('student_info', 'student_full_info', 'photo'));
+        return view('student.student_information', compact('student_info', 'student_full_info'));
     }
 
     public function student_information_apply(Request $request){
+
+        if(empty($request->surname))
+        {
+            return redirect()->back()->with('message_error', 'Введіть прізвище');
+        }
+        else if(empty($request->name))
+        {
+            return redirect()->back()->with('message_error', 'Введіть ім\'я');
+        }
+        else if(empty($request->patronymic))
+        {
+            return redirect()->back()->with('message_error', 'Введіть ім\'я по батькові');
+        }
+        else if(empty($request->email))
+        {
+            return redirect()->back()->with('message_error', 'Введіть поштову скринькю');
+        }
 
         $all_info = $request->all();
         //dd($all_info);
@@ -63,6 +79,7 @@ class StudentController extends Controller
             //Обновляем статус на "подтвержден"
             DB::table('users')->where('id', $user_id)->update([
                 'status' => 'confirmed',
+                'email' => $request->email,
                 'surname' => $request->surname,
                 'name' => $request->name,
                 'patronymic' => $request->patronymic,
@@ -79,6 +96,7 @@ class StudentController extends Controller
                 'student_number' => $request->student_number,
             ]);
             DB::table('users')->where('id', $user_id)->update([
+                'email' => $request->email,
                 'surname' => $request->surname,
                 'name' => $request->name,
                 'patronymic' => $request->patronymic,
@@ -116,11 +134,15 @@ class StudentController extends Controller
         ]);*/
 
         $current_password = \Auth::User()->password;
-        if(\Hash::check($request->input('oldpass'), $current_password))
+        if($request->password != $request->password_confirmation)
+        {
+            return redirect()->back()->with('message_error', 'Новий пароль не збігається з повторним');
+        }
+        else if(\Hash::check($request->oldpass, $current_password))
         {
             $user_id = \Auth::User()->id;
             $obj_user = User::find($user_id);
-            $obj_user->password = \Hash::make($request->input('password'));
+            $obj_user->password = \Hash::make($request->password);
             $obj_user->save();
             return redirect()->back()->with('message_success', 'Пароль оновлен!');
         }
