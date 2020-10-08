@@ -32,19 +32,25 @@ class StudentController extends Controller
 
     public function student_information_apply(Request $request){
 
-        if(empty($request->surname))
-        {
-            return redirect()->back()->with('message_error', 'Введіть прізвище');
+        $user_id = Auth::user()->id;
+
+        if (isset($request->photo)) {
+            $types = array(1 => 'gif', 2 => 'jpg', 3 => 'png');
+            $data = getimagesize($request->photo);
+            if (!array_key_exists($data[2], $types))
+            {
+                return redirect()->back()->with('message_error', 'Неприпустимий тип файлу. Припустимо завантажувати тільки зображення: *.gif, *.png, *.jpg ---'.$data[2]);
+            }
+            $filesize = filesize($request->photo);
+            if ($filesize > 1000000)
+            {
+                return redirect()->back()->with('message_error', 'Перевищен максимальний розмір файлу в 1 Мб');
+            }
+            $user = User::where('id', $user_id)->first();
+            $user->addMediaFromRequest('photo')->toMediaCollection('photos');
         }
-        else if(empty($request->name))
-        {
-            return redirect()->back()->with('message_error', 'Введіть ім\'я');
-        }
-        else if(empty($request->patronymic))
-        {
-            return redirect()->back()->with('message_error', 'Введіть ім\'я по батькові');
-        }
-        else if(empty($request->email))
+
+        if(empty($request->email))
         {
             return redirect()->back()->with('message_error', 'Введіть поштову скринькю');
         }
@@ -52,7 +58,6 @@ class StudentController extends Controller
         $all_info = $request->all();
         //dd($all_info);
 
-        $user_id = Auth::user()->id;
         $full_name = trim($request->surname . ' ' . $request->name . ' ' . $request->patronymic);
 
         // Проверяем на существующего студента (Если есть в записях базы)
@@ -80,9 +85,9 @@ class StudentController extends Controller
             DB::table('users')->where('id', $user_id)->update([
                 'status' => 'confirmed',
                 'email' => $request->email,
-                'surname' => $request->surname,
-                'name' => $request->name,
-                'patronymic' => $request->patronymic,
+                //'surname' => $request->surname,
+                //'name' => $request->name,
+                //'patronymic' => $request->patronymic,
             ]);
 
         // Если студент не совпал - обновляем инфуормацию. (Все еще будет нуждаться в подтверждении)
@@ -97,15 +102,10 @@ class StudentController extends Controller
             ]);
             DB::table('users')->where('id', $user_id)->update([
                 'email' => $request->email,
-                'surname' => $request->surname,
-                'name' => $request->name,
-                'patronymic' => $request->patronymic,
+                //'surname' => $request->surname,
+                //'name' => $request->name,
+                //'patronymic' => $request->patronymic,
             ]);
-        }
-
-        if (isset($request->photo)) {
-            $user = User::where('id', $user_id)->first();
-            $user->addMediaFromRequest('photo')->toMediaCollection('photos');
         }
 
         // DB::table('students')->where('user_id', $request->student_id)->update([
@@ -116,7 +116,7 @@ class StudentController extends Controller
         //     'student_number' => $request->student_number,
         // ]);
 
-        return redirect()->back()->with('message_success', 'Информация обновлена!');
+        return redirect()->back()->with('message_success', 'Інформація оновлена!');
 
     }
 

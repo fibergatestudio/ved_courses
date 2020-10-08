@@ -37,12 +37,12 @@
                 <div class="grid-top_item">
                     <div class="grid-top_name">Ім'я користувача<sup>*</sup></div>
                     <div class="grid-top_example">Приклад: Іванов Іван Іванович</div>
-                    <input class="studentSettings-input" type="text" placeholder="Прізвище" name="surname" value="{{ $student_info->surname }}" required>
-                    <input class="studentSettings-input" type="text" placeholder="Ім'я" name="name" value="{{ $student_info->name }}" required>
-                    <input class="studentSettings-input" type="text" placeholder="По батькові" name="patronymic" value="{{ $student_info->patronymic }}" required>
+                    <input class="studentSettings-input" type="text" placeholder="Прізвище" name="surname" value="{{ $student_info->surname }}" required disabled>
+                    <input class="studentSettings-input" type="text" placeholder="Ім'я" name="name" value="{{ $student_info->name }}" required disabled>
+                    <input class="studentSettings-input" type="text" placeholder="По батькові" name="patronymic" value="{{ $student_info->patronymic }}" required disabled>
                 </div>
                 <div class="grid-top_item">
-                    <div class="grid-top_prometheus">Ім’я для ідентифікації на Prometheus. Ви не зможете змінити ім’я
+                    <div class="grid-top_prometheus">Ім’я для ідентифікації на Ved. Ви не зможете змінити ім’я
                         користувача.</div>
                 </div>
                 <div class="grid-top_item">
@@ -53,12 +53,15 @@
                             <p>Файли з розширенням JPG, GIF або PNG. </p>
                             <p>Максимальний розмір - 1 Мб. </p>
                             <a class="photo-btn" href="javascript: void();">
-                                <span>Вибрати фото</span>
-                                <input class="photo-btn_input" type="file" name="photo">
+                                <span>Відправити фото</span>
+                                <input class="photo-btn_input" type="file" name="photo" onchange="document.getElementById('form-stud').submit();">
                             </a>
                         </div>
                     @if( Auth::user()->getMedia('photos')->last())
-                        <style>.photo-photo:before { content: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb') }}) !important; }</style>
+                        <style>
+                            .photo-photo:before { content: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb_medium') }}) !important; }
+                            .photo-photo { background: none !important; }
+                        </style>
                     @endif
                     </div>
                 </div>
@@ -97,26 +100,26 @@
             <div class="studentSettings-flex-bottom">
                 <div class="grid-top_name">Назва ВУЗа</div>
                 <div class="studentSettings-bottom_wrapper">
-                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="university_name" value="{{ $student_full_info->university_name }}" required>
-                <div class="studentSettings-bottom_text">{{ $student_full_info->university_name }}</div>
+                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="university_name" value="{{ $student_full_info->university_name }}" required onkeyup="document.getElementById('university_name_text').innerHTML=this.value;">
+                <div class="studentSettings-bottom_text" id="university_name_text">{{ $student_full_info->university_name }}</div>
                 </div>
 
                 <div class="grid-top_name">Номер курсу</div>
                 <div class="studentSettings-bottom_wrapper">
-                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="course_number" value="{{ $student_full_info->course_number }}" required>
-                <div class="studentSettings-bottom_text">{{ $student_full_info->course_number }}</div>
+                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="course_number" value="{{ $student_full_info->course_number }}" required onkeyup="document.getElementById('course_number_text').innerHTML=this.value;">
+                <div class="studentSettings-bottom_text" id="course_number_text">{{ $student_full_info->course_number }}</div>
                 </div>
 
                 <div class="grid-top_name">Номер групи</div>
                 <div class="studentSettings-bottom_wrapper">
-                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="group_number" value="{{ $student_full_info->group_number }}" required>
-                <div class="studentSettings-bottom_text">{{ $student_full_info->group_number }}</div>
+                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="group_number" value="{{ $student_full_info->group_number }}" required onkeyup="document.getElementById('group_number_text').innerHTML=this.value;">
+                <div class="studentSettings-bottom_text" id="group_number_text">{{ $student_full_info->group_number }}</div>
                 </div>
 
                 <div class="grid-top_name">Номер студентського квитка</div>
                 <div class="studentSettings-bottom_wrapper">
-                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="student_number" value="{{ $student_full_info->student_number }}" required>
-                <div class="studentSettings-bottom_text">{{ $student_full_info->student_number }}</div>
+                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="student_number" value="{{ $student_full_info->student_number }}" required onkeyup="document.getElementById('student_number_text').innerHTML=this.value;">
+                <div class="studentSettings-bottom_text" id="student_number_text">{{ $student_full_info->student_number }}</div>
                 </div>
                 <a class="studentSettings-bottom-btn btn-watch--more" href="javascript: void();" onclick="document.getElementById('form-stud').submit();"><span>Зберегти</span></a>
             </div>

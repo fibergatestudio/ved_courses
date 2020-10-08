@@ -45,6 +45,12 @@ class User extends Authenticatable implements HasMedia
         $this->addMediaConversion('thumb')
             ->width(50)
             ->height(50);
+        $this->addMediaConversion('thumb_medium')
+            ->width(100)
+            ->height(100);
+        $this->addMediaConversion('thumb_big')
+            ->width(265)
+            ->height(265);
     }
 
     // Проверка, является ли пользователь администратором
