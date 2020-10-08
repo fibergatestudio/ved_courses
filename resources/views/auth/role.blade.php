@@ -1,38 +1,25 @@
-@extends('layouts.app')
+@extends('layouts.front.sign')
 
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        @if (session('error'))
-            <div class="alert alert-danger" role="alert">
-                {{ session('error') }}
-            </div>
-        @endif
-    </div>
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Вибір ролі') }}</div>
+<div class="modal-dialog" role="document">
+    <div class="modal-content">
+            <div class="modal-body tab-content radius">
+                <div class="">
+                    <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                    <h3 class="entrance-title mt-3">{{ __('Вибір ролі') }}</h3>
+                </div>
 
                 <div class="card-body">
                     <form method="POST" action="{{ route('login.setrole', ['user_id' => $user_id, 'student_id' => $student_id]) }}">
                         @csrf
-                        <div class="form-group row">
-                            <label for="role" class="col-md-4 col-form-label text-md-right">{{ __('Роль') }}</label>
-
-                            <div class="col-md-6">
-                                <select id="role" class="form-control" name="role" required >
-                                    <option value="student">Студент</option>
-                                    <option value="teacher">Вчитель</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="form-group row mb-0">
-                            <div class="col-md-6 offset-md-4">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Обрати роль') }}
-                                </button>
-                            </div>
+                        <label for="role" class="entrance-label">{{ __('Роль') }}</label>
+                        <select id="role" class="entrance-input" name="role" required >
+                            <option value="student">Студент</option>
+                            <option value="teacher">Вчитель</option>
+                        </select>
+                        <div class="modal-footer">
+                            <button type="submit" class="btn-entrance btn btn-secondary"
+                                data-dismiss="modal"> {{ __('Обрати роль') }}</button>
                         </div>
                     </form>
                 </div>
