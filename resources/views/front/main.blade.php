@@ -55,7 +55,7 @@
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_2.jpg') }}" alt="img">
-                    <a class="image-btn" href="##">
+                    <a class="image-btn" href="{{ route('simulator') }}">
                         <span>Підкатегорії</span>
                         <div class="image-btn_arrow"></div>
                     </a>
@@ -95,73 +95,9 @@
         </div>
     </div>
 </section>
-<section class="popular">
-    <div class="direction-separator popular-separator">
-        <div class="direction-separator_badge"><span>Найпопулярніші курси</span></div>
-    </div>
-    <div class="container">
-        <div class="popular-wrapper">
-            <div class="popular-inner">
-                <div class="popular-inner_top">
-                    <img class="popular-inner_img" src="{{ asset('img/popular_1.jpg') }}" alt="img">
-                    <a class="image-btn popular-btn" href="##">
-                        <span>перейти до курсів</span>
-                        <div class="image-btn_arrow"></div>
-                    </a>
-                </div>
-                <div class="popular-inner_bottom">
-                    <div class="popular-inner_bottom--title">
-                        <h4>Довга назва найпопулярнішого курсу</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="popular-inner">
-                <div class="popular-inner_top">
-                    <img class="popular-inner_img" src="{{ asset('img/popular_2.jpg') }}" alt="img">
-                    <a class="image-btn popular-btn" href="##">
-                        <span>перейти до курсів</span>
-                        <div class="image-btn_arrow"></div>
-                    </a>
-                </div>
-                <div class="popular-inner_bottom">
-                    <div class="popular-inner_bottom--title">
-                        <h4>Довга назва найпопулярнішого курсу</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="popular-inner">
-                <div class="popular-inner_top">
-                    <img class="popular-inner_img" src="{{ asset('img/popular_3.jpg') }}" alt="img">
-                    <a class="image-btn popular-btn" href="##">
-                        <span>перейти до курсів</span>
-                        <div class="image-btn_arrow"></div>
-                    </a>
-                </div>
-                <div class="popular-inner_bottom">
-                    <div class="popular-inner_bottom--title">
-                        <h4>Довга назва найпопулярнішого курсу</h4>
-                    </div>
-                </div>
-            </div>
-            <div class="popular-inner">
-                <div class="popular-inner_top">
-                    <img class="popular-inner_img" src="{{ asset('img/popular_4.jpg') }}" alt="img">
-                    <a class="image-btn popular-btn" href="##">
-                        <span>перейти до курсів</span>
-                        <div class="image-btn_arrow"></div>
-                    </a>
-                </div>
-                <div class="popular-inner_bottom">
-                    <div class="popular-inner_bottom--title">
-                        <h4>Довга назва найпопулярнішого курсу</h4>
-                    </div>
-                </div>
-            </div>
-
-        </div>
-
-    </div>
-</section>
+<!--Popular section-->
+@include('layouts.front.includes.popular')
+<!-- End Popular Section -->
 <section class="main">
     <div class="container">
         <h3 class="main-title_top">Назва розділу</h3>
@@ -696,72 +632,7 @@
         </div>
     </div>
 </section>
-<section class="partners">
-    <div class="direction-separator popular-separator">
-        <div class="direction-separator_badge"><span>Наші партнери</span></div>
-    </div>
-
-    <div class="container">
-        <div class="partners-wrapper">
-            <div class="partners-inner">
-                <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a href="##"></a>
-                </div>
-                <div class="partners-inner_title">Lorem Ipsum has been</div>
-                <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever since
-                    the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever
-                    since the</div>
-            </div>
-            <div class="partners-inner">
-                <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a href="##"></a>
-                </div>
-                <div class="partners-inner_title">Lorem Ipsum has been</div>
-                <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever since
-                    the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever
-                    since the</div>
-            </div>
-            <div class="partners-inner">
-                <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a href="##"></a>
-                </div>
-                <div class="partners-inner_title">Lorem Ipsum has been</div>
-                <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever since
-                    the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever
-                    since the</div>
-            </div>
-        </div>
-
-        <!-- hidden-slider-here (begin)-->
-        <div class="partners-slider-wrapper">
-            <div class="partners-slider-inner">
-                <div class="partners-inner">
-                    <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a
-                            href="##"></a></div>
-                    <div class="partners-inner_title">Lorem Ipsum has been</div>
-                    <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy
-                        text ever since the</div>
-                </div>
-                <div class="partners-inner">
-                    <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a
-                            href="##"></a></div>
-                    <div class="partners-inner_title">Lorem Ipsum has been</div>
-                    <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy
-                        text ever since the</div>
-                </div>
-                <div class="partners-inner">
-                    <div class="partners-inner_top"> <img src="{{ asset('img/partners-img.jpg') }}" alt="img"><a
-                            href="##"></a></div>
-                    <div class="partners-inner_title">Lorem Ipsum has been</div>
-                    <div class="partners-inner_text">Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy
-                        text ever since the</div>
-                </div>
-
-            </div>
-        </div>
-
-        <!-- hidden-slider-here (end)-->
-    </div>
-
-</section>
+<!--Partners section-->
+@include('layouts.front.includes.partners')
+<!-- End Partners Section -->
 @endsection

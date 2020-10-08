@@ -16,6 +16,26 @@ class HomePageController extends Controller
         return view('front.main', compact('courses'));
     }
 
+    public function simulator()
+    {
+        return view('front.simulator');
+    }
+
+    public function welcome_page()
+    {
+        return view('front.welcome');
+    }
+
+    public function welcome2_page()
+    {
+        return view('front.welcome2');
+    }
+
+    public function student_profile()
+    {
+        return view('front.student_profile');
+    }
+
     public function view_course($course_id){
 
         //dd($course_id);

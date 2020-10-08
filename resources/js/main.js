@@ -1,4 +1,5 @@
 (function () {
+
     let burgerButton = document.querySelector('.menu_burger');
     let burgerButtonClone = document.querySelector('.menu_burger-clone');
     let burgerMenu = document.querySelector('.menu_title-wrapper');
@@ -75,6 +76,40 @@
 
 })();
 
+(function () {
+
+    var form = document.querySelector('.profile-item_text');
+    var fakeForm = document.querySelector('.profile-grid_fakeform');
+    var textArea = document.getElementById('profile-text');
+
+    if (textArea.value) {
+        form.classList.add('active');
+        fakeForm.classList.remove('active');
+    }
+
+    if (form !== null )
+    {
+        fakeForm.addEventListener('click', func);
+        textArea.addEventListener('blur', func2);
+        textArea.addEventListener('keyup', func2);
+    };
+
+    function func() {
+         form.classList.add('active');
+         fakeForm.classList.remove('active');
+         textArea.focus();
+    };
+
+    function func2() {
+        if (!textArea.value) {
+            form.classList.remove('active');
+            fakeForm.classList.add('active');
+        }
+    };
+
+
+
+})();
 
 
 

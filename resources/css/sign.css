@@ -4,6 +4,7 @@
   -moz-background-size: cover;
   -o-background-size: cover;
   background-size: cover;
+  min-height: 100vh;
 }
 
 .bootstrap-restyling .modal-dialog {
@@ -30,7 +31,7 @@
     }
 
     .sign-bg {
-        height: 100vh;
+        min-height: 100vh;
     }
 }
 
@@ -54,4 +55,14 @@
 
 .entrance-input.is-invalid {
     margin-bottom: 0 !important;
+}
+
+/*Added Styles*/
+.modal-content .student-menu-wrapper {
+    flex-direction: column;
+    align-items: center;
+}
+
+.radius {
+    border-radius: 9px 9px 0px 0px;
 }

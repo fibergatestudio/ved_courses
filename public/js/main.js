@@ -69,9 +69,44 @@
 
     function func() {
 
-        this.classList.toggle('active');
-        this.nextElementSibling.classList.toggle('show');
-    };
+  ;
+})();
+
+(function () {
+  var form = document.querySelector('.profile-item_text');
+  var fakeForm = document.querySelector('.profile-grid_fakeform');
+  var textArea = document.getElementById('profile-text');
+
+  if (textArea.value) {
+    form.classList.add('active');
+    fakeForm.classList.remove('active');
+  }
+
+  if (form !== null) {
+    fakeForm.addEventListener('click', func);
+    textArea.addEventListener('blur', func2);
+    textArea.addEventListener('keyup', func2);
+  }
+
+  ;
+
+  function func() {
+    form.classList.add('active');
+    fakeForm.classList.remove('active');
+    textArea.focus();
+  }
+
+  ;
+
+  function func2() {
+    if (!textArea.value) {
+      form.classList.remove('active');
+      fakeForm.classList.add('active');
+    }
+  }
+
+  ;
+})(); // slick-slider///////////////////////////////////
 
 })();
 
@@ -82,7 +117,7 @@
 
     if (form !== null )
     {fakeForm.addEventListener('click', func)};
-    
+
 
     function func() {
          form.classList.toggle('active');
@@ -92,6 +127,7 @@
 })();
 
 
+module.exports = __webpack_require__(/*! C:\Fibergate\LARAGON\www\ved_courses\resources\js\main.js */"./resources/js/main.js");
 
 // slick-slider///////////////////////////////////
 $(document).ready(function () {
@@ -102,5 +138,3 @@ $(document).ready(function () {
         infinite: true,
     });
 });
-
-
