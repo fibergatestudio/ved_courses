@@ -33,7 +33,11 @@ class HomePageController extends Controller
 
     public function student_profile()
     {
-        return view('front.student_profile');
+        $student_id = Auth::user()->id;
+        $student_info = DB::table('users')->where('id', $student_id)->first();
+        $student_full_info = DB::table('students')->where('user_id', $student_id)->first();
+        $student_info->full_name = trim($student_info->surname . ' ' . $student_info->name . ' ' . $student_info->patronymic);
+        return view('front.student_profile', compact('student_info', 'student_full_info'));
     }
 
     public function view_course($course_id){
