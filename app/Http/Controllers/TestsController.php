@@ -68,17 +68,16 @@ class TestsController extends Controller
 
     public function new_test_question($test_info_id){
 
-        // Создаем "болванку" вопроса для теста .
-        // $new_question_id = DB::table('tests_questions')->insertGetId([]);
-
         return view('tests.create_test_questions', compact('test_info_id'));
     }
 
     public function create_new_test_question($test_info_id, Request $request){
 
+        // Формирование Инфы для джсона
         $q_data = "";
         $a_data = "";
 
+        // Енкод инфы
         $question_info_json = json_encode($q_data);
         $answers_json       = json_encode($a_data);
 
@@ -90,6 +89,16 @@ class TestsController extends Controller
         ]);
 
         return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+    }
+
+    // Просмотр теста вопросов\ответов 
+    public function view_test_info_questions($test_info_id){
+
+        // Получаем информацию о тесте.
+        $test_view_info = DB::table('tests_info')->where('id', $test_info_id)->first();
+        $test_question_answers = DB::table('tests_questions')->where('test_id', $test_info_id)->get();
+
+        return view('tests.view_test_info_questions', compact('test_info_id', 'test_view_info', 'test_question_answers'));
     }
     // -----------------Конец создания новых тестов-------------------------
 

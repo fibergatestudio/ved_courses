@@ -129,8 +129,8 @@ Route::get('/home', 'HomeController@index')->name('home');
         // Создание Теста
         Route::get('/tests_controll/new_test_info', 'TestsController@new_test_info')->name('new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
-        // Создание Теста POST
-        Route::post('/tests_controll/new_test_info/create', 'TestsController@create_new_test_info')->name('create_new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+            // Создание Теста POST
+            Route::post('/tests_controll/new_test_info/create', 'TestsController@create_new_test_info')->name('create_new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
         // Добавление вопроса(Страница)
         Route::get('/tests_controll/new_test_info/{test_info_id}/add_question', 'TestsController@new_test_question')->name('new_test_question')->middleware(['can:admin_rights' || 'can:teacher_rights']);
@@ -140,6 +140,8 @@ Route::get('/home', 'HomeController@index')->name('home');
             // -- //
             // Удалить вопрос (При редактировании вопроса)
             // -- //
+        // Просмотра теста и вопросов\ответов
+        Route::get('/tests_controll/new_test_info/{test_info_id}/view', 'TestsController@view_test_info_questions')->name('view_test_info_questions')->middleware(['can:admin_rights' || 'can:teacher_rights']);
     //
 //
 

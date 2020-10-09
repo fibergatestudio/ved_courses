@@ -167,12 +167,7 @@
                                     <a href="">
                                         <button class="btn btn-success">Просмотреть</button>
                                     </a>
-                                    <!-- <a href="">
-                                        <button class="btn btn-success">Изменить</button>
-                                    </a>
-                                    <a href="">
-                                        <button class="btn btn-danger">Удалить</button>
-                                    </a> -->
+
                                 </td>
                             </tr>
                             @endforeach
