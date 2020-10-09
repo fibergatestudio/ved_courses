@@ -120,6 +120,14 @@ class StudentController extends Controller
 
     }
 
+    public function student_descr_apply(Request $request){
+        $user_id = Auth::user()->id;
+        DB::table('students')->where('user_id', $user_id)->update([
+            'descr' => $request->profile_text,
+        ]);
+        return redirect()->back()->with('message_success', 'Інформація оновлена!');
+    }
+
     public function student_information_change_password(Request $request){
         /*$validatedData = $request->validate([
             'oldpass' => 'required|min:8',
