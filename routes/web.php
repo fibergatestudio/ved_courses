@@ -128,13 +128,20 @@ Route::get('/home', 'HomeController@index')->name('home');
     // Новое создание тестов
         // Создание Теста
         Route::get('/tests_controll/new_test_info', 'TestsController@new_test_info')->name('new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
         // Создание Теста POST
         Route::post('/tests_controll/new_test_info/create', 'TestsController@create_new_test_info')->name('create_new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
-        // Добавление вопросов.
-        Route::get('/tests_controll/new_test_info/{test_info_id}/add_questions', 'TestsController@new_test_questions')->name('new_test_questions')->middleware(['can:admin_rights' || 'can:teacher_rights']);
-
+        // Добавление вопроса(Страница)
+        Route::get('/tests_controll/new_test_info/{test_info_id}/add_question', 'TestsController@new_test_question')->name('new_test_question')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+            // Сохранить вопрос (POST)
+            Route::post('/tests_controll/new_test_info/{test_info_id}/add_questions/create', 'TestsController@create_new_test_question')->name('create_new_test_question')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+            // Добавить ответ (Через код во вьюхе)
+            // -- //
+            // Удалить вопрос (При редактировании вопроса)
+            // -- //
     //
+//
 
 
 

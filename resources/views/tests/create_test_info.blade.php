@@ -37,9 +37,9 @@
                             <label>Описание Теста</label>
                             <textarea type="text" class="form-control" name="description" value=""></textarea>
                         </div>
-                        <hr>
+                        <hr> 
                         <br>
-                        <button type="submit" class="btn btn-success">Добавить вопросы</button>
+                        <button type="submit" class="btn btn-success">Добавить вопрос</button>
                     </form>
                     
                         <a href="{{ route('tests_controll') }}">

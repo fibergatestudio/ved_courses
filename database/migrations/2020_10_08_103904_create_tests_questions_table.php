@@ -15,10 +15,16 @@ class CreateTestsQuestionsTable extends Migration
     {
         Schema::create('tests_questions', function (Blueprint $table) {
             $table->id();
+            // Айди основного теста
             $table->string('test_id')->nullable();
+            // Тип вопроса
             $table->string('question_type')->nullable();
-            $table->string('answer')->nullable();
-            $table->timestamps();
+            // Вопрос
+            $table->json('question_info_json')->nullable();
+            // Ответ(Ы)
+            $table->json('answers_json')->nullable();
+
+            $table->timestamps(); 
         });
     }
 

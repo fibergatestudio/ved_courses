@@ -13,8 +13,9 @@ class TestsController extends Controller
 
         $tests = DB::table('tests')->get();
         $simple_tests = DB::table('simple_tests')->get();
+        $test_info = DB::table('tests_info')->get();
 
-        return view('tests.index', compact('tests','simple_tests') );
+        return view('tests.index', compact('tests','simple_tests', 'test_info') );
     }
 
     public function new_test(){
@@ -23,7 +24,7 @@ class TestsController extends Controller
     }
 
 
-    // Новое создание тестов (под вертску)
+    // --------------------Новое создание тестов (под вертску) ------------------------
     public function new_test_info(){
 
         return view('tests.create_test_info');
@@ -32,21 +33,65 @@ class TestsController extends Controller
     public function create_new_test_info(Request $request){
 
         $test_info_id = DB::table('tests_info')->insertGetId([
-            'name' => $request->name,
-            'description' => $request->description,
+            // Общее
+            'name'                      => $request->name,
+            'description'               => $request->description,
+            // Выбор времени
+            'start_date_time'           => $request->start_date_time,
+            'end_date_time'             => $request->end_date_time,
+            'time_limit'                => $request->time_limit,
+            'when_time_is_up'           => $request->when_time_is_up,
+            // Оценка
+            'passing_score'             => $request->passing_score,
+            'available_attempts'        => $request->available_attempts,
+            'assessment_method'         => $request->assessment_method,
+            // Макет
+            'new_page'                  => $request->new_page,
+            'transition_method'         => $request->transition_method,
+            // Поведение вопросов
+            'random_answers_order'      => $request->random_answers_order,
+            'getting_result'            => $request->getting_result,
+            // Параметры просмотра
+            'view_options'              => $request->view_options,
+            // Вид
+            'photo_and_student_name'    => $request->photo_and_student_name,
+            // Разширенный ответ
+            'extended_feedback'          => $request->extended_feedback,
+            // Общие настройки модуля
+            'availability'              => $request->availability,
+            'operating_mode'            => $request->operating_mode,
+
+        ]);
+        // Создаем тест и редиректим на добавление вопроса
+        return \Redirect::route('new_test_question', $test_info_id)->with('message', 'State saved correctly!!!');
+    }
+
+    public function new_test_question($test_info_id){
+
+        // Создаем "болванку" вопроса для теста .
+        // $new_question_id = DB::table('tests_questions')->insertGetId([]);
+
+        return view('tests.create_test_questions', compact('test_info_id'));
+    }
+
+    public function create_new_test_question($test_info_id, Request $request){
+
+        $q_data = "";
+        $a_data = "";
+
+        $question_info_json = json_encode($q_data);
+        $answers_json       = json_encode($a_data);
+
+        DB::table('tests_questions')->insert([
+            'test_id'               => $test_info_id,
+            'question_type'         => $request->question_type,
+            'question_info_json'    => $question_info_json,
+            'answers_json'          => $answers_json
         ]);
 
-        //dd($test_info_id);
-
-        //return redirect('new_test_info_questions'); //->with('message_success', 'Описание теста успешно создано!');
-        return \Redirect::route('new_test_questions', $test_info_id)->with('message', 'State saved correctly!!!');
+        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
     }
-
-    public function new_test_questions($test_info_id){
-
-        return view('tests.create_test_questions');
-    }
-    // Конец создания новых тестов
+    // -----------------Конец создания новых тестов-------------------------
 
 
 

@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header">{{ __('Добавление вопроса к тесту') }}</div>
+                <div class="card-header">{{ __('Добавление вопроса к тесту') }} </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -26,7 +26,7 @@
                         </div>
                     @endif
 
-                    <form action="" id="test_form" method="POST" >
+                    <form action="{{ route('create_new_test_question',['test_info_id' => $test_info_id]) }}" id="test_form" method="POST" >
                         @csrf
                         <div class="form-group">
                             <label>Выбор типа теста</label>
@@ -37,14 +37,20 @@
                                 <option>Тип 4</option>
                             </select>
                         </div>
-                        
+                         
                         <hr>
                         <br>
-                        <button type="submit" class="btn btn-success">Добавить вопрос</button>
-                        <button type="submit" class="btn btn-warning">Добавить ответ</button>
-                        <button type="submit" class="btn btn-danger">Удалить вопрос</button>
+                        <button type="submit" class="btn btn-warning">Сохранить вопрос</button>
                     </form>
-                    
+
+                        <a href="">
+                            <button type="submit" class="btn btn-success">Добавить ответ</button>
+                        </a>
+
+                        <a href="{{ route('tests_controll') }}">
+                            <button type="submit" class="btn btn-danger">Удалить вопрос</button>
+                        </a>
+
                         <a href="{{ route('tests_controll') }}">
                             <button class="btn btn-danger">Назад</button>
                         </a>
