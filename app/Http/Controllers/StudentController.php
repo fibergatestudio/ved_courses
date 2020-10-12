@@ -39,7 +39,7 @@ class StudentController extends Controller
             $data = getimagesize($request->photo);
             if (!array_key_exists($data[2], $types))
             {
-                return redirect()->back()->with('message_error', 'Неприпустимий тип файлу. Припустимо завантажувати тільки зображення: *.gif, *.png, *.jpg ---'.$data[2]);
+                return redirect()->back()->with('message_error', 'Неприпустимий тип файлу. Припустимо завантажувати тільки зображення: *.gif, *.png, *.jpg');
             }
             $filesize = filesize($request->photo);
             if ($filesize > 1000000)
