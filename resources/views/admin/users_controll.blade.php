@@ -46,9 +46,11 @@
                                     <a href="{{ route('user_edit', ['user_id' => $user->id]) }}">
                                         <button class="btn btn-success">Изменить</button>
                                     </a>
+                                @if($user->role != 'admin')
                                     <a href="{{ route('user_delete', ['user_id' => $user->id]) }}">
                                         <button class="btn btn-danger">Удалить</button>
                                     </a>
+                                @endif
                                 </td>
                             </tr>
                             @endforeach

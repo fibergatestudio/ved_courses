@@ -42,14 +42,13 @@ class AdminController extends Controller
         //dd($all_info);
 
         $user_info_checker = DB::table('users')->where('id', $user_id)->first();
-
-        if($user_info_checker->email != $request->email){
-            DB::table('users')->update([
+        //dd($user_info_checker);
+        //if($user_info_checker->email != $request->email){
+            DB::table('users')->where('id', $user_id)->update([
                 'name' => $request->name,
                 'email' => $request->email,
-                'role' => $request->role
             ]);
-        }
+        //}
         
         // Если пользователь студент - обновить
         if($request->role == "student"){

@@ -40,7 +40,7 @@ class TestsController extends Controller
             'start_date_time'           => $request->start_date_time,
             'end_date_time'             => $request->end_date_time,
             'time_limit'                => $request->time_limit,
-            'when_time_is_up'           => $request->when_time_is_up,
+            'when_time_is_up'           => $request->when_time_is_up, 
             // Оценка
             'passing_score'             => $request->passing_score,
             'available_attempts'        => $request->available_attempts,
