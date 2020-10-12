@@ -26,7 +26,7 @@
             </div>
             @if( Auth::user()->getMedia('photos')->last())
                 <style>
-                    .profile-item_photo { background-image: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb_big') }}) !important; }
+                    .profile-item_photo { background-image: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb_big') }}) !important; background-color: inherit !important;}
                 </style>
             @endif
             <div class="profile-grid_item">
