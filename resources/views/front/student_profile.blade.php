@@ -43,11 +43,11 @@
                 </div>
                 <form action="{{ route('student_descr_apply') }}" method="POST" class="profile-grid_form" id="form-profile">
                     @csrf
-                    <textarea name="profile_text" class="profile-item_text" spellcheck="false" id="profile_text2">{{ $student_full_info->descr }}</textarea>
+                    <textarea name="profile_text" class="profile-item_text" spellcheck="false" id="profile_text2" onblur="document.getElementById('form-profile').submit()">{{ $student_full_info->descr }}</textarea>
                 </form>
             </div>
         </div>
-        <a class="btn-watch--more" href="javascript: void();" onclick="document.getElementById('form-profile').submit();"><span>Редагувати</span></a>
+        <a class="btn-watch--more" href="javascript: void();" onclick="location.href='{{ route('student_information') }}'"><span>Редагувати</span></a>
 
 
 
@@ -55,13 +55,18 @@
 </section>
 
 <script>
+    @if( !empty($student_full_info->descr))
+        show_text_profile();
+    @endif
     function show_text_profile() {
         document.getElementById('profile_text1').style.display = 'none';
         document.getElementById('profile_text2').style.display = 'block';
     }
     function hide_text_profile() {
-        document.getElementById('profile_text1').style.display = 'block';
-        document.getElementById('profile_text2').style.display = 'none';
+        if (document.getElementById('profile_text2').value == '') {
+            document.getElementById('profile_text1').style.display = 'block';
+            document.getElementById('profile_text2').style.display = 'none';
+        }
     }
 </script>
 @endsection
