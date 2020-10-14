@@ -32,7 +32,8 @@ class SocialiteController extends Controller
                 return redirect()->route('register')->with('error', 'Ошибка регистрации. Повторите регистрацию.');
             }
             $user = User::where('provider_id', $userInfo->id)->first();
-            if ($user) {
+            $userWithEmail = User::where('email', $userInfo->getEmail())->first();
+            if ($user or $userWithEmail) {
                 return redirect()->route('login')->with('error', 'Пользователь с такой учетной записью уже зарегистрирован. Войдите.');
             }
             //Добавляем пользователя - поумолчанию студент
