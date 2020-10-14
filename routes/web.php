@@ -23,6 +23,17 @@ Route::get('/simulator', 'HomePageController@simulator')->name('simulator');
 Route::get('/student_courses', 'HomePageController@welcome_page')->name('welcome_page')->middleware('auth');
 Route::get('/student_ended', 'HomePageController@welcome2_page')->name('welcome2_page')->middleware('auth');
 Route::get('/student_profile', 'HomePageController@student_profile')->name('student_profile')->middleware('auth');
+Route::get('/aboute_course', 'HomePageController@aboute_course')->name('aboute_course')->middleware('auth');
+Route::get('/student_settings', 'HomePageController@student_settings')->name('student_settings')->middleware('auth');
+Route::get('/program', 'HomePageController@program')->name('program')->middleware('auth');
+Route::get('/protocol', 'HomePageController@protocol')->name('protocol')->middleware('auth');
+Route::get('/questions', 'HomePageController@questions')->name('questions')->middleware('auth');
+Route::get('/strings', 'HomePageController@strings')->name('strings')->middleware('auth');
+Route::get('/teachers', 'HomePageController@teachers')->name('teachers')->middleware('auth');
+Route::get('/test_a', 'HomePageController@test_a')->name('test_a')->middleware('auth');
+Route::get('/test_b', 'HomePageController@test_b')->name('test_b')->middleware('auth');
+Route::get('/test_c', 'HomePageController@test_c')->name('test_c')->middleware('auth');
+Route::get('/video_collection', 'HomePageController@video_collection')->name('video_collection')->middleware('auth');
 
 Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
 
