@@ -31,10 +31,10 @@
                         <div class="form-group">
                             <label>Выбор типа теста</label>
                             <select class="form-control" name="question_type">
-                                <option>Тип 1</option>
-                                <option>Тип 2</option>
-                                <option>Тип 3</option>
-                                <option>Тип 4</option>
+                                <option>Множественный выбор</option>
+                                <option>Верно\Не верно</option>
+                                <option>Краткий ответ</option>
+                                <option>Перетаскивание в тексте</option>
                             </select>
                         </div>
                          
@@ -42,6 +42,19 @@
                         <br>
                         <button type="submit" class="btn btn-warning">Сохранить вопрос</button>
                     </form>
+
+                    <!-- Множественный выбор -->
+                        <div class="form-group">
+                            <label>Название вопроса</label>
+                            <input type="text" class="form-control" name="question_name">
+                        </div>
+                        <div class="form-group">
+                            <label>Текст вопроса</label>
+                            <textarea id="question_text">Введите текст вопроса</textarea>
+                        </div>
+                    <!-- Верно\Не верно -->
+                    <!-- Краткий ответ -->
+                    <!-- Перетаскивание в тексте -->
 
                         <a href="">
                             <button type="submit" class="btn btn-success">Добавить ответ</button>
@@ -63,6 +76,12 @@
 @section('scripts')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script type="text/javascript">
+  tinymce.init({
+    selector: '#question_text'
+  });
+</script>
 
 @endsection
 
