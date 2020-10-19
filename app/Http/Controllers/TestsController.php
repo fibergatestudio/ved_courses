@@ -11,11 +11,11 @@ class TestsController extends Controller
 {
     public function index(){
 
-        $tests = DB::table('tests')->get();
+        $tests_info = DB::table('tests_info')->get();
         $simple_tests = DB::table('simple_tests')->get();
-        $test_info = DB::table('tests_info')->get();
+        //$test_info = DB::table('tests_info')->get();
 
-        return view('tests.index', compact('tests','simple_tests', 'test_info') );
+        return view('tests.index', compact('tests_info','simple_tests') );
     }
 
     public function new_test(){
@@ -73,6 +73,7 @@ class TestsController extends Controller
 
     public function create_new_test_question($test_info_id, Request $request){
 
+        dd($request->all());
         // Формирование Инфы для джсона
         $q_data = "";
         $a_data = "";
