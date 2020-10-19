@@ -8,6 +8,7 @@
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
+        <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
         <!-- Styles -->
         <style>
@@ -79,8 +80,25 @@
                 </div>
             @endif
 
-            <div class="content">
-                <div class="title m-b-md">
+                <div class="content">
+                <h3>Курсы</h3>
+
+                <div class="card-columns">
+                @if($courses == '[]')
+                    Курсы отсутствуют
+                @endif
+                @foreach($courses as $course)
+                    <a href="{{ url('view_course', ['course_id' => $course->id] ) }}">
+                        <div class="card bg">
+                            <div class="card-body text-center">
+                            <p class="card-text"><h4>{{ $course->name }}</h4></p>
+                            </div>
+                        </div>
+                    </a>
+                @endforeach
+
+                </div>
+                <!-- <div class="title m-b-md">
                     Laravel
                 </div>
 
@@ -93,7 +111,7 @@
                     <a href="https://forge.laravel.com">Forge</a>
                     <a href="https://vapor.laravel.com">Vapor</a>
                     <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+                </div> -->
             </div>
         </div>
     </body>

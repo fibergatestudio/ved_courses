@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -50,7 +51,9 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
+            'surname' => ['required', 'string', 'max:255'],
             'name' => ['required', 'string', 'max:255'],
+            'patronymic' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:8', 'confirmed'],
         ]);
@@ -64,10 +67,46 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
-        ]);
+        //dd($data);
+
+        // Если пользователь - студент
+        if($data['role'] == "student"){
+
+            //Добавляем пользователя
+            $user = User::create([
+                'surname' => $data['surname'],
+                'name' => $data['name'],
+                'patronymic' => $data['patronymic'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => $data['role'],
+                'status' => 'unconfirmed'
+            ]);
+
+            // Создаем для него запись в стундентах
+            DB::table('students')->insert(
+                ['user_id' => $user->id,'status' => 'confirmed',]
+            );
+        // Если пользователь - учитель
+        } else if ($data['role'] == "teacher"){
+
+            //Добавляем пользователя
+            $user = User::create([
+                'surname' => $data['surname'],
+                'name' => $data['name'],
+                'patronymic' => $data['patronymic'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password']),
+                'role' => 'teacher',
+                'status' => 'unconfirmed',
+            ]);
+            // Создаем для него запись в учителях
+            DB::table('teachers')->insert(
+                ['user_id' => $user->id,
+                'status' => 'unconfirmed',]
+            );
+        }
+
+        return $user;
     }
 }
