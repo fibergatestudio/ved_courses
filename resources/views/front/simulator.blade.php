@@ -14,12 +14,21 @@
         <div class="direction-separator_badge"><span>Симулятор слідчих дій</span></div>
     </div>
     <div class="container">
-        <a class="breadcrumbs" href="#">Головна сторінка / Симулятор слідчих дій</a>
+        <!--<a class="breadcrumbs" href="#">Головна сторінка / Симулятор слідчих дій</a>-->
+        <ul class="breadcrumbs_list">
+            <li class="breadcrumbs_item">
+                <a href="http://ved.com.ua/" class="breadcrumbs_link">Головна</a>
+            </li>
+            <li class="breadcrumbs_item">
+                <a href="" class="breadcrumbs_link breadcrumbs_active">Симулятор слідчих дій</a>
+            </li>
+        </ul>
+        
         <div class="direction-wrapper">
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_4.jpg') }}" alt="img">
-                    <a class="image-btn" href="##">
+                    <a class="image-btn" href="{{ route('aboute_course') }}">
                         <span>Підкатегорії</span>
                         <div class="image-btn_arrow"></div>
                     </a>
@@ -39,7 +48,7 @@
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_5.jpg') }}" alt="img">
-                    <a class="image-btn" href="##">
+                    <a class="image-btn" href="{{ route('aboute_course') }}">
                         <span>Підкатегорії</span>
                         <div class="image-btn_arrow"></div>
                     </a>
@@ -59,7 +68,7 @@
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_3.jpg') }}" alt="img">
-                    <a class="image-btn" href="##">
+                    <a class="image-btn" href="{{ route('aboute_course') }}">
                         <span>Підкатегорії</span>
                         <div class="image-btn_arrow"></div>
                     </a>
