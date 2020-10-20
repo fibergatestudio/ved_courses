@@ -33,7 +33,7 @@ class CreateTestsInfoTable extends Migration
             // Поведение вопросов
             $table->string('random_answers_order')->nullable();
             $table->string('getting_result')->nullable();
-            // Параметры просмотра
+            // Параметры просмотра 
             $table->json('view_options')->nullable();
             // Вид
             $table->string('photo_and_student_name')->nullable();

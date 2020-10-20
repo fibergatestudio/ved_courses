@@ -28,7 +28,7 @@
                         </div>
                     @endif
 
-                    <table class="table table-bordered data-table">
+                    <table class="table table-bordered data-table"> 
                         <thead>
                             <tr>
                                 <th>#</th>

@@ -16,7 +16,7 @@ class CreateTestsTrueFalseTable extends Migration
         Schema::create('tests_true_false', function (Blueprint $table) {
             $table->id();
             // Основная информация вопроса
-            $table->string('question_name')->nullable();
+            $table->string('question_name')->nullable(); 
             $table->string('question_text')->nullable();
             $table->string('default_score')->nullable();
             $table->string('test_comment')->nullable();

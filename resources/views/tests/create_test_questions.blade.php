@@ -67,7 +67,7 @@
                         </div>
                         <div class="form-group">
                             <label>Нумеровать ответы?</label>
-                            <select class="form-control" name="number_answers">
+                            <select class="form-control" name="number_answers"> 
                                 <option value="Без нумерации">Без нумерации</option>
                                 <option value="a, b, c">a, b, c, ...</option>
                                 <option value="A, B, C">A, B, C, ...</option>

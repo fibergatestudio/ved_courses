@@ -19,7 +19,7 @@ class CreateTestsQuestionsTable extends Migration
             $table->string('test_id')->nullable();
             // Тип вопроса
             $table->string('question_type')->nullable();
-            // Таблица - вопросов
+            // Таблица - вопросов 
             $table->string('test_answers_id')->nullable();
             //$table->json('question_info_json')->nullable();
             // Ответ(Ы)

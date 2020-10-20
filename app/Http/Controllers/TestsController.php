@@ -73,21 +73,129 @@ class TestsController extends Controller
 
     public function create_new_test_question($test_info_id, Request $request){
 
-        dd($request->all());
-        // Формирование Инфы для джсона
-        $q_data = "";
-        $a_data = "";
+        //dd($request->all());
 
-        // Енкод инфы
-        $question_info_json = json_encode($q_data);
-        $answers_json       = json_encode($a_data);
+        // Если тип вопроса "множественный выбор"
+        if($request->question_type == 'Множественный выбор'){
 
-        DB::table('tests_questions')->insert([
-            'test_id'               => $test_info_id,
-            'question_type'         => $request->question_type,
-            'question_info_json'    => $question_info_json,
-            'answers_json'          => $answers_json
-        ]);
+            // Формирование Инфы для джсона
+            $a_data = "";
+
+            // Енкод инфы
+            $answers_json = json_encode($a_data);
+
+            // Добавляем вопроса в базу
+            $insrt_id = DB::table('tests_multiple_choice')->insertGetId([
+                'question_name'         => $request->question_name,
+                'question_text'         => $request->question_text,
+                'default_score'         => $request->default_score,
+                'test_comment'          => $request->test_comment,
+                'answers_type'          => $request->answers_type,
+                'number_answers'        => $request->number_answers,
+                'answers_json'          => $answers_json,
+            ]);
+
+            // Добавляем таблицу вопроса
+            DB::table('tests_questions')->insert([
+                'test_id'               => $test_info_id,
+                'question_type'         => $request->question_type,
+                'test_answers_id'       => $insrt_id,
+            ]);
+
+        } 
+        
+        if($request->question_type == 'Верно\Не верно') {
+            // Формирование Инфы для джсона
+            $a_data = "";
+
+            // Енкод инфы
+            $answers_json = json_encode($a_data);
+
+            // Добавляем вопроса в базу
+            $insrt_id = DB::table('tests_true_false')->insertGetId([
+                'question_name'         => $request->question_name,
+                'question_text'         => $request->question_text,
+                'default_score'         => $request->default_score,
+                'test_comment'          => $request->test_comment,
+                'right_answer'          => $request->right_answer,
+                'right_answer_comment'  => $request->right_answer_comment,
+                'wrong_answer_comment'  => $request->wrong_answer_comment
+            ]);
+
+            // Добавляем таблицу вопроса
+            DB::table('tests_questions')->insert([
+                'test_id'               => $test_info_id,
+                'question_type'         => $request->question_type,
+                'test_answers_id'       => $insrt_id,
+            ]);
+        }
+                
+        if($request->question_type == 'Краткий ответ') {
+            // Формирование Инфы для джсона
+            $a_data = "";
+
+            // Енкод инфы
+            $answers_json = json_encode($a_data);
+
+            // Добавляем вопроса в базу
+            $insrt_id = DB::table('tests_short_answer')->insertGetId([
+                'question_name'         => $request->question_name,
+                'question_text'         => $request->question_text,
+                'default_score'         => $request->default_score,
+                'test_comment'          => $request->test_comment,
+                //'answers_type'          => $request->answers_type,
+                //'number_answers'        => $request->number_answers,
+                //'answers_json'          => $answers_json,
+            ]);
+
+            // Добавляем таблицу вопроса
+            DB::table('tests_questions')->insert([
+                'test_id'               => $test_info_id,
+                'question_type'         => $request->question_type,
+                'test_answers_id'       => $insrt_id,
+            ]);
+        }
+                
+        if($request->question_type == 'Перетаскивание в тексте') {
+            // Формирование Инфы для джсона
+            $a_data = "";
+
+            // Енкод инфы
+            $answers_json = json_encode($a_data);
+
+            // Добавляем вопроса в базу
+            $insrt_id = DB::table('tests_drag_drop')->insertGetId([
+                'question_name'         => $request->question_name,
+                'question_text'         => $request->question_text,
+                'default_score'         => $request->default_score,
+                'test_comment'          => $request->test_comment,
+                //'answers_type'          => $request->answers_type,
+                //'number_answers'        => $request->number_answers,
+                //'answers_json'          => $answers_json,
+            ]);
+
+            // Добавляем таблицу вопроса
+            DB::table('tests_questions')->insert([
+                'test_id'               => $test_info_id,
+                'question_type'         => $request->question_type,
+                'test_answers_id'       => $insrt_id,
+            ]);
+        }
+
+        // // Формирование Инфы для джсона
+        // $q_data = "";
+        // $a_data = "";
+
+        // // Енкод инфы
+        // $question_info_json = json_encode($q_data);
+        // $answers_json       = json_encode($a_data);
+
+        // DB::table('tests_questions')->insert([
+        //     'test_id'               => $test_info_id,
+        //     'question_type'         => $request->question_type,
+        //     'question_info_json'    => $question_info_json,
+        //     'answers_json'          => $answers_json
+        // ]);
 
         return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
     }
@@ -98,6 +206,28 @@ class TestsController extends Controller
         // Получаем информацию о тесте.
         $test_view_info = DB::table('tests_info')->where('id', $test_info_id)->first();
         $test_question_answers = DB::table('tests_questions')->where('test_id', $test_info_id)->get();
+
+        // Подтяжка вопросов\ответов
+        foreach($test_question_answers as $t_quest){
+            // Если тип вопроса множественнный выбор
+            if($t_quest->question_type == "Множественный выбор"){
+                $answer_info = DB::table('tests_multiple_choice')->where('id', $t_quest->test_answers_id)->first();
+                $t_quest->question_name = $answer_info->question_name;
+            }
+            if($t_quest->question_type == "Верно\Не верно"){
+                $answer_info = DB::table('tests_true_false')->where('id', $t_quest->test_answers_id)->first();
+                $t_quest->question_name = $answer_info->question_name;
+            }
+            if($t_quest->question_type == "Краткий ответ"){
+                $answer_info = DB::table('tests_short_answer')->where('id', $t_quest->test_answers_id)->first();
+                $t_quest->question_name = $answer_info->question_name;
+            }
+            if($t_quest->question_type == "Перетаскивание в тексте"){
+                $answer_info = DB::table('tests_drag_drop')->where('id', $t_quest->test_answers_id)->first();
+                $t_quest->question_name = $answer_info->question_name;
+            }
+
+        }
 
         return view('tests.view_test_info_questions', compact('test_info_id', 'test_view_info', 'test_question_answers'));
     }

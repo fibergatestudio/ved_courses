@@ -18,7 +18,7 @@ class CreateTestsMultipleChoiceTable extends Migration
             $table->id();
             // Основная информация вопроса
             $table->string('question_name')->nullable();
-            $table->string('question_text')->nullable();
+            $table->string('question_text')->nullable(); 
             $table->string('default_score')->nullable();
             $table->string('test_comment')->nullable();
             $table->string('answers_type')->nullable();
