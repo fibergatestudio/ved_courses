@@ -38,7 +38,7 @@ class CreateTestsInfoTable extends Migration
             // Вид
             $table->string('photo_and_student_name')->nullable();
             // Разширенный ответ
-            $table->json('extended_feedback')->nullable();
+            $table->string('extended_feedback')->nullable();
             // Общие настройки модуля
             $table->string('availability')->nullable();
             $table->string('operating_mode')->nullable();
