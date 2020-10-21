@@ -100,13 +100,31 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-3">
-                                    One of three columns
+                                        <label>После попытки</label>
+                                        <div> <input type="checkbox" name="1_attempt"><label>Попытка</label> </div>
+                                        <div> <input type="checkbox" name="1_right"><label>Правильный ли ответ</label> </div>
+                                        <div> <input type="checkbox" name="1_score"><label>Баллы</label> </div>
+                                        <div> <input type="checkbox" name="1_overall_comment" checked> <label>Коментарий ко всему тесту</label> </div>
+                                        <div> <input type="checkbox" name="1_right_answer" checked> <label>Правильный ответ</label> </div>
+                                        <div> <input type="checkbox" name="1_overall_review"><label>Общий отзыв</label></div>
                                     </div>
                                     <div class="col-md-3">
-                                    One of three columns
+                                        <label>Позже, пока тест еще открытый</label>
+                                        <div> <input type="checkbox" name="2_attempt"><label>Попытка</label> </div>
+                                        <div> <input type="checkbox" name="2_right"><label>Правильный ли ответ</label> </div>
+                                        <div> <input type="checkbox" name="2_score"><label>Баллы</label> </div>
+                                        <div> <input type="checkbox" name="2_overall_comment" checked> <label>Коментарий ко всему тесту</label> </div>
+                                        <div> <input type="checkbox" name="2_right_answer" checked> <label>Правильный ответ</label> </div>
+                                        <div> <input type="checkbox" name="2_overall_review"><label>Общий отзыв</label></div>
                                     </div>
                                     <div class="col-md-3">
-                                    One of three columns
+                                        <label>После закрытия теста</label>
+                                        <div> <input type="checkbox" name="3_attempt" checked><label>Попытка</label> </div>
+                                        <div> <input type="checkbox" name="3_right"><label>Правильный ли ответ</label> </div>
+                                        <div> <input type="checkbox" name="3_score" checked><label>Баллы</label> </div>
+                                        <div> <input type="checkbox" name="3_overall_comment" checked> <label>Коментарий ко всему тесту</label> </div>
+                                        <div> <input type="checkbox" name="3_right_answer"> <label>Правильный ответ</label> </div>
+                                        <div> <input type="checkbox" name="3_overall_review" checked><label>Общий отзыв</label></div>
                                     </div>
                                 </div>
                             </div>
@@ -115,8 +133,9 @@
                         <div class="form-group">
                             <label>Фото и имя студента</label>
                             <select class="form-control" name="photo_and_student_name">
-                                <option>Выберите</option>
-                                <option>-</option>
+                                <option>Без картинки</option>
+                                <option>Маленькая картинка</option>
+                                <option>Большая картинка</option>
                             </select>
                         </div>
                         <hr>

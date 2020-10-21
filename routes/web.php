@@ -131,8 +131,26 @@ Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/courses_controll', 'CoursesController@index')->name('courses_controll')->middleware('can:admin_rights');
         // Создание Курса
         Route::get('/courses_controll/new_course', 'CoursesController@new_course')->name('new_course')->middleware('can:admin_rights');
-        // Создание Курса POST
-        Route::post('/courses_controll/new_course/create', 'CoursesController@create_course')->name('create_course')->middleware('can:admin_rights');
+            // Создание Курса POST
+            Route::post('/courses_controll/new_course/create', 'CoursesController@create_course')->name('create_course')->middleware('can:admin_rights');
+        // Редактирование курса
+        Route::get('/courses_controll/edit_course/{course_id}', 'CoursesController@edit_course')->name('edit_course')->middleware('can:admin_rights');
+            // Редактирование курса POST
+            Route::post('/courses_controll/edit_course/{course_id}/apply', 'CoursesController@edit_course_apply')->name('edit_course_apply')->middleware('can:admin_rights');
+
+            //--todo // Редактировать "Про Этот Курс"
+            Route::get('/courses_controll/edit_course/{course_id}/edit_about', 'CoursesController@edit_about')->name('edit_about')->middleware('can:admin_rights');
+                //--todo // Примернить редактирование
+                Route::post('/courses_controll/edit_course/{course_id}/edit_about/apply', 'CoursesController@edit_about_apply')->name('edit_about_apply')->middleware('can:admin_rights');
+            //--todo// Добавить Занятие
+            Route::get('/courses_controll/edit_course/{course_id}/add_lesson', 'CoursesController@add_lesson')->name('add_lesson')->middleware('can:admin_rights');
+                //--todo// Добавить Занятие POST
+                Route::post('/courses_controll/edit_course/{course_id}/add_lesson/apply', 'CoursesController@add_lesson_apply')->name('add_lesson_apply')->middleware('can:admin_rights');
+            //--todo// Добавить Вопрос
+            Route::get('/courses_controll/edit_course/{course_id}/add_question', 'CoursesController@add_question')->name('add_question')->middleware('can:admin_rights');
+                //--todo// Добавить Вопрос POST
+                Route::post('/courses_controll/edit_course/{course_id}/add_question/apply', 'CoursesController@add_question_apply')->name('add_question_apply')->middleware('can:admin_rights');
+
 
 //////////
 

@@ -38,6 +38,7 @@
                             <textarea type="text" class="form-control" name="description" value=""></textarea>
                         </div>
                         <br>
+
                         <button type="submit" class="btn btn-success">Создать</button>
                     </form>
                         <a href="{{ route('courses_controll') }}">

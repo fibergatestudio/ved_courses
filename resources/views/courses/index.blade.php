@@ -48,7 +48,7 @@
                                 <td></td>
                                 <td>{{ $course->creator_id }} {{ $course->creator_name }}</td>
                                 <td>
-                                    <a href="">
+                                    <a href="{{ route('edit_course', ['course_id' => $course->id ]) }}">
                                         <button class="btn btn-success">Изменить</button>
                                     </a>
                                     <a href="">
