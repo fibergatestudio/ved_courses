@@ -17,7 +17,7 @@
         </div>
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header">{{ __('Добавление вопроса к тесту') }} </div>
+                <div class="card-header">{{ __('Добавление вопроса "Перетаскивае в тексте" к тесту') }} </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -26,25 +26,12 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('create_new_test_question',['test_info_id' => $test_info_id]) }}" id="test_form" method="POST" >
+                    <form action="{{ route('create_drag_drop',['test_info_id' => $test_info_id]) }}" id="test_form" method="POST" >
                         @csrf
-                        <div class="form-group">
-                            <label>Выбор типа теста</label>
-                            <select class="form-control" name="question_type">
-                                <option value="Множественный выбор">Множественный выбор</option>
-                                <option value="Верно\Не верно">Верно\Не верно</option>
-                                <option value="Краткий ответ">Краткий ответ</option>
-                                <option value="Перетаскивание в тексте">Перетаскивание в тексте</option>
-                            </select>
-                        </div>
-                         
-                        <hr>
-                        <br>
-
                     <!-- Множественный выбор -->
                         <div class="form-group">
                             <label>Название вопроса</label>
-                            <input type="text" class="form-control" name="question_name">
+                            <input type="text" class="form-control" name="question_name" required>
                         </div>
                         <div class="form-group">
                             <label>Текст вопроса</label>

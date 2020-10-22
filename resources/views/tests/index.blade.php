@@ -55,7 +55,7 @@
                                     <a href="{{ route('view_test_info_questions', ['test_info_id' => $test->id ]) }}">
                                         <button class="btn btn-success">Просмотреть</button>
                                     </a>
-                                    <a href="">
+                                    <a href="{{ route('delete_test', ['test_info_id'=>$test->id ] )}}">
                                         <button class="btn btn-danger">Удалить</button>
                                     </a>
                                 </td>

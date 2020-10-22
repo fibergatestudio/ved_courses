@@ -57,13 +57,15 @@
                             <input type="number" class="form-control" name="passing_score" value="">
                             <label>Разршено попыток</label>
                             <select class="form-control" name="available_attempts">
-                                <option>Выберите</option>
+                                <option>Одна попытка</option>
                                 <option>-</option>
                             </select>
                             <label>Метод оценивания</label>
                             <select class="form-control" name="assessment_method">
-                                <option>Выберите</option>
-                                <option>-</option>
+                                <option>Лучшая оценка</option>
+                                <option>Средняя оценка</option>
+                                <option>Первая попытка</option>
+                                <option>ПОследняя попытка</option>
                             </select>
                         </div>
                         <hr> 
@@ -71,13 +73,13 @@
                         <div class="form-group">
                             <label>Новая страница</label>
                             <select class="form-control" name="new_page">
-                                <option>Выберите</option>
+                                <option>Каждый вопрос</option>
                                 <option>-</option>
                             </select>
                             <label>Метод перехода</label>
                             <select class="form-control" name="transition_method">
-                                <option>Выберите</option>
-                                <option>-</option>
+                                <option>Свободный</option>
+                                <option>Последовательный</option>
                             </select>
                         </div>
 
@@ -85,13 +87,20 @@
                         <div class="form-group">
                             <label>Случайный порядок ответов</label>
                             <select class="form-control" name="random_answers_order">
-                                <option>Выберите</option>
+                                <option>Да</option>
                                 <option>-</option>
                             </select>
                             <label>Получение результата</label>
                             <select class="form-control" name="getting_result">
-                                <option>Выберите</option>
-                                <option>-</option>
+                                <option>После отправки всего теста</option>
+                                <option>Интерактивный за несколько попыток</option>
+                                <option>Адаптивный режим</option>
+                                <option>Адаптивный режим(Без штрафных балов)</option>
+                                <option>Сразу после ответа</option>
+                                <option>Сразу после ответа с пометкой студента уверенности</option>
+                                <option>После отправки всего теста</option>
+                                <option>После отправки всего теста с пометкой студента уверенности</option>
+                                <option>Ручная оценка</option>
                             </select>
                         </div>
                         <hr>

@@ -163,14 +163,40 @@ Route::get('/home', 'HomeController@index')->name('home');
             // Создание Теста POST
             Route::post('/tests_controll/new_test_info/create', 'TestsController@create_new_test_info')->name('create_new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
-        // Добавление вопроса(Страница)
-        Route::get('/tests_controll/new_test_info/{test_info_id}/add_question', 'TestsController@new_test_question')->name('new_test_question')->middleware(['can:admin_rights' || 'can:teacher_rights']);
-            // Сохранить вопрос (POST)
-            Route::post('/tests_controll/new_test_info/{test_info_id}/add_questions/create', 'TestsController@create_new_test_question')->name('create_new_test_question')->middleware(['can:admin_rights' || 'can:teacher_rights']);
-            // Добавить ответ (Через код во вьюхе)
-            // -- //
-            // Удалить вопрос (При редактировании вопроса)
-            // -- //
+            // Удаление Теста 
+            Route::get('/tests_controll/new_test_info/{test_info_id}/delete', 'TestsController@delete_test')->name('delete_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+        // Выбор типа вопроса
+        Route::get('/tests_controll/new_test_info/{test_info_id}/question_type', 'TestsController@question_type')->name('question_type')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+            // Выбор типа вопроса POST
+            Route::post('/tests_controll/new_test_info/{test_info_id}/question_type_submit', 'TestsController@question_type_submit')->name('question_type_submit')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+            //----- Типы вопросов -----//
+            // Добавление вопроса "Множественный выбор" (Страница)
+            Route::get('/tests_controll/new_test_info/{test_info_id}/multiple_choice', 'TestsController@multiple_choice')->name('multiple_choice')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+                // Сохранить вопрос "Множественный выбор" (POST)
+                Route::post('/tests_controll/new_test_info/{test_info_id}/multiple_choice/create', 'TestsController@create_multiple_choice')->name('create_multiple_choice')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+            // Добавление вопроса "Верно\Не верно" (Страница)
+            Route::get('/tests_controll/new_test_info/{test_info_id}/true_false', 'TestsController@true_false')->name('true_false')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+                // Сохранить вопрос "Верно\Не верно" (POST)
+                Route::post('/tests_controll/new_test_info/{test_info_id}/true_false/create', 'TestsController@create_true_false')->name('create_true_false')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+            // Добавление вопроса "Краткий ответ" (Страница)
+            Route::get('/tests_controll/new_test_info/{test_info_id}/short_answer', 'TestsController@short_answer')->name('short_answer')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+                // Сохранить вопрос "Краткий ответ" (POST)
+                Route::post('/tests_controll/new_test_info/{test_info_id}/short_answer/create', 'TestsController@create_short_answer')->name('create_short_answer')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+            // Добавление вопроса "Перетаскивание в тексте" (Страница)
+            Route::get('/tests_controll/new_test_info/{test_info_id}/drag_drop', 'TestsController@drag_drop')->name('drag_drop')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+                // Сохранить вопрос "Перетаскивание в тексте" (POST)
+                Route::post('/tests_controll/new_test_info/{test_info_id}/drag_drop/create', 'TestsController@create_drag_drop')->name('create_drag_drop')->middleware(['can:admin_rights' || 'can:teacher_rights']);
+
+            //----- Типы вопросов -----//
+
+
+        
+
         // Просмотра теста и вопросов\ответов
         Route::get('/tests_controll/new_test_info/{test_info_id}/view', 'TestsController@view_test_info_questions')->name('view_test_info_questions')->middleware(['can:admin_rights' || 'can:teacher_rights']);
     //

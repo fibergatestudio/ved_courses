@@ -67,7 +67,7 @@
                         </div>
                         
                     </form>
-                        <a href="{{ route('new_test_question',['test_info_id'=>$test_info_id]) }}">
+                        <a href="{{ route('question_type',['test_info_id'=>$test_info_id]) }}">
                             <button class="btn btn-success">Добавить вопрос</button>
                         </a>
                         <a href="{{ route('tests_controll') }}">
