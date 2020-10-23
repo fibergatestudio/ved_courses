@@ -14,8 +14,16 @@
         <div class="direction-separator_badge"><span>Назва розділу підрозділу</span></div>
     </div>
     <div class="container">
-        <a class="breadcrumbs" href="#">Головна сторінка / Курс назва</a>
 
+        <!--<a class="breadcrumbs" href="#">Головна сторінка / Курс назва</a> -->
+        <ul class="breadcrumbs_list">
+            <li class="breadcrumbs_item">
+                <a href="http://ved.com.ua/" class="breadcrumbs_link">Головна</a>
+            </li>
+            <li class="breadcrumbs_item">
+                <a href="" class="breadcrumbs_link breadcrumbs_active">Назва курсу</a>
+            </li>
+        </ul>
 
 
         <div class="main-menu">
