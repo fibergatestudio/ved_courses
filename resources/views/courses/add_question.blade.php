@@ -28,6 +28,15 @@
 
                     <form action="{{ route('add_question_apply', ['course_id' => $course_info->id ]) }}" id="test_form" method="POST" >
                         @csrf
+                        <div class="form-group">
+                            <label>Вопрос</label>
+                            <input type="text" class="form-control" name="course_question" value="">
+                        </div>
+
+                        <div class="form-group">
+                            <label>Ответ</label>
+                            <textarea id="question_text" class="question_text" name="course_answer"></textarea>
+                        </div>
 
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
@@ -42,6 +51,14 @@
 </div>
 
 @section('scripts')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script type="text/javascript">
+  tinymce.init({
+    selector: '.question_text'
+  });
+</script>
 
 @endsection
 

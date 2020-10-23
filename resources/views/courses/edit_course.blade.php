@@ -22,7 +22,7 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
+                            {{ session('status') }} 
                         </div>
                     @endif
 
@@ -41,18 +41,40 @@
 
                         <div class="form-group">
                             <label>Про этот курс</label>
-                            <a href="{{ route('edit_about', ['course_id' => $course_info->id ]) }}">
-                                <input class="btn btn-success" value="Редактировать" disabled></a>
+                            <a href="{{ route('edit_about', ['course_id' => $course_info->id ]) }}" class="btn btn-success">Редактировать</a>
                         </div>
                         <div class="form-group">
                             <label>Программа курса</label>
-                            <a href="{{ route('add_lesson', ['course_id' => $course_info->id ]) }}">
-                                <input class="btn btn-success" value="Добавить" disabled></a>
+                            <a href="{{ route('add_lesson', ['course_id' => $course_info->id ]) }}" class="btn btn-success">Добавить</a>
                         </div>
                         <div class="form-group">
                             <label>Частые вопросы</label>
-                            <a href="{{ route('add_question', ['course_id' => $course_info->id ]) }}">
-                                <input class="btn btn-success" value="Добавить" disabled></a>
+                            <a href="{{ route('add_question', ['course_id' => $course_info->id ]) }}" class="btn btn-success">Добавить</a>
+                        </div>
+                        <div class="form-group">
+                            <label>Список вопросов</label>
+                            <table class="table table-bordered data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th> 
+                                        <th>Вопрос</th>
+                                        <th>Ответ</th>
+                                        <th></th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($courses_question_answers as $faq)
+                                    <tr>
+                                        <td>{{ $faq->id }}</td>
+                                        <td>{{ $faq->course_question }}</td>
+                                        <td>{{ $faq->course_answer }}</td>
+                                        <td></td>
+                                        <td></td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
 
                         <hr>
