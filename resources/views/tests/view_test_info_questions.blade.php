@@ -45,10 +45,10 @@
                             <table class="table table-bordered data-table">
                                 <thead>
                                     <tr>
-                                        <th>#</th>
+                                        <th>#</th> 
                                         <th>Тип вопроса</th>
-                                        <th>Вопросы</th>
-                                        <th>Ответы</th>
+                                        <th>Название вопроса</th>
+                                        <th></th>
                                         <th></th>
                                     </tr>
                                 </thead>
@@ -57,8 +57,8 @@
                                     <tr>
                                         <td>{{ $test->id }}</td>
                                         <td>{{ $test->question_type }}</td>
-                                        <td>{{ $test->question_info_json }}</td>
-                                        <td>{{ $test->answers_json }}</td>
+                                        <td>{{ $test->question_name }}</td>
+                                        <td></td>
                                         <td></td>
                                     </tr>
                                     @endforeach
@@ -67,7 +67,9 @@
                         </div>
                         
                     </form>
-                    
+                        <a href="{{ route('question_type',['test_info_id'=>$test_info_id]) }}">
+                            <button class="btn btn-success">Добавить вопрос</button>
+                        </a>
                         <a href="{{ route('tests_controll') }}">
                             <button class="btn btn-danger">Назад</button>
                         </a>

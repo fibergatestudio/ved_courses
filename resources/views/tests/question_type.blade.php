@@ -26,30 +26,21 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('create_new_test_question',['test_info_id' => $test_info_id]) }}" id="test_form" method="POST" >
+                    <form action="{{ route('question_type_submit',['test_info_id' => $test_info_id]) }}" id="test_form" method="POST" >
                         @csrf
                         <div class="form-group">
                             <label>Выбор типа теста</label>
                             <select class="form-control" name="question_type">
-                                <option>Тип 1</option>
-                                <option>Тип 2</option>
-                                <option>Тип 3</option>
-                                <option>Тип 4</option>
+                                <option value="Множественный выбор">Множественный выбор</option>
+                                <option value="Верно\Не верно">Верно\Не верно</option>
+                                <option value="Краткий ответ">Краткий ответ</option>
+                                <option value="Перетаскивание в тексте">Перетаскивание в тексте</option>
                             </select>
                         </div>
-                         
+                        <button type="submit" class="btn btn-success">Далее</button>
+                    </form>
                         <hr>
                         <br>
-                        <button type="submit" class="btn btn-warning">Сохранить вопрос</button>
-                    </form>
-
-                        <a href="">
-                            <button type="submit" class="btn btn-success">Добавить ответ</button>
-                        </a>
-
-                        <a href="{{ route('tests_controll') }}">
-                            <button type="submit" class="btn btn-danger">Удалить вопрос</button>
-                        </a>
 
                         <a href="{{ route('tests_controll') }}">
                             <button class="btn btn-danger">Назад</button>
@@ -63,6 +54,12 @@
 @section('scripts')
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script type="text/javascript">
+  tinymce.init({
+    selector: '.question_text'
+  });
+</script>
 
 @endsection
 

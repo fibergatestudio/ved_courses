@@ -212,7 +212,8 @@
             </div>
         </div>
     </div>
-    </div>
+    
+</div>
 
 
 <div class="container">
@@ -230,6 +231,12 @@
         </div> -->
     </div>
 </div>
+
+
+
+
+
+
 @section('scripts')
 <!-- Latest Sortable -->
 <!-- <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script> -->
