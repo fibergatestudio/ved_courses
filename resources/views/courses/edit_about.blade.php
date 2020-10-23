@@ -21,13 +21,38 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert">
+                        <div class="alert alert-success" role="alert"> 
                             {{ session('status') }}
                         </div>
                     @endif
 
                     <form action="{{ route('edit_about_apply', ['course_id' => $course_info->id ]) }}" id="test_form" method="POST" >
                         @csrf
+
+                        <div class="form-group">
+                            <label>Описание</label>
+                            <textarea id="question_text" class="question_text" name="course_description">{{ $course_i->course_description }}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Чего вы научитесь</label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Пункт 1</label>
+                            <textarea id="question_text" class="question_text" name="course_learn[]">Введите текст коментария</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Пункт 2</label>
+                            <textarea id="question_text" class="question_text" name="course_learn[]">Введите текст коментария</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Пункт 3</label>
+                            <textarea id="question_text" class="question_text" name="course_learn[]">Введите текст коментария</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>Пункт 4</label>
+                            <textarea id="question_text" class="question_text" name="course_learn[]">Введите текст коментария</textarea>
+                        </div>
 
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
@@ -42,6 +67,15 @@
 </div>
 
 @section('scripts')
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
+<script type="text/javascript">
+  tinymce.init({
+    selector: '.question_text'
+  });
+</script>
+
 
 @endsection
 

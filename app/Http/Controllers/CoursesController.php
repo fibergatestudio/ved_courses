@@ -45,7 +45,9 @@ class CoursesController extends Controller
 
         $course_info = DB::table('courses')->where('id', $course_id)->first();
 
-        return view('courses.edit_course', compact('course_info') );
+        $courses_question_answers = DB::table('courses_faq')->where('id', $course_id)->get();
+
+        return view('courses.edit_course', compact('course_info', 'courses_question_answers') );
     }
 
     public function edit_course_apply($course_id, Request $request){
@@ -63,21 +65,52 @@ class CoursesController extends Controller
 
         $course_info = DB::table('courses')->where('id', $course_id)->first();
 
-        return view('courses.edit_about', compact('course_info'));
+        $course_i = DB::table('courses_information')->where('course_id', $course_id)->first();
+
+        return view('courses.edit_about', compact('course_info', 'course_i'));
     }
     // edit_about_apply
     public function edit_about_apply($course_id, Request $request){
+
+        //dd($request->all());
+        // Делаем аррей из пунктов
+        $courses_arr = json_encode($request->course_learn, JSON_UNESCAPED_UNICODE);
+        //dd($courses_arr);
+
+        // Добавляем в базу.
+        DB::table('courses_information')->insert([
+            'course_id' => $course_id,
+            'course_description' => $request->course_description,
+            'course_learn_arr' => $courses_arr,
+        ]);
+
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
     // add_lesson
     public function add_lesson($course_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
+        $course_info = DB::table('courses')->where('id', $course_id)->first(); 
 
         return view('courses.add_lesson', compact('course_info'));
     }
     // add_lesson_apply
     public function add_lesson_apply($course_id, Request $request){
+
+        //dd($request->all());
+
+        DB::table('courses_program')->insert([
+            'course_id' => $course_id,
+            'course_description' => $request->course_description,
+            'learning_time' => $request->learning_time,
+            'course_protocol_descr' => $request->course_protocol_descr,
+            'learning_protocol_time' => $request->learning_protocol_time,
+            'add_document' => $request->add_document,
+            'video_name' =>  $request->video_name,
+            'video_length' => $request->video_length,
+            'video_file' =>  $request->video_file,
+            'test_id' => '0',
+        ]);
+        
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
     // add_question
@@ -89,6 +122,15 @@ class CoursesController extends Controller
     }
     // add_question_apply
     public function add_question_apply($course_id, Request $request){
+
+        //dd($request->all());
+
+        DB::table('courses_faq')->insert([
+            'course_id' => $course_id,
+            'course_question' => $request->course_question,
+            'course_answer' => $request->course_answer,
+        ]);
+
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
 

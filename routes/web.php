@@ -141,7 +141,7 @@ Route::get('/home', 'HomeController@index')->name('home');
             //--todo // Редактировать "Про Этот Курс"
             Route::get('/courses_controll/edit_course/{course_id}/edit_about', 'CoursesController@edit_about')->name('edit_about')->middleware('can:admin_rights');
                 //--todo // Примернить редактирование
-                Route::post('/courses_controll/edit_course/{course_id}/edit_about/apply', 'CoursesController@edit_about_apply')->name('edit_about_apply')->middleware('can:admin_rights');
+                Route::post('/courses_controll/edit_course/{course_id}/edit_about/apply', 'CoursesController@edit_about_apply')->name('edit_about_apply')->middleware('can:admin_rights'); 
             //--todo// Добавить Занятие
             Route::get('/courses_controll/edit_course/{course_id}/add_lesson', 'CoursesController@add_lesson')->name('add_lesson')->middleware('can:admin_rights');
                 //--todo// Добавить Занятие POST
