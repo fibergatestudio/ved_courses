@@ -82,6 +82,13 @@
 
                         <!--  -->
                         <br>
+                        <div class="form-group">
+                            <label>Видимость курса</label>
+                            <select type="text" class="form-control" name="visibility">
+                                <option value="all" @if($course_info->visibility == "all") selected @endif>Для всех</option>
+                                <option value="register" @if($course_info->visibility == "register") selected @endif>Только для зарегистрированных</option>
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
                     
