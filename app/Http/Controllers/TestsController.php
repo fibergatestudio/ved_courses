@@ -148,7 +148,7 @@ class TestsController extends Controller
 
     }
 
-    public function add_multiple_choice($test_info_id){
+    public function multiple_choice($test_info_id){
 
         return view('tests.create_multiple_choice', compact('test_info_id'));
     }

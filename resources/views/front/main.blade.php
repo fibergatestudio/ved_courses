@@ -95,6 +95,26 @@
             <!-- Тест вывода курсов -->
             @foreach($courses as $course)
                 @if($course->visibility == "all")
+
+                    <div class="direction-inner">
+                        <div class="direction-inner_top">
+                            <img class="direction-inner_img" src="{{ asset('img/direction_3.jpg') }}" alt="img">
+                            <a class="image-btn" href="##">
+                                <span>Підкатегорії</span>
+                                <div class="image-btn_arrow"></div>
+                            </a>
+                        </div>
+                        <div class="direction-inner_bottom">
+                            <div class="direction-inner_bottom--title">
+                                <h4> {{ $course->name }}</h4>
+                            </div>
+                            <div class="direction-inner_bottom--text">
+                                {{ $course->description }}
+                            </div>
+                        </div>
+                    </div>
+
+                @elseif($course->visibility == "register")
                     @if (Auth::check())
                     <div class="direction-inner">
                         <div class="direction-inner_top">
