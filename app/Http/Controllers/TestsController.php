@@ -102,8 +102,8 @@ class TestsController extends Controller
             'available_attempts'        => $request->available_attempts,
             'assessment_method'         => $request->assessment_method,
             // Макет
-            'new_page'                  => $request->new_page,
-            'transition_method'         => $request->transition_method,
+            //'new_page'                  => $request->new_page,
+            //'transition_method'         => $request->transition_method,
             // Поведение вопросов
             'random_answers_order'      => $request->random_answers_order,
             'getting_result'            => $request->getting_result,

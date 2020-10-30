@@ -112,6 +112,7 @@ class CoursesController extends Controller
             'video_name' =>  $request->video_name,
             'video_length' => $request->video_length,
             'video_file' =>  $request->video_file,
+            'video_link' => $request->video_link,
             'test_id' => '0',
         ]);
         

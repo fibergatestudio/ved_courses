@@ -28,7 +28,8 @@ class CreateCoursesProgramTable extends Migration
             $table->string('video_name')->nullable(); 
             $table->string('video_length')->nullable(); 
             $table->string('video_file')->nullable(); 
-            
+            $table->string('video_link')->nullable(); 
+
             // Тест
             $table->string('test_id')->nullable(); 
         
