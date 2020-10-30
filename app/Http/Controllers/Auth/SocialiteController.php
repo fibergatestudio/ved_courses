@@ -46,8 +46,9 @@ class SocialiteController extends Controller
                         'provider' => $provider,
                         'provider_id' => $userInfo->getId(),
                         'role' => 'student',
-                        'status' => 'confirmed'
+                        'status' => 'unconfirmed'
                     ]);
+                    $studen_fio = $userInfo['given_name'] . " " . $userInfo['family_name'] . " ";
                     break;
 
                 case 'facebook':
@@ -57,13 +58,15 @@ class SocialiteController extends Controller
                         'provider' => $provider,
                         'provider_id' => $userInfo->getId(),
                         'role' => 'student',
-                        'status' => 'confirmed'
+                        'status' => 'unconfirmed'
                     ]);
+                    $studen_fio = $userInfo->getName() . " ";
                     break;
             }
+
             // Создаем для него запись в стундентах
             $student_id = DB::table('students')->insertGetId(
-                ['user_id' => $user->id, 'status' => 'confirmed',]
+                ['user_id' => $user->id, 'full_name' => $studen_fio, 'status' => 'confirmed',]
             );
             return redirect()->route('login.role', ['user_id' => $user->id, 'student_id' => $student_id]);
         } else {
@@ -92,6 +95,7 @@ class SocialiteController extends Controller
             case 'teacher':
                 $user->role = 'teacher';
                 $user->status = 'unconfirmed';
+                $user->save();
                 $student = DB::table('students')->where('id', $student_id)->delete();
                 DB::table('teachers')->insert(
                     [
