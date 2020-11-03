@@ -32,9 +32,19 @@ class CoursesController extends Controller
 
         $all_info = $request->all();
 
+        //dd($request->course_image);
+        //$img_path = $request->course_image;
+
+        $filename = time().'.'.request()->course_image->getClientOriginalExtension();
+        request()->course_image->move(public_path('images'), $filename);
+
+        //$user->image=$filename;
+        //$user->save();
+
         DB::table('courses')->insert([
             'name' => $request->name,
             'description' => $request->description,
+            'course_image_path' => $filename,
             'creator_id' => Auth::user()->id,
             'visibility' => 'all',
         ]);
@@ -46,9 +56,12 @@ class CoursesController extends Controller
 
         $course_info = DB::table('courses')->where('id', $course_id)->first();
 
-        $courses_question_answers = DB::table('courses_faq')->where('id', $course_id)->get();
+        $courses_question_answers = DB::table('courses_faq')->where('course_id', $course_id)->get();
+        //dd($courses_question_answers);
 
-        return view('courses.edit_course', compact('course_info', 'courses_question_answers') );
+        $course_lessons = DB::table('courses_program')->where('id', $course_id)->get();
+
+        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons') );
     }
 
     public function edit_course_apply($course_id, Request $request){
@@ -130,11 +143,25 @@ class CoursesController extends Controller
 
         //dd($request->all());
 
-        DB::table('courses_faq')->insert([
-            'course_id' => $course_id,
-            'course_question' => $request->course_question,
-            'course_answer' => $request->course_answer,
-        ]);
+        $q_counter = $request->questions_counter;
+
+        for($i = 0; $i <= $q_counter; $i++){
+            //echo $i;
+            $c_course_question = 'course_question' . $i;
+            $c_course_answer = 'course_answer' . $i;
+            //dd($c_course_question);
+            DB::table('courses_faq')->insert([
+                'course_id' => $course_id,
+                'course_question' => $request->$c_course_question,
+                'course_answer' => $request->$c_course_answer,
+            ]);
+        }
+
+        // DB::table('courses_faq')->insert([
+        //     'course_id' => $course_id,
+        //     'course_question' => $request->course_question,
+        //     'course_answer' => $request->course_answer,
+        // ]);
 
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
