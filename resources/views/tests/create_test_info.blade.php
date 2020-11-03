@@ -70,7 +70,7 @@
                         </div>
                         <hr> 
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Новая страница</label>
                             <select class="form-control" name="new_page">
                                 <option>Каждый вопрос</option>
@@ -81,7 +81,7 @@
                                 <option>Свободный</option>
                                 <option>Последовательный</option>
                             </select>
-                        </div>
+                        </div> -->
 
                         <hr>
                         <div class="form-group">

@@ -31,7 +31,13 @@
 
                         <div class="form-group">
                             <label>Описание</label>
-                            <textarea id="question_text" class="question_text" name="course_description">{{ $course_i->course_description }}</textarea>
+                            <textarea id="question_text" class="question_text" name="course_description"> 
+
+                            @if(isset($course_i->course_description))
+                                {{ $course_i->course_description }}
+                            @endif
+                            
+                            </textarea>
                         </div>
                         <div class="form-group">
                             <label>Чего вы научитесь</label>

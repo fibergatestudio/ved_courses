@@ -20,6 +20,7 @@ class CreateCoursesTable extends Migration
             $table->string('views')->nullable();
             $table->string('finished_count')->nullable();
             $table->string('creator_id')->nullable();
+            $table->string('visibility')->nullable();
             $table->timestamps();
         });
     }

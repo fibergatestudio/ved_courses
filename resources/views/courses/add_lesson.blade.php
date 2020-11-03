@@ -71,7 +71,11 @@
                         </div>
                         <div class="form-group">
                             <label>Добавить видео</label>
-                            <input type="file" class="form-control" name="video_file" value="">
+                            <input type="file" class="form-control" name="video_file" value=""> 
+                        </div>
+                        <div class="form-group">
+                            <label>Ссылка видео</label>
+                            <input type="file" class="form-control" name="video_link" value="">
                         </div>
 
 

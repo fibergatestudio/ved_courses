@@ -35,6 +35,7 @@
                                 <th>Просмотров</th>
                                 <th>Пройден (раз)</th>
                                 <th>Содздатель (id,name)</th>
+                                <th>Видимость</th>
                                 <th></th>
                             </tr>
                         </thead>
@@ -47,6 +48,14 @@
                                 <td></td>
                                 <td></td>
                                 <td>{{ $course->creator_id }} {{ $course->creator_name }}</td>
+                                <td>
+                                    @if( $course->visibility == "all")
+                                        Для всех
+                                    @else
+                                        Только для зарегистрированных
+                                    @endif
+                                
+                                </td>
                                 <td>
                                     <a href="{{ route('edit_course', ['course_id' => $course->id ]) }}">
                                         <button class="btn btn-success">Изменить</button>

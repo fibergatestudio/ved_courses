@@ -36,6 +36,7 @@ class CoursesController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'creator_id' => Auth::user()->id,
+            'visibility' => 'all',
         ]);
         
         return redirect('courses_controll')->with('message_success', 'Курс успешно создан!');
@@ -52,9 +53,12 @@ class CoursesController extends Controller
 
     public function edit_course_apply($course_id, Request $request){
 
+        //dd($request->visibility);
+
         DB::table('courses')->where('id',$course_id)->update([
             'name' => $request->name,
             'description' => $request->description,
+            'visibility' => $request->visibility,
         ]);
 
         return redirect('courses_controll')->with('message_success', 'Курс успешно изменен!');
@@ -108,6 +112,7 @@ class CoursesController extends Controller
             'video_name' =>  $request->video_name,
             'video_length' => $request->video_length,
             'video_file' =>  $request->video_file,
+            'video_link' => $request->video_link,
             'test_id' => '0',
         ]);
         

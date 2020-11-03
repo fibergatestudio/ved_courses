@@ -28,8 +28,8 @@ class CreateTestsInfoTable extends Migration
             $table->string('available_attempts')->nullable();
             $table->string('assessment_method')->nullable();
             // Макет
-            $table->string('new_page')->nullable();
-            $table->string('transition_method')->nullable();
+            //$table->string('new_page')->nullable();
+            //$table->string('transition_method')->nullable();
             // Поведение вопросов
             $table->string('random_answers_order')->nullable();
             $table->string('getting_result')->nullable();

@@ -7,14 +7,14 @@
 
 .dropdown-menu-list{
     position: absolute !important;
-    top: 220px;
-    left: 20px;
+    top: 180px;
+    left: 13px;
     z-index: 1000;
     float: left;
     min-width: 10rem;
     padding: 0.5rem 0;
     margin: 0.125rem 0 0;
-    font-size: 0.9rem;
+    font-size: 1.4rem;
     color: #212529;
     text-align: left;
     list-style: none;

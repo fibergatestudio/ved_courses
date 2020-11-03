@@ -1,4 +1,4 @@
-<div class="header-menu">
+<div class="header-menu header-menu-narrow">
     <div class="header-menu_inner">
         <nav class="header-menu_left">
             <ul>
@@ -8,7 +8,7 @@
         </nav>
     </div>
     <div class="header-menu_inner">
-        <div class="header-menu_center">
+        <div class="header-menu_center header-menu_center--narrow">
             <img class="header-menu_logo" src="{{ asset('img/logo.png') }}" alt="logo">
         </div>
     </div>

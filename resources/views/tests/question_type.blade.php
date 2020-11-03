@@ -33,7 +33,7 @@
                             <select class="form-control" name="question_type">
                                 <option value="Множественный выбор">Множественный выбор</option>
                                 <option value="Верно\Не верно">Верно\Не верно</option>
-                                <option value="Краткий ответ">Краткий ответ</option>
+                                <!-- <option value="Краткий ответ">Краткий ответ</option> -->
                                 <option value="Перетаскивание в тексте">Перетаскивание в тексте</option>
                             </select>
                         </div>
