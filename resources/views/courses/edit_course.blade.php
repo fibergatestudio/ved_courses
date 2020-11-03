@@ -48,6 +48,29 @@
                             <a href="{{ route('add_lesson', ['course_id' => $course_info->id ]) }}" class="btn btn-success">Добавить</a>
                         </div>
                         <div class="form-group">
+                            <label>Список уроков</label>
+                            <table class="table table-bordered data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th> 
+                                        <th>Описание</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($course_lessons as $lesson)
+                                    <tr>
+                                        <td>{{ $lesson->id }}</td>
+                                        <td>{{ strip_tags($lesson->course_description) }}</td>
+                                        <td>
+                                            <div class="btn btn-success">Редактировать</div>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="form-group">
                             <label>Частые вопросы</label>
                             <a href="{{ route('add_question', ['course_id' => $course_info->id ]) }}" class="btn btn-success">Добавить</a>
                         </div>
@@ -60,17 +83,17 @@
                                         <th>Вопрос</th>
                                         <th>Ответ</th>
                                         <th></th>
-                                        <th></th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach($courses_question_answers as $faq)
                                     <tr>
                                         <td>{{ $faq->id }}</td>
-                                        <td>{{ $faq->course_question }}</td>
-                                        <td>{{ $faq->course_answer }}</td>
-                                        <td></td>
-                                        <td></td>
+                                        <td>{{ strip_tags($faq->course_question) }}</td>
+                                        <td>{{ strip_tags($faq->course_answer) }}</td>
+                                        <td>
+                                            <div class="btn btn-success">Редактировать</div>
+                                        </td>
                                     </tr>
                                     @endforeach
                                 </tbody>

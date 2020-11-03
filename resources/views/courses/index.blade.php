@@ -31,7 +31,7 @@
                             <tr>
                                 <th>#</th>
                                 <th>Название теста</th>
-                                <th>Описание</th>
+                                <th>Картинка</th>
                                 <th>Просмотров</th>
                                 <th>Пройден (раз)</th>
                                 <th>Содздатель (id,name)</th>
@@ -44,7 +44,7 @@
                             <tr>
                                 <td>{{ $course->id }}</td>
                                 <td>{{ $course->name }}</td>
-                                <td>{{ $course->description }}</td>
+                                <td><img src="{{url('/images/' . $course->course_image_path)}}" height="50" width="80" alt="Image"/></td>
                                 <td></td>
                                 <td></td>
                                 <td>{{ $course->creator_id }} {{ $course->creator_name }}</td>

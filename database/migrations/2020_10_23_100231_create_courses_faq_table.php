@@ -17,7 +17,7 @@ class CreateCoursesFaqTable extends Migration
             $table->id();
             $table->string('course_id')->nullable();
             $table->string('course_question')->nullable();
-            $table->string('course_answer')->nullable();
+            $table->longText('course_answer')->nullable();
             $table->timestamps();
         });
     }
