@@ -33,7 +33,7 @@
                 <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="#">Панель курсів</a>
+            <a class="menu_title-link" href="{{ route('home') }}">Панель управління</a>
             </li>
             <li class="menu_title-inner">
                 <a class="menu_title-link" href="{{ route('home') }}">Управління</a>
@@ -50,7 +50,7 @@
                 <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="{{ route('home') }}">Панель курсів</a>
+                <a class="menu_title-link" href="{{ route('home') }}">Панель управління</a>
             </li>
             <li class="menu_title-inner">
                 <a class="menu_title-link" href="##">Профіль</a>
@@ -67,7 +67,7 @@
                 <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="{{ route('home') }}">Панель курсів</a>
+                <a class="menu_title-link" href="{{ route('home') }}">Панель управління</a>
             </li>
             <li class="menu_title-inner">
                 <a class="menu_title-link" href="##">Профіль</a>

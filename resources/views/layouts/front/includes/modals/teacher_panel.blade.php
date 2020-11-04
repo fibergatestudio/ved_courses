@@ -4,13 +4,13 @@
         <div class="modal-content">
             <ul class="student-menu-wrapper">
                 <li class="student-menu-inner">
-                    <a class="student-menu-link" href="{{ route('home') }}">Панель курсів</a>
+                    <a class="student-menu-link" href="{{ route('home') }}">Панель управління</a>
                 </li>
                 <li class="student-menu-inner">
-                    <a class="student-menu-link" href="##">Профіль</a>
+                    <a class="student-menu-link" href="{{ route('teacher.profile') }}">Профіль</a>
                 </li>
                 <li class="student-menu-inner">
-                    <a class="student-menu-link" href="##">Налаштування</a>
+                    <a class="student-menu-link" href="{{ route('teacher.setting' )}}">Налаштування</a>
                 </li>
                 <li class="student-menu-inner">
                     <a class="student-menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();

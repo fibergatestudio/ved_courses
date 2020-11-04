@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,13 @@ Route::get('/course/{course_id}/{lesson_id?}/{tab?}', 'HomePageController@view_c
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+// Teacher profile
+Route::get('/teacher_courses', 'TeacherController@teacherCourses')->middleware('auth')->name('teacher.courses');
+Route::get('/teacher/profile', 'TeacherController@teacherProfile')->middleware('auth')->name('teacher.profile');
+Route::get('/teacher/setting', 'TeacherController@teacherSetting')->middleware('auth')->name('teacher.setting');
+
+
 
 
 // Для авторизации через соц сети -
