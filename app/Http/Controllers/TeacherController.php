@@ -42,7 +42,7 @@ class TeacherController extends Controller
         return view('front.teacher_profile', compact('teacher_info'));
     }
 
-    public function teacherInformation()
+    public function teacherSetting()
     {
         $teacher_info = DB::table('users')->where('id', Auth::user()->id)->first();
         return view('teacher.teacher_setting', compact('teacher_info'));

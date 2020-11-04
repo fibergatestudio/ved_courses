@@ -32,14 +32,14 @@
         @endif
         <form action="{{ route('student_information_apply') }}" method="POST" enctype="multipart/form-data" id="form-stud">
             @csrf
-            <input type="hidden" name="student_id" value="{{ $student_info->id }}">
+            <input type="hidden" name="student_id" value="{{ $teacher_info->id }}">
             <div class="studentSettings-grid-top">
                 <div class="grid-top_item">
                     <div class="grid-top_name">Ім'я користувача<sup>*</sup></div>
                     <div class="grid-top_example">Приклад: Іванов Іван Іванович</div>
-                    <input class="studentSettings-input" type="text" placeholder="Прізвище" name="surname" value="{{ $student_info->surname }}" required disabled>
-                    <input class="studentSettings-input" type="text" placeholder="Ім'я" name="name" value="{{ $student_info->name }}" required disabled>
-                    <input class="studentSettings-input" type="text" placeholder="По батькові" name="patronymic" value="{{ $student_info->patronymic }}" required disabled>
+                    <input class="studentSettings-input" type="text" placeholder="Прізвище" name="surname" value="{{ $teacher_info->surname }}" required disabled>
+                    <input class="studentSettings-input" type="text" placeholder="Ім'я" name="name" value="{{ $teacher_info->name }}" required disabled>
+                    <input class="studentSettings-input" type="text" placeholder="По батькові" name="patronymic" value="{{ $teacher_info->patronymic }}" required disabled>
                 </div>
                 <div class="grid-top_item">
                     <div class="grid-top_prometheus">Ім’я для ідентифікації на Ved. Ви не зможете змінити ім’я
@@ -67,7 +67,7 @@
                 </div>
                 <div class="grid-top_item">
                     <div class="grid-top_name">Поштова скринька<sup>*</sup></div>
-                    <input class="studentSettings-input studentSettings-email" type="email" placeholder="mail@gmail.com" name="email" value="{{ $student_info->email }}" required>
+                    <input class="studentSettings-input studentSettings-email" type="email" placeholder="mail@gmail.com" name="email" value="{{ $teacher_info->email }}" required>
                 </div>
                 <div class="grid-top_item">
                     <div class="grid-top_email">Адреса електронної пошти, яку ви використовуєте, щоб увійти на сайт.
