@@ -59,6 +59,11 @@ class HomePageController extends Controller
         //return view('courses.view_course', compact('course_id'));
     }
 
+    public function guest()
+    {
+        return view('front.guest');
+    }
+
     public function aboute_course()
     {
         return view('front.aboute_course');

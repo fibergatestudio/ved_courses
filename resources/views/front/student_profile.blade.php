@@ -24,11 +24,6 @@
                 <div class="profile-item_photo">
                 </div>
             </div>
-            @if( Auth::user()->getMedia('photos')->last())
-                <style>
-                    .profile-item_photo { background-image: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb_big') }}) !important; background-color: inherit !important;}
-                </style>
-            @endif
             <div class="profile-grid_item">
                 <div class="profile-item_name">{{ $student_info->full_name }}</div>
                 <div class="profile-item_position">студент</div>
@@ -49,7 +44,11 @@
         </div>
         <a class="btn-watch--more" href="javascript: void();" onclick="location.href='{{ route('student_information') }}'"><span>Редагувати</span></a>
 
-
+        @if( Auth::user()->getMedia('photos')->last())
+            <style>
+                .profile-item_photo { background-image: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb_big') }}) !important; background-color: inherit !important;}
+            </style>
+        @endif
 
     </div>
 </section>
