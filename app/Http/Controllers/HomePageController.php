@@ -40,23 +40,36 @@ class HomePageController extends Controller
         return view('front.student_profile', compact('student_info', 'student_full_info'));
     }
 
-    public function view_course($course_id){
-
-        //dd($course_id);
-        $auth_id = Auth::user();
-        //dd($auth_id->id);
-        if($auth_id){
-            //dd($auth_id);
-            $user_info = DB::table('users')->where('id', $auth_id->id)->first();
-
-            return view('courses.view_course', compact('course_id', 'user_info'));
+    public function view_course($course_id, $lesson_id = null, $tab = null) {
+        $user = Auth::user();
+        $course = DB::table('courses')->where('id', $course_id)->first();
+        if ($lesson_id) {
+            $lesson = DB::table('courses_program')->where([['course_id', '=', $course_id], ['id', '=', $lesson_id]])->first();
         } else {
-
-            return view('courses.view_course', compact('course_id'));
+            $lesson = DB::table('courses_program')->where('course_id', '=', $course_id)->first();
         }
-        //dd($auth_id);
+        if (is_null($course) or is_null($lesson)) {
+            abort(404);
+        }
+        $prevLesson = DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '<', $lesson->id]])->orderBy('id','desc')->first();
+        $nextLesson = DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->first();
+        $lessonNumber = DB::table('courses_program')->where('course_id', '=', $course->id)->count() - DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->count();
 
-        //return view('courses.view_course', compact('course_id'));
+        switch ($tab) {
+        case 'video':
+            return view('front.video_collection', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+            break;
+        case 'protocol':
+            return view('front.protocol', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+            break;
+        case 'test':
+            return view('front.test_a', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+            break;
+
+        default:
+            return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+            break;
+        }
     }
 
     public function aboute_course()

@@ -99,7 +99,7 @@
                     <div class="direction-inner">
                         <div class="direction-inner_top">
                             <img class="direction-inner_img" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
-                            <a class="image-btn" href="##">
+                            <a class="image-btn" href="{{ url('/course/'.$course->id) }}">
                                 <span>Підкатегорії</span>
                                 <div class="image-btn_arrow"></div>
                             </a>
@@ -119,7 +119,7 @@
                     <div class="direction-inner">
                         <div class="direction-inner_top">
                             <img class="direction-inner_img" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
-                            <a class="image-btn" href="##">
+                            <a class="image-btn" href="{{ url('/course/'.$course->id) }}>
                                 <span>Підкатегорії</span>
                                 <div class="image-btn_arrow"></div>
                             </a>
