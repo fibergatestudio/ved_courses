@@ -61,23 +61,30 @@
                         <div class="form-group">
                             <label>Видеоколлекция</label>
                         </div>
-                        <div class="form-group">
-                            <label>Название видео</label>
-                            <input type="text" class="form-control" name="video_name" value="">
+                        <input type="hidden" id="videos_counter" name="videos_counter" value="">
+                        <div id="app1">
+                            <div v-for="(id,index) in ids" >
+                                <hr>
+                                <div class="form-group">
+                                    <label>Название видео @{{ index + 1}}</label>
+                                    <input type="text" class="form-control" :name="'video_name' + index" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Длина видео @{{ index + 1}}</label>
+                                    <input type="number" class="form-control" :name="'video_length' + index" value="">
+                                </div>
+                                <div class="form-group">
+                                    <label>Добавить видео @{{ index + 1}}</label>
+                                    <input type="file" class="form-control" :name="'video_file' + index" value=""> 
+                                </div>
+                                <div class="form-group">
+                                    <label>Ссылка видео @{{ index + 1}}</label>
+                                    <input type="text" class="form-control" :name="'video_link' + index" value="">
+                                </div>
+                                <hr>
+                            </div>
+                            <div onclick="app1.addNewEntry()" class="btn btn-success">Добавить Следущее Видео</div>
                         </div>
-                        <div class="form-group">
-                            <label>Длина видео</label>
-                            <input type="number" class="form-control" name="video_length" value="">
-                        </div>
-                        <div class="form-group">
-                            <label>Добавить видео</label>
-                            <input type="file" class="form-control" name="video_file" value=""> 
-                        </div>
-                        <div class="form-group">
-                            <label>Ссылка видео</label>
-                            <input type="text" class="form-control" name="video_link" value="">
-                        </div>
-
 
 
                         <button type="submit" class="btn btn-success">Применить</button>
@@ -93,6 +100,34 @@
 </div>
 
 @section('scripts')
+
+
+<script>
+    //var global_index = 0;
+    var currentCounter = 0;
+    //var answersCounter = 0;
+
+    var app1 = new Vue({
+        el: '#app1',
+        data: {
+            ids: [
+                { id: currentCounter},
+            ],
+            answers: [
+            ],
+        },
+        methods: {
+            addNewEntry: function(){
+                currentCounter = currentCounter + 1;
+                //tinymce.init({ selector: id_t });
+                this.ids.push({id: currentCounter});
+                document.getElementById("videos_counter").value = currentCounter;
+                
+            },
+            
+        }
+    });
+</script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
 <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
