@@ -16,7 +16,6 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'HomePageController@welcome');
 
-Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
 Route::get('/student/information', 'StudentController@student_information' )->name('student_information');
 
 Route::get('/simulator', 'HomePageController@simulator')->name('simulator');
@@ -36,7 +35,7 @@ Route::get('/test_c', 'HomePageController@test_c')->name('test_c')->middleware('
 Route::get('/video_collection', 'HomePageController@video_collection')->name('video_collection')->middleware('auth');
 Route::get('/guest', 'HomePageController@guest')->name('guest');
 
-Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
+Route::get('/course/{course_id}/{lesson_id?}/{tab?}', 'HomePageController@view_course' )->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|protocol|test'])->name('view_course');
 
 Auth::routes();
 
@@ -142,7 +141,7 @@ Route::get('/home', 'HomeController@index')->name('home');
             //--todo // Редактировать "Про Этот Курс"
             Route::get('/courses_controll/edit_course/{course_id}/edit_about', 'CoursesController@edit_about')->name('edit_about')->middleware('can:admin_rights');
                 //--todo // Примернить редактирование
-                Route::post('/courses_controll/edit_course/{course_id}/edit_about/apply', 'CoursesController@edit_about_apply')->name('edit_about_apply')->middleware('can:admin_rights'); 
+                Route::post('/courses_controll/edit_course/{course_id}/edit_about/apply', 'CoursesController@edit_about_apply')->name('edit_about_apply')->middleware('can:admin_rights');
             //--todo// Добавить Занятие
             Route::get('/courses_controll/edit_course/{course_id}/add_lesson', 'CoursesController@add_lesson')->name('add_lesson')->middleware('can:admin_rights');
                 //--todo// Добавить Занятие POST
@@ -164,7 +163,7 @@ Route::get('/home', 'HomeController@index')->name('home');
             // Создание Теста POST
             Route::post('/tests_controll/new_test_info/create', 'TestsController@create_new_test_info')->name('create_new_test_info')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
-            // Удаление Теста 
+            // Удаление Теста
             Route::get('/tests_controll/new_test_info/{test_info_id}/delete', 'TestsController@delete_test')->name('delete_test')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
         // Выбор типа вопроса
@@ -196,7 +195,7 @@ Route::get('/home', 'HomeController@index')->name('home');
             //----- Типы вопросов -----//
 
 
-        
+
 
         // Просмотра теста и вопросов\ответов
         Route::get('/tests_controll/new_test_info/{test_info_id}/view', 'TestsController@view_test_info_questions')->name('view_test_info_questions')->middleware(['can:admin_rights' || 'can:teacher_rights']);

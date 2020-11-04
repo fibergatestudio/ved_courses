@@ -103,7 +103,7 @@
                             @else
                                 <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
                             @endif
-                            <a class="image-btn" href="##">
+                            <a class="image-btn" href="{{ url('/course/'.$course->id) }}">
                                 <span>Підкатегорії</span>
                                 <div class="image-btn_arrow"></div>
                             </a>
@@ -127,7 +127,7 @@
                             @else
                                 <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
                             @endif
-                            <a class="image-btn" href="##">
+                            <a class="image-btn" href="{{ url('/course/'.$course->id) }}>
                                 <span>Підкатегорії</span>
                                 <div class="image-btn_arrow"></div>
                             </a>
