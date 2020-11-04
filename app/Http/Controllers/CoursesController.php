@@ -35,8 +35,12 @@ class CoursesController extends Controller
         //dd($request->course_image);
         //$img_path = $request->course_image;
 
-        $filename = time().'.'.request()->course_image->getClientOriginalExtension();
-        request()->course_image->move(public_path('images'), $filename);
+        if($request->hasFile('course_image')){
+            $filename = time().'.'.request()->course_image->getClientOriginalExtension();
+            request()->course_image->move(public_path('images'), $filename);
+        }else{
+            $filename = "";
+        }
 
         //$user->image=$filename;
         //$user->save();

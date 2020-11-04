@@ -44,7 +44,11 @@
                             <tr>
                                 <td>{{ $course->id }}</td>
                                 <td>{{ $course->name }}</td>
-                                <td><img src="{{url('/images/' . $course->course_image_path)}}" height="50" width="80" alt="Image"/></td>
+                                <td>
+                                    @if($course->course_image_path != "")
+                                    <img src="{{url('/images/' . $course->course_image_path)}}" height="50" width="80" alt="Image"/>
+                                    @endif
+                                </td>   
                                 <td></td>
                                 <td></td>
                                 <td>{{ $course->creator_id }} {{ $course->creator_name }}</td>

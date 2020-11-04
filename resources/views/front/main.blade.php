@@ -98,7 +98,11 @@
 
                     <div class="direction-inner">
                         <div class="direction-inner_top">
-                            <img class="direction-inner_img" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
+                            @if($course->course_image_path != "")
+                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
+                            @else
+                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
+                            @endif
                             <a class="image-btn" href="##">
                                 <span>Підкатегорії</span>
                                 <div class="image-btn_arrow"></div>
@@ -118,7 +122,11 @@
                     @if (Auth::check())
                     <div class="direction-inner">
                         <div class="direction-inner_top">
-                            <img class="direction-inner_img" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
+                            @if($course->course_image_path != "")
+                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
+                            @else
+                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
+                            @endif
                             <a class="image-btn" href="##">
                                 <span>Підкатегорії</span>
                                 <div class="image-btn_arrow"></div>
