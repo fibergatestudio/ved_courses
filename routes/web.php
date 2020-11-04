@@ -34,6 +34,7 @@ Route::get('/test_a', 'HomePageController@test_a')->name('test_a')->middleware('
 Route::get('/test_b', 'HomePageController@test_b')->name('test_b')->middleware('auth');
 Route::get('/test_c', 'HomePageController@test_c')->name('test_c')->middleware('auth');
 Route::get('/video_collection', 'HomePageController@video_collection')->name('video_collection')->middleware('auth');
+Route::get('/guest', 'HomePageController@guest')->name('guest');
 
 Route::get('/view_course/{course_id}', 'HomePageController@view_course' )->name('view_course');
 
