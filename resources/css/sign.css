@@ -1,0 +1,68 @@
+.sign-bg {
+  background: url('../img/background-crop.jpg') no-repeat center center fixed;
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+.bootstrap-restyling .modal-dialog {
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 0;
+    padding-bottom: 0;
+    margin-top: 0;
+}
+
+@media (min-width:576px) {
+    .bootstrap-restyling .modal-dialog {
+        max-width: 573px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+@media (max-width:768px) {
+
+    .bootstrap-restyling .modal-dialog {
+        max-width: 65%;
+    }
+
+    .sign-bg {
+        min-height: 100vh;
+    }
+}
+
+@media (max-width:482px) {
+    .bootstrap-restyling .modal-dialog {
+        max-width: 80%
+    }
+}
+
+@media (max-width:336px) {
+    .bootstrap-restyling .modal-dialog {
+        max-width: 90%
+    }
+}
+
+@media (max-width:286px) {
+    .bootstrap-restyling .modal-dialog {
+        min-width: 95%
+    }
+}
+
+.entrance-input.is-invalid {
+    margin-bottom: 0 !important;
+}
+
+/*Added Styles*/
+.modal-content .student-menu-wrapper {
+    flex-direction: column;
+    align-items: center;
+}
+
+.radius {
+    border-radius: 9px 9px 0px 0px;
+}
