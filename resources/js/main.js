@@ -123,4 +123,24 @@ $(document).ready(function () {
     });
 });
 
+//sidebar-burger////////////////////////////////////
 
+(function () {
+    let sidebarBurgerButton = document.querySelector('.sidebar-top_burger-btn');
+    let sidebarBurgerMenu = document.querySelector('.sidebar_title-wrapper');
+    let sideBarBurgerBlock = document.querySelector('.sidebar');
+
+    let sidebarMobileButton = document.querySelector('.sidebar-top_mobile-btn');
+
+if (sidebarBurgerButton !== null) {
+        sidebarBurgerButton.addEventListener('click', sidebarBurgerClass);
+    };
+if (sidebarMobileButton !== null) {
+        sidebarMobileButton.addEventListener('click', sidebarBurgerClass);
+    };
+
+    function sidebarBurgerClass() {
+        sideBarBurgerBlock.classList.toggle('active');
+        sidebarBurgerMenu.classList.toggle('active');
+    };
+})();

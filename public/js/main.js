@@ -219,7 +219,33 @@ $(document).ready(function () {
     dots: false,
     infinite: true
   });
-});
+}); //sidebar-burger////////////////////////////////////
+
+(function () {
+  var sidebarBurgerButton = document.querySelector('.sidebar-top_burger-btn');
+  var sidebarBurgerMenu = document.querySelector('.sidebar_title-wrapper');
+  var sideBarBurgerBlock = document.querySelector('.sidebar');
+  var sidebarMobileButton = document.querySelector('.sidebar-top_mobile-btn');
+
+  if (sidebarBurgerButton !== null) {
+    sidebarBurgerButton.addEventListener('click', sidebarBurgerClass);
+  }
+
+  ;
+
+  if (sidebarMobileButton !== null) {
+    sidebarMobileButton.addEventListener('click', sidebarBurgerClass);
+  }
+
+  ;
+
+  function sidebarBurgerClass() {
+    sideBarBurgerBlock.classList.toggle('active');
+    sidebarBurgerMenu.classList.toggle('active');
+  }
+
+  ;
+})();
 
 /***/ }),
 

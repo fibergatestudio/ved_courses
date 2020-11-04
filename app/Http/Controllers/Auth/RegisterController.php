@@ -83,9 +83,11 @@ class RegisterController extends Controller
                 'status' => 'unconfirmed'
             ]);
 
+            $studen_fio = $data['name'] . " " . $data['surname'] . " " . $data['patronymic'] . " ";
+
             // Создаем для него запись в стундентах
             DB::table('students')->insert(
-                ['user_id' => $user->id,'status' => 'confirmed',]
+                ['user_id' => $user->id,'full_name' => $studen_fio, 'status' => 'confirmed',]
             );
         // Если пользователь - учитель
         } else if ($data['role'] == "teacher"){

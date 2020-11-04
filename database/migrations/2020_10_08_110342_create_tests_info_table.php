@@ -19,8 +19,8 @@ class CreateTestsInfoTable extends Migration
             $table->string('name')->nullable();
             $table->string('description')->nullable();
             // Выбор времени
-            $table->dateTime('start_date_time')->nullable();
-            $table->dateTime('end_date_time')->nullable();
+            $table->string('start_date_time')->nullable();
+            $table->string('end_date_time')->nullable();
             $table->string('time_limit')->nullable();
             $table->string('when_time_is_up')->nullable();
             // Оценка
@@ -28,17 +28,17 @@ class CreateTestsInfoTable extends Migration
             $table->string('available_attempts')->nullable();
             $table->string('assessment_method')->nullable();
             // Макет
-            $table->string('new_page')->nullable();
-            $table->string('transition_method')->nullable();
+            //$table->string('new_page')->nullable();
+            //$table->string('transition_method')->nullable();
             // Поведение вопросов
             $table->string('random_answers_order')->nullable();
             $table->string('getting_result')->nullable();
-            // Параметры просмотра
+            // Параметры просмотра 
             $table->json('view_options')->nullable();
             // Вид
             $table->string('photo_and_student_name')->nullable();
             // Разширенный ответ
-            $table->json('extended_feedback')->nullable();
+            $table->string('extended_feedback')->nullable();
             // Общие настройки модуля
             $table->string('availability')->nullable();
             $table->string('operating_mode')->nullable();

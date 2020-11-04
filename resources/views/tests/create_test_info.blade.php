@@ -57,41 +57,50 @@
                             <input type="number" class="form-control" name="passing_score" value="">
                             <label>Разршено попыток</label>
                             <select class="form-control" name="available_attempts">
-                                <option>Выберите</option>
+                                <option>Одна попытка</option>
                                 <option>-</option>
                             </select>
                             <label>Метод оценивания</label>
                             <select class="form-control" name="assessment_method">
-                                <option>Выберите</option>
-                                <option>-</option>
+                                <option>Лучшая оценка</option>
+                                <option>Средняя оценка</option>
+                                <option>Первая попытка</option>
+                                <option>ПОследняя попытка</option>
                             </select>
                         </div>
                         <hr> 
 
-                        <div class="form-group">
+                        <!-- <div class="form-group">
                             <label>Новая страница</label>
                             <select class="form-control" name="new_page">
-                                <option>Выберите</option>
+                                <option>Каждый вопрос</option>
                                 <option>-</option>
                             </select>
                             <label>Метод перехода</label>
                             <select class="form-control" name="transition_method">
-                                <option>Выберите</option>
-                                <option>-</option>
+                                <option>Свободный</option>
+                                <option>Последовательный</option>
                             </select>
-                        </div>
+                        </div> -->
 
                         <hr>
                         <div class="form-group">
                             <label>Случайный порядок ответов</label>
                             <select class="form-control" name="random_answers_order">
-                                <option>Выберите</option>
+                                <option>Да</option>
                                 <option>-</option>
                             </select>
                             <label>Получение результата</label>
                             <select class="form-control" name="getting_result">
-                                <option>Выберите</option>
-                                <option>-</option>
+                                <option>После отправки всего теста</option>
+                                <option>Интерактивный за несколько попыток</option>
+                                <option>Адаптивный режим</option>
+                                <option>Адаптивный режим(Без штрафных балов)</option>
+                                <option>Сразу после ответа</option>
+                                <option>Сразу после ответа с пометкой студента уверенности</option>
+                                <option>После отправки всего теста</option>
+                                <option>После отправки всего теста с пометкой студента уверенности</option>
+                                <option>Ручная оценка</option>
                             </select>
                         </div>
                         <hr>
@@ -100,13 +109,31 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-md-3">
-                                    One of three columns
+                                        <label>После попытки</label>
+                                        <div> <input type="checkbox" name="1_attempt"><label>Попытка</label> </div>
+                                        <div> <input type="checkbox" name="1_right"><label>Правильный ли ответ</label> </div>
+                                        <div> <input type="checkbox" name="1_score"><label>Баллы</label> </div>
+                                        <div> <input type="checkbox" name="1_overall_comment" checked> <label>Коментарий ко всему тесту</label> </div>
+                                        <div> <input type="checkbox" name="1_right_answer" checked> <label>Правильный ответ</label> </div>
+                                        <div> <input type="checkbox" name="1_overall_review"><label>Общий отзыв</label></div>
                                     </div>
                                     <div class="col-md-3">
-                                    One of three columns
+                                        <label>Позже, пока тест еще открытый</label>
+                                        <div> <input type="checkbox" name="2_attempt"><label>Попытка</label> </div>
+                                        <div> <input type="checkbox" name="2_right"><label>Правильный ли ответ</label> </div>
+                                        <div> <input type="checkbox" name="2_score"><label>Баллы</label> </div>
+                                        <div> <input type="checkbox" name="2_overall_comment" checked> <label>Коментарий ко всему тесту</label> </div>
+                                        <div> <input type="checkbox" name="2_right_answer" checked> <label>Правильный ответ</label> </div>
+                                        <div> <input type="checkbox" name="2_overall_review"><label>Общий отзыв</label></div>
                                     </div>
                                     <div class="col-md-3">
-                                    One of three columns
+                                        <label>После закрытия теста</label>
+                                        <div> <input type="checkbox" name="3_attempt" checked><label>Попытка</label> </div>
+                                        <div> <input type="checkbox" name="3_right"><label>Правильный ли ответ</label> </div>
+                                        <div> <input type="checkbox" name="3_score" checked><label>Баллы</label> </div>
+                                        <div> <input type="checkbox" name="3_overall_comment" checked> <label>Коментарий ко всему тесту</label> </div>
+                                        <div> <input type="checkbox" name="3_right_answer"> <label>Правильный ответ</label> </div>
+                                        <div> <input type="checkbox" name="3_overall_review" checked><label>Общий отзыв</label></div>
                                     </div>
                                 </div>
                             </div>
@@ -115,8 +142,9 @@
                         <div class="form-group">
                             <label>Фото и имя студента</label>
                             <select class="form-control" name="photo_and_student_name">
-                                <option>Выберите</option>
-                                <option>-</option>
+                                <option>Без картинки</option>
+                                <option>Маленькая картинка</option>
+                                <option>Большая картинка</option>
                             </select>
                         </div>
                         <hr>

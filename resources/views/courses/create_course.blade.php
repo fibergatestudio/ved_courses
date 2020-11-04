@@ -26,7 +26,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('create_course') }}" method="POST">
+                    <form action="{{ route('create_course') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label>Название Курса</label>
@@ -37,7 +37,12 @@
                             <label>Описание Курса</label>
                             <textarea type="text" class="form-control" name="description" value=""></textarea>
                         </div>
+
+                        <div class="form-group">
+                            <input type="file" class="form-control" name="course_image" >
+                        </div>
                         <br>
+
                         <button type="submit" class="btn btn-success">Создать</button>
                     </form>
                         <a href="{{ route('courses_controll') }}">

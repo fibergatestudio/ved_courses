@@ -19,7 +19,9 @@ class CreateCoursesTable extends Migration
             $table->string('description')->nullable();
             $table->string('views')->nullable();
             $table->string('finished_count')->nullable();
+            $table->string('course_image_path')->nullable();
             $table->string('creator_id')->nullable();
+            $table->string('visibility')->nullable();
             $table->timestamps();
         });
     }

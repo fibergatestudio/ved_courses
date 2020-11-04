@@ -29,12 +29,12 @@ class SocialiteController extends Controller
         if (isset($signup)) {
             //Registration
             if (!$userInfo) {
-                return redirect()->route('register')->with('error', 'Ошибка регистрации. Повторите регистрацию.');
+                return redirect()->route('register')->with('error', 'Помилка реєстрації. Повторіть реєстрацію.');
             }
             $user = User::where('provider_id', $userInfo->id)->first();
             $userWithEmail = User::where('email', $userInfo->getEmail())->first();
             if ($user or $userWithEmail) {
-                return redirect()->route('login')->with('error', 'Пользователь с такой учетной записью уже зарегистрирован. Войдите.');
+                return redirect()->route('login')->with('error', 'Користувач з таким обліковим записом уже зареєстрований. Увійдіть.');
             }
             //Добавляем пользователя - поумолчанию студент
             switch ($provider) {
@@ -46,8 +46,9 @@ class SocialiteController extends Controller
                         'provider' => $provider,
                         'provider_id' => $userInfo->getId(),
                         'role' => 'student',
-                        'status' => 'confirmed'
+                        'status' => 'unconfirmed'
                     ]);
+                    $studen_fio = $userInfo['given_name'] . " " . $userInfo['family_name'] . " ";
                     break;
 
                 case 'facebook':
@@ -57,20 +58,22 @@ class SocialiteController extends Controller
                         'provider' => $provider,
                         'provider_id' => $userInfo->getId(),
                         'role' => 'student',
-                        'status' => 'confirmed'
+                        'status' => 'unconfirmed'
                     ]);
+                    $studen_fio = $userInfo->getName() . " ";
                     break;
             }
+
             // Создаем для него запись в стундентах
             $student_id = DB::table('students')->insertGetId(
-                ['user_id' => $user->id, 'status' => 'confirmed',]
+                ['user_id' => $user->id, 'full_name' => $studen_fio, 'status' => 'confirmed',]
             );
             return redirect()->route('login.role', ['user_id' => $user->id, 'student_id' => $student_id]);
         } else {
             //Login
             $user = User::where('provider_id', $userInfo->id)->first();
             if (!$user) {
-                return redirect()->route('login')->with('error', 'Пользователь с такой учетной записью не найден. Зарегистрируйтесь.');
+                return redirect()->route('login')->with('error', 'Користувача з таким обліковим записом не знайдено. Зареєструйтеся.');
             }
             auth()->login($user);
             return redirect()->to(RouteServiceProvider::HOME);
@@ -92,6 +95,7 @@ class SocialiteController extends Controller
             case 'teacher':
                 $user->role = 'teacher';
                 $user->status = 'unconfirmed';
+                $user->save();
                 $student = DB::table('students')->where('id', $student_id)->delete();
                 DB::table('teachers')->insert(
                     [
