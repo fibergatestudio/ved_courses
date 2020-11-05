@@ -26,7 +26,7 @@
                         </div> 
                     @endif
 
-                    <form action="{{ route('add_lesson_apply', ['course_id' => $course_info->id ]) }}" id="test_form" method="POST" >
+                    <form action="{{ route('add_lesson_apply', ['course_id' => $course_info->id ]) }}" id="test_form" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                             <label>Как это работает</label>
@@ -53,9 +53,18 @@
                             <label>Время на прочтение (минуты)</label>
                             <input type="number" class="form-control" name="learning_protocol_time" value="">
                         </div>
+
                         <div class="form-group">
                             <label>Добавить документ</label>
-                            <input type="file" class="form-control" name="add_document" value="">
+                            <hr>
+                                <input type="hidden" id="docs_counter" name="docs_counter" value="">
+                                <div id="docs">
+                                    <div v-for="(id,index) in ids" >
+                                        <input type="file" class="form-control" :name="'add_document' + index" value="">
+                                    </div>
+                                    <div onclick="docs.addNewEntry()" class="btn btn-success">Добавить След. Док.</div>
+                                </div>
+                            <hr>
                         </div>
 
                         <div class="form-group">
@@ -103,10 +112,7 @@
 
 
 <script>
-    //var global_index = 0;
     var currentCounter = 0;
-    //var answersCounter = 0;
-
     var app1 = new Vue({
         el: '#app1',
         data: {
@@ -122,6 +128,28 @@
                 //tinymce.init({ selector: id_t });
                 this.ids.push({id: currentCounter});
                 document.getElementById("videos_counter").value = currentCounter;
+                
+            },
+            
+        }
+    });
+
+    var docsCounter = 0;
+    var docs = new Vue({
+        el: '#docs',
+        data: {
+            ids: [
+                { id: docsCounter},
+            ],
+            answers: [
+            ],
+        },
+        methods: {
+            addNewEntry: function(){
+                docsCounter = docsCounter + 1;
+                //tinymce.init({ selector: id_t });
+                this.ids.push({id: docsCounter});
+                document.getElementById("docs_counter").value = docsCounter;
                 
             },
             

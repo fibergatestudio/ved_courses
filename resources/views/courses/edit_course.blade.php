@@ -64,6 +64,7 @@
                                         <td>{{ strip_tags($lesson->course_description) }}</td>
                                         <td>
                                             <div class="btn btn-success">Редактировать</div>
+                                            <div class="btn btn-danger">Удалить</div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -93,6 +94,7 @@
                                         <td>{{ strip_tags($faq->course_answer) }}</td>
                                         <td>
                                             <div class="btn btn-success">Редактировать</div>
+                                            <div class="btn btn-danger">Удалить</div>
                                         </td>
                                     </tr>
                                     @endforeach

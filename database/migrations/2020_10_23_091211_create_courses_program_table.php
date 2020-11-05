@@ -22,13 +22,13 @@ class CreateCoursesProgramTable extends Migration
             // Протокол
             $table->string('course_protocol_descr')->nullable(); 
             $table->string('learning_protocol_time')->nullable(); 
-            $table->string('add_document')->nullable(); 
+            $table->json('add_document')->nullable(); 
 
             // Видеоколекция
-            $table->string('video_name')->nullable(); 
-            $table->string('video_length')->nullable(); 
-            $table->string('video_file')->nullable(); 
-            $table->string('video_link')->nullable();
+            $table->json('video_name')->nullable(); 
+            $table->json('video_length')->nullable(); 
+            $table->json('video_file')->nullable(); 
+            $table->json('video_link')->nullable();
 
             // Тест
             $table->string('test_id')->nullable(); 

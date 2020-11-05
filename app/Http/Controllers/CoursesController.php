@@ -63,7 +63,7 @@ class CoursesController extends Controller
         $courses_question_answers = DB::table('courses_faq')->where('course_id', $course_id)->get();
         //dd($courses_question_answers);
 
-        $course_lessons = DB::table('courses_program')->where('id', $course_id)->get();
+        $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
 
         return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons') );
     }
@@ -117,20 +117,78 @@ class CoursesController extends Controller
     // add_lesson_apply
     public function add_lesson_apply($course_id, Request $request){
 
-        //dd($request->all());
+        // Количество видео
+        $video_counter = $request->videos_counter;
+ 
+        // Арреи под инфу видео
+        $video_name_arr = [];
+        $video_lenght_arr = [];
+        $video_file_arr = [];
+        $vido_link_arr = [];
 
+        // Перебираем и берем информацию о каждом видео
+        for($i = 0; $i <= $video_counter; $i++){
+            // Формируем реквест имя
+            $r_video_name = 'video_name' . $i;
+            $r_video_length = 'video_length' . $i;
+            $r_video_file = 'video_file' . $i;
+            $r_video_link = 'video_link' . $i;
+
+            // Получаем информацию по имени
+            $video_name = $request->$r_video_name;
+            $video_length = $request->$r_video_length;
+
+            //$video_file = $request->$r_video_file;
+
+            if($request->hasFile($r_video_file)){
+                $filename = time().'.'.request()->$r_video_file->getClientOriginalExtension();
+                request()->$r_video_file->move(public_path('video_files'), $filename);
+            }else{
+                $filename = "";
+            }
+
+            $video_link = $request->$r_video_link;
+            // Заносим информацию в аррей
+            array_push($video_name_arr, $video_name);
+            array_push($video_lenght_arr, $video_length);
+            array_push($video_file_arr, $filename);
+            array_push($vido_link_arr, $video_link);
+        }
+        //dd($video_file_arr);
+
+        // Аррей документов
+        $docs_arr = [];
+        // Количество документов
+        $docs_counter = $request->docs_counter;
+
+        // Перебираем и берем информацию о каждом доке
+        for($a = 0; $a <= $docs_counter; $a++){
+            // Реквест имени дока
+            $r_add_document = 'add_document' . $a;
+
+            // Получаем доку, формируем имя и переносим файл
+            if($request->hasFile($r_add_document)){
+                $filename = time().'.'.request()->$r_add_document->getClientOriginalExtension();
+                request()->$r_add_document->move(public_path('docs'), $filename);
+            }else{
+                $filename = "no doc";
+            }
+            // Передача инфы в аррей
+            array_push($docs_arr, $filename);
+        }
+
+        // Инсерт в базу
         DB::table('courses_program')->insert([
             'course_id' => $course_id,
             'course_description' => $request->course_description,
             'learning_time' => $request->learning_time,
             'course_protocol_descr' => $request->course_protocol_descr,
             'learning_protocol_time' => $request->learning_protocol_time,
-            'add_document' => $request->add_document,
-            'video_name' =>  $request->video_name,
-            'video_length' => $request->video_length,
-            'video_file' =>  $request->video_file,
-            'video_link' => $request->video_link,
-            'test_id' => '0',
+            'add_document' => json_encode($docs_arr),
+            'video_name' =>  json_encode($video_name_arr),
+            'video_length' => json_encode($video_lenght_arr),
+            'video_file' =>  json_encode($video_file_arr),
+            'video_link' => json_encode($vido_link_arr),
         ]);
         
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
@@ -169,6 +227,14 @@ class CoursesController extends Controller
 
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
+
+    // // Просмотр курса
+    // public function course_view($course_id){
+
+    //     dd($course_id);
+
+    //     return view('courses.course_view', compact('course_id')); 
+    // }
 
 
 }
