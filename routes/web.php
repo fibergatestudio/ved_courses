@@ -22,7 +22,7 @@ Route::get('/student/information', 'StudentController@student_information' )->na
 Route::get('/simulator', 'HomePageController@simulator')->name('simulator');
 Route::get('/student_courses', 'HomePageController@welcome_page')->name('welcome_page')->middleware('auth');
 Route::get('/student_ended', 'HomePageController@welcome2_page')->name('welcome2_page')->middleware('auth');
-Route::get('/student_profile', 'HomePageController@student_profile')->name('student_profile')->middleware('auth');
+Route::get('/student/profile', 'HomePageController@student_profile')->name('student_profile')->middleware('auth');
 Route::get('/aboute_course', 'HomePageController@aboute_course')->name('aboute_course')->middleware('auth');
 Route::get('/student_settings', 'HomePageController@student_settings')->name('student_settings')->middleware('auth');
 Route::get('/program', 'HomePageController@program')->name('program')->middleware('auth');
