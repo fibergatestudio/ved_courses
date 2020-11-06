@@ -51,12 +51,7 @@
         <div class="main-learn">
             <h4 class="main-learn_title">Чого ви навчитесь</h4>
             <div class="about-course_wrapper main-learn_wrapper">
-                <div class="main-learn_inner">
-                    <div class="main-learn_inner--icon"></div>
-                    <div class="main-learn_inner--text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</div>
-                </div>
                 @forelse (collect(json_decode($course_information->course_learn_arr)) as $item)
-
                     <div class="main-learn_inner">
                         <div class="main-learn_inner--icon"></div>
                         <div class="main-learn_inner--text">{!! $item !!}</div>

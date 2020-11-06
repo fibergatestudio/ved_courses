@@ -44,32 +44,16 @@ class HomePageController extends Controller
         $user = Auth::user();
         $course = DB::table('courses')->where('id', $course_id)->first();
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
-        if (isset($lesson_id)) {
-            $lesson = DB::table('courses_program')->where([['course_id', '=', $course_id], ['id', '=', $lesson_id]])->first();
-            $prevLesson = DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '<', $lesson->id]])->orderBy('id','desc')->first();
-            $nextLesson = DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->first();
-            $lessonNumber = DB::table('courses_program')->where('course_id', '=', $course->id)->count() - DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->count();
-        } else {
-            $lesson = DB::table('courses_program')->where('course_id', '=', $course_id)->first();
-        }
-        /*if (is_null($course) or is_null($lesson)) {
+        $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->orderBy('id')->get();
+        if (is_null($course)) {
             abort(404);
-        }*/
+        }
         switch ($tab) {
-        case 'video':
-            return view('front.video_collection', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
-            break;
-        case 'protocol':
-            return view('front.protocol', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
-            break;
-        case 'test':
-            return view('front.test_a', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
-            break;
-        case 'strings':
-            return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
-            break;
         case 'teachers':
             return view('front.teachers', compact('course', 'course_information'));
+            break;
+        case 'program':
+            return view('front.program', compact('course', 'course_information', 'course_lessons'));
             break;
         default:
             return view('front.aboute_course', compact('course', 'course_information'));

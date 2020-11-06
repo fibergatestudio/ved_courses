@@ -7,31 +7,31 @@
 @section('content')
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>Назва розділу підрозділу</span></div>
+        <div class="direction-separator_badge"><span>{{ $course->name }}</span></div>
     </div>
     <div class="container">
         <!--<a class="breadcrumbs" href="#">Головна сторінка / Курс назва</a>-->
         <ul class="breadcrumbs_list">
             <li class="breadcrumbs_item">
-                <a href="http://ved.com.ua/" class="breadcrumbs_link">Головна</a>
+                <a href="{{route('main')}}" class="breadcrumbs_link">Головна</a>
             </li>
             <li class="breadcrumbs_item">
-                <a href="" class="breadcrumbs_link breadcrumbs_active">Назва курсу</a>
+                <a href="{{ route('view_course', $course->id) }}" class="breadcrumbs_link">{{ $course->name }}</a>
             </li>
         </ul>
 
         <div class="main-menu">
             <div class="main-menu_inner">
-                <a class="main-menu_btn" href="about-course.html"><span>Про курс</span></a>
+                <a class="main-menu_btn" href="{{ route('view_course', $course->id) }}"><span>Про курс</span></a>
             </div>
             <div class="main-menu_inner active">
-                <a class="main-menu_btn" href="teachers.html"><span>Викладачі</span></a>
+                <a class="main-menu_btn" href="{{ route('view_course', [$course->id, 'teachers']) }}"><span>Викладачі</span></a>
             </div>
             <div class="main-menu_inner">
-                <a class="main-menu_btn" href="program.html"><span>Програма курсу</span></a>
+                <a class="main-menu_btn" href="{{ route('view_course', [$course->id, 'program']) }}"><span>Програма курсу</span></a>
             </div>
             <div class="main-menu_inner">
-                <a class="main-menu_btn" href="questions.html"><span>Поширені запитання</span></a>
+                <a class="main-menu_btn" href="{{ route('view_course', [$course->id, 'faq']) }}"><span>Поширені запитання</span></a>
             </div>
             <div class="main-menu_inner">
                 <div class="main-menu_social"><a href="##"><img src="{{ asset('img/facebook.png') }}" alt="img"></a></div>
