@@ -36,7 +36,7 @@ Route::get('/test_c', 'HomePageController@test_c')->name('test_c')->middleware('
 Route::get('/video_collection', 'HomePageController@video_collection')->name('video_collection')->middleware('auth');
 Route::get('/guest', 'HomePageController@guest')->name('guest');
 Route::get('/course/{course_id}/{tab?}', 'HomePageController@view_course')->where(['course_id' => '[0-9]+', 'tab' => 'teachers|program|faq'])->name('view_course');
-Route::get('/course/{course_id}/lesson/{lesson_id}/{tab?}', 'HomePageController@view_course1')->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|protocol|test'])->name('view_lesson');
+Route::get('/course/{course_id}/lesson/{lesson_id}/{tab?}', 'HomePageController@view_lesson')->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|protocol|test'])->name('view_lesson');
 
 Auth::routes();
 
