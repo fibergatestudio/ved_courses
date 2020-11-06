@@ -45,6 +45,7 @@ class HomePageController extends Controller
         $course = DB::table('courses')->where('id', $course_id)->first();
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
         $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->orderBy('id')->get();
+        $course_faq = DB::table('courses_faq')->where('course_id', $course_id)->orderBy('id')->get();
         if (is_null($course)) {
             abort(404);
         }
@@ -54,6 +55,9 @@ class HomePageController extends Controller
             break;
         case 'program':
             return view('front.program', compact('course', 'course_information', 'course_lessons'));
+            break;
+        case 'faq':
+            return view('front.questions', compact('course', 'course_information', 'course_faq'));
             break;
         default:
             return view('front.aboute_course', compact('course', 'course_information'));
