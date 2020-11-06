@@ -49,6 +49,9 @@ Route::get('/teacher/setting', 'TeacherController@teacherSetting')->middleware('
 
 
 
+// Логаут
+Route::get('/logout', 'Auth\LoginController@logout');
+
 
 // Для авторизации через соц сети -
 // https://laravel.com/docs/7.x/socialite
@@ -146,17 +149,22 @@ Route::get('/teacher/setting', 'TeacherController@teacherSetting')->middleware('
             // Редактирование курса POST
             Route::post('/courses_controll/edit_course/{course_id}/apply', 'CoursesController@edit_course_apply')->name('edit_course_apply')->middleware('can:admin_rights');
 
-            //--todo // Редактировать "Про Этот Курс"
+            // Редактировать "Про Этот Курс"
             Route::get('/courses_controll/edit_course/{course_id}/edit_about', 'CoursesController@edit_about')->name('edit_about')->middleware('can:admin_rights');
-                //--todo // Примернить редактирование
+                // Применить редактирование
                 Route::post('/courses_controll/edit_course/{course_id}/edit_about/apply', 'CoursesController@edit_about_apply')->name('edit_about_apply')->middleware('can:admin_rights');
-            //--todo// Добавить Занятие
+            // Добавить Занятие
             Route::get('/courses_controll/edit_course/{course_id}/add_lesson', 'CoursesController@add_lesson')->name('add_lesson')->middleware('can:admin_rights');
-                //--todo// Добавить Занятие POST
+                // Добавить Занятие POST
                 Route::post('/courses_controll/edit_course/{course_id}/add_lesson/apply', 'CoursesController@add_lesson_apply')->name('add_lesson_apply')->middleware('can:admin_rights');
-            //--todo// Добавить Вопрос
+                // Добавить тест к занятию
+                Route::get('/courses_controll/edit_course/{course_id}/add_lesson_test', 'CoursesController@addLessonRedirect')->name('add_lesson_redirect')->middleware('can:admin_rights');
+                // Добавить тест (POST)
+                Route::post('/courses_controll/edit_course/{course_id}/add_lesson_test/apply')->name('add_lesson_test_apply')->middleware('can:admin_rights');
+
+            /// Добавить Вопрос
             Route::get('/courses_controll/edit_course/{course_id}/add_question', 'CoursesController@add_question')->name('add_question')->middleware('can:admin_rights');
-                //--todo// Добавить Вопрос POST
+                // Добавить Вопрос POST
                 Route::post('/courses_controll/edit_course/{course_id}/add_question/apply', 'CoursesController@add_question_apply')->name('add_question_apply')->middleware('can:admin_rights');
 
 

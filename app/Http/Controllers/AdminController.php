@@ -61,8 +61,10 @@ class AdminController extends Controller
             ]);
         // Если пользователь учитель - обновить
         } else if ($request->role == "teacher"){
-            DB::table('teachers')->where('user_id', $user_id)->update([
-            ]);
+            //dd("Techer");
+            // DB::table('teachers')->where('user_id', $user_id)->update([
+            //     'status' 
+            // ]);
         }
 
         return redirect()->back()->with('message_success', 'Пользователь изменен!');

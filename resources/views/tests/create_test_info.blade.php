@@ -17,7 +17,12 @@
         </div>
         <div class="col-md-9">
             <div class="card">
-                <div class="card-header">{{ __('Создание теста') }}</div>
+                <div class="card-header">
+                    {{ __('Создание теста') }} 
+                    @if($course_id)
+                        - Для курса # {{ $course_id }}
+                    @endif
+                </div>
 
                 <div class="card-body">
                     @if (session('status'))
@@ -26,7 +31,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('create_new_test_info') }}" id="test_form" method="POST" >
+                    <form action="{{ route('create_new_test_info', ['course_id' => $course_id ]) }}" id="test_form" method="POST" >
                         @csrf
                         <div class="form-group">
                             <label>Название Теста</label>

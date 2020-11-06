@@ -26,7 +26,11 @@ class TestsController extends Controller
     // --------------------Новое создание тестов (под вертску) ------------------------
     public function new_test_info(){
 
-        return view('tests.create_test_info');
+        //dd(request()->has('course_id'));
+        // Получаем айди курса
+        $course_id = request()->course_id;
+
+        return view('tests.create_test_info', compact('course_id'));
     }
 
     public function create_new_test_info(Request $request){
@@ -118,6 +122,18 @@ class TestsController extends Controller
             'operating_mode'            => $request->operating_mode,
 
         ]);
+        
+        // Берем айди курса
+        $course_id = request()->course_id;
+        // Если айди существует, добавляем текущий текст к курсу
+        if($course_id){
+            DB::table('courses_program')->where('course_id', $course_id)->update([
+                'test_id' => $test_info_id,
+            ]);
+        } else {
+            dd("no_course");
+        }
+
         // Создаем тест и редиректим на добавление вопроса
         return \Redirect::route('question_type', $test_info_id)->with('message', 'State saved correctly!!!');
     }

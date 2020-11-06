@@ -96,14 +96,25 @@ class CoursesController extends Controller
         //dd($request->all());
         // Делаем аррей из пунктов
         $courses_arr = json_encode($request->course_learn, JSON_UNESCAPED_UNICODE);
-        //dd($courses_arr);
-
-        // Добавляем в базу.
-        DB::table('courses_information')->insert([
-            'course_id' => $course_id,
-            'course_description' => $request->course_description,
-            'course_learn_arr' => $courses_arr,
-        ]);
+        
+        // Берем информацию описания курса
+        $about_check = DB::table('courses_information')->where('course_id', $course_id)->first();
+        // Если инфа есть
+        if(isset($about_check)){
+            // Обновляем
+            // dd("exist");
+            DB::table('courses_information')->where('course_id', $course_id)->update([
+                'course_description' => $request->course_description,
+                'course_learn_arr' => $courses_arr,
+            ]);
+        } else {
+            // Если нет, создаем
+            DB::table('courses_information')->insert([
+                'course_id' => $course_id,
+                'course_description' => $request->course_description,
+                'course_learn_arr' => $courses_arr,
+            ]);
+        }
 
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
@@ -112,7 +123,22 @@ class CoursesController extends Controller
 
         $course_info = DB::table('courses')->where('id', $course_id)->first(); 
 
-        return view('courses.add_lesson', compact('course_info'));
+        $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
+
+        // Аррей айдишников тестов
+        $test_ids_arr = [];
+        // Берем все айди и заносим в аррей
+        foreach($courses_program as $course_program){
+            array_push($test_ids_arr, $course_program->test_id);
+        }
+
+        //dd($test_ids_arr);
+
+        $course_tests = DB::table('tests_info')->where('id', $test_ids_arr)->get();
+        //dd($tests);
+
+
+        return view('courses.add_lesson', compact('course_info', 'course_tests'));
     }
     // add_lesson_apply
     public function add_lesson_apply($course_id, Request $request){
@@ -193,6 +219,16 @@ class CoursesController extends Controller
         
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
+    // add_ lesson
+    public function addLessonRedirect($course_id, Request $request){
+
+        // Добавляем урок перед редиректом
+        $this->add_lesson_apply($course_id, $request);
+
+        // Редиректим с айдишником
+        return redirect()->route('new_test_info', ['course_id' => $course_id]);
+    }
+
     // add_question
     public function add_question($course_id){
 

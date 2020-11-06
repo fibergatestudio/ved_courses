@@ -95,7 +95,36 @@
                             <div onclick="app1.addNewEntry()" class="btn btn-success">Добавить Следущее Видео</div>
                         </div>
 
-
+                        <div class="form-group">
+                            <label>Текущие тесты курса</label>
+                            <div class="form-group">
+                                <label>Список тестов</label>
+                                <table class="table table-bordered data-table">
+                                    <thead>
+                                        <tr>
+                                            <th>#</th> 
+                                            <th>Имя</th>
+                                            <th>Описание</th>
+                                            <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @foreach($course_tests as $test)
+                                        <tr>
+                                            <td>{{ $test->id }}</td>
+                                            <td>{{ $test->name }}</td>
+                                            <td>{{ strip_tags($test->description) }}</td>
+                                            <td>
+                                                <a href="{{ route('view_test_info_questions', ['test_info_id' => $test->id ]) }}"><div class="btn btn-success">Редактировать</div></a>
+                                                <div class="btn btn-danger">Удалить</div>
+                                            </td>
+                                        </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <a href="{{ route('add_lesson_redirect', ['course_id' => $course_info->id ]) }}" class="btn btn-success">Добавить тест</a>
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
                     
