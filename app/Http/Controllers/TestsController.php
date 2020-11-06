@@ -130,8 +130,6 @@ class TestsController extends Controller
             DB::table('courses_program')->where('course_id', $course_id)->update([
                 'test_id' => $test_info_id,
             ]);
-        } else {
-            dd("no_course");
         }
 
         // Создаем тест и редиректим на добавление вопроса
