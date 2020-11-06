@@ -256,7 +256,7 @@ $(document).ready(function () {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! C:\Fibergate\LARAGON\www\ved_courses\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\Fibergate\LARAGON\www\ved_courses\resources\js\main.js */"./resources/js/main.js");
 
 
 /***/ })

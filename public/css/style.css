@@ -1259,7 +1259,7 @@ element.style {
 .direction-wrapper {
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding-left: 10px;
     padding-right: 10px;
     -ms-flex-wrap: wrap;
@@ -1270,7 +1270,9 @@ element.style {
     -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
     margin-bottom: 50px;
-    max-width: 32%
+    max-width: 30%;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .direction-inner:hover .direction-inner_img {
@@ -1650,7 +1652,7 @@ element.style {
     width: 45%;
     -webkit-box-pack: center;
     -ms-flex-pack: center;
-    justify-content: center;
+    /*justify-content: center;*/
     margin-bottom: 26px
 }
 
