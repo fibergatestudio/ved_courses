@@ -133,7 +133,7 @@ class CoursesController extends Controller
         }
 
         //dd($test_ids_arr);
-
+        dd($test_ids_arr);
         $course_tests = DB::table('tests_info')->where('id', $test_ids_arr)->get();
         //dd($tests);
 
