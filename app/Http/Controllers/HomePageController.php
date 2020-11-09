@@ -77,27 +77,24 @@ class HomePageController extends Controller
         } else {
             $lesson = DB::table('courses_program')->where('course_id', '=', $course_id)->first();
         }
-        /*if (is_null($course) or is_null($lesson)) {
+        if (is_null($course) or is_null($lesson)) {
             abort(404);
-        }*/
+        }
         switch ($tab) {
+        case 'strings':
+            return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+            break;
         case 'video':
             return view('front.video_collection', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
             break;
         case 'protocol':
             return view('front.protocol', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
             break;
-        case 'test':
+        /*case 'test':
             return view('front.test_a', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
-            break;
-        case 'strings':
-            return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
-            break;
-        case 'teachers':
-            return view('front.teachers', compact('course', 'course_information'));
-            break;
+            break;*/
         default:
-            return view('front.aboute_course', compact('course', 'course_information'));
+            return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));;
             break;
         }
     }
