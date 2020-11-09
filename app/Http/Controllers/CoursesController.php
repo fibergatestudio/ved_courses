@@ -124,17 +124,20 @@ class CoursesController extends Controller
         $course_info = DB::table('courses')->where('id', $course_id)->first(); 
 
         $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
+        //dd($courses_program);
+        if(!$courses_program->isEmpty()){
+            // Аррей айдишников тестов
+            $test_ids_arr = [];
+            // Берем все айди и заносим в аррей
+            foreach($courses_program as $course_program){
+                array_push($test_ids_arr, $course_program->test_id);
+            }
 
-        // Аррей айдишников тестов
-        $test_ids_arr = [];
-        // Берем все айди и заносим в аррей
-        foreach($courses_program as $course_program){
-            array_push($test_ids_arr, $course_program->test_id);
+            $course_tests = DB::table('tests_info')->where('id', $test_ids_arr)->get();
+        } else {
+            $course_tests = [];
         }
 
-        //dd($test_ids_arr);
-
-        $course_tests = DB::table('tests_info')->where('id', $test_ids_arr)->get();
         //dd($tests);
 
 
