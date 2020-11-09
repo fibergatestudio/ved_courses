@@ -65,17 +65,22 @@ class CoursesController extends Controller
 
         $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
 
-        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons') );
+        $teachers = DB::table('users')->where('role', 'teacher')->get();
+
+        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers') );
     }
 
     public function edit_course_apply($course_id, Request $request){
 
         //dd($request->visibility);
 
+        $teacher = $request->assigned_teacher_id;
+
         DB::table('courses')->where('id',$course_id)->update([
             'name' => $request->name,
             'description' => $request->description,
             'visibility' => $request->visibility,
+            'assigned_teacher_id' => $teacher,
         ]);
 
         return redirect('courses_controll')->with('message_success', 'Курс успешно изменен!');
