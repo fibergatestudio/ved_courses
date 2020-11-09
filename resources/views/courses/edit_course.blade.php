@@ -114,6 +114,15 @@
                                 <option value="register" @if($course_info->visibility == "register") selected @endif>Только для зарегистрированных</option>
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Назначенный препод</label>
+                            <select type="text" class="form-control" name="assigned_teacher_id">
+                                <option>Выберите</option>
+                                @foreach($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}" @if($teacher->id == $course_info->assigned_teacher_id ) selected @endif>{{ $teacher->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
                     
