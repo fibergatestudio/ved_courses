@@ -58,14 +58,15 @@
                     <div class="programs-item_hours"><a href="##">{{ $lesson->learning_time }} годин на завершення</a> </div>
                 </div>
                 <div class="programs-grid_item">
-                    <div class="programs-item_video"><a href="##">7 відео, 7 матеріалів для самостійного вивчення, 2 тести</a></div>
+                    <div class="programs-item_video"><a href="##">{{ collect(json_decode($lesson->video_file))->whereNotNull()->count() + collect(json_decode($lesson->video_link))->whereNotNull()->count() }} відео, {{ collect(json_decode($lesson->add_document))->whereNotNull()->count() }} матеріалів для самостійного вивчення, {{ collect(json_decode($lesson->test_id))->whereNotNull()->count() }} тести</a></div>
+
                 </div>
                 <div class="programs-grid_item">
                     <a class="programs-item_btn btn-watch" href="##"><span class="btn-watch_inner">переглянути все</span></a>
                 </div>
                 <div class="programs-grid_item hidden_item ">
                     <div class="gray-separator"></div>
-                    <div class="programs-item_video">5 відео</div>
+                    <div class="programs-item_video">{{ collect(json_decode($lesson->video_file))->whereNotNull()->count() + collect(json_decode($lesson->video_link))->whereNotNull()->count() }} відео</div>
                     <table class="hidden-menu">
                         <tr class="hidden-menu_string">
                             <td class="hidden-menu_column">3 хв.</td>
@@ -94,7 +95,7 @@
                         </tr>
                     </table>
                     <div class="gray-separator"></div>
-                    <div class="programs-item_book">2 матеріалів для самостійного вивчення</div>
+                    <div class="programs-item_book">{{ collect(json_decode($lesson->add_document))->whereNotNull()->count() }} матеріалів для самостійного вивчення</div>
                     <table class="hidden-menu">
                         <tr class="hidden-menu_string">
                             <td class="hidden-menu_column">10 хв.</td>
