@@ -11,7 +11,7 @@
         <a class="menu_title-link" href="{{url('/simulatorBig')}}">Про ресурс</a>
     </li>
     <li class="menu_title-inner">
-        <a class="menu_title-link" href="resources/views/main#direction-separator_badge">Тематичні напрями</a>
+        <a class="menu_title-link" href="#direction-separator_badge">Тематичні напрями</a>
     </li>
     @guest
         <li class="menu_title-inner">

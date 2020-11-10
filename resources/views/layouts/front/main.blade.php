@@ -16,7 +16,7 @@
                     <div class="header-text-middle">
                         Пізнай світ по-новому
                     </div>
-                    <a class="header-btn" href="##">
+                    <a class="header-btn" href="{{url('/simulator')}}">
                         <span>перейти до курсів</span>
                     </a>
                 </div>
