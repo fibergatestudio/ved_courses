@@ -167,6 +167,9 @@ Route::get('/logout', 'Auth\LoginController@logout');
                 // Добавить Вопрос POST
                 Route::post('/courses_controll/edit_course/{course_id}/add_question/apply', 'CoursesController@add_question_apply')->name('add_question_apply')->middleware('can:admin_rights');
 
+                // Удалить препода с курса
+                Route::get('/courses_controll/edit_course/{course_id}/delete_teacher/{teacher_id}', 'CoursesController@delete_teacher_course')->name('delete_teacher')->middleware('can:admin_rights');
+
 
 //////////
 

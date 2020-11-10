@@ -21,7 +21,7 @@ class CreateCoursesTable extends Migration
             $table->string('finished_count')->nullable();
             $table->string('course_image_path')->nullable();
             $table->string('creator_id')->nullable();
-            $table->string('assigned_teacher_id')->nullable();
+            $table->json('assigned_teacher_id')->nullable();
             $table->string('visibility')->nullable();
             $table->timestamps();
         });

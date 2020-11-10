@@ -123,6 +123,29 @@
                                 @endforeach
                             </select>
                         </div>
+                        <div class="form-group">
+                            <label>Список преподавателей</label>
+                            <table class="table table-bordered data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th> 
+                                        <th>Имя</th>
+                                        <th>Действие</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($assigned_teachers as $teacher)
+                                    <tr>
+                                        <td>{{ $teacher->id }}</td>
+                                        <td>{{ $teacher->name }}</td>
+                                        <td>
+                                            <a href="{{ route('delete_teacher', ['course_id' => $course_info->id, 'teacher_id' => $teacher->id]) }}"><div class="btn btn-danger">Удалить</div></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
                     
