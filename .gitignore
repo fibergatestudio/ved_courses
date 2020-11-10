@@ -1,6 +1,7 @@
 /public/images
 /public/docs
 /public/video_files
+.vscode
 /node_modules
 /public/hot
 /public/storage
