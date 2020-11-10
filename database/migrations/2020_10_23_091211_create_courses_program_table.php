@@ -16,7 +16,7 @@ class CreateCoursesProgramTable extends Migration
         Schema::create('courses_program', function (Blueprint $table) {
             $table->id();
             $table->string('course_id')->nullable();
-            $table->string('course_description')->nullable(); 
+            $table->longText('course_description')->nullable(); 
             $table->string('learning_time')->nullable(); 
             
             // Протокол

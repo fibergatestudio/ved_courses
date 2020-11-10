@@ -88,8 +88,6 @@ class CoursesController extends Controller
         // Убираем лишнее значение
         $new_arr = array_splice($teacher_arr, array_search($teacher_id, $teacher_arr ), 1);
 
-        //dd($teacher_arr, $new_arr);
-
         DB::table('courses')->where('id', $course_id)->update([
             'assigned_teacher_id' => json_encode($teacher_arr),
         ]);
