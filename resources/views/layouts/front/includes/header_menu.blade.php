@@ -9,7 +9,7 @@
     </div>
     <div class="header-menu_inner">
         <div class="header-menu_center header-menu_center--narrow">
-            <img class="header-menu_logo" src="{{ asset('img/logo.png') }}" alt="logo">
+            <a href="{{route('main')}}"><img class="header-menu_logo" src="{{ asset('img/logo.png') }}" alt="logo"></a>
         </div>
     </div>
     <div class="header-menu_inner">
