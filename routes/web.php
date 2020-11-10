@@ -243,4 +243,11 @@ Route::get('/logout', 'Auth\LoginController@logout');
         // Drag and drop test
         Route::get('/tests_controll/view_sort/{test_id}', 'TestsController@view_sort')->name('view_sort')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
-//////////
+
+        Route::get('simulatorBig', function () {
+             return view('simulatorBig');
+        });
+        Route::get('/main', function () {
+            return view('main');
+       });
+       

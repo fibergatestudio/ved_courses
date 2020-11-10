@@ -16,7 +16,7 @@
                     <div class="header-text-middle">
                         Пізнай світ по-новому
                     </div>
-                    <a class="header-btn" href="##">
+                    <a class="header-btn" href="{{url('/simulator')}}">
                         <span>перейти до курсів</span>
                     </a>
                 </div>
@@ -91,60 +91,7 @@
                         since the 1500s, when an unknown printer
                     </div>
                 </div>
-            </div>-
-            <!-- Тест вывода курсов -->
-            @foreach($courses as $course)
-                @if($course->visibility == "all")
-
-                    <div class="direction-inner">
-                        <div class="direction-inner_top">
-                            @if($course->course_image_path != "")
-                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
-                            @else
-                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
-                            @endif
-                            <a class="image-btn" href="{{ route('view_course', $course->id) }}">
-                                <span>До курсу</span>
-                                <!--<div class="image-btn_arrow"></div>-->
-                            </a>
-                        </div>
-                        <div class="direction-inner_bottom">
-                            <div class="direction-inner_bottom--title">
-                                <h4> {{ $course->name }}</h4>
-                            </div>
-                            <div class="direction-inner_bottom--text">
-                                {{ $course->description }}
-                            </div>
-                        </div>
-                    </div>
-
-                @elseif($course->visibility == "register")
-                    @if (Auth::check())
-                    <div class="direction-inner">
-                        <div class="direction-inner_top">
-                            @if($course->course_image_path != "")
-                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
-                            @else
-                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
-                            @endif
-                            <a class="image-btn" href="{{ route('view_course', $course->id) }}">
-                                <span>До курсу</span>
-                                <!--<div class="image-btn_arrow"></div>-->
-                            </a>
-                        </div>
-                        <div class="direction-inner_bottom">
-                            <div class="direction-inner_bottom--title">
-                                <h4> {{ $course->name }}</h4>
-                            </div>
-                            <div class="direction-inner_bottom--text">
-                                {{ $course->description }}
-                            </div>
-                        </div>
-                    </div>
-                    @endif
-                @endif
-            @endforeach
-            <!-- END Тест вывода курсов END -->
+            </div>
         </div>
     </div>
 </section>
