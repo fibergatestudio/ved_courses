@@ -2,14 +2,14 @@
     <div class="header-menu_inner">
         <nav class="header-menu_left">
             <ul>
-                <li><a class="top-btn" href="{{url('/simulatorBig')}}"><span>Про ресурс</span></a></li>
+                <li><a class="top-btn" href="{{route('about')}}"><span>Про ресурс</span></a></li>
                 <li><a class="top-btn" href="{{ URL::to('/') }}/#direction-separator_badge"><span>Тематичні напрямки</span></a></li>
             </ul>
         </nav>
     </div>
     <div class="header-menu_inner">
         <div class="header-menu_center header-menu_center--narrow">
-            <img class="header-menu_logo" src="{{ asset('img/logo.png') }}" alt="logo">
+            <a href="{{route('main')}}"><img class="header-menu_logo" src="{{ asset('img/logo.png') }}" alt="logo"></a>
         </div>
     </div>
     <div class="header-menu_inner">
