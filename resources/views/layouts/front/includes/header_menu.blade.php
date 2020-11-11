@@ -2,7 +2,7 @@
     <div class="header-menu_inner">
         <nav class="header-menu_left">
             <ul>
-                <li><a class="top-btn" href="{{url('/simulatorBig')}}"><span>Про ресурс</span></a></li>
+                <li><a class="top-btn" href="{{route('about')}}"><span>Про ресурс</span></a></li>
                 <li><a class="top-btn" href="{{ URL::to('/') }}/#direction-separator_badge"><span>Тематичні напрямки</span></a></li>
             </ul>
         </nav>

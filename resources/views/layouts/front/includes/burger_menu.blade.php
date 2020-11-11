@@ -8,7 +8,7 @@
         </div>
     </li>
     <li class="menu_title-inner">
-        <a class="menu_title-link" href="{{url('/simulatorBig')}}">Про ресурс</a>
+        <a class="menu_title-link" href="{{ route('about')}}">Про ресурс</a>
     </li>
     <li class="menu_title-inner">
         <a class="menu_title-link" href="#direction-separator_badge">Тематичні напрями</a>
