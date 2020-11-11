@@ -42,43 +42,27 @@
 
         <div class="main-teachers">
             <h3 class="main-teachers_title" id="anchor_teachers">Викладачі</h3>
-
-            <div class="teachers-grid_wrapper">
+            @forelse ($course_teachers as $teacher)
+            <div class="teachers-grid_wrapper mb-2">
                 <div class="teachers-grid_item">
                     <div class="teachers-item_photo">
                     </div>
                 </div>
                 <div class="teachers-grid_item">
-                    <div class="teachers-item_name">Іванов Іван Іванович </div>
-                    <div class="teachers-item_position">Професор наук</div>
-                    <div class="teachers-item_students"><span>12645</span> &nbspучнів</div>
-                    <div class="teachers-item_course"><span>25</span> &nbspкурсів</div>
+                    <div class="teachers-item_name">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
+                    <div class="teachers-item_position">Професор наук ???</div>
+                    <div class="teachers-item_students"><span>???</span> &nbspучнів</div>
+                    <div class="teachers-item_course"><span>??</span> &nbspкурсів</div>
                 </div>
                 <div class="teachers-grid_item">
                     <div class="teachers-item_text">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printerLorem Ipsum has been the industry's standard dummy text ever since the
+                        ???
                     </div>
                 </div>
             </div>
+            @empty
 
-            <div class="teachers-grid_wrapper">
-                <div class="teachers-grid_item">
-                    <div class="teachers-item_photo">
-                    </div>
-                </div>
-                <div class="teachers-grid_item">
-                    <div class="teachers-item_name">Іванов Іван Іванович </div>
-                    <div class="teachers-item_position">Професор наук</div>
-                    <div class="teachers-item_students"><span>12645</span> &nbspучнів</div>
-                    <div class="teachers-item_course"><span>25</span> &nbspкурсів</div>
-                </div>
-                <div class="teachers-grid_item">
-                    <div class="teachers-item_text">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printerLorem Ipsum has been the industry's standard dummy text ever since the
-                    </div>
-                </div>
-            </div>
-
+            @endforelse
 
         </div>
 
