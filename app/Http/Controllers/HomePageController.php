@@ -51,16 +51,16 @@ class HomePageController extends Controller
         }
         switch ($tab) {
         case 'teachers':
-            return view('front.teachers', compact('course', 'course_information'));
+            return view('teachers', compact('course', 'course_information'));
             break;
         case 'program':
-            return view('front.program', compact('course', 'course_information', 'course_lessons'));
+            return view('program', compact('course', 'course_information', 'course_lessons'));
             break;
         case 'faq':
-            return view('front.questions', compact('course', 'course_information', 'course_faq'));
+            return view('questions', compact('course', 'course_information', 'course_faq'));
             break;
         default:
-            return view('front.aboute_course', compact('course', 'course_information'));
+            return view('aboute_course', compact('course', 'course_information'));
             break;
         }
     }

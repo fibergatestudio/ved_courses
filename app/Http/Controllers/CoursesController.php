@@ -65,25 +65,70 @@ class CoursesController extends Controller
 
         $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
 
-        $teachers = DB::table('users')->where('role', 'teacher')->get();
+        $teacher_arr = json_decode($course_info->assigned_teacher_id);
+        //dd($teacher_arr);
+        if($teacher_arr){
+            $assigned_teachers =  DB::table('users')->whereIn('id', $teacher_arr)->get();
+            $teachers = DB::table('users')->where('role', 'teacher')->whereNotIn('id', $teacher_arr)->get();
+        } else {
+            $assigned_teachers = [];
+            $teachers = DB::table('users')->where('role', 'teacher')->get();
+        }
+        
 
-        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers') );
+        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers') );
+    }
+
+    public function delete_teacher_course($course_id, $teacher_id){
+
+        $course_info = DB::table('courses')->where('id', $course_id)->first();
+        // Берем аррей учителей - декодим
+        $teacher_arr = json_decode($course_info->assigned_teacher_id);
+
+        // Убираем лишнее значение
+        $new_arr = array_splice($teacher_arr, array_search($teacher_id, $teacher_arr ), 1);
+
+        DB::table('courses')->where('id', $course_id)->update([
+            'assigned_teacher_id' => json_encode($teacher_arr),
+        ]);
+
+
+        
+        return redirect()->back();
     }
 
     public function edit_course_apply($course_id, Request $request){
 
         //dd($request->visibility);
 
-        $teacher = $request->assigned_teacher_id;
+        $current_course = DB::table('courses')->where('id', $course_id)->first();
+        //$tecaher_arr = json_encode()
+
+        // $teachers_arr = [];
+        // //dd($current_course->assigned_teacher_id);
+        if($current_course->assigned_teacher_id){
+            //array_push($teachers_arr, )
+            $teacher_arr = json_decode($current_course->assigned_teacher_id);
+            //dd($teachers_arr);
+        } else {
+            $teacher_arr = [];
+        }
+
+        //$teacher_arr = [];
+        $t_id = $request->assigned_teacher_id;
+        array_push($teacher_arr, $t_id);
+        $teachers = json_encode($teacher_arr);
+        //dd($teachers);
 
         DB::table('courses')->where('id',$course_id)->update([
             'name' => $request->name,
             'description' => $request->description,
             'visibility' => $request->visibility,
-            'assigned_teacher_id' => $teacher,
+            'assigned_teacher_id' => $teachers,
         ]);
 
-        return redirect('courses_controll')->with('message_success', 'Курс успешно изменен!');
+        return redirect()->back();
+        //return redirect('courses_controll')->with('message_success', 'Курс успешно изменен!');
     }
 
     // edit_about

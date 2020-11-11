@@ -3,10 +3,10 @@
         <div class="footer-wrapper">
             <ul class="footer-inner">
                 <li>
-                    <a href="##">Про ресурс</a>
+                    <a href="{{url('/simulatorBig')}}">Про ресурс</a>
                 </li>
                 <li>
-                    <a href="##">Тематичні напрями</a>
+                    <a href="#direction-separator_badge">Тематичні напрями</a>
                 </li>
                 <li>
                     <a href="##">Кабінет</a>
