@@ -143,10 +143,22 @@ class CoursesController extends Controller
     // edit_about_apply
     public function edit_about_apply($course_id, Request $request){
 
+        //dd($request->questions_counter);
         //dd($request->all());
         // Делаем аррей из пунктов
-        $courses_arr = json_encode($request->course_learn, JSON_UNESCAPED_UNICODE);
+        //$courses_arr = json_encode($request->course_learn, JSON_UNESCAPED_UNICODE);
+
+        $q_c = $request->questions_counter;
+        $course_lrn_arr = [];
+        for($i = 0; $i <= $q_c; $i++){
+            $c = "course_learn" . $i;
+            //dd($c);
+            array_push($course_lrn_arr, $request->$c);
+        }
+        //dd($course_lrn_arr);
         
+        $courses_arr = json_encode($course_lrn_arr, JSON_UNESCAPED_UNICODE);
+        //dd($courses_arr);
         // Берем информацию описания курса
         $about_check = DB::table('courses_information')->where('course_id', $course_id)->first();
         // Если инфа есть
