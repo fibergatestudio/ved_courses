@@ -60,11 +60,7 @@
 @section('scripts')
 
 <script>
-
-        //var global_index = 0;
         var currentCounter = 0;
-        //var answersCounter = 0;
-
         var app1 = new Vue({
             el: '#app1',
             data: {
@@ -77,28 +73,17 @@
             methods: {
                 addNewEntry: function(){
                     currentCounter = currentCounter + 1;
-                    //var id_t = '#question_text' + (currentCounter - 1);
                     var id_t = '#question_text' + (currentCounter);
-                    //console.log(id_t);
+
                     setTimeout(function(){  tinymce.init({ selector: id_t }); }, 100);
-                    //tinymce.init({ selector: id_t });
+
                     this.ids.push({id: currentCounter});
                     document.getElementById("counter").value = currentCounter;
-                    //var id_t = '#question_text' + currentCounter;
-                    //var id_t1 = '#question_text1';
-                    //console.log(id_t);
-                    //console.log(id_t1);
-                    //tinymce.init({ selector: '#question_text0'});
-                    //tinymce.init({ selector: '#question_text1'});
-                    //tinymce.init({ selector: '#question_text2'});
-                    //tinymce.init({ selector: '#question_text3'});
+
                     
                 },
-              
             }
         });
-    
-
 </script>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
