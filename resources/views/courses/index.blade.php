@@ -1,7 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.front.front_child')
 
 @section('content')
-<div class="container">
+<div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -78,4 +78,342 @@
         </div>
     </div>
 </div>
+
+
+
+<body>
+
+    <!-- Burger-menu (begin)-->
+    <ul class="menu_title-wrapper">
+
+        <li class="menu_title-inner">
+            <div class="menu_burger-clone">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Про ресурс</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Тематичні напрями</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Студент</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link menu_title-linkStudent" href="##">Ім'я викладача</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Панель курсів</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Профіль</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Налаштування</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Вийти</a>
+        </li>
+
+    </ul>
+    <!-- Burger-menu (end)-->
+
+    <!-- student modal-page (begin) -->
+    <div class="bootstrap-restylingStudent modal fade" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <ul class="student-menu-wrapper">
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Панель курсів</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Профіль</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Налаштування</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Вийти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- student modal-page (end) -->
+
+    <!-- deleteBtn modal-page (begin) -->
+    <div class="bootstrap-restylingStudent modal fade" id="deleteModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog_restyle">
+            <div class="modal-content">
+                <div class="deleteMenu-wrapper">
+
+                    <div class="deleteMenu-topImg">
+                        <img src="/img/basket.png" alt="icon">
+                    </div>
+                    <div class="deleteMenu-text">
+                        Ви точно бажаєте видалити <br> Курс ?
+                    </div>
+                    <div class="deleteMenu-btn">
+                        <a class="flexTable-btn_delete" href="##"><span>Видалити</span></a>
+                    </div>
+                </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- deleteBtn modal-page (end) -->
+
+    <section class="courseControl" style="min-height: 420px;">
+        <div class="courseControl-separator direction-separator">
+        </div>
+        <div class="courseControl-container sticky-container container">
+
+            <!-- sidebar-menu (start) -->
+
+            <div class="sidebar">
+
+                <div class="sidebar-sticky">
+
+                    <div class="sidebar-top_wrapper">
+                        <div class="sidebar-top_burger-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <!-- changeling block mobile-btn (start) -->
+                        <div class="sidebar-top_mobile-btn">
+                            <div class="sidebar-top_mobile-img">
+                                <img src="/img/teacher-mobileMenu-2.png" alt="icon">
+                            </div>
+                            <div class="sidebar-top_mobile-name">
+                                Управління курсами
+                            </div>
+                        </div>
+                        <!-- changeling block mobile-btn (end) -->
+
+                    </div>
+                    <div class="sidebar-menu_wrapper">
+                        <nav class="sidebar-menu_navigation">
+                            <ul class="sidebar_title-wrapper">
+                                <li class="sidebar_title-inner">
+                                    <div class="sidebar_title-imgBox">
+                                        <img class="sidebar_title-image" src="/img/teacher-menu-1.png" alt="icon">
+                                    </div>
+                                    <a class="sidebar_title-link" href="{{ route('admin_panel') }}">Головна</a>
+                                </li>
+                                <li class="sidebar_title-inner">
+                                    <div class="sidebar_title-imgBox">
+                                        <img class="sidebar_title-image" src="/img/teacher-menu-2.png" alt="icon">
+                                    </div>
+                                    <a class="sidebar_title-link" href="{{ route('courses_controll') }}">Управління Курсами</a>
+                                </li>
+                                <li class="sidebar_title-inner">
+                                    <div class="sidebar_title-imgBox">
+                                        <img class="sidebar_title-image" src="/img/teacher-menu-3.png" alt="icon">
+                                    </div>
+                                    <a class="sidebar_title-link" href="{{ route('groups_controll') }}">Управління Групами</a>
+                                </li>
+                                <li class="sidebar_title-inner">
+                                    <div class="sidebar_title-imgBox">
+                                        <img class="sidebar_title-image" src="/img/teacher-menu-4.png" alt="icon">
+                                    </div>
+                                    <a class="sidebar_title-link" href="{{ route('students_controll') }}">Управління Студентами</a>
+                                </li>
+                                <li class="sidebar_title-inner">
+                                    <div class="sidebar_title-imgBox">
+                                        <img class="sidebar_title-image" src="/img/teacher-menu-5.png" alt="icon">
+                                    </div>
+                                    <a class="sidebar_title-link" href="{{ route('users_controll') }}">Управління Користувачами</a>
+                                </li>
+                                <li class="sidebar_title-inner">
+                                    <div class="sidebar_title-imgBox">
+                                        <img class="sidebar_title-image" src="/img/teacher-menu-6.png" alt="icon">
+                                    </div>
+                                    <a class="sidebar_title-link" href="{{ route('logout') }}">Вихід</a>
+                                </li>
+                            </ul>
+                        </nav>
+
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- sidebar-menu (end) -->
+
+            <h3 class="courseControl-title">Управління курсами <a href="{{ route('new_course') }}"><button class="btn btn-success">Создать Курс</button></a></h3>
+
+            <div class="flexTable-wrapper">
+                <div class="flexTable-scrollContainer">
+                    <div class="flexTable-scrollInner">
+
+                        <div class="flexTable-topTitle">
+                            <div class="flexTable-topTitle_inner">№</div>
+                            <div class="flexTable-topTitle_inner">Назва курсу</div>
+                            <div class="flexTable-topTitle_inner">Опис</div>
+                            <div class="flexTable-topTitle_inner">Перегляів</div>
+                            <div class="flexTable-topTitle_inner">Пройдено разів</div>
+                            <div class="flexTable-topTitle_inner">Творець (id)</div>
+                            <div class="flexTable-topTitle_inner">Управління</div>
+                        </div>
+                        @foreach($courses as $course)
+                        <div class="flexTable-string">
+                            <div class="flexTable-string_inner">{{ $course->id }}.</div>
+                            <div class="flexTable-string_inner">{{ $course->name }}</div>
+                            <div class="flexTable-string_inner">{{ $course->description }}</div>
+                            <div class="flexTable-string_inner">{{ $course->views }}</div>
+                            <div class="flexTable-string_inner">{{ $course->finished_count }}</div>
+                            <div class="flexTable-string_inner">{{ $course->creator_id }} {{ $course->creator_name }}</div>
+                            <div class="flexTable-string_inner">
+                                <a class="flexTable-btn_edit" href="{{ route('edit_course', ['course_id' => $course->id ]) }}"><span>Редагувати</span></a>
+                                <a class="flexTable-btn_delete" href="##" data-toggle="modal"
+                                    data-target="#deleteModal"><span>Видалити</span></a>
+                            </div>
+                        </div>
+                        @endforeach
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="flexMobile-wrapper">
+
+                <div class="flexMobile-block">
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">№</div>
+                        <div class="flexMobile-string_inner grayFont">1.</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Назва курсу
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter"> Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer Lorem Ipsum has</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Опис
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter">Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy</div>
+                    </div>
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">Переглядів</div>
+                        <div class="flexMobile-string_inner grayFont">10</div>
+                    </div>
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">Пройдено разів</div>
+                        <div class="flexMobile-string_inner grayFont">2</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Творець (id)
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter">Lorem Ipsum has been the industry's standard
+                             dummy text ever since</div>
+                    </div>
+                    <div class="flexMobile-string btns-string">
+                        <a class="flexMobile-btn_edit" href="##"><span>Редагувати</span></a>
+                        <a class="flexMobile-btn_delete" href="##" data-toggle="modal"
+                            data-target="#deleteModal"><span>Видалити</span></a>
+                    </div>
+                </div>
+
+                <div class="flexMobile-block">
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">№</div>
+                        <div class="flexMobile-string_inner grayFont">2.</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Назва курсу
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter"> Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer Lorem Ipsum has</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Опис
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter">Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy</div>
+                    </div>
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">Переглядів</div>
+                        <div class="flexMobile-string_inner grayFont">10</div>
+                    </div>
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">Пройдено разів</div>
+                        <div class="flexMobile-string_inner grayFont">2</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Творець (id)
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter">Lorem Ipsum has been the industry's standard
+                             dummy text ever since</div>
+                    </div>
+                    <div class="flexMobile-string btns-string">
+                        <a class="flexMobile-btn_edit" href="##"><span>Редагувати</span></a>
+                        <a class="flexMobile-btn_delete" href="##" data-toggle="modal"
+                            data-target="#deleteModal"><span>Видалити</span></a>
+                    </div>
+                </div>
+
+                <div class="flexMobile-block">
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">№</div>
+                        <div class="flexMobile-string_inner grayFont">3.</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Назва курсу
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter"> Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer Lorem Ipsum has</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Опис
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter">Lorem Ipsum has been the industry's standard dummy text ever
+                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy</div>
+                    </div>
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">Переглядів</div>
+                        <div class="flexMobile-string_inner grayFont">10</div>
+                    </div>
+                    <div class="flexMobile-string">
+                        <div class="flexMobile-string_inner blackFont">Пройдено разів</div>
+                        <div class="flexMobile-string_inner grayFont">2</div>
+                    </div>
+                    <div class="flexMobile-string blackFont">Творець (id)
+                    </div>
+                    <div class="flexMobile-string grayFont">
+                        <div class="text-limiter">Lorem Ipsum has been the industry's standard
+                             dummy text ever since</div>
+                    </div>
+                    <div class="flexMobile-string btns-string">
+                        <a class="flexMobile-btn_edit" href="##"><span>Редагувати</span></a>
+                        <a class="flexMobile-btn_delete" href="##" data-toggle="modal"
+                            data-target="#deleteModal"><span>Видалити</span></a>
+                    </div>
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+</body>
+
+
+
 @endsection
