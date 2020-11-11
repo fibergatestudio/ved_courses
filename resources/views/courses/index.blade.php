@@ -289,119 +289,42 @@
 
             <div class="flexMobile-wrapper">
 
+                @foreach($courses as $course)
                 <div class="flexMobile-block">
                     <div class="flexMobile-string">
                         <div class="flexMobile-string_inner blackFont">№</div>
-                        <div class="flexMobile-string_inner grayFont">1.</div>
+                        <div class="flexMobile-string_inner grayFont">{{ $course->id }}.</div>
                     </div>
                     <div class="flexMobile-string blackFont">Назва курсу
                     </div>
                     <div class="flexMobile-string grayFont">
-                        <div class="text-limiter"> Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has</div>
+                        <div class="text-limiter"> {{ $course->name }}</div>
                     </div>
                     <div class="flexMobile-string blackFont">Опис
                     </div>
                     <div class="flexMobile-string grayFont">
-                        <div class="text-limiter">Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy</div>
+                        <div class="text-limiter">{{ $course->description }}</div>
                     </div>
                     <div class="flexMobile-string">
                         <div class="flexMobile-string_inner blackFont">Переглядів</div>
-                        <div class="flexMobile-string_inner grayFont">10</div>
+                        <div class="flexMobile-string_inner grayFont">{{ $course->views }}</div>
                     </div>
                     <div class="flexMobile-string">
                         <div class="flexMobile-string_inner blackFont">Пройдено разів</div>
-                        <div class="flexMobile-string_inner grayFont">2</div>
+                        <div class="flexMobile-string_inner grayFont">{{ $course->finished_count }}</div>
                     </div>
                     <div class="flexMobile-string blackFont">Творець (id)
                     </div>
                     <div class="flexMobile-string grayFont">
-                        <div class="text-limiter">Lorem Ipsum has been the industry's standard
-                             dummy text ever since</div>
+                        <div class="text-limiter">{{ $course->creator_id }} {{ $course->creator_name }}</div>
                     </div>
                     <div class="flexMobile-string btns-string">
-                        <a class="flexMobile-btn_edit" href="##"><span>Редагувати</span></a>
+                        <a class="flexMobile-btn_edit" href="{{ route('edit_course', ['course_id' => $course->id ]) }}"><span>Редагувати</span></a>
                         <a class="flexMobile-btn_delete" href="##" data-toggle="modal"
                             data-target="#deleteModal"><span>Видалити</span></a>
                     </div>
                 </div>
-
-                <div class="flexMobile-block">
-                    <div class="flexMobile-string">
-                        <div class="flexMobile-string_inner blackFont">№</div>
-                        <div class="flexMobile-string_inner grayFont">2.</div>
-                    </div>
-                    <div class="flexMobile-string blackFont">Назва курсу
-                    </div>
-                    <div class="flexMobile-string grayFont">
-                        <div class="text-limiter"> Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has</div>
-                    </div>
-                    <div class="flexMobile-string blackFont">Опис
-                    </div>
-                    <div class="flexMobile-string grayFont">
-                        <div class="text-limiter">Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy</div>
-                    </div>
-                    <div class="flexMobile-string">
-                        <div class="flexMobile-string_inner blackFont">Переглядів</div>
-                        <div class="flexMobile-string_inner grayFont">10</div>
-                    </div>
-                    <div class="flexMobile-string">
-                        <div class="flexMobile-string_inner blackFont">Пройдено разів</div>
-                        <div class="flexMobile-string_inner grayFont">2</div>
-                    </div>
-                    <div class="flexMobile-string blackFont">Творець (id)
-                    </div>
-                    <div class="flexMobile-string grayFont">
-                        <div class="text-limiter">Lorem Ipsum has been the industry's standard
-                             dummy text ever since</div>
-                    </div>
-                    <div class="flexMobile-string btns-string">
-                        <a class="flexMobile-btn_edit" href="##"><span>Редагувати</span></a>
-                        <a class="flexMobile-btn_delete" href="##" data-toggle="modal"
-                            data-target="#deleteModal"><span>Видалити</span></a>
-                    </div>
-                </div>
-
-                <div class="flexMobile-block">
-                    <div class="flexMobile-string">
-                        <div class="flexMobile-string_inner blackFont">№</div>
-                        <div class="flexMobile-string_inner grayFont">3.</div>
-                    </div>
-                    <div class="flexMobile-string blackFont">Назва курсу
-                    </div>
-                    <div class="flexMobile-string grayFont">
-                        <div class="text-limiter"> Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has</div>
-                    </div>
-                    <div class="flexMobile-string blackFont">Опис
-                    </div>
-                    <div class="flexMobile-string grayFont">
-                        <div class="text-limiter">Lorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy</div>
-                    </div>
-                    <div class="flexMobile-string">
-                        <div class="flexMobile-string_inner blackFont">Переглядів</div>
-                        <div class="flexMobile-string_inner grayFont">10</div>
-                    </div>
-                    <div class="flexMobile-string">
-                        <div class="flexMobile-string_inner blackFont">Пройдено разів</div>
-                        <div class="flexMobile-string_inner grayFont">2</div>
-                    </div>
-                    <div class="flexMobile-string blackFont">Творець (id)
-                    </div>
-                    <div class="flexMobile-string grayFont">
-                        <div class="text-limiter">Lorem Ipsum has been the industry's standard
-                             dummy text ever since</div>
-                    </div>
-                    <div class="flexMobile-string btns-string">
-                        <a class="flexMobile-btn_edit" href="##"><span>Редагувати</span></a>
-                        <a class="flexMobile-btn_delete" href="##" data-toggle="modal"
-                            data-target="#deleteModal"><span>Видалити</span></a>
-                    </div>
-                </div>
+                @endforeach
 
             </div>
 
