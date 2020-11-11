@@ -6,7 +6,7 @@
                     <a href="{{url('/simulatorBig')}}">Про ресурс</a>
                 </li>
                 <li>
-                    <a href="#direction-separator_badge">Тематичні напрями</a>
+                    <a href="{{ URL::to('/') }}/#direction-separator_badge">Тематичні напрями</a>
                 </li>
                 <li>
                     <a href="##">Кабінет</a>
