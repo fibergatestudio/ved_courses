@@ -2426,6 +2426,10 @@ element.style {
     color: #878787
 }
 
+.breadcrumbs_item::first-letter {
+    text-transform: capitalize;
+}
+
 .breadcrumbs_item:not(:last-child):after {
     content: "/";
     color: #878787;
