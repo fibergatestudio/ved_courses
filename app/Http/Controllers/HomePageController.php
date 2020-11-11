@@ -72,6 +72,17 @@ class HomePageController extends Controller
 
     public function view_lesson($course_id, $lesson_id = null, $tab = null) {
         $user = Auth::user();
+        if ($user) {
+            session()->forget('viewed_course', $course_id);
+            session()->forget('viewed_lesson', $lesson_id);
+        }
+        else {
+            if ((session()->get('viewed_course') == $course_id) and (session()->get('viewed_lesson') <> $lesson_id)) {
+                return view('front.guest');
+            }
+            session()->put('viewed_course', $course_id);
+            session()->put('viewed_lesson', $lesson_id);
+        }
         $course = DB::table('courses')->where('id', $course_id)->first();
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
         if (isset($lesson_id)) {
