@@ -60,7 +60,6 @@
                         <div class="main-learn_inner--text">{!! $item !!}</div>
                     </div>
                     @endforeach
-
             </div>
         </div>
         @endisset
