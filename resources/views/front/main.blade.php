@@ -16,7 +16,7 @@
                     <div class="header-text-middle">
                         Пізнай світ по-новому
                     </div>
-                    <a class="header-btn" href="##">
+                    <a class="header-btn" href="{{ route('simulator') }}">
                         <span>перейти до курсів</span>
                     </a>
                 </div>
@@ -28,7 +28,7 @@
 @section('content')
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>Тематичні напрямки</span></div>
+        <div class="direction-separator_badge" id="direction-separator_badge"><span>Тематичні напрямки</span></div>
     </div>
     <div class="container">
         <div class="direction-wrapper">
@@ -91,7 +91,7 @@
                         since the 1500s, when an unknown printer
                     </div>
                 </div>
-            </div>
+            </div>-
             <!-- Тест вывода курсов -->
             @foreach($courses as $course)
                 @if($course->visibility == "all")
@@ -103,9 +103,9 @@
                             @else
                                 <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
                             @endif
-                            <a class="image-btn" href="{{ url('/course/'.$course->id) }}">
-                                <span>Підкатегорії</span>
-                                <div class="image-btn_arrow"></div>
+                            <a class="image-btn" href="{{ route('view_course', $course->id) }}">
+                                <span>До курсу</span>
+                                <!--<div class="image-btn_arrow"></div>-->
                             </a>
                         </div>
                         <div class="direction-inner_bottom">
@@ -127,9 +127,9 @@
                             @else
                                 <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
                             @endif
-                            <a class="image-btn" href="{{ url('/course/'.$course->id) }}>
-                                <span>Підкатегорії</span>
-                                <div class="image-btn_arrow"></div>
+                            <a class="image-btn" href="{{ route('view_course', $course->id) }}">
+                                <span>До курсу</span>
+                                <!--<div class="image-btn_arrow"></div>-->
                             </a>
                         </div>
                         <div class="direction-inner_bottom">

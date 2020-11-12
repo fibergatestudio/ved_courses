@@ -65,6 +65,7 @@
                     @endif
                     </div>
                 </div>
+            @if (!Auth::user()->provider_id)
                 <div class="grid-top_item">
                     <div class="grid-top_name">Поштова скринька<sup>*</sup></div>
                     <input class="studentSettings-input studentSettings-email" type="email" placeholder="mail@gmail.com" name="email" value="{{ $teacher_info->email }}" required>
@@ -73,9 +74,10 @@
                     <div class="grid-top_email">Адреса електронної пошти, яку ви використовуєте, щоб увійти на сайт.
                         Повідомлення з Ved і ваших курсів будуть відправлятися на цю адресу.</div>
                 </div>
-            </div>
-            <div class="separator settings-separator"></div>
 
+            </div>
+
+            <div class="separator settings-separator"></div>
             <div class="studentSettings-grid-middle">
                 <div class="grid-middle_item">
                     <div class="middle-wrapper">
@@ -96,6 +98,7 @@
                     <a class="middle-btn" href="javascript: void();" onclick="change_password();"><span>Зберегти</span></a></div>
                 </div>
             </div>
+            @endif
         </form>
         </div>
     </section>

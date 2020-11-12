@@ -64,6 +64,7 @@
                                         <td>{{ strip_tags($lesson->course_description) }}</td>
                                         <td>
                                             <div class="btn btn-success">Редактировать</div>
+                                            <div class="btn btn-danger">Удалить</div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -93,6 +94,7 @@
                                         <td>{{ strip_tags($faq->course_answer) }}</td>
                                         <td>
                                             <div class="btn btn-success">Редактировать</div>
+                                            <div class="btn btn-danger">Удалить</div>
                                         </td>
                                     </tr>
                                     @endforeach
@@ -111,6 +113,38 @@
                                 <option value="all" @if($course_info->visibility == "all") selected @endif>Для всех</option>
                                 <option value="register" @if($course_info->visibility == "register") selected @endif>Только для зарегистрированных</option>
                             </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Назначенный препод</label>
+                            <select type="text" class="form-control" name="assigned_teacher_id">
+                                <option>Выберите</option>
+                                @foreach($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}" @if($teacher->id == $course_info->assigned_teacher_id ) selected @endif>{{ $teacher->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Список преподавателей</label>
+                            <table class="table table-bordered data-table">
+                                <thead>
+                                    <tr>
+                                        <th>#</th> 
+                                        <th>Имя</th>
+                                        <th>Действие</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($assigned_teachers as $teacher)
+                                    <tr>
+                                        <td>{{ $teacher->id }}</td>
+                                        <td>{{ $teacher->name }}</td>
+                                        <td>
+                                            <a href="{{ route('delete_teacher', ['course_id' => $course_info->id, 'teacher_id' => $teacher->id]) }}"><div class="btn btn-danger">Удалить</div></a>
+                                        </td>
+                                    </tr>
+                                    @endforeach
+                                </tbody>
+                            </table>
                         </div>
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>

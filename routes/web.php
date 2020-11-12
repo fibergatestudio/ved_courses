@@ -15,14 +15,14 @@ use Illuminate\Support\Facades\Auth;
 */
 
 
-Route::get('/', 'HomePageController@welcome');
+Route::get('/', 'HomePageController@welcome')->name('main');
 
 Route::get('/student/information', 'StudentController@student_information' )->name('student_information');
 
 Route::get('/simulator', 'HomePageController@simulator')->name('simulator');
 Route::get('/student_courses', 'HomePageController@welcome_page')->name('welcome_page')->middleware('auth');
 Route::get('/student_ended', 'HomePageController@welcome2_page')->name('welcome2_page')->middleware('auth');
-Route::get('/student_profile', 'HomePageController@student_profile')->name('student_profile')->middleware('auth');
+Route::get('/student/profile', 'HomePageController@student_profile')->name('student_profile')->middleware('auth');
 Route::get('/aboute_course', 'HomePageController@aboute_course')->name('aboute_course')->middleware('auth');
 Route::get('/student_settings', 'HomePageController@student_settings')->name('student_settings')->middleware('auth');
 Route::get('/program', 'HomePageController@program')->name('program')->middleware('auth');
@@ -35,8 +35,8 @@ Route::get('/test_b', 'HomePageController@test_b')->name('test_b')->middleware('
 Route::get('/test_c', 'HomePageController@test_c')->name('test_c')->middleware('auth');
 Route::get('/video_collection', 'HomePageController@video_collection')->name('video_collection')->middleware('auth');
 Route::get('/guest', 'HomePageController@guest')->name('guest');
-
-Route::get('/course/{course_id}/{lesson_id?}/{tab?}', 'HomePageController@view_course' )->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|protocol|test'])->name('view_course');
+Route::get('/course/{course_id}/{tab?}', 'HomePageController@view_course')->where(['course_id' => '[0-9]+', 'tab' => 'teachers|program|faq'])->name('view_course');
+Route::get('/course/{course_id}/lesson/{lesson_id}/{tab?}', 'HomePageController@view_lesson')->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|protocol|test'])->name('view_lesson');
 
 Auth::routes();
 
@@ -48,6 +48,9 @@ Route::get('/teacher/profile', 'TeacherController@teacherProfile')->middleware('
 Route::get('/teacher/setting', 'TeacherController@teacherSetting')->middleware('auth')->name('teacher.setting');
 
 
+
+// Логаут
+Route::get('/logout', 'Auth\LoginController@logout');
 
 
 // Для авторизации через соц сети -
@@ -146,18 +149,26 @@ Route::get('/teacher/setting', 'TeacherController@teacherSetting')->middleware('
             // Редактирование курса POST
             Route::post('/courses_controll/edit_course/{course_id}/apply', 'CoursesController@edit_course_apply')->name('edit_course_apply')->middleware('can:admin_rights');
 
-            //--todo // Редактировать "Про Этот Курс"
+            // Редактировать "Про Этот Курс"
             Route::get('/courses_controll/edit_course/{course_id}/edit_about', 'CoursesController@edit_about')->name('edit_about')->middleware('can:admin_rights');
-                //--todo // Примернить редактирование
+                // Применить редактирование
                 Route::post('/courses_controll/edit_course/{course_id}/edit_about/apply', 'CoursesController@edit_about_apply')->name('edit_about_apply')->middleware('can:admin_rights');
-            //--todo// Добавить Занятие
+            // Добавить Занятие
             Route::get('/courses_controll/edit_course/{course_id}/add_lesson', 'CoursesController@add_lesson')->name('add_lesson')->middleware('can:admin_rights');
-                //--todo// Добавить Занятие POST
+                // Добавить Занятие POST
                 Route::post('/courses_controll/edit_course/{course_id}/add_lesson/apply', 'CoursesController@add_lesson_apply')->name('add_lesson_apply')->middleware('can:admin_rights');
-            //--todo// Добавить Вопрос
+                // Добавить тест к занятию
+                Route::get('/courses_controll/edit_course/{course_id}/add_lesson_test', 'CoursesController@addLessonRedirect')->name('add_lesson_redirect')->middleware('can:admin_rights');
+                // Добавить тест (POST)
+                Route::post('/courses_controll/edit_course/{course_id}/add_lesson_test/apply')->name('add_lesson_test_apply')->middleware('can:admin_rights');
+
+            /// Добавить Вопрос
             Route::get('/courses_controll/edit_course/{course_id}/add_question', 'CoursesController@add_question')->name('add_question')->middleware('can:admin_rights');
-                //--todo// Добавить Вопрос POST
+                // Добавить Вопрос POST
                 Route::post('/courses_controll/edit_course/{course_id}/add_question/apply', 'CoursesController@add_question_apply')->name('add_question_apply')->middleware('can:admin_rights');
+
+                // Удалить препода с курса
+                Route::get('/courses_controll/edit_course/{course_id}/delete_teacher/{teacher_id}', 'CoursesController@delete_teacher_course')->name('delete_teacher')->middleware('can:admin_rights');
 
 
 //////////
@@ -235,4 +246,8 @@ Route::get('/teacher/setting', 'TeacherController@teacherSetting')->middleware('
         // Drag and drop test
         Route::get('/tests_controll/view_sort/{test_id}', 'TestsController@view_sort')->name('view_sort')->middleware(['can:admin_rights' || 'can:teacher_rights']);
 
-//////////
+
+        Route::get('/about', function () {
+             return view('front.simulatorBig');
+        })->name('about');
+
