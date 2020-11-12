@@ -18,3 +18,4 @@ mix.styles('resources/css/slick.css','public/css/slick.css');
 mix.js('resources/js/main.js', 'public/js');
 mix.copy('resources/js/slick.min.js', 'public/js/slick.min.js');
 mix.copyDirectory('resources/img', 'public/img');
+mix.copyDirectory('resources/js/tinymce', 'public/js/tinymce');
