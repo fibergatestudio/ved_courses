@@ -34,11 +34,11 @@ class CreateTestsInfoTable extends Migration
             $table->string('random_answers_order')->nullable();
             $table->string('getting_result')->nullable();
             // Параметры просмотра 
-            $table->json('view_options')->nullable();
+            //$table->json('view_options')->nullable();
             // Вид
-            $table->string('photo_and_student_name')->nullable();
+            //$table->string('photo_and_student_name')->nullable();
             // Разширенный ответ
-            $table->string('extended_feedback')->nullable();
+            $table->json('extended_feedback')->nullable();
             // Общие настройки модуля
             $table->string('availability')->nullable();
             $table->string('operating_mode')->nullable();

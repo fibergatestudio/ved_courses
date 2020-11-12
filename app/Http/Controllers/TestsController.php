@@ -39,57 +39,29 @@ class TestsController extends Controller
 
         // View OPTIONS
 
-        $array_1 = [];
-        $attempt_1         = $request->has('1_attempt');
-        $right_1            = $request->has('1_right');
-        $score_1            = $request->has('1_score');
-        $overall_comment_1  = $request->has('1_overall_comment');
-        $right_answer_1     = $request->has('1_right_answer');
-        $overall_review_1   = $request->has('1_overall_review');
-        $array_1 = [ 
-            '1_attempt' => $attempt_1, 
-            '1_right' => $right_1, 
-            '1_score' => $score_1, 
-            '1_overall_comment' => $overall_comment_1, 
-            '1_right_answer' => $right_answer_1, 
-            '1_overall_review' => $overall_review_1
-        ];
-
-        $array_2 = [];
-        $attempt_2          = $request->has('2_attempt');
-        $right_2            = $request->has('2_right');
-        $score_2            = $request->has('2_score');
-        $overall_comment_2  = $request->has('2_overall_comment');
-        $right_answer_2     = $request->has('2_right_answer');
-        $overall_review_2   = $request->has('2_overall_review');
-        $array_2 = [ 
-            '2_attempt' => $attempt_2, 
-            '2_right' => $right_2, 
-            '2_score' => $score_2, 
-            '2_overall_comment' => $overall_comment_2, 
-            '2_right_answer' => $right_answer_2, 
-            '2_overall_review' => $overall_review_2
-        ];
-
-        $array_3 = [];
-        $attempt_3          = $request->has('3_attempt');
-        $right_3            = $request->has('3_right');
-        $score_3            = $request->has('3_score');
-        $overall_comment_3  = $request->has('3_overall_comment');
-        $right_answer_3     = $request->has('3_right_answer');
-        $overall_review_3   = $request->has('3_overall_review');
-        $array_3 = [ 
-            '3_attempt' => $attempt_3, 
-            '3_right' => $right_3, 
-            '3_score' => $score_3, 
-            '3_overall_comment' => $overall_comment_3, 
-            '3_right_answer' => $right_answer_3, 
-            '3_overall_review' => $overall_review_3
-        ];
-
-        $options_array = ['after_try' => $array_1, 'when_open' => $array_2, 'after_test_close' => $array_3];
+        $options_array = ["null"];
         $options_json = json_encode($options_array);
         //dd($options_array);
+
+
+        $arr_ext = $request->extended_feedback;
+
+        $arr_1 = [
+            'grade' => '100',
+            'review' => $request->extended_feedback_100,
+        ];
+        $arr_2 = [
+            'grade' => $request->extended_feedback_grade,
+            'review' => $request->extended_feedback_review,
+        ];
+        $arr_3 = [
+            'grade' => '0',
+            'review' => $request->extended_feedback_0,
+        ];
+
+        $options_array = ['grade_100' => $arr_1, 'grade_custom' => $arr_2, 'grade_0' => $arr_3];
+        $extended_feedback = json_encode($options_array);
+        //dd($extended_feedback);
 
 
         $test_info_id = DB::table('tests_info')->insertGetId([
@@ -105,18 +77,11 @@ class TestsController extends Controller
             'passing_score'             => $request->passing_score,
             'available_attempts'        => $request->available_attempts,
             'assessment_method'         => $request->assessment_method,
-            // Макет
-            //'new_page'                  => $request->new_page,
-            //'transition_method'         => $request->transition_method,
             // Поведение вопросов
             'random_answers_order'      => $request->random_answers_order,
             'getting_result'            => $request->getting_result,
-            // Параметры просмотра
-            'view_options'              => $options_json,
-            // Вид
-            'photo_and_student_name'    => $request->photo_and_student_name,
             // Разширенный ответ
-            'extended_feedback'          => $request->extended_feedback,
+            'extended_feedback'          => $extended_feedback,
             // Общие настройки модуля
             'availability'              => $request->availability,
             'operating_mode'            => $request->operating_mode,
