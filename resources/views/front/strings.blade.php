@@ -7,7 +7,7 @@
 @section('content')
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>???</span></div>
+        <div class="direction-separator_badge"><span>Заняття {{ $lessonNumber }}</span></div>
     </div>
     <div class="container">
 

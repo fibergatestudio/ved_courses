@@ -7,7 +7,7 @@
 @section('content')
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>???</span></div>
+        <div class="direction-separator_badge"><span>Заняття {{ $lessonNumber }}</span></div>
     </div>
     <div class="container">
         <ul class="breadcrumbs_list">
@@ -51,7 +51,7 @@
 
         </div>
 
-      <div class="protocole_book programs-item_book">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's </div>
+      <!--<div class="protocole_book programs-item_book">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's </div>-->
 
       <div class="protocole-text string-text">
         {!! $lesson->course_protocol_descr !!}

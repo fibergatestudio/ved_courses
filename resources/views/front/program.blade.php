@@ -50,14 +50,16 @@
                 </div>
                 <div class="programs-grid_item">
                     <div class="programs-item_chapter">
-                        <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}">???</a>
+                        <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}">Заняття {{ $loop->iteration }}</a>
                     </div>
                 </div>
                 <div class="programs-grid_item">
                     <div class="programs-item_text">{!! $lesson->course_description !!}</div>
                 </div>
                 <div class="programs-grid_item">
-                    <div class="programs-item_hours"><a href="##">{{ $lesson->learning_time }} годин на завершення</a> </div>
+                    @isset($lesson->learning_time)
+                        <div class="programs-item_hours"><span>{{ $lesson->learning_time }} годин на завершення</span></div>
+                    @endisset
                 </div>
                 <div class="programs-grid_item">
                     <div class="programs-item_video"><a href="##">{{ collect(json_decode($lesson->video_name))->count() }} відео, {{ collect(json_decode($lesson->add_document))->count() }} матеріалів для самостійного вивчення, {{ collect(json_decode($lesson->test_id))->whereNotNull()->count() }} тести</a></div>
