@@ -50,7 +50,9 @@
                 {!! $faq->course_answer !!}
             </div>
         @empty
-
+        <div class="main-textblock">
+            Немає даних про поширені питання курсу
+            </div>
         @endforelse
     </div>
 

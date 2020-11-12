@@ -106,9 +106,11 @@
                 </div>
             </div>
             @empty
-
+            <div class="main-textblock">
+                Немає даних про програму курсу
+                </div>
             @endforelse
-            <a class="btn-watch--more" href="##"><span>Переглянути більше</span></a>
+            <!--<a class="btn-watch--more" href="##"><span>Переглянути більше</span></a>-->
             </div>
 
 
