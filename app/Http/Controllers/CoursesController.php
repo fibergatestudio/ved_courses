@@ -137,6 +137,9 @@ class CoursesController extends Controller
         $course_info = DB::table('courses')->where('id', $course_id)->first();
 
         $course_i = DB::table('courses_information')->where('course_id', $course_id)->first();
+        //dd($course_i);
+        
+        
 
         return view('courses.edit_about', compact('course_info', 'course_i'));
     }
@@ -153,18 +156,17 @@ class CoursesController extends Controller
         for($i = 0; $i <= $q_c; $i++){
             $c = "course_learn" . $i;
             //dd($c);
-            array_push($course_lrn_arr, $request->$c);
+            array_push($course_lrn_arr, strip_tags ($request->$c));
         }
         //dd($course_lrn_arr);
         
         $courses_arr = json_encode($course_lrn_arr, JSON_UNESCAPED_UNICODE);
-        //dd($courses_arr);
+
         // Берем информацию описания курса
         $about_check = DB::table('courses_information')->where('course_id', $course_id)->first();
         // Если инфа есть
         if(isset($about_check)){
             // Обновляем
-            // dd("exist");
             DB::table('courses_information')->where('course_id', $course_id)->update([
                 'course_description' => $request->course_description,
                 'course_learn_arr' => $courses_arr,
@@ -178,7 +180,10 @@ class CoursesController extends Controller
             ]);
         }
 
-        return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
+        //return redirect()->back();
+        return \Redirect::route('edit_course', $course_id)->with('message', 'ІНФОРМАЦІЯ ПРО КУРС ОНОВЛЕНА');
+        //return redirect()->route('');
+        //return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
     // add_lesson
     public function add_lesson($course_id){
@@ -301,32 +306,27 @@ class CoursesController extends Controller
 
         return view('courses.add_question', compact('course_info'));
     }
-    // add_question_apply
+    // Добавление вопроса - применить
     public function add_question_apply($course_id, Request $request){
 
-        //dd($request->all());
-
+        // Получаем кол-во вопросов
         $q_counter = $request->questions_counter;
-
+        // Для каждого вопроса
         for($i = 0; $i <= $q_counter; $i++){
-            //echo $i;
+            // Формируем название полей реквеста
             $c_course_question = 'course_question' . $i;
             $c_course_answer = 'course_answer' . $i;
-            //dd($c_course_question);
+            // И добавляем их в базу.
             DB::table('courses_faq')->insert([
                 'course_id' => $course_id,
                 'course_question' => $request->$c_course_question,
                 'course_answer' => $request->$c_course_answer,
             ]);
         }
-
-        // DB::table('courses_faq')->insert([
-        //     'course_id' => $course_id,
-        //     'course_question' => $request->course_question,
-        //     'course_answer' => $request->course_answer,
-        // ]);
-
-        return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
+        // Возвращаем назад
+        return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ');
+        //return redirect()->back();
+        //return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
 
     // // Просмотр курса

@@ -197,7 +197,7 @@
 
             <div class="cource-container--mobile">
                 <h3 class="courseEdit-title courseControl-title">Інформація про курс</h3>
-                <form action="{{ route('edit_about_apply', ['course_id' => $course_info->id ]) }}" id="test_form" method="POST" >
+                <form action="{{ route('edit_about_apply', ['course_id' => $course_info->id ]) }}" id="edit_about_form" method="POST" >
                     @csrf
                     <div class="courseEdit-block">
                         <div class="courseEdit-top">
@@ -224,18 +224,40 @@
                         <div class="courseAdd-wrapper no-padding-bottom">
                             <div class="courseAdd-top-text">Додайте <span>4</span> обов'язкових  пунктів</div>
                             <input type="hidden" id="counter" name="questions_counter" value="0">
+
+                            <?php if(isset($course_i)){
+                                    $questions_count = json_decode($course_i->course_learn_arr);
+                                    //var_dump($test); ?>
+                                    <input type="hidden" id="mtest" value="<?php echo count($questions_count); ?>">
+                                <?php } ?>
+                                
+
                             <div id="app1">
                                 <div v-for="(id,index) in ids" >
-                                    <div class="courseAdd-inner courseAdd-inner_margbottom">
-                                        <div class="courseAdd-inner_left">
-                                            <div class="courseAdd_left--name">
-                                                Пункт @{{ index + 1}}<sup>*</sup>
+                                    <div v-if="index === 0">
+                                        <!-- <div class="courseAdd-inner courseAdd-inner_margbottom">
+                                            <div class="courseAdd-inner_left">
+                                                <div class="courseAdd_left--name">
+                                                    Пункт @{{ index }}<sup>*</sup>
+                                                </div>
                                             </div>
-                                        </div>
-                                        <div class="courseAdd-inner_right">
-                                            <!-- <form action="post"> -->
-                                                <textarea class="tinyMCE-area" :id="'question_text'+index" :name="'course_learn'+index"></textarea>
-                                            <!-- </form> -->
+                                            <div class="courseAdd-inner_right">
+                                                    <textarea class="tinyMCE-area" :id="'question_text'+index" :name="'course_learn'+index"></textarea>
+                                            </div>
+                                        </div> -->
+                                    </div>
+                                    <div v-else>
+                                    <div class="courseAdd-inner courseAdd-inner_margbottom">
+                                            <div class="courseAdd-inner_left">
+                                                <div class="courseAdd_left--name">
+                                                    Пункт @{{ index }}<sup>*</sup>
+                                                </div>
+                                            </div>
+                                            <div class="courseAdd-inner_right">
+                                                <!-- <form action="post"> -->
+                                                    <textarea class="tinyMCE-area" :id="'question_text'+index" :name="'course_learn'+index"></textarea>
+                                                <!-- </form> -->
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -252,18 +274,54 @@
                     </div>
 
                     <div class="courseEdit-btn-watch_wrapper">
-                        <button class="courseEdit-btn-watch btn-watch--more courseAdd-btn" type="submit">Зберегти</button>
+                        <a id="form_submit" class="courseEdit-btn-watch btn-watch--more courseAdd-btn"><span style="color:white;">Зберегти</span></a>
                     </div>
                 </form>
 
     </section>
 
-    <!-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    <script type="text/javascript" src="/js/slick.min.js"></script> -->
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-    <!-- <script type="text/javascript" src="libs/tinymce/tinymce.min.js"></script> -->
+    <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script>
+
+    $( document ).ready(function() {
+        var q_count = $('#mtest').val();
+        //q_count = q_count;
+        var i;
+
+        const myServices = [];
+        @if(isset($course_i))
+            @foreach (json_decode($course_i->course_learn_arr) as $service)
+                myServices.push('{{ $service }}');
+            @endforeach
+        @endif
+        console.log(myServices);
+        for (i = 0; i < q_count; i++) {
+            //var id_t = '#question_text' + (i);
+            app1.addNewEntryWithText(myServices[i]);
+        }
+
+
+    });
+
+    
+    $( "#form_submit" ).click(function(event ) {
+        event.preventDefault();
+
+        var question_count = $('#counter').val();
+        console.log(question_count);
+        if(question_count <= 2){
+            alert("Додайте 4 обов'язкових пунктів!");
+        } else {
+            $( "#edit_about_form" ).submit();
+        }
+
+        
+    });
+
+    </script>
     <script>
         var currentCounter = 0;
         var app1 = new Vue({
@@ -279,9 +337,10 @@
                 addNewEntry: function(){
                     currentCounter = currentCounter + 1;
                     var id_t = '#question_text' + (currentCounter);
-                    console.log(id_t);
+                    console.log("Обычный вопрос добавлен");
                     setTimeout(function(){  tinymce.init({  selector: id_t,
                     menubar: false,
+                    placeholder: "memes",
                     plugins: [
                         'advlist autolink lists link image charmap print preview anchor',
                         'searchreplace visualblocks code fullscreen',
@@ -291,7 +350,43 @@
                         'bold italic backcolor | alignleft aligncenter ' +
                         'alignright alignjustify | bullist numlist | ' + 
                         'insertfile link image media pageembed template ' ,
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }' }); }, 100);
+                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                    }); 
+                                    
+                    
+                    }, 100);
+
+                    this.ids.push({id: currentCounter});
+                    document.getElementById("counter").value = currentCounter;
+
+                    
+                },
+                addNewEntryWithText: function(value){
+                    currentCounter = currentCounter + 1;
+                    var id_t = '#question_text' + (currentCounter);
+                    console.log("Вопрос с текстом добавлен");
+                    setTimeout(function(){  tinymce.init({  selector: id_t,
+                    menubar: false,
+                    placeholder: "memes",
+                    plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar: 
+                        'bold italic backcolor | alignleft aligncenter ' +
+                        'alignright alignjustify | bullist numlist | ' + 
+                        'insertfile link image media pageembed template ' ,
+                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                    setup: function (editor) {
+                        editor.on('init', function () {
+                            editor.setContent(value);
+                            tinymce.triggerSave();
+                        })
+                    }, }); 
+                                    
+                    
+                    }, 100);
 
                     this.ids.push({id: currentCounter});
                     document.getElementById("counter").value = currentCounter;
@@ -318,30 +413,9 @@
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
     </script>
-
-
-
-    <!-- <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
-    <script src="/js/main.js"></script> -->
 </body>
 
 @section('scripts')
-
-
-
-
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script src="https://cdn.tiny.cloud/1/no-api-key/tinymce/5/tinymce.min.js" referrerpolicy="origin"></script>
-<script type="text/javascript">
-  tinymce.init({
-    selector: '.question_text'
-  });
-</script>  -->
-
-
 
 @endsection
 
