@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div class="container">
+<div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
