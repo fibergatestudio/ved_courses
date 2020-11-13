@@ -50,16 +50,35 @@ class TestsController extends Controller
             'grade' => '100',
             'review' => $request->extended_feedback_100,
         ];
-        $arr_2 = [
-            'grade' => $request->extended_feedback_grade,
-            'review' => $request->extended_feedback_review,
-        ];
+
+        //dd($request->grade_counter);
+
+        $grades_counter = $request->grade_counter;
+        $grade_arr = [];
+        for($i = 1; $i <= $grades_counter; $i++){
+            $grade = "extended_feedback_grade" . $i;
+            $comment = "extended_feedback_review" . $i;
+
+            $arr_ = [
+                'grade' => $request->$grade,
+                'review' => strip_tags ($request->$comment),
+            ];
+
+            //dd($c);
+            array_push($grade_arr, $arr_);
+        }
+        //dd($grade_arr);
+        // $arr_2 = [
+        //     'grade' => $request->extended_feedback_grade,
+        //     'review' => $request->extended_feedback_review,
+        // ];
+
         $arr_3 = [
             'grade' => '0',
             'review' => $request->extended_feedback_0,
         ];
 
-        $options_array = ['grade_100' => $arr_1, 'grade_custom' => $arr_2, 'grade_0' => $arr_3];
+        $options_array = ['grade_100' => $arr_1, 'grade_custom' => $grade_arr, 'grade_0' => $arr_3];
         $extended_feedback = json_encode($options_array);
         //dd($extended_feedback);
 
@@ -134,16 +153,38 @@ class TestsController extends Controller
 
     public function create_multiple_choice($test_info_id, Request $request){
 
+        //dd($request->all());
+
         $q_type = "Множественный выбор";
+
+        $a_counter = $request->answer_counter;
+        //dd($a_counter);
+
+        //$q_c = $request->questions_counter;
+        $answers_arr = [];
+        for($i = 0; $i <= $a_counter; $i++){
+            //$c = "course_learn" . $i;
+            $answr = "answer" . $i;
+            $answer_grade = "answer_grade" . $i;
+            $answer_comment = "answer_comment" . $i;
+            //dd($c);
+            $arr_answer = [
+                'answer' => strip_tags( $request->$answr ),
+                'answer_grade' => $request->$answer_grade,
+                'answer_comment' => strip_tags( $request->$answer_comment),
+            ];
+
+            array_push($answers_arr, $arr_answer);
+        }
+        //dd($answers_arr);
 
         // Если тип вопроса "множественный выбор"
         //if($request->question_type == 'Множественный выбор'){
 
             // Формирование Инфы для джсона
-            $a_data = "";
 
             // Енкод инфы
-            $answers_json = json_encode($a_data);
+            $answers_json = json_encode($answers_arr);
 
             // Добавляем вопроса в базу
             $insrt_id = DB::table('tests_multiple_choice')->insertGetId([
