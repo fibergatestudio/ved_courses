@@ -21,14 +21,20 @@ class HomePageController extends Controller
         return view('front.simulator');
     }
 
-    public function welcome_page()
+    public function student_courses_main()
     {
-        return view('front.welcome');
+        $courses = DB::table('courses')->get();
+        return view('front.student_courses_main', compact('courses'));
     }
 
-    public function welcome2_page()
+    public function student_courses()
     {
-        return view('front.welcome2');
+        return view('front.student_courses');
+    }
+
+    public function student_courses_ended()
+    {
+        return view('front.student_courses_ended');
     }
 
     public function student_profile()

@@ -20,8 +20,9 @@ Route::get('/', 'HomePageController@welcome')->name('main');
 Route::get('/student/information', 'StudentController@student_information' )->name('student_information');
 
 Route::get('/simulator', 'HomePageController@simulator')->name('simulator');
-Route::get('/student_courses', 'HomePageController@welcome_page')->name('welcome_page')->middleware('auth');
-Route::get('/student_ended', 'HomePageController@welcome2_page')->name('welcome2_page')->middleware('auth');
+Route::get('/student/courses/all', 'HomePageController@student_courses_main')->name('student_courses_main')->middleware('auth');
+Route::get('/student/courses/process', 'HomePageController@student_courses')->name('student_courses')->middleware('auth');
+Route::get('/student/courses/ended', 'HomePageController@student_courses_ended')->name('student_courses_ended')->middleware('auth');
 Route::get('/student/profile', 'HomePageController@student_profile')->name('student_profile')->middleware('auth');
 Route::get('/aboute_course', 'HomePageController@aboute_course')->name('aboute_course')->middleware('auth');
 Route::get('/student_settings', 'HomePageController@student_settings')->name('student_settings')->middleware('auth');
