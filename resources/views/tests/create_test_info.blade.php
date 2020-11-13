@@ -522,27 +522,32 @@
                                 </div>
                             </div>
 
-                            <div class="reviewMiddle-inner">
-                                <div class="reviewMiddle-inner_left">
-                                    <div class="reviewMiddle_left--name">
-                                        Гранична оцінка 
+                            <input type="hidden" id="counter" name="grade_counter" value="0">
+                            <div id="app1">
+                                <div v-for="(id,index) in ids" >
+                                    <div class="reviewMiddle-inner">
+                                        <div class="reviewMiddle-inner_left">
+                                            <div class="reviewMiddle_left--name">
+                                                Гранична оцінка @{{ index+1 }}
+                                            </div>
+                                        </div>
+                                        <div class="reviewMiddle-inner_right">
+                                            <input class="newTest-dedline-input_left" :name="'extended_feedback_grade'+index" type="number">
+                                        </div>
                                     </div>
-                                </div>
-                                <div class="reviewMiddle-inner_right">
-                                    <input class="newTest-dedline-input_left" name="extended_feedback_grade" type="number">
+                                    
+                                    <div class="courseAdd-inner courseAdd-inner_margbottom">
+                                        <div class="courseAdd-inner_left">
+                                            <div class="courseAdd_left--name">
+                                                Відгук
+                                            </div>
+                                        </div>
+                                        <div class="courseAdd-inner_right">
+                                                <textarea class="tinyMCE-area" :id="'extended_feedback_review'+index" :name="'extended_feedback_review'+index"></textarea>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            
-                            <div class="courseAdd-inner courseAdd-inner_margbottom">
-                                <div class="courseAdd-inner_left">
-                                    <div class="courseAdd_left--name">
-                                        Відгук
-                                    </div>
-                                </div>
-                                <div class="courseAdd-inner_right">
-                                        <textarea class="tinyMCE-area" name="extended_feedback_review"></textarea>
-                                </div>
-                            </div>    
 
                             <div class="review-inner">
                                 <div class="review-inner_left">
@@ -566,7 +571,7 @@
                                 </div>
                             </div>
 
-                            <a href="##" class="newTest-addBtn">
+                            <a href="##" class="newTest-addBtn" onclick="app1.addNewEntry()">
                                 <span>
                                     Додати 3 полів коментаря
                                 </span>
@@ -632,7 +637,47 @@
    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+    <script>
+        var currentCounter = 0;
+        var app1 = new Vue({
+            el: '#app1',
+            data: {
+                ids: [
+                    { id: currentCounter},
+                ],
+                answers: [
+                ],
+            },
+            methods: {
+                addNewEntry: function(){
+                    currentCounter = currentCounter + 1;
+                    var id_t = '#extended_feedback_review' + (currentCounter);
+
+                    setTimeout(function(){  tinymce.init({  selector: id_t,
+                    menubar: false,
+                    placeholder: "memes",
+                    plugins: [
+                        'advlist autolink lists link image charmap print preview anchor',
+                        'searchreplace visualblocks code fullscreen',
+                        'insertdatetime media table paste code help wordcount'
+                    ],
+                    toolbar: 
+                        'bold italic backcolor | alignleft aligncenter ' +
+                        'alignright alignjustify | bullist numlist | ' + 
+                        'insertfile link image media pageembed template ' ,
+                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                    });  }, 100);
+
+                    this.ids.push({id: currentCounter});
+                    document.getElementById("counter").value = currentCounter;
+
+                    
+                },
+            }
+        });
+    </script>
     <script>
         tinymce.init({
             selector: '.tinyMCE-area',

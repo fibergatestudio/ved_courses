@@ -153,7 +153,7 @@ class CoursesController extends Controller
 
         $q_c = $request->questions_counter;
         $course_lrn_arr = [];
-        for($i = 0; $i <= $q_c; $i++){
+        for($i = 1; $i <= $q_c; $i++){
             $c = "course_learn" . $i;
             //dd($c);
             array_push($course_lrn_arr, strip_tags ($request->$c));
@@ -213,6 +213,8 @@ class CoursesController extends Controller
     // add_lesson_apply
     public function add_lesson_apply($course_id, Request $request){
 
+        //dd($request->all());
+
         // Количество видео
         $video_counter = $request->videos_counter;
  
@@ -220,8 +222,8 @@ class CoursesController extends Controller
         $video_name_arr = [];
         $video_lenght_arr = [];
         $video_file_arr = [];
-        $vido_link_arr = [];
-
+        $video_link_arr = [];
+ 
         // Перебираем и берем информацию о каждом видео
         for($i = 0; $i <= $video_counter; $i++){
             // Формируем реквест имя
@@ -240,15 +242,16 @@ class CoursesController extends Controller
                 $filename = time().'.'.request()->$r_video_file->getClientOriginalExtension();
                 request()->$r_video_file->move(public_path('video_files'), $filename);
             }else{
-                $filename = "";
+                $filename = null;
             }
 
             $video_link = $request->$r_video_link;
             // Заносим информацию в аррей
-            array_push($video_name_arr, $video_name);
-            array_push($video_lenght_arr, $video_length);
-            array_push($video_file_arr, $filename);
-            array_push($vido_link_arr, $video_link);
+            if($video_name == null){ $video_name_arr = null; } else { array_push($video_name_arr, $video_name); }
+            if($video_length == null){ $video_lenght_arr = null; } else { array_push($video_lenght_arr, $video_length); }
+            if($filename == null){ $video_file_arr = null; } else { array_push($video_file_arr, $filename); }
+            if($video_link == null){ $video_link_arr = null; } else { array_push($video_link_arr, $video_link); }
+            
         }
         //dd($video_file_arr);
 
@@ -264,13 +267,14 @@ class CoursesController extends Controller
 
             // Получаем доку, формируем имя и переносим файл
             if($request->hasFile($r_add_document)){
-                $filename = time().'.'.request()->$r_add_document->getClientOriginalExtension();
+                $filename_doc = time().'.'.request()->$r_add_document->getClientOriginalExtension();
                 request()->$r_add_document->move(public_path('docs'), $filename);
             }else{
-                $filename = "no doc";
+                $filename_doc = null;
             }
             // Передача инфы в аррей
-            array_push($docs_arr, $filename);
+            if($filename_doc == null){ $docs_arr = null; } else { array_push($docs_arr, $filename_doc); }
+            //array_push($docs_arr, $filename);
         }
 
         // Инсерт в базу
@@ -284,7 +288,7 @@ class CoursesController extends Controller
             'video_name' =>  json_encode($video_name_arr),
             'video_length' => json_encode($video_lenght_arr),
             'video_file' =>  json_encode($video_file_arr),
-            'video_link' => json_encode($vido_link_arr),
+            'video_link' => json_encode($video_link_arr),
         ]);
         
         return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
