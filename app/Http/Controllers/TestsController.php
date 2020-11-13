@@ -29,8 +29,9 @@ class TestsController extends Controller
         //dd(request()->has('course_id'));
         // Получаем айди курса
         $course_id = request()->course_id;
+        $courses_program_id = request()->courses_program_id;
 
-        return view('tests.create_test_info', compact('course_id'));
+        return view('tests.create_test_info', compact('course_id', 'courses_program_id'));
     }
 
     public function create_new_test_info(Request $request){
@@ -109,9 +110,11 @@ class TestsController extends Controller
         
         // Берем айди курса
         $course_id = request()->course_id;
+        $courses_program_id = request()->courses_program_id;
+        //dd($courses_program_id);
         // Если айди существует, добавляем текущий текст к курсу
         if($course_id){
-            DB::table('courses_program')->where('course_id', $course_id)->update([
+            DB::table('courses_program')->where('id', $courses_program_id)->update([
                 'test_id' => $test_info_id,
             ]);
         }

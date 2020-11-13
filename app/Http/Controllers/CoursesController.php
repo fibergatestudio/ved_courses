@@ -199,12 +199,12 @@ class CoursesController extends Controller
             foreach($courses_program as $course_program){
                 array_push($test_ids_arr, $course_program->test_id);
             }
-
-            $course_tests = DB::table('tests_info')->where('id', $test_ids_arr)->get();
+            //dd($test_ids_arr);
+            $course_tests = DB::table('tests_info')->whereIn('id', $test_ids_arr)->get();
         } else {
             $course_tests = [];
         }
-
+        //dd($course_tests);
         //dd($tests);
 
 
@@ -278,7 +278,7 @@ class CoursesController extends Controller
         }
 
         // Инсерт в базу
-        DB::table('courses_program')->insert([
+        $courses_program_id = DB::table('courses_program')->insertGetId([
             'course_id' => $course_id,
             'course_description' => $request->course_description,
             'learning_time' => $request->learning_time,
@@ -291,16 +291,17 @@ class CoursesController extends Controller
             'video_link' => json_encode($video_link_arr),
         ]);
         
-        return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
+        return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
     }
     // add_ lesson
     public function addLessonRedirect($course_id, Request $request){
 
         // Добавляем урок перед редиректом
         $this->add_lesson_apply($course_id, $request);
-
+        $courses_program_id = session()->get('courses_program_id');
+        //dd($courses_program_id);
         // Редиректим с айдишником
-        return redirect()->route('new_test_info', ['course_id' => $course_id]);
+        return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
     }
 
     // add_question

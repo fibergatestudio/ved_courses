@@ -300,7 +300,7 @@
 
             </div>
             <!-- sidebar-menu (end) -->
-            <form action="{{ route('create_new_test_info', ['course_id' => $course_id ]) }}" id="create_test_form" method="POST" >
+            <form action="{{ route('create_new_test_info', ['course_id' => $course_id, 'courses_program_id'=>$courses_program_id ]) }}" id="create_test_form" method="POST" >
                 @csrf
             <div class="cource-container--mobile">
                 <h3 class="courseEdit-title courseControl-title">Створити новий тест</h3>
