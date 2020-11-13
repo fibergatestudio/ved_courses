@@ -50,9 +50,14 @@ class StudentController extends Controller
             $user->addMediaFromRequest('photo')->toMediaCollection('photos');
         }
 
-        if(empty($request->email))
+        if(empty($request->email) and empty(auth()->user()->provider_id))
         {
-            return redirect()->back()->with('message_error', 'Введіть поштову скринькю');
+            return redirect()->back()->with('message_error', 'Введіть поштову скриньку');
+        }
+
+        if(auth()->user()->provider_id)
+        {
+           $request['email'] = auth()->user()->email;
         }
 
         $all_info = $request->all();
@@ -92,7 +97,7 @@ class StudentController extends Controller
 
         // Если студент не совпал - обновляем инфуормацию. (Все еще будет нуждаться в подтверждении)
         } else {
-            
+
             DB::table('students')->where('user_id', $user_id)->update([
                 'full_name' => $full_name,
                 'university_name' => $request->university_name,
@@ -185,7 +190,7 @@ class StudentController extends Controller
 
         return view('student.student_tests', compact('tests') );
     }
-    
+
 
     public function students_controll_edit($student_id){
 
@@ -243,7 +248,7 @@ class StudentController extends Controller
         return view('student.students_import');
     }
 
-    public function import_students_apply(Request $request) 
+    public function import_students_apply(Request $request)
     {
         // Получаем всю инфу с запроса
         $all_info = $request->all();
@@ -262,8 +267,8 @@ class StudentController extends Controller
 
                 } else {
                     DB::table('students_data')->insert([
-                        'upload_date' => $column_data['data_zavantazennya'], 
-                        'status_from' => $column_data['status_z'], 
+                        'upload_date' => $column_data['data_zavantazennya'],
+                        'status_from' => $column_data['status_z'],
                         'ID_FO' => $column_data['id_fo'],
                         'recipient' => $column_data['zdobuvac'],
                         'birthday' => $column_data['data_narodzennya'],
@@ -275,7 +280,7 @@ class StudentController extends Controller
                 }
             }
         }
-        
+
         return redirect()->back()->with('message_success', 'Импорт успешен!');
     }
 
