@@ -57,10 +57,16 @@
         {!! $lesson->course_protocol_descr !!}
       </div>
 
-      @isset($lesson->add_document)
-        <a class="protocole-btn btn-watch--more" href="{{ $lesson->add_document }}"><span>відкрити файл</span></a>
-      @endisset
+      @forelse (collect(json_decode($lesson->add_document)) as $document)
+            <a class="protocole-btn btn-watch--more" href="{{ asset('/docs').'/'.$document }}"><span>Протокол № {{ $loop->iteration }}</span></a>
+      @empty
+        Протоколи відсутні
+      @endforelse
 
-           </div>
+
+
+
+
+    </div>
 </section>
 @endsection

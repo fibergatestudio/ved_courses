@@ -74,7 +74,11 @@
                     <table class="hidden-menu">
                         @forelse (collect(json_decode($lesson->video_name)) as $video_name)
                             <tr class="hidden-menu_string">
-                                <td class="hidden-menu_column">{{ collect(json_decode($lesson->video_length))->get($loop->index) }} хв.</td>
+                                @if(null !== collect(json_decode($lesson->video_length))->get($loop->index)))
+                                <td class="hidden-menu_column">
+                                    {{ collect(json_decode($lesson->video_length))->get($loop->index) }} хв.
+                                </td>
+                                @endif
                                 <td class="hidden-menu_column"><div class="hidden-menu_dot"></div></td>
                                 <td class="hidden-menu_column">{{ $video_name }}
                                     (@if (null !== collect(json_decode($lesson->video_file))->get($loop->index))
@@ -94,9 +98,9 @@
                     <table class="hidden-menu">
                         @forelse (collect(json_decode($lesson->add_document)) as $document)
                         <tr class="hidden-menu_string">
-                            <td class="hidden-menu_column">??? хв.</td>
+                            <td class="hidden-menu_column"></td>
                             <td class="hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                            <td class="hidden-menu_column"> <a href="##">Документ №{{ $loop->iteration }}</a></td>
+                            <td class="hidden-menu_column"> <a href="{{ asset('docs/').'/'.$document }}">Документ №{{ $loop->iteration }}</a></td>
                         </tr>
                         @empty
 
