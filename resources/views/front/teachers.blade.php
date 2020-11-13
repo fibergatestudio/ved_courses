@@ -61,7 +61,9 @@
                 </div>
             </div>
             @empty
-
+            <div class="main-textblock">
+            Немає даних про викладачів курсу
+            </div>
             @endforelse
 
         </div>

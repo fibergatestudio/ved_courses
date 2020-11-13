@@ -46,21 +46,23 @@
         </div>
         <h4 class="main-title_middle" id="anchor_course">Про цей курс</h4>
         <div class="main-textblock">
-            {!! $course_information->course_description ?? ' ' !!}
+            {!! $course_information->course_description ?? 'Немає опису курсу' !!}
         </div>
+        @isset($course_information->course_learn_arr)
         <div class="main-learn">
             <h4 class="main-learn_title">Чого ви навчитесь</h4>
+
             <div class="about-course_wrapper main-learn_wrapper">
-                @isset($course_information->course_learn_arr)
+
                     @foreach (collect(json_decode($course_information->course_learn_arr)) as $item)
                     <div class="main-learn_inner">
                         <div class="main-learn_inner--icon"></div>
                         <div class="main-learn_inner--text">{!! $item !!}</div>
                     </div>
                     @endforeach
-                @endisset
             </div>
         </div>
+        @endisset
     </div>
 </section>
 @endsection

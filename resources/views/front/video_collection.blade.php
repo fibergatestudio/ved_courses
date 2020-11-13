@@ -68,7 +68,9 @@
                     </td>
                 </tr>
             @empty
-
+            <div class="string-text">
+                Відеo відсутні
+              </div>
             @endforelse
     </tbody>
 </table>

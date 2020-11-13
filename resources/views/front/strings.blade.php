@@ -53,7 +53,9 @@
         </div>
 
         <div class="string-text">
-        {!! $lesson->course_description !!}
+
+        {!! $lesson->course_description ?? 'Немає опису' !!}
+
       </div>
     </div>
 </section>

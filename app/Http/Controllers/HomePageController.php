@@ -46,13 +46,13 @@ class HomePageController extends Controller
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
         $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->orderBy('id')->get();
         $course_faq = DB::table('courses_faq')->where('course_id', $course_id)->orderBy('id')->get();
+        if (is_null($course)) {
+            abort(404);
+        }
         if ($course->assigned_teacher_id) {
             $course_teachers = DB::table('users')->whereIn('id', json_decode($course->assigned_teacher_id))->get();
         } else {
             $course_teachers = collect(null);
-        }
-        if (is_null($course)) {
-            abort(404);
         }
         switch ($tab) {
         case 'teachers':
@@ -72,30 +72,33 @@ class HomePageController extends Controller
 
     public function view_lesson($course_id, $lesson_id = null, $tab = null) {
         $user = Auth::user();
-        if ($user) {
-            session()->forget('viewed_course', $course_id);
-            session()->forget('viewed_lesson', $lesson_id);
-        }
-        else {
-            if ((session()->get('viewed_course') == $course_id) and (session()->get('viewed_lesson') <> $lesson_id)) {
-                return view('front.guest');
-            }
-            session()->put('viewed_course', $course_id);
-            session()->put('viewed_lesson', $lesson_id);
-        }
+
         $course = DB::table('courses')->where('id', $course_id)->first();
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
+
+        if (is_null($course)) {
+            abort(404);
+        }
         if (isset($lesson_id)) {
             $lesson = DB::table('courses_program')->where([['course_id', '=', $course_id], ['id', '=', $lesson_id]])->first();
             $prevLesson = DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '<', $lesson->id]])->orderBy('id','desc')->first();
             $nextLesson = DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->first();
             $lessonNumber = DB::table('courses_program')->where('course_id', '=', $course->id)->count() - DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->count();
         } else {
-            $lesson = DB::table('courses_program')->where('course_id', '=', $course_id)->first();
+            $lesson = DB::table('courses_program')->where('course_id', '=', $course_id)->orderBy('id','asc')->first();
         }
-        if (is_null($course) or is_null($lesson)) {
+
+        if (is_null($lesson)) {
             abort(404);
         }
+
+        if (is_null($user)) {
+            $first_lesson_in_course = DB::table('courses_program')->where('course_id', '=', $course_id)->orderBy('id','asc')->first();
+            if ($lesson->id > $first_lesson_in_course->id) {
+               return view('front.guest');
+            }
+        }
+
         switch ($tab) {
         case 'strings':
             return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
