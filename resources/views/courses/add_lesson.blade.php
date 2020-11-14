@@ -1,141 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div style="display:none;" class="container">
-    @if(session()->has('message_success'))
-        <div class="alert alert-success">
-            {{ session()->get('message_success') }}
-        </div>
-    @endif
-    <div class="row justify-content-center">
-        <div class="col-md-3">
-            @if(Auth::user()->role == "admin")
-                @include('layouts.admin_sidebar')
-            @elseif(Auth::user()->role == "teacher")
-               @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
-            @endif
-        </div>
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">{{ __('Добавить урок') }}</div>
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div> 
-                    @endif
-
-                    <form action="{{ route('add_lesson_apply', ['course_id' => $course_info->id ]) }}" id="test_form" method="POST" enctype="multipart/form-data">
-                        @csrf
-                        <div class="form-group">
-                            <label>Как это работает</label>
-                        </div>
-                        <div class="form-group">
-                            <label>Описание</label>
-                            <textarea id="question_text" class="question_text" name="course_description">Введите описание </textarea>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Время на прочтение (минуты)</label>
-                            <input type="number" class="form-control" name="learning_time" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Протокол</label>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Описание</label>
-                            <textarea id="question_text" class="question_text" name="course_protocol_descr">Введите описание протокола</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Время на прочтение (минуты)</label>
-                            <input type="number" class="form-control" name="learning_protocol_time" value="">
-                        </div>
-
-                        <div class="form-group">
-                            <label>Добавить документ</label>
-                            <hr>
-                                <input type="hidden" id="docs_counter" name="docs_counter" value="">
-                                <div id="docs1">
-                                    <div v-for="(id,index) in ids" >
-                                        <input type="file" class="form-control" :name="'add_document' + index" value="">
-                                    </div>
-                                    <div onclick="docs.addNewEntry()" class="btn btn-success">Добавить След. Док.</div>
-                                </div>
-                            <hr>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Видеоколлекция</label>
-                        </div>
-                        <input type="hidden" id="videos_counter" name="videos_counter" value="">
-                        <div id="app11">
-                            <div v-for="(id,index) in ids" >
-                                <hr>
-                                <div class="form-group">
-                                    <label>Название видео @{{ index + 1}}</label>
-                                    <input type="text" class="form-control" :name="'video_name' + index" value="">
-                                </div>
-                                <div class="form-group">
-                                    <label>Длина видео @{{ index + 1}}</label>
-                                    <input type="number" class="form-control" :name="'video_length' + index" value="">
-                                </div>
-                                <div class="form-group">
-                                    <label>Добавить видео @{{ index + 1}}</label>
-                                    <input type="file" class="form-control" :name="'video_file' + index" value=""> 
-                                </div>
-                                <div class="form-group">
-                                    <label>Ссылка видео @{{ index + 1}}</label>
-                                    <input type="text" class="form-control" :name="'video_link' + index" value="">
-                                </div>
-                                <hr>
-                            </div>
-                            <div onclick="app1.addNewEntry()" class="btn btn-success">Добавить Следущее Видео</div>
-                        </div>
-
-                        <div class="form-group">
-                            <label>Текущие тесты курса</label>
-                            <div class="form-group">
-                                <label>Список тестов</label>
-                                <table class="table table-bordered data-table">
-                                    <thead>
-                                        <tr>
-                                            <th>#</th> 
-                                            <th>Имя</th>
-                                            <th>Описание</th>
-                                            <th></th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        @foreach($course_tests as $test)
-                                        <tr>
-                                            <td>{{ $test->id }}</td>
-                                            <td>{{ $test->name }}</td>
-                                            <td>{{ strip_tags($test->description) }}</td>
-                                            <td>
-                                                <a href="{{ route('view_test_info_questions', ['test_info_id' => $test->id ]) }}"><div class="btn btn-success">Редактировать</div></a>
-                                                <div class="btn btn-danger">Удалить</div>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <a href="{{ route('add_lesson_redirect', ['course_id' => $course_info->id ]) }}" class="btn btn-success">Добавить тест</a>
-                        <button type="submit" class="btn btn-success">Применить</button>
-                    </form>
-                    
-                        <a href="{{ route('courses_controll') }}">
-                            <button class="btn btn-danger">Назад</button>
-                        </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 <body>
 
@@ -336,7 +202,7 @@
                                 Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
                             </div>
 
-
+                            <input type="hidden" id="docs_counter" name="docs_counter" value="0">
                             <div id="docs">
                                 <div v-for="(id,index) in ids" style="display: flex; align-items: center;">
                                     <!-- <input type="file" class="form-control" :name="'add_document' + index" value=""> -->
@@ -381,6 +247,7 @@
                         <div class="courseAdditional-topName">
                             У разі відсутності відеоматеріалу до заняття буде відображено  повідомлення для студента <span> "В цьому занятті немає відео супроводу"</span>
                         </div>
+                        <input type="hidden" id="videos_counter" name="videos_counter" value="0">
                         <div id="app1">
                             <div v-for="(id,index) in ids" >
                                 <br>
@@ -418,8 +285,8 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
-                                            <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу" :name="'video_file' + index">
-                                            <input class="courseAdditional-input_button" type="file">
+                                            <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
+                                            <input class="courseAdditional-input_button" type="file" :name="'video_file' + index">
                                             <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                         </div>
                                     </div>
@@ -441,9 +308,9 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
-                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" :name="'video_link' + index">
-                                            <input class="courseAdditional-input_button" type="file">
-                                            <a class="courseAdditional-input_FakeButton" href="##">Додати</a>
+                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" >
+                                            <input class="courseAdditional-input_button" type="text" :name="'video_link' + index">
+                                            <!-- <a class="courseAdditional-input_FakeButton" href="##">Додати</a> -->
                                         </div>
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
@@ -531,21 +398,23 @@
                 ids: [
                     { id: currentCounter},
                 ],
-                answers: [
-                ],
             },
             methods: {
                 addNewEntry: function(){
                     currentCounter = currentCounter + 1;
-                    //tinymce.init({ selector: id_t });
+                    
                     this.ids.push({id: currentCounter});
-                    document.getElementById("videos_counter").value = currentCounter;
+                    //document.getElementById("videos_counter").value = currentCounter;
+                    $('#videos_counter').val(currentCounter);
                     
                 },
                 
             }
         });
-
+    </script>
+    <script>
+    
+    
         var docsCounter = 0;
         var docs = new Vue({
             el: '#docs',
@@ -561,12 +430,13 @@
                     docsCounter = docsCounter + 1;
                     //tinymce.init({ selector: id_t });
                     this.ids.push({id: docsCounter});
-                    document.getElementById("docs_counter").value = docsCounter;
-                    
+                    //document.getElementById("docs_counter").value = docsCounter;
+                    $('#docs_counter').val(currentCounter);
                 },
                 
             }
         });
+    
     </script>
 
     <script>
