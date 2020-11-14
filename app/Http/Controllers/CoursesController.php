@@ -214,7 +214,7 @@ class CoursesController extends Controller
     public function add_lesson_apply($course_id, Request $request){
 
         //dd($request->all());
-
+        
         // Количество видео
         $video_counter = $request->videos_counter;
  
@@ -259,7 +259,6 @@ class CoursesController extends Controller
         $docs_arr = [];
         // Количество документов
         $docs_counter = $request->docs_counter;
-
         // Перебираем и берем информацию о каждом доке
         for($a = 0; $a <= $docs_counter; $a++){
             // Реквест имени дока
