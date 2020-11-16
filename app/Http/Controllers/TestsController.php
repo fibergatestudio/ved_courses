@@ -220,6 +220,8 @@ class TestsController extends Controller
 
     public function create_true_false($test_info_id, Request $request){
 
+        //dd($request->all());
+
         $q_type = "Верно\Не верно";
 
         // Формирование Инфы для джсона
@@ -294,12 +296,35 @@ class TestsController extends Controller
 
     public function create_drag_drop($test_info_id, Request $request){
 
-        $q_type = "Перетаскивание в тексте";
-        // Формирование Инфы для джсона
-        $a_data = "";
+        //dd($request->all());
 
+        $answers_counter = $request->answers_counter;
+        //dd($answers_counter);
+        $answers_arr = [];
+        for($i = 1; $i <= $answers_counter; $i++){
+            $answer = "answer" . $i;
+
+            $answer_text =  $request->$answer;
+            // $arr_ = [
+            //     'grade' => $request->$grade,
+            //     'review' => strip_tags ($request->$comment),
+            // ];
+
+            //dd($c);
+            array_push($answers_arr, $answer_text);
+        }
+
+        $r_answer_arr = [
+            'right_answer' => $request->right_answer,
+        ];
+        $answers_arr['right_answer'] = $request->right_answer;
+        //dd($answers_arr);
+
+        
+
+        $q_type = "Перетаскивание в тексте";
         // Енкод инфы
-        $answers_json = json_encode($a_data);
+        $answers_json = json_encode($answers_arr);
 
         // Добавляем вопроса в базу
         $insrt_id = DB::table('tests_drag_drop')->insertGetId([
@@ -309,7 +334,7 @@ class TestsController extends Controller
             'test_comment'          => $request->test_comment,
             //'answers_type'          => $request->answers_type,
             //'number_answers'        => $request->number_answers,
-            //'answers_json'          => $answers_json,
+            'answers_json'          => $answers_json,
         ]);
 
         // Добавляем таблицу вопроса
