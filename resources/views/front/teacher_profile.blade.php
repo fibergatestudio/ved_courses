@@ -33,7 +33,6 @@
             <div class="profile-grid_item">
                 <div class="profile-item_name">{{ $teacher_info->full_name }}</div>
                 <div class="profile-item_position">@if ($teacher_info->role === 'teacher') викладач @endif</div>
-                {{-- <div class="profile-item_students">{{ $student_full_info->course_number }} {{ $student_full_info->group_number }}</div> --}}
                 <div class="profile-item_course">{{ $teacher_info->email }}</div>
             </div>
             <div class="profile-grid_item" onmouseover="show_text_profile();" onmouseout="hide_text_profile();">
@@ -42,15 +41,13 @@
                     <p>Розкажіть іншим користувачам трохи про себе: де ви живете, чим </p>
                     <p>цікавитесь, чому проходите курси, або що сподіваєтеся вивчити.</p>
                 </div>
-                <form action="{{ route('student_descr_apply') }}" method="POST" class="profile-grid_form" id="form-profile">
+                <form action="{{ route('teacher_descr_apply') }}" method="POST" class="profile-grid_form" id="form-profile">
                     @csrf
-                    <textarea name="profile_text" class="profile-item_text" spellcheck="false" id="profile_text2" onblur="document.getElementById('form-profile').submit()">{{ $teacher_info->name }}</textarea>
+                    <textarea name="profile_text" class="profile-item_text" spellcheck="false" id="profile_text2" onblur="document.getElementById('form-profile').submit()">{{ $teacher_info->descr }}</textarea>
                 </form>
             </div>
         </div>
-        <a class="btn-watch--more" href="javascript: void();" onclick="location.href='{{ route('student_information') }}'"><span>Редагувати</span></a>
-
-
+        <a class="btn-watch--more" href="javascript: void();" onclick="location.href='{{ route('teacher_information') }}'"><span>Редагувати</span></a>
 
     </div>
 </section>
