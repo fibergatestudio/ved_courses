@@ -57,6 +57,7 @@
                                 <input class="photo-btn_input" type="file" name="photo" onchange="document.getElementById('form-stud').submit();">
                             </a>
                         </div>
+
                     @if( Auth::user()->getMedia('photos')->last())
                         <style>
                             .photo-photo:before { content: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb_medium') }}) !important; }

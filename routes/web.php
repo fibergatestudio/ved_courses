@@ -118,6 +118,12 @@ Route::get('/logout', 'Auth\LoginController@logout');
     Route::get('/teacher', 'TeacherController@index')->name('teacher_panel')->middleware('can:teacher_rights');
         // Личная информация учителя
         Route::get('/teacher/information', 'TeacherController@teacher_information')->name('teacher_information')->middleware('can:teacher_rights');
+        // Применить изменения учителя
+        Route::post('/teacher/information/apply', 'TeacherController@teacher_information_apply')->name('teacher_information_apply')->middleware('can:teacher_rights');
+        // Применить изменения описания учителя
+        Route::post('/teacher/descr/apply', 'TeacherController@teacher_descr_apply')->name('teacher_descr_apply')->middleware('can:teacher_rights');
+        // Изменение пароля
+        Route::post('/teacher/information/change_password', 'TeacherController@teacher_information_change_password')->name('teacher_information_change_password')->middleware('can:teacher_rights');
 
     // Управление студентами (АДМИН + УЧИТЕЛЬ)
     Route::get('/students_controll', 'StudentController@students_controll')->name('students_controll')->middleware(['can:admin_rights' || 'can:teacher_rights']);
