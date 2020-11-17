@@ -4,7 +4,7 @@
         <div class="modal-content">
             <ul class="student-menu-wrapper">
                 <li class="student-menu-inner">
-                    <a class="student-menu-link" href="{{ route('home') }}">Панель управління</a>
+                    <a class="student-menu-link" href="{{ route('teacher_panel') }}">Панель управління</a>
                 </li>
                 <li class="student-menu-inner">
                     <a class="student-menu-link" href="{{ route('teacher.profile') }}">Профіль</a>

@@ -31,10 +31,10 @@
                         <div class="form-group">
                             <label>Выбор типа теста</label>
                             <select class="form-control" name="question_type">
-                                <option value="Множественный выбор">Множественный выбор</option>
-                                <option value="Верно\Не верно">Верно\Не верно</option>
+                                <option value="Множинний вибір">Множественный выбор</option>
+                                <option value="Правильно/неправильно">Верно\Не верно</option>
                                 <!-- <option value="Краткий ответ">Краткий ответ</option> -->
-                                <option value="Перетаскивание в тексте">Перетаскивание в тексте</option>
+                                <option value="Перетягування в тексті">Перетаскивание в тексте</option>
                             </select>
                         </div>
                         <button type="submit" class="btn btn-success">Далее</button>

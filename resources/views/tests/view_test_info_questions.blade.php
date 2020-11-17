@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front.front_child')
 
 @section('content')
 <div class="container">
@@ -78,6 +78,301 @@
         </div>
     </div>
 </div>
+
+
+<body style="display:none;">
+
+    <!-- Burger-menu (begin)-->
+    <ul class="menu_title-wrapper">
+
+        <li class="menu_title-inner">
+            <div class="menu_burger-clone">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Про ресурс</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Тематичні напрями</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Студент</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link menu_title-linkStudent" href="##">Ім'я викладача</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Панель курсів</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Профіль</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Налаштування</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Вийти</a>
+        </li>
+
+    </ul>
+    <!-- Burger-menu (end)-->
+
+    <!-- student modal-page (begin) -->
+    <div class="bootstrap-restylingStudent modal fade" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <ul class="student-menu-wrapper">
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Панель курсів</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Профіль</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Налаштування</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Вийти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- student modal-page (end) -->
+
+    <!-- deleteBtn modal-page (begin) -->
+    <div class="bootstrap-restylingStudent modal fade" id="deleteModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="deleteMenu-wrapper">
+
+                    <div class="deleteMenu-topImg">
+                        <img src="/img/basket.png" alt="icon">
+                    </div>
+                    <div class="deleteMenu-text">
+                        Ви точно бажаєте видалити <br> Курс ?
+                    </div>
+                    <div class="deleteMenu-btn">
+                        <a class="flexTable-btn_delete" href="##"><span>Видалити</span></a>
+                    </div>
+                </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- deleteBtn modal-page (end) -->
+
+    
+    <section class="courseControl">
+        <div class="courseControl-separator direction-separator">
+        </div>
+        <div class="courseControl-container sticky-container container">
+
+            <!-- sidebar-menu (start) -->
+
+            <div class="sidebar">
+
+                <div class="sidebar-sticky">
+
+                    <div class="sidebar-top_wrapper">
+                        <div class="sidebar-top_burger-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <!-- changeling block mobile-btn (start) -->
+                        <div class="sidebar-top_mobile-btn">
+                            <div class="sidebar-top_mobile-img">
+                                <img src="/img/teacher-mobileMenu-2.png" alt="icon">
+                            </div>
+                            <div class="sidebar-top_mobile-name">
+                                Управління курсами
+                            </div>
+                        </div>
+                        <!-- changeling block mobile-btn (end) -->
+
+                    </div>
+                    @include('layouts.front.includes.admin_sidebar_vrst')
+
+                </div>
+
+            </div>
+            <!-- sidebar-menu (end) -->
+
+            <div class="cource-container--mobile">
+                <h3 class="courseEdit-title courseControl-title">Редагування тесту</h3>
+              <div class="editing-string-top">
+                <div class="editing-top_inner">
+                    Питань:<span>1</span>
+                </div>
+                <div class="editing-top_inner">
+                    Тест відкритий
+                </div>
+              </div>
+            
+              <div class="editing-string-middle">
+                <div class="editing-middle_inner">
+                    Максимальна оцінка
+                </div>
+                <div class="editing-middle_inner">
+                    <input class="editing-input" type="number" step='0.01' value='0.00' placeholder='100.00'>
+                </div>
+                <div class="editing-middle_inner">
+                    <a class="editing-btn-save" href="##"> <span>ЗБЕРЕГТИ</span> </a>
+                </div>
+
+              </div>
+              
+              <div class="editing-string-bottom">
+                Всього балів :<span>69.00</span> 
+              </div>
+              
+
+
+            <div class="editing-block">
+                  <div class="editing-wrapper">
+                    <div class="editing-textarea_wrapper">
+                        <div class="editing-textarea_inner">
+                            <div class="editing-textarea_num">1</div>
+                            <div class="editing-textarea_icon">
+                                <img src="/img/choice-1.png" alt="icon">
+                            </div>
+                            <textarea class="editing-textarea_textarea" name="editing"  cols="30" rows="1" placeholder="Довга назва питання тесту"></textarea>
+                            <div class="editing-textarea_btns">
+                               <a href="##" class="editing-textarea_btns--search">
+                                    <img src="/img/search-ico.png" alt="icon">
+                               </a>
+                               <a href="##" class="editing-textarea_btns--close">
+                                    <img src="/img/close-ico.png" alt="icon">
+                               </a>
+                            </div>
+                            <div class="editing-textarea_edit">
+                                <div class="editing-textarea_edit--left">
+                                    23.00
+                                </div>
+                                <div class="editing-textarea_edit--right">
+                                    <a href="##">
+                                    <img src="/img/pencil-edit-icon.png" alt="icon">
+                                    </a>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="editing-textarea_wrapper">
+                        <div class="editing-textarea_inner">
+                            <div class="editing-textarea_num">2</div>
+                            <div class="editing-textarea_icon">
+                                <img src="/img/choice-2.png" alt="icon">
+                            </div>
+                            <textarea class="editing-textarea_textarea" name="editing" cols="30" rows="1" placeholder="Довга назва питання тесту"></textarea>
+                            <div class="editing-textarea_btns">
+                               <a href="##" class="editing-textarea_btns--search">
+                                    <img src="/img/search-ico.png" alt="icon">
+                               </a>
+                               <a href="##" class="editing-textarea_btns--close">
+                                    <img src="/img/close-ico.png" alt="icon">
+                               </a>
+                            </div>
+                            <div class="editing-textarea_edit">
+                                <div class="editing-textarea_edit--left">
+                                    23.00
+                                </div>
+                                <div class="editing-textarea_edit--right">
+                                    <a href="##">
+                                    <img src="/img/pencil-edit-icon.png" alt="icon">
+                                    </a>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+
+                    <div class="editing-textarea_wrapper">
+                        <div class="editing-textarea_inner">
+                            <div class="editing-textarea_num">3</div>
+                            <div class="editing-textarea_icon">
+                                <img src="/img/choice-3.png" alt="icon">
+                            </div>
+                            <textarea class="editing-textarea_textarea" name="editing" cols="30" rows="1" placeholder="Довга назва питання тесту"></textarea>
+                            <div class="editing-textarea_btns">
+                               <a href="##" class="editing-textarea_btns--search">
+                                    <img src="/img/search-ico.png" alt="icon">
+                               </a>
+                               <a href="##" class="editing-textarea_btns--close">
+                                    <img src="/img/close-ico.png" alt="icon">
+                               </a>
+                            </div>
+                            <div class="editing-textarea_edit">
+                                <div class="editing-textarea_edit--left">
+                                    23.00
+                                </div>
+                                <div class="editing-textarea_edit--right">
+                                    <a href="##">
+                                    <img src="/img/pencil-edit-icon.png" alt="icon">
+                                    </a>
+                                </div>
+                             </div>
+                        </div>
+                    </div>
+             
+                    <a class="editing-btn-add" href="##">Додати питання</a>
+
+                  </div>
+                </div>
+
+                <div class="editing-btn-wrapper">
+                       <a class="editing-btn-saveBottom" href="##">Зберегти</a>
+                </div>
+    </section>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
+   
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+        tinymce.init({
+            selector: '.tinyMCE-area',
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar: 
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist | ' + 
+                'insertfile link image media pageembed template ' ,
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+    </script>
+
+    <script>
+        $('.datepicker').datepicker({
+                weekStart: 1,
+                daysOfWeekHighlighted: "6,0",
+                autoclose: true,                
+                timepicker: true,
+                datepicker: true,
+                format: 'dd/mm/yyyy',            
+                        });
+            // $('.datepicker').datepicker("setDate", new Date());
+    </script>
+
+</body>
 
 @section('scripts')
 

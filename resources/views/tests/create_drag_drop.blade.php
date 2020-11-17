@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div class="container">
+<div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -194,71 +194,7 @@
     <!-- deleteBtn modal-page (end) -->
 
     <!-- questionType modal-page (begin) -->
-    <div class="bootstrap-restylingQuestionType modal fade" id="questionType" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="questionType-top"> <span>Виберіть тип питання</span> </div>
-                <div class="questionType-wrapper">
-
-                    <div class="questionType-inner">
-                        <div class="questionType-inner_left questionType-js">
-                            <div class="questionType-inner_left--dot">
-                                <div class="questionType-menu_dot">
-                                </div>
-                            </div>
-                            <div class="questionType-inner_left--icon">
-                                <img src="assets/img/choice-1.png" alt="icon">
-                            </div>
-                            <div class="questionType-inner_left--title">Множинний вибір</div>
-                        </div>
-                        <div class="questionType-inner_right">Дозволяє вибирати одну або декілька відповідей з
-                            заданого списку.</div>
-                    </div>
-
-                    <div class="questionType-inner">
-                        <div class="questionType-inner_left questionType-js">
-                            <div class="questionType-inner_left--dot">
-                                <div class="questionType-menu_dot">
-                                </div>
-                            </div>
-                            <div class="questionType-inner_left--icon">
-                                <img src="assets/img/choice-2.png" alt="icon">
-                            </div>
-                            <div class="questionType-inner_left--title">Правильно/неправильно</div>
-                        </div>
-                        <div class="questionType-inner_right">Проста форма з множинним вибором тільки з двома варіантами
-                            вибору "Правильно" і "Неправильно".</div>
-                    </div>
-
-                    <div class="questionType-inner">
-                        <div class="questionType-inner_left questionType-js active">
-                            <div class="questionType-inner_left--dot">
-                                <div class="questionType-menu_dot">
-                                </div>
-                            </div>
-                            <div class="questionType-inner_left--icon">
-                                <img src="assets/img/choice-3.png" alt="icon">
-                            </div>
-                            <div class="questionType-inner_left--title">Перетягування в тексті</div>
-                        </div>
-                        <div class="questionType-inner_right show">Пропущені слова в тексті заповнюються перетягуванням
-                            правильних значень з доступних варіантів.</div>
-                    </div>
-
-                    <div class="questionType-innerFalse">
-                        <div class="questionType-innerFalse_left"></div>
-                        <div class="questionType-innerFalse_right">
-                            <a href="##" class="questionType-btn-add"><span>Додати</span></a>
-                            <a href="##" class="questionType-btn-delete"><span>Скасувати</span></a>
-                        </div>
-                    </div>
-
-                </div>
-
-            </div>
-        </div>
-    </div>
+    @include('layouts.front.includes.admin_course_type_select')
     <!-- questionType modal-page (end) -->
 
     <section class="courseControl">

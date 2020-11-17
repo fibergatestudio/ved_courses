@@ -120,7 +120,20 @@ class TestsController extends Controller
         }
 
         // Создаем тест и редиректим на добавление вопроса
-        return \Redirect::route('question_type', $test_info_id)->with('message', 'State saved correctly!!!');
+
+        //$this->question_type_submit($test_info_id, $request);
+
+        $question_type = $request->question_type;
+        //dd($question_type);
+        if($question_type == "Множинний вибір"){
+            return \Redirect::route('multiple_choice', $test_info_id);
+        } else if ($question_type == "Правильно/неправильно"){
+            return \Redirect::route('true_false', $test_info_id);
+        } else if ($question_type == "Перетягування в тексті"){
+            return \Redirect::route('drag_drop', $test_info_id);
+        }
+
+        //return \Redirect::route('question_type', $test_info_id)->with('message', 'State saved correctly!!!');
     }
 
     public function question_type($test_info_id){
@@ -129,23 +142,16 @@ class TestsController extends Controller
     }
     public function question_type_submit($test_info_id, Request $request){
 
-        //dd($request->all());
+        // Получаем тип вопроса
         $question_type = $request->question_type;
-
-        if($question_type == "Множественный выбор"){
+        // Если тип вопроса ...
+        if($question_type == "Множинний вибір"){
             return \Redirect::route('multiple_choice', $test_info_id);
-            //return view('tests.create_multiple_choice', compact('test_info_id'));
-        } else if ($question_type == "Верно\Не верно"){
+        } else if ($question_type == "Правильно/неправильно"){
             return \Redirect::route('true_false', $test_info_id);
-            //return view('tests.create_true_false', compact('test_info_id'));
-        } else if ($question_type == "Краткий ответ"){
-            return \Redirect::route('short_answer', $test_info_id);
-            //return view('tests.create_short_answer', compact('test_info_id'));
-        } else if ($question_type == "Перетаскивание в тексте"){
+        } else if ($question_type == "Перетягування в тексті"){
             return \Redirect::route('drag_drop', $test_info_id);
-            //return view('tests.create_drag_drop', compact('test_info_id'));
         }
-
 
     }
 

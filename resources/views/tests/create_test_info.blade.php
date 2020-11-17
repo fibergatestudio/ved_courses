@@ -621,13 +621,78 @@
                     </div>
                 </div>
 
-
-                <div class="addquestion-btn_wrapper">
-                    <a onclick="document.getElementById('create_test_form').submit();" class="addquestion-btn" ><span style="color:white;">Додати питання</span></a> 
+                <!-- onclick="document.getElementById('create_test_form').submit();" -->
+                <div class="addquestion-btn_wrapper"> 
+                    <a class="addquestion-btn" data-toggle="modal" data-target="#questionType"><span style="color:white;">Додати питання</span></a> 
                     <div class="addquestion-btn_text">
                         Текст для супроводу створення тесту
                     </div>
                 </div>
+
+
+                <div class="bootstrap-restylingQuestionType modal fade" id="questionType" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="questionType-top"> <span>Виберіть тип питання</span> </div>
+                            <div class="questionType-wrapper">
+                                        <input type="hidden" id="question_type" name="question_type" value="">
+                                        <div class="questionType-inner">
+                                            <div id="multiply_choice" class="questionType-inner_left questionType-js">
+                                                <div class="questionType-inner_left--dot">
+                                                    <div class="questionType-menu_dot">
+                                                    </div>
+                                                </div>
+                                                <div class="questionType-inner_left--icon">
+                                                    <img src="/img/choice-1.png" alt="icon">
+                                                </div>
+                                                <div class="questionType-inner_left--title">Множинний вибір</div>
+                                            </div>
+                                            <div class="questionType-inner_right show">Дозволяє вибирати одну або декілька відповідей з заданого списку.</div>
+                                        </div>
+
+                                        <div class="questionType-inner">
+                                            <div id="true_false" class="questionType-inner_left questionType-js active">
+                                                <div class="questionType-inner_left--dot">
+                                                    <div class="questionType-menu_dot">
+                                                    </div>
+                                                </div>
+                                                <div class="questionType-inner_left--icon">
+                                                    <img src="/img/choice-2.png" alt="icon">
+                                                </div>
+                                                <div class="questionType-inner_left--title">Правильно/неправильно</div>
+                                            </div>
+                                            <div class="questionType-inner_right show">Проста форма з множинним вибором тільки з двома варіантами вибору "Правильно" і "Неправильно".</div>
+                                        </div>
+
+                                        <div class="questionType-inner">
+                                            <div id="drag_drop" class="questionType-inner_left questionType-js">
+                                                <div class="questionType-inner_left--dot">
+                                                    <div class="questionType-menu_dot">
+                                                    </div>
+                                                </div>
+                                                <div class="questionType-inner_left--icon">
+                                                    <img src="/img/choice-3.png" alt="icon">
+                                                </div>
+                                                <div class="questionType-inner_left--title">Перетягування в тексті</div>
+                                            </div>
+                                            <div class="questionType-inner_right">Пропущені слова в тексті заповнюються перетягуванням правильних значень з доступних варіантів.</div>
+                                        </div>
+
+                                        <div class="questionType-innerFalse">
+                                            <div class="questionType-innerFalse_left"></div>
+                                            <div class="questionType-innerFalse_right">
+                                                <a href="##" class="questionType-btn-add" onclick="document.getElementById('create_test_form').submit();"><span>Додати</span></a> 
+                                                <a href="##" class="questionType-btn-delete"><span>Скасувати</span></a>
+                                            </div>
+                                        </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+            </div>
+
+                
         </form>
     </section>
 
@@ -707,13 +772,28 @@
             // $('.datepicker').datepicker("setDate", new Date());
     </script>
 
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
+    <script>
 
-            
-       
-    <script src="assets/js/main.js"></script>
+    $( document ).ready(function() {
+
+        $('#question_type').val("Правильно/неправильно");
+    });
+
+    $( "#multiply_choice" ).click(function() {
+        
+        $('#question_type').val("Множинний вибір");
+    });
+    $( "#true_false" ).click(function() {
+        
+        $('#question_type').val("Правильно/неправильно");
+    });
+    $( "#drag_drop" ).click(function() {
+        
+        $('#question_type').val("Перетягування в тексті");
+    });
+
+
+    </script>
 </body>
 
 @section('scripts')
