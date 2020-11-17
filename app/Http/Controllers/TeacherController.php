@@ -11,7 +11,7 @@ class TeacherController extends Controller
 {
 
     public function index(){
-        
+
         return view('teacher.index');
     }
 
@@ -72,9 +72,14 @@ class TeacherController extends Controller
             $user->addMediaFromRequest('photo')->toMediaCollection('photos');
         }
 
-        if(empty($request->email))
+        if(empty($request->email) and empty(auth()->user()->provider_id))
         {
-            return redirect()->back()->with('message_error', 'Введіть поштову скринькю');
+            return redirect()->back()->with('message_error', 'Введіть поштову скриньку');
+        }
+
+        if(auth()->user()->provider_id)
+        {
+           $request['email'] = auth()->user()->email;
         }
 
         $all_info = $request->all();
@@ -104,7 +109,7 @@ class TeacherController extends Controller
 
         // Если учитель не совпал - обновляем инфуормацию. (Все еще будет нуждаться в подтверждении)
         } else {
-            
+
             DB::table('teachers')->where('user_id', $user_id)->update([
                 'full_name' => $full_name,
             ]);

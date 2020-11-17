@@ -52,7 +52,7 @@
                         since the 1500s, when an unknown printer
                     </div>
                     <div class="more-btn-block">
-                        <a class="programs-item_btn btn-watch active w2__btn_restyle" href="##"><span class="btn-watch_inner">Успiшнiсть</span></a>
+                        <a class="btn-watch active w2__btn_restyle" href="##"><span class="btn-watch_inner">Успiшнiсть</span></a>
                     </div>
                 </div>
             </div>
