@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -61,7 +62,11 @@ class HomePageController extends Controller
             abort(404);
         }
         if ($course->assigned_teacher_id) {
-            $course_teachers = DB::table('users')->whereIn('id', json_decode($course->assigned_teacher_id))->get();
+            $course_teachers = DB::table('users')
+            ->join('teachers', 'users.id', '=', 'teachers.user_id')
+            //->leftJoin('media', 'media.model_id' , '=', 'teachers.user_id')
+            ->whereIn('users.id', json_decode($course->assigned_teacher_id))
+            ->get();
         } else {
             $course_teachers = collect(null);
         }
