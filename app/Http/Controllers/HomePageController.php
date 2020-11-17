@@ -16,6 +16,11 @@ class HomePageController extends Controller
         return view('front.main', compact('courses'));
     }
 
+    public function about()
+    {
+        return view('front.simulatorBig');
+    }
+
     public function simulator()
     {
         return view('front.simulator');
@@ -129,41 +134,6 @@ class HomePageController extends Controller
         return view('front.guest');
     }
 
-    public function aboute_course()
-    {
-        return view('front.aboute_course');
-    }
-
-    public function student_settings()
-    {
-        return view('front.student_settings');
-    }
-
-    public function program()
-    {
-        return view('front.program');
-    }
-
-    public function protocol()
-    {
-        return view('front.protocol');
-    }
-
-    public function questions()
-    {
-        return view('front.questions');
-    }
-
-    public function strings()
-    {
-        return view('front.strings');
-    }
-
-    public function teachers()
-    {
-        return view('front.teachers');
-    }
-
     public function test_a()
     {
         return view('front.test_a');
@@ -177,10 +147,5 @@ class HomePageController extends Controller
     public function test_c()
     {
         return view('front.test_c');
-    }
-
-    public function video_collection()
-    {
-        return view('front.video_collection');
     }
 }
