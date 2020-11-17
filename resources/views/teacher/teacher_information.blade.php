@@ -5,8 +5,8 @@
 @endsection
 
 @section('header')
-    <header class="header header-narrowteacher">
-        <div class="topWhite-layer topWhite-layer-narrowteacher">
+    <header class="header header-narrowStudent">
+        <div class="topWhite-layer topWhite-layer-narrowStudent">
             <div class="container">
                 @include('layouts.front.includes.header_menu')
             </div>
