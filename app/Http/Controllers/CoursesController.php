@@ -279,6 +279,7 @@ class CoursesController extends Controller
         // Инсерт в базу
         $courses_program_id = DB::table('courses_program')->insertGetId([
             'course_id' => $course_id,
+            'course_name' => $request->course_name,
             'course_description' => $request->course_description,
             'learning_time' => $request->learning_time,
             'course_protocol_descr' => $request->course_protocol_descr,

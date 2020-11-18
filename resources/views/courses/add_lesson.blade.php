@@ -141,6 +141,7 @@
                         Як це працює
                     </div>
                     <div class="courseAdd-wrapper">
+
                         <div class="courseAdd-inner courseAdd-inner_margbottom">
                             <div class="courseAdd-inner_left">
                                 <div class="courseAdd_left--name">
@@ -151,6 +152,17 @@
                                     <textarea class="tinyMCE-area" name="course_description"></textarea>
                             </div>
                         </div>
+
+                        <div class="courseAdditional-bottom-inner">
+                            <div class="courseAdditional-bottom_left">
+                                <div class="courseAdd_left--name">
+                                    Назва<sup>*</sup>
+                                </div>
+                            </div>
+                            <div class="courseAdditional-bottom_right">
+                                <input class="courseAdditional--input" name="course_name" type="text">
+                            </div>
+                        </div><br>
 
                         <div class="courseAdditional-bottom-inner">
                             <div class="courseAdditional-bottom_left">
