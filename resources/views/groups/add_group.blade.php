@@ -1,4 +1,4 @@
-@extends('layouts.app')
+@extends('layouts.front.front_child')
 
 
 @section('style')
@@ -29,7 +29,7 @@
 @endsection
 
 @section('content')
-<div class="container">
+<div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -59,7 +59,7 @@
                         </div>
                     @endif
 
-                    <form action="{{ route('add_group_apply') }}" method="POST">
+                    <!-- <form action="{{ route('add_group_apply') }}" method="POST">
                         @csrf
                         <div class="form-group">
                             <label>Название группы</label>
@@ -73,14 +73,13 @@
                                 </div>
                                 <a id="addstudent" style="color:white;" class="btn btn-success">Добавить</a>
                             </div>
-                            @csrf
                         </div>
                         <div id="studentsAdd" class="form-group">
                             <label>Список студентов</label><br>
                         </div>
                         <div class="form-group">
                             <label>Учителя</label>
-                            <select class="form-control" name="teacher_id">
+                            <select class="form-control">
                                 <option>Нет</option>
                                 @foreach($teachers_list as $teacher)
                                     <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
@@ -89,7 +88,7 @@
                         </div>
                         <br>
                         <button type="submit" class="btn btn-success">Создать</button>
-                    </form>
+                    </form> -->
                         <a href="{{ route('groups_controll') }}">
                             <button class="btn btn-danger">Назад</button>
                         </a>
@@ -99,55 +98,294 @@
     </div>
 </div>
 
+
+<body>
+
+    <!-- Burger-menu (begin)-->
+    <ul class="menu_title-wrapper">
+
+        <li class="menu_title-inner">
+            <div class="menu_burger-clone">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Про ресурс</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Тематичні напрями</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Студент</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link menu_title-linkStudent" href="##">Ім'я викладача</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Панель курсів</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Профіль</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Налаштування</a>
+        </li>
+        <li class="menu_title-inner menu_title-innerStudent">
+            <a class="menu_title-link" href="##">Вийти</a>
+        </li>
+
+    </ul>
+    <!-- Burger-menu (end)-->
+
+    <!-- student modal-page (begin) -->
+    <div class="bootstrap-restylingStudent modal fade" id="exampleModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <ul class="student-menu-wrapper">
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Панель курсів</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Профіль</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Налаштування</a>
+                    </li>
+                    <li class="student-menu-inner">
+                        <a class="student-menu-link" href="##">Вийти</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- student modal-page (end) -->
+
+    <!-- deleteBtn modal-page (begin) -->
+    <div class="bootstrap-restylingStudent modal fade" id="deleteModal" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog_restyle">
+            <div class="modal-content">
+                <div class="deleteMenu-wrapper">
+
+                    <div class="deleteMenu-topImg">
+                        <img src="assets/img/basket.png" alt="icon">
+                    </div>
+                    <div class="deleteMenu-text">
+                        Ви дійсно бажаєте видалити <br> студента зі списку?
+                    </div>
+                    <div class="deleteMenu-btn">
+                        <a class="flexTable-btn_delete" href="##"><span>Видалити</span></a>
+                    </div>
+                </div>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- deleteBtn modal-page (end) -->
+
+    <!-- show students modal start -->
+    <!-- deleteBtn modal-page (begin) -->
+    <!-- <div class="bootstrap-restylingStudent modal fade" id="showStudents" tabindex="-1" role="dialog"
+        aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog  modal-dialog_restyle">
+            <div class="modal-content">
+                <div class="deleteMenu-wrapper">
+                    <div class="deleteMenu-text">
+                        <h3 class="modal-students-title">ПІБ Студента</h3>
+                        <div class="groups__elem student-data"><span>1. &nbsp;</span>Іванов Іван Іванович</div>
+                        <div class="groups__elem student-data"><span>2. &nbsp;</span>Іванов Іван Іванович</div>
+                        <div class="groups__elem student-data"><span>3. &nbsp;</span>Іванов Іван Іванович</div>
+                        <div class="groups__elem student-data"><span>4. &nbsp;</span>Іванов Іван Іванович</div>
+                        <div class="groups__elem student-data"><span>5. &nbsp;</span>Іванов Іван Іванович</div>
+                        <div class="groups__elem student-data"><span>6. &nbsp;</span>Іванов Іван Іванович</div>
+                        <div class="groups__elem student-data"><span>7. &nbsp;</span>Іванов Іван Іванович</div>
+                    </div>
+                </div>
+                </ul>
+            </div>
+        </div>
+    </div> -->
+
+
+    <!-- deleteBtn modal-page (end) -->
+
+    <!-- show students modal end -->
+    <section class="courseControl">
+        <div class="courseControl-separator direction-separator">
+        </div>
+        <div class="courseControl-container sticky-container container">
+
+            <!-- sidebar-menu (start) -->
+
+            <div class="sidebar">
+
+                <div class="sidebar-sticky">
+
+                    <div class="sidebar-top_wrapper">
+                        <div class="sidebar-top_burger-btn">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                        </div>
+
+                        <!-- changeling block mobile-btn (start) -->
+                        <div class="sidebar-top_mobile-btn">
+                            <div class="sidebar-top_mobile-img">
+                                <img src="assets/img/005-lecture.png" alt="icon">
+                            </div>
+                            <div class="sidebar-top_mobile-name">
+                                Управління групами
+                            </div>
+                        </div>
+                        <!-- changeling block mobile-btn (end) -->
+
+                    </div>
+                    @include('layouts.front.includes.admin_sidebar_vrst')
+
+                </div>
+
+            </div>
+            <!-- sidebar-menu (end) -->
+
+            <div class="groups-control_edit-block">
+                <h1 class='groups-head__title'>Додати групу</h1>
+                <div class="groups-edit">
+                    <form action="{{ route('add_group_apply') }}" method="POST">
+                            @csrf
+                        <!-- <div class="groups-edit__teacher-block">
+                            <p class="groups-edit__current-teacher eg-text-style">Поточний викладач: &nbsp;</p>
+                            <p class="groups-edit__teachers-name"> Іванов Іван Іванович</p>
+                        </div> -->
+                        <div class="groups-edit__group">
+                            <p class="groups-edit__group-name eg-text-style">Назва групи</p>
+                            <input class='eg-input' type="text" name="name" id="getCourseName"
+                                placeholder="Повна назва курсу студента">
+                        </div>
+                        <div class="groups-edit__group">
+                            <p class="groups-edit__group-name eg-text-style">Додати студента</p>
+                            <div class="groups-edit__student-add-form">
+                                <input class='eg-input add-style' type="text" id="student" name="student" id="getCourseName"
+                                    placeholder="Введіть ім'я студента">
+                                    
+                                <a class="add-student" id="addstudent">Додати</a>
+                                <div id="studentList">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div id="studentsAdd" class="form-group">
+                            <label>Список студентов</label><br>
+                        </div> -->
+                        <div class="groups-edit__students-list">
+                            <p class="groups-edit__group-name eg-text-style">Список студентів:</p>
+                            <div class="groups-edit__student-col" id="studentsAdd">
+
+                            </div>
+                            <div class="groups-edit__student-col">
+
+                            </div>
+                            <div class="groups-edit__student-col">
+
+                            </div>
+                        </div>
+                        <div class="groups-edit__add-teacher-block">
+                            <p class="groups-edit__current-teacher eg-text-style">Додати викладача</p>
+                            <div class="select">
+                                <select name="select-teacher" class="select-teacher" name="teacher_id" id="selectTeacher">
+                                    <option>Нет</option>
+                                    @foreach($teachers_list as $teacher)
+                                        <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        <div class="groups-edit__buttons-block">
+                            <button type="submit" class="groups-edit__create-group" id="createGroup">Створити </button>
+                            <button class="groups-edit__back-to-groups" id="backToGroups">Назад </button>
+
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+
+
+    </section>
+
+
+
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script type="text/javascript" src="assets/js/slick.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <script src="assets/js/main.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+    <script>
+    $(document).ready(function(){
+
+        $('#student').keyup(function(){ 
+            var query = $(this).val();
+            if(query != '')
+            {
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+            url:"{{ route('autocomplete.fetch') }}",
+            method:"POST",
+            data:{query:query, _token:_token},
+            success:function(data){
+            $('#studentList').fadeIn();  
+                        $('#studentList').html(data);
+            }
+            });
+            }
+        });
+
+        $(document).on('click', 'li', function(){  
+            $('#student').val($(this).text());  
+            $('#studentList').fadeOut();  
+        });  
+
+        /* Создаем аррей с студентами */
+        var students_array = new Array();
+        var count_t = 1;
+
+        $('#addstudent').click(function() {
+            /* Берем имя текущего студента */
+            var curr_stud = $('#student').val();
+            console.log(curr_stud);
+            console.log(students_array);
+            /* Если студент есть в аррее */
+            if(jQuery.inArray(curr_stud, students_array) != -1 ){
+                alert("Студент "+ curr_stud + " Уже добавлен!");
+            } else {
+                $('#studentsAdd').append("<div class='groups-edit__student-row'><p class='student-number'>" + count_t + ". &nbsp;</p><p class='groups-edit__student'>" + curr_stud + "</p><button class='delete-student' data-toggle='modal' data-target='#deleteModal'>X</button></div>");
+                //$('#studentsAdd').append( "<button class='btn btn-success m-1' disabled>"+ curr_stud + "</button>" );
+                $('#studentsAdd').append( "<input type='hidden' name='student_name[]' value='" + curr_stud +"'>" );
+                /* Добавляем текущего студента в аррей */
+                count_t++;
+                students_array.push(curr_stud);
+            }
+        
+        });
+
+    });
+    </script>
+
+</body>
+
 @section('scripts')
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-<script>
-$(document).ready(function(){
 
-    $('#student').keyup(function(){ 
-        var query = $(this).val();
-        if(query != '')
-        {
-         var _token = $('input[name="_token"]').val();
-         $.ajax({
-          url:"{{ route('autocomplete.fetch') }}",
-          method:"POST",
-          data:{query:query, _token:_token},
-          success:function(data){
-           $('#studentList').fadeIn();  
-                    $('#studentList').html(data);
-          }
-         });
-        }
-    });
-
-    $(document).on('click', 'li', function(){  
-        $('#student').val($(this).text());  
-        $('#studentList').fadeOut();  
-    });  
-
-    /* Создаем аррей с студентами */
-    var students_array = new Array();
-
-    $('#addstudent').click(function() {
-        /* Берем имя текущего студента */
-        var curr_stud = $('#student').val();
-        console.log(curr_stud);
-        console.log(students_array);
-        /* Если студент есть в аррее */
-        if(jQuery.inArray(curr_stud, students_array) != -1 ){
-            alert("Студент "+ curr_stud + " Уже добавлен!");
-        } else {
-            $('#studentsAdd').append( "<button class='btn btn-success m-1' disabled>"+ curr_stud + "</button>" );
-            $('#studentsAdd').append( "<input type='hidden' name='student_name[]' value='" + curr_stud +"'>" );
-            /* Добавляем текущего студента в аррей */
-            students_array.push(curr_stud);
-        }
-       
-    });
-
-});
-</script>
 @endsection
 
 
