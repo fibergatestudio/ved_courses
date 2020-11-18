@@ -7,8 +7,8 @@
             @csrf
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <a href="{{ route('main')}}">
-                        <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                    <a class="entrance-logo" href="{{ route('main')}}">
+                        <img class="w-100" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
                     </a>
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
