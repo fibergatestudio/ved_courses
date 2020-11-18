@@ -25,10 +25,10 @@
                 </div>
             </div>
             @if( Auth::user()->getMedia('photos')->last())
-                {{-- <style>
+                <style>
                     .profile-item_photo { background-image: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb_big') }}) !important; background-color: inherit !important;
                     }
-                </style> --}}
+                </style>
             @endif
             <div class="profile-grid_item">
                 <div class="profile-item_name">{{ $teacher_info->full_name }}</div>
@@ -53,9 +53,9 @@
 </section>
 
 <script>
-    // @if( !empty($student_full_info->descr))
-    //     show_text_profile();
-    // @endif
+    @if( !empty($teacher_info->descr))
+        show_text_profile();
+    @endif
     function show_text_profile() {
         document.getElementById('profile_text1').style.display = 'none';
         document.getElementById('profile_text2').style.display = 'block';
