@@ -51,7 +51,13 @@
 
         </div>
 
-      <div class="programs-item_video">{{ collect(json_decode($lesson->video_name))->count() }} відео</div>
+        @if (collect(json_decode($lesson->video_name))->count() > 0)
+        <div class="programs-item_video">
+
+          {{ collect(json_decode($lesson->video_name))->count() }} відео
+
+        </div>
+        @endif
       <table class="video-collection_table hidden-menu">
         <tbody>
             @forelse (collect(json_decode($lesson->video_name)) as $video_name)
