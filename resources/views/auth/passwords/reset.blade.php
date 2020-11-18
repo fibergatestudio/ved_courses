@@ -5,7 +5,9 @@
     <div class="modal-content">
             <div class="modal-body tab-content radius">
                 <div class="">
-                    <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                    <a href="{{ route('main')}}">
+                        <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                    </a>
                     <h3 class="entrance-title mt-3">{{ __('Reset Password') }}</h3>
                 </div>
 
