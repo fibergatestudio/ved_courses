@@ -148,26 +148,6 @@
     <!-- student modal-page (end) -->
 
     <!-- deleteBtn modal-page (begin) -->
-    <div class="bootstrap-restylingStudent modal fade" id="deleteModal" tabindex="-1" role="dialog"
-        aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog  modal-dialog_restyle">
-            <div class="modal-content">
-                <div class="deleteMenu-wrapper">
-
-                    <div class="deleteMenu-topImg">
-                        <img src="/img/basket.png" alt="icon">
-                    </div>
-                    <div class="deleteMenu-text">
-                        Ви точно бажаєте видалити <br> Курс ?
-                    </div>
-                    <div class="deleteMenu-btn">
-                        <a class="flexTable-btn_delete" href="##"><span>Видалити</span></a>
-                    </div>
-                </div>
-                </ul>
-            </div>
-        </div>
-    </div>
 
 
     <!-- deleteBtn modal-page (end) -->
@@ -211,7 +191,7 @@
             </div>
             <!-- sidebar-menu (end) -->
 
-            <h3 class="courseControl-title">Управління курсами <a href="{{ route('new_course') }}"><button style="display: initial" class="flexTable-btn_edit">Створити курс</button></a></h3>
+            <h3 class="courseControl-title">Управління курсами<a href="{{ route('new_course') }}"><button style="display: initial" class="flexTable-btn_edit">Створити курс</button></a></h3>
 
             <div class="flexTable-wrapper">
                 <div class="flexTable-scrollContainer">
@@ -237,7 +217,27 @@
                             <div class="flexTable-string_inner">
                                 <a class="flexTable-btn_edit" href="{{ route('edit_course', ['course_id' => $course->id ]) }}"><span>Редагувати</span></a>
                                 <a class="flexTable-btn_delete" href="##" data-toggle="modal"
-                                    data-target="#deleteModal"><span>Видалити</span></a>
+                                    data-target="#deleteModal{{ $course->id }}"><span>Видалити</span></a>
+                                    <div class="bootstrap-restylingStudent modal fade" id="deleteModal{{ $course->id }}" tabindex="-1" role="dialog"
+                                        aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog  modal-dialog_restyle">
+                                            <div class="modal-content">
+                                                <div class="deleteMenu-wrapper">
+
+                                                    <div class="deleteMenu-topImg">
+                                                        <img src="/img/basket.png" alt="icon">
+                                                    </div>
+                                                    <div class="deleteMenu-text">
+                                                        Ви точно бажаєте видалити <br> Курс {{ $course->name }} ?
+                                                    </div>
+                                                    <div class="deleteMenu-btn">
+                                                        <a class="flexTable-btn_delete" href="{{ route('delete_course', ['course_id' => $course->id ]) }}"><span>Видалити</span></a>
+                                                    </div>
+                                                </div>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                         @endforeach
