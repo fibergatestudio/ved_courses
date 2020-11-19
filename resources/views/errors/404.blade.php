@@ -20,7 +20,7 @@
                         @guest
                             <div class="f0f__btns">
                                 <a class="flexTable-btn_edit groups-edit__back-to-groups sc__student-edit f0f__to-main-page"
-                                    href="{{ URL::to('/') }}"><span>На головну
+                                    href="{{ route('main') }}"><span>На головну
                                     </span>
                                 </a>
                                 <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login" href="{{ route('login') }}">Зареєструватися /
