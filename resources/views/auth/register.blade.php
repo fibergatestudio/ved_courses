@@ -12,7 +12,9 @@
         </div> -->
         <div class="modal-body">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                <a class="entrance-logo" href="{{ route('main')}}">
+                    <img class="w-100" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                </a>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}" role="tab" aria-controls="home"
                         aria-selected="true">Увійти</a>
