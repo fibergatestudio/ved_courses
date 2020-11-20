@@ -57,7 +57,7 @@
       </div>
 
       @forelse (collect(json_decode($lesson->add_document)) as $document)
-            <a class="protocole-btn btn-watch--more" href="{{ asset('/docs').'/'.$document }}"><span>Протокол № {{ $loop->iteration }}</span></a>
+            <a class="protocole-btn btn-watch--more" href="{{ asset('docs/'.$document) }}"><span>Протокол № {{ $loop->iteration }}</span></a>
       @empty
       <div class="string-text">
         Протоколи відсутні
