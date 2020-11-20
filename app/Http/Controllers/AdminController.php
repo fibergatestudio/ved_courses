@@ -17,7 +17,7 @@ class AdminController extends Controller
     // Управление пользователями
     public function users_controll(){
 
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->paginate(4);
 
         return view('admin.users_controll', compact('users'));
     }
