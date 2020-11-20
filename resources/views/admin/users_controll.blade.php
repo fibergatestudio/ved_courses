@@ -1,7 +1,107 @@
-@extends('layouts.app')
+@extends('layouts.front.front_child')
 
 @section('content')
-<div class="container">
+<section class="courseControl">
+    <div class="courseControl-separator direction-separator">
+    </div>
+    <div class="courseControl-container sticky-container container">
+        @if(session()->has('message_success'))
+            <div class="alert alert-success">
+                {{ session()->get('message_success') }}
+            </div>
+        @endif
+
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => __('Управління користувачами')])
+
+        <div class="groups-control ug__group">
+            <div class="groups-head">
+                <h1 class="groups-head__title ug__head-title">{{ __('Управління користувачами') }}</h1>
+            </div>
+            <div class="groups-body ug__body">
+                @if (session('status'))
+                    <div class="alert alert-success" role="alert">
+                        {{ session('status') }}
+                    </div>
+                @endif
+                <div class="groups-title ug__content">
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('№') }}</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Логін') }}</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Email') }}</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Роль') }}</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Управління') }}</div>
+                </div>
+                <div class="groups-content ug__content">
+                    @foreach($users as $user)
+                    <div class="groups-row ug__row">
+                        <div class="groups__elem ug__elem">{{ $user->id }}.</div>
+                        <div class="groups__elem ug__elem">{{ $user->name }}</div>
+                        <div class="groups__elem ug__elem">{{ $user->email }}</div>
+                        <div class="groups__elem ug__elem">{{ $user->role }}</div>
+                        <div class="groups__elem ug__elem">
+                            <a class="flexTable-btn_edit groups-btn-edit-restyle ug_btn-edit"
+                                href="{{ route('user_edit', ['user_id' => $user->id]) }}"><span>Редагувати</span></a>
+                            @if($user->role != 'admin')
+                            <a class="flexTable-btn_delete ug__btn-delete"
+                                href="{{ route('user_delete', ['user_id' => $user->id]) }}"
+                                data-toggle="modal"
+                                data-target="#deleteModal"><span>Видалити</span></a>
+                            @endif
+                        </div>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+        <div class="groups-control-mobile">
+            <div class="groups-head">
+                <h1 class="groups-head__title ug_m-head-title">{{ __('Управління користувачами') }}</h1>
+            </div>
+            <div class="groups-body">
+                @foreach($users as $user)
+                <div class="groups-content">
+                    <div class="groups-row groups-row_style">
+                        <div class="groups-row__elem">
+                            <div
+                                class="groups-title__elem  groups-row__elem_restyle ug__m-row-title ug__mt-bl-reset">
+                                {{ __('№') }}
+                            </div>
+                            <div
+                                class="groups__elem groups-row__elem_restyle ug__m-row-title ug__mobile-row-elem ug__mt-bl-reset">
+                                {{ $user->id }}.
+                            </div>
+                        </div>
+                        <div class="groups-row__elem">
+                            <div class="groups-title__elem  ug__m-row-title">{{ __('Логін') }}</div>
+                            <div class="groups__elem ug__m-row-title ug__mobile-row-elem">{{ $user->name }}</div>
+                        </div>
+                        <div class="groups-row__elem">
+                            <div class="groups-title__elem  ug__m-row-title">{{ __('Email') }}</div>
+                            <div class="groups__elem ug__m-row-title ug__mobile-row-elem">{{ $user->email }}</div>
+                        </div>
+                        <div class="groups-row__elem">
+                            <div class="groups-title__elem  ug__m-row-title">{{ __('Роль') }}</div>
+                            <div class="groups__elem ug__m-row-title ug__mobile-row-elem">{{ $user->role }}</div>
+                        </div>
+                        <div class="groups-row__elem">
+                            <div class="groups__elem groups__elem-last-child groups__elem_style pl-0">
+                                <a class="flexTable-btn_edit groups-btn-edit-restyle ug_btn-edit"
+                                    href="{{ route('user_edit', ['user_id' => $user->id]) }}#"><span>Редагувати</span>
+                                </a>
+                                @if($user->role != 'admin')
+                                    <a class="flexTable-btn_delete ug__btn-delete" href="{{ route('user_delete', ['user_id' => $user->id]) }}" data-toggle="modal"
+                                        data-target="#deleteModal"><span>Видалити</span>
+                                    </a>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+        </div>
+    </div>
+</section>
+{{-- <div class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -61,5 +161,5 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 @endsection
