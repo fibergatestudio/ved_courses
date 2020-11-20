@@ -64,6 +64,31 @@ class CoursesController extends Controller
         //dd($courses_question_answers);
 
         $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
+        //$videos_arr = [];
+        foreach($course_lessons as $lesson){
+
+            //dd(json_decode($lesson->video_name));
+            if($lesson->video_name == "null"){
+                $lesson->video_count = 0;
+            } else {
+                $lesson->video_count = count(json_decode($lesson->video_name));
+            }
+            
+            // $video_arr = [];
+            // $i = 0;
+            // foreach(json_decode($lesson->video_name) as $video){
+            //     $video_arr["video_name"] = $video;
+            //     $i++;
+            // }
+            // $a = 0;
+            // foreach(json_decode($lesson->video_length) as $video_l){
+            //     $video_arr["video_length"] = $video_l;
+            //     //$a++;
+            // }
+            // dd($video_arr);
+
+        }
+
 
         $teacher_arr = json_decode($course_info->assigned_teacher_id);
         //dd($teacher_arr);

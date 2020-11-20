@@ -139,7 +139,7 @@ use Illuminate\Support\Facades\Auth;
         // Применитть редактироавние
         Route::post('/students_controll/{student_id}/apply', 'StudentController@students_controll_apply')->name('students_controll_apply')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
         // Загрузить студентов - страница АДМИН
-        Route::get('/import_students', 'StudentController@import_students')->name('import_students')->middleware(['auth','can:admin_rights']);
+        Route::get('/import_students', 'StudentController@import_students')->name('import_students')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
         // Загрузить POST Запрос
         Route::post('/import_students/apply', 'StudentController@import_students_apply')->name('import_students_apply')->middleware(['auth','can:admin_rights']);
 

@@ -338,6 +338,9 @@
     <script>
     $(document).ready(function(){
 
+        /* Создаем аррей с студентами */
+        var students_array = new Array();
+        var count_t = 1;
 
         $('#student').keyup(function(){ 
             var query = $(this).val();
@@ -360,10 +363,6 @@
             $('#student').val($(this).text());  
             $('#studentList').fadeOut();  
         });  
-
-        /* Создаем аррей с студентами */
-        var students_array = new Array();
-        var count_t = 1;
 
         $('#addstudent').click(function() {
             /* Берем имя текущего студента */

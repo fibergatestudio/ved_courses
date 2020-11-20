@@ -5,7 +5,7 @@
                 <div class="sidebar_title-imgBox">
                     <a href="{{ route('admin_panel') }}"><img class="sidebar_title-image" src="/img/teacher-menu-1.png" alt="icon"></a>
                 </div>
-                <a class="sidebar_title-link" href="{{ route('admin_panel') }}">Головна</a>
+                <a class="sidebar_title-link" href="{{ route('teacher_panel') }}">Головна</a>
             </li>
             <li class="sidebar_title-inner">
                 <div class="sidebar_title-imgBox">
