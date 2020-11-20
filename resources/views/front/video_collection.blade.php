@@ -7,7 +7,7 @@
 @section('content')
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>Заняття {{ $lessonNumber }}</span></div>
+        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
     </div>
     <div class="container">
         <ul class="breadcrumbs_list">
@@ -18,7 +18,7 @@
                 <a href="{{ route('view_course', $course->id) }}" class="breadcrumbs_link">{{ $course->name }}</a>
             </li>
             <li class="breadcrumbs_item">
-                <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}" class="breadcrumbs_link breadcrumbs_active">Заняття {{ $lessonNumber }}</a>
+                <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}" class="breadcrumbs_link breadcrumbs_active">{{ $lesson->course_name ?? 'Без назви' }}</a>
             </li>
 
         </ul>
@@ -51,7 +51,13 @@
 
         </div>
 
-      <div class="programs-item_video">{{ collect(json_decode($lesson->video_name))->count() }} відео</div>
+        @if (collect(json_decode($lesson->video_name))->count() > 0)
+        <div class="programs-item_video">
+
+          {{ collect(json_decode($lesson->video_name))->count() }} відео
+
+        </div>
+        @endif
       <table class="video-collection_table hidden-menu">
         <tbody>
             @forelse (collect(json_decode($lesson->video_name)) as $video_name)

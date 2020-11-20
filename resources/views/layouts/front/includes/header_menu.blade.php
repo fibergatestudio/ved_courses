@@ -27,12 +27,12 @@
                     <li><a class="top-btn top-btn--user" href="##" data-toggle="modal" data-target="#adminPanelModal"><span class="student--user">{{ auth()->user()->name }}</span></a></li>
                     @endif
                     @if( Auth::user()->role == "teacher")
-                        <li><a class="top-btn" href="##"><span>Студент</span></a></li>
+                        <!--<li><a class="top-btn" href="##"><span>Студент</span></a></li>-->
                         <li><a class="top-btn top-btn--user" href="##" data-toggle="modal" data-target="#teacherPanelModal"><span class="student--user">{{ auth()->user()->name }}</span></a></li>
                     @endif
                     @if( Auth::user()->role == "student")
-                        <li><a class="top-btn" href="##"><span>Викладач</span></a></li>
-                        <li><a class="top-btn top-btn--user" href="##" data-toggle="modal" data-target="#studentPanelModal"><span class="student--user">{{ auth()->user()->name }}</span></a></li>
+                        <!--<li><a class="top-btn" href="##"><span>Викладач</span></a></li>-->
+                        <li><a class="top-btn top-btn--user ml-auto" href="##" data-toggle="modal" data-target="#studentPanelModal"><span class="student--user">{{ auth()->user()->name }}</span></a></li>
                     @endif
                     @if( Auth::user()->getMedia('photos')->last())
                         <style>.student--user:after { background-image: url({{ Auth::user()->getMedia('photos')->last()->getUrl('thumb') }}) !important; }</style>

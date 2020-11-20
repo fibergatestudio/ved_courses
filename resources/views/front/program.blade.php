@@ -50,7 +50,7 @@
                 </div>
                 <div class="programs-grid_item">
                     <div class="programs-item_chapter">
-                        <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}">Заняття {{ $loop->iteration }}</a>
+                        <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}">{{ $lesson->course_name ?? 'Без назви' }}</a>
                     </div>
                 </div>
                 <div class="programs-grid_item">

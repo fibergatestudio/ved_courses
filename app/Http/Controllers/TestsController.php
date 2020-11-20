@@ -164,7 +164,7 @@ class TestsController extends Controller
 
         //dd($request->all());
 
-        $q_type = "Множественный выбор";
+        $q_type = "Множинний вибір";
 
         $a_counter = $request->answer_counter;
         //dd($a_counter);
@@ -228,7 +228,7 @@ class TestsController extends Controller
 
         //dd($request->all());
 
-        $q_type = "Верно\Не верно";
+        $q_type = "Правильно/неправильно";
 
         // Формирование Инфы для джсона
         $a_data = "";
@@ -328,7 +328,7 @@ class TestsController extends Controller
 
         
 
-        $q_type = "Перетаскивание в тексте";
+        $q_type = "Перетягування в тексті";
         // Енкод инфы
         $answers_json = json_encode($answers_arr);
 
@@ -363,21 +363,34 @@ class TestsController extends Controller
         // Подтяжка вопросов\ответов
         foreach($test_question_answers as $t_quest){
             // Если тип вопроса множественнный выбор
-            if($t_quest->question_type == "Множественный выбор"){
+            if($t_quest->question_type == "Множинний вибір"){
                 $answer_info = DB::table('tests_multiple_choice')->where('id', $t_quest->test_answers_id)->first();
-                $t_quest->question_name = $answer_info->question_name;
+                if($answer_info->question_name){
+                    $t_quest->question_name = $answer_info->question_name;
+                } else {
+                    $t_quest->question_name = "";
+                }
+                
             }
-            if($t_quest->question_type == "Верно\Не верно"){
+            if($t_quest->question_type == "Правильно/неправильно"){
                 $answer_info = DB::table('tests_true_false')->where('id', $t_quest->test_answers_id)->first();
-                $t_quest->question_name = $answer_info->question_name;
+                if($answer_info->question_name){
+                    $t_quest->question_name = $answer_info->question_name;
+                } else {
+                    $t_quest->question_name = "";
+                }
             }
-            if($t_quest->question_type == "Краткий ответ"){
-                $answer_info = DB::table('tests_short_answer')->where('id', $t_quest->test_answers_id)->first();
-                $t_quest->question_name = $answer_info->question_name;
-            }
-            if($t_quest->question_type == "Перетаскивание в тексте"){
+            // if($t_quest->question_type == "Краткий ответ"){
+            //     $answer_info = DB::table('tests_short_answer')->where('id', $t_quest->test_answers_id)->first();
+            //     $t_quest->question_name = $answer_info->question_name;
+            // }
+            if($t_quest->question_type == "Перетягування в тексті"){
                 $answer_info = DB::table('tests_drag_drop')->where('id', $t_quest->test_answers_id)->first();
-                $t_quest->question_name = $answer_info->question_name;
+                if($answer_info->question_name){
+                    $t_quest->question_name = $answer_info->question_name;
+                } else {
+                    $t_quest->question_name = "";
+                }
             }
 
         }
@@ -592,13 +605,13 @@ class TestsController extends Controller
         //dd($questions);
 
         foreach($questions as $question){
-            if($question->question_type == "Множественный выбор"){
+            if($question->question_type == "Множинний вибір"){
                 DB::table('tests_multiple_choice')->where('id', $question->test_answers_id)->delete();
-            } else if($question->question_type == "Верно\Не верно"){
+            } else if($question->question_type == "Правильно/неправильно"){
                 DB::table('tests_true_false')->where('id', $question->test_answers_id)->delete();
             } else if($question->question_type == "Краткий ответ"){
                 DB::table('tests_short_answer')->where('id', $question->test_answers_id)->delete();
-            } else if($question->question_type == "Перетаскивание в тексте"){ 
+            } else if($question->question_type == "Перетягування в тексті"){ 
                 DB::table('tests_drag_drop')->where('id', $question->test_answers_id)->delete();
             }
         }

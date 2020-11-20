@@ -79,6 +79,18 @@ class CoursesController extends Controller
         return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers') );
     }
 
+    public function delete_course($course_id){
+
+        //dd($course_id);
+
+        DB::table('courses')->where('id', $course_id)->delete();
+        DB::table('courses_faq')->where('course_id', $course_id)->delete();
+        DB::table('courses_information')->where('course_id', $course_id)->delete();
+        DB::table('courses_program')->where('course_id', $course_id)->delete();
+
+        return back();
+    }
+
     public function delete_teacher_course($course_id, $teacher_id){
 
         $course_info = DB::table('courses')->where('id', $course_id)->first();
@@ -279,6 +291,7 @@ class CoursesController extends Controller
         // Инсерт в базу
         $courses_program_id = DB::table('courses_program')->insertGetId([
             'course_id' => $course_id,
+            'course_name' => $request->course_name,
             'course_description' => $request->course_description,
             'learning_time' => $request->learning_time,
             'course_protocol_descr' => $request->course_protocol_descr,

@@ -182,6 +182,8 @@ use Illuminate\Support\Facades\Auth;
 
                 // Удалить препода с курса
                 Route::get('/courses_controll/edit_course/{course_id}/delete_teacher/{teacher_id}', 'CoursesController@delete_teacher_course')->name('delete_teacher')->middleware('auth','can:admin_rights');
+        // Удаление курса
+        Route::get('/courses_controll/{course_id}/delete', 'CoursesController@delete_course')->name('delete_course')->middleware('auth','can:admin_rights');
 
 
 //////////
