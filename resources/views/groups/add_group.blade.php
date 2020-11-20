@@ -248,7 +248,11 @@
                         <!-- changeling block mobile-btn (end) -->
 
                     </div>
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+                    @if(Auth::user()->role == "admin")
+                        @include('layouts.front.includes.admin_sidebar_vrst')
+                    @elseif(Auth::user()->role == "teacher")
+                        @include('layouts.front.includes.teacher_sidebar_vrst')
+                    @endif
 
                 </div>
 
@@ -258,7 +262,7 @@
             <div class="groups-control_edit-block">
                 <h1 class='groups-head__title'>Додати групу</h1>
                 <div class="groups-edit">
-                    <form action="{{ route('add_group_apply') }}" method="POST">
+                    <form action="{{ route('add_group_apply') }}" id="group_add_form" method="POST">
                             @csrf
                         <!-- <div class="groups-edit__teacher-block">
                             <p class="groups-edit__current-teacher eg-text-style">Поточний викладач: &nbsp;</p>
@@ -267,7 +271,7 @@
                         <div class="groups-edit__group">
                             <p class="groups-edit__group-name eg-text-style">Назва групи</p>
                             <input class='eg-input' type="text" name="name" id="getCourseName"
-                                placeholder="Повна назва курсу студента">
+                                placeholder="Повна назва групи">
                         </div>
                         <div class="groups-edit__group">
                             <p class="groups-edit__group-name eg-text-style">Додати студента</p>
@@ -334,6 +338,7 @@
     <script>
     $(document).ready(function(){
 
+
         $('#student').keyup(function(){ 
             var query = $(this).val();
             if(query != '')
@@ -378,6 +383,21 @@
             }
         
         });
+
+        $('#createGroup').click(function(e){
+            e.preventDefault();
+
+            if(count_t <= 1){
+                alert("Додайте мінімум одного студента!");
+            } else {
+                $('#group_add_form').submit();
+            }
+        });
+        $('#backToGroups').click(function(e){
+            e.preventDefault();
+            window.location.href = "/groups";
+        });
+
 
     });
     </script>

@@ -217,7 +217,11 @@
                         <!-- changeling block mobile-btn (end) -->
 
                     </div>
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+                    @if(Auth::user()->role == "admin")
+                        @include('layouts.front.includes.admin_sidebar_vrst')
+                    @elseif(Auth::user()->role == "teacher")
+                        @include('layouts.front.includes.teacher_sidebar_vrst')
+                    @endif
 
                 </div>
 
