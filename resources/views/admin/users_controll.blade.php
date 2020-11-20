@@ -10,7 +10,6 @@
                 {{ session()->get('message_success') }}
             </div>
         @endif
-<<<<<<< HEAD
 
         @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => __('Управління користувачами')])
 
@@ -110,9 +109,7 @@
     @endif
     <div class="row justify-content-center">
         <div class="col-md-3">
-=======
-        <div class="courseControl-container sticky-container container">
->>>>>>> a598d76bf9a33d314cd81f45ee819e20e8fb68a2
+        <div class="courseControl-container sticky-container container"
             @include('layouts.admin_sidebar')
             <div class="groups-control ug__group">
                 <div class="groups-head">
@@ -199,12 +196,11 @@
 
                     </div>
                 </div>
-            </div> --}}
+            </div>
         </div>
     </div>
-<<<<<<< HEAD
 </div> --}}
-=======
+
 </section>
->>>>>>> a598d76bf9a33d314cd81f45ee819e20e8fb68a2
+
 @endsection
