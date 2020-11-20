@@ -380,7 +380,7 @@
                                     <td>{{ strip_tags($test->description) }}</td>
                                     <td>
                                         <a href="{{ route('view_test_info_questions', ['test_info_id' => $test->id ]) }}"><div class="btn btn-success">Редактировать</div></a>
-                                        <div class="btn btn-danger">Удалить</div>
+                                        <a href="{{ route('delete_test', ['test_info_id' => $test->id ]) }}" class="btn btn-danger">Удалить</div></a>
                                     </td>
                                 </tr>
                                 @endforeach

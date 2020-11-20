@@ -191,7 +191,7 @@
             </div>
             <!-- sidebar-menu (end) -->
 
-            <h3 class="courseControl-title">Управління курсами<a href="{{ route('new_course') }}"><button style="display: initial" class="flexTable-btn_edit">Створити курс</button></a></h3>
+            <h3 class="courseControl-title">Управління курсами<a href="{{ route('new_course') }}"><button style="display: initial; margin-left:5px;" class="flexTable-btn_edit">Створити курс</button></a></h3>
 
             <div class="flexTable-wrapper">
                 <div class="flexTable-scrollContainer">

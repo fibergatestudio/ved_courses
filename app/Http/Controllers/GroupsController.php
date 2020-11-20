@@ -145,6 +145,7 @@ class GroupsController extends Controller
     // Автокомплит
     public function fetch(Request $request){
 
+
         if($request->get('query'))
         {
             $query = $request->get('query');

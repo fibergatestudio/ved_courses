@@ -180,7 +180,7 @@
                 <div class="deleteMenu-wrapper">
 
                     <div class="deleteMenu-topImg ccec_deleteImg">
-                        <img src="assets/img/graduation-cap.png" alt="icon">
+                        <img src="/img/graduation-cap.png" alt="icon">
                     </div>
                     <div class="deleteMenu-text">
                         Ви точно бажаєте видалити <br> студента <span id="studentName">Іванов Іван Іванович</span>?
