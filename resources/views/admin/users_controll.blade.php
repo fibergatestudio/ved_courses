@@ -2,15 +2,15 @@
 
 @section('content')
 
-{{-- <section class="courseControl">
+<section class="courseControl">
     <div class="courseControl-separator direction-separator">
     </div>
     <div class="courseControl-container sticky-container container">
-        @if(session()->has('message_success'))
+        {{-- @if(session()->has('message_success'))
             <div class="alert alert-success">
                 {{ session()->get('message_success') }}
             </div>
-        @endif
+        @endif --}}
 
         @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => __('Управління користувачами')])
 
@@ -19,11 +19,11 @@
                 <h1 class="groups-head__title ug__head-title">{{ __('Управління користувачами') }}</h1>
             </div>
             <div class="groups-body ug__body">
-                @if (session('status'))
+                {{-- @if (session('status'))
                     <div class="alert alert-success" role="alert">
                         {{ session('status') }}
                     </div>
-                @endif
+                @endif --}}
                 <div class="groups-title ug__content">
                     <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('№') }}</div>
                     <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Логін') }}</div>
@@ -42,16 +42,16 @@
                             <a class="flexTable-btn_edit groups-btn-edit-restyle ug_btn-edit"
                                 href="{{ route('user_edit', ['user_id' => $user->id]) }}"><span>Редагувати</span></a>
                             @if($user->role != 'admin')
-                            <a class="flexTable-btn_delete ug__btn-delete"
-                                href="{{ route('user_delete', ['user_id' => $user->id]) }}"
-                                data-toggle="modal"
-                                data-target="#deleteModal"><span>Видалити</span></a>
+                                <a class="flexTable-btn_delete ug__btn-delete" href="##" data-toggle="modal"
+                                    data-target="#deleteModal{{ $user->id }}"><span>Видалити</span></a>
+                                @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModal'])
                             @endif
                         </div>
                     </div>
                     @endforeach
                 </div>
             </div>
+
         </div>
         <div class="groups-control-mobile">
             <div class="groups-head">
@@ -89,9 +89,9 @@
                                     href="{{ route('user_edit', ['user_id' => $user->id]) }}#"><span>Редагувати</span>
                                 </a>
                                 @if($user->role != 'admin')
-                                    <a class="flexTable-btn_delete ug__btn-delete" href="{{ route('user_delete', ['user_id' => $user->id]) }}" data-toggle="modal"
-                                        data-target="#deleteModal"><span>Видалити</span>
-                                    </a>
+                                    <a class="flexTable-btn_delete ug__btn-delete" href="##" data-toggle="modal"
+                                        data-target="#deleteModalm{{ $user->id }}"><span>Видалити</span></a>
+                                    @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModalm'])
                                 @endif
                             </div>
                         </div>
@@ -99,11 +99,14 @@
                 </div>
                 @endforeach
             </div>
-        </div>
-    </div>
-</section> --}}
 
-<body>
+        </div>
+        {{ $users->links('vendor.pagination.vrst_pagination') }}
+    </div>
+</section>
+@endsection
+
+{{-- <body>
 
     <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
@@ -352,7 +355,4 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
     <script src="assets/js/main.js"></script>
-</body>
-
-
-@endsection
+</body> --}}

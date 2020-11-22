@@ -32,38 +32,44 @@
                         </div>
                         <a class="sidebar_title-link" href="{{ route('admin_panel') }}">{{ __('Головна') }}</a>
                     </li>
-                    <li class="sidebar_title-inner">
-                        <div class="sidebar_title-imgBox">
-                            <a href="{{ route('courses_controll') }}">
-                                <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-2.png') }}" alt="icon">
-                            </a>
-                        </div>
-                        <a class="sidebar_title-link" href="{{ route('courses_controll') }}">{{ __('Управління Курсами') }}</a>
-                    </li>
-                    <li class="sidebar_title-inner">
-                        <div class="sidebar_title-imgBox">
-                            <a href="{{ route('groups_controll') }}">
-                                <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-3.png') }}" alt="icon">
-                            </a>
-                        </div>
-                        <a class="sidebar_title-link" href="{{ route('groups_controll') }}">{{ __('Управління Групами') }}</a>
-                    </li>
-                    <li class="sidebar_title-inner">
-                        <div class="sidebar_title-imgBox">
-                            <a href="{{ route('students_controll') }}">
-                                <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-4.png') }}" alt="icon">
-                            </a>
-                        </div>
-                        <a class="sidebar_title-link" href="{{ route('students_controll') }}">{{ __('Управління Студентами') }}</a>
-                    </li>
-                    <li class="sidebar_title-inner">
-                        <div class="sidebar_title-imgBox">
-                            <a href="{{ route('users_controll') }}">
-                                <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-5.png') }}" alt="icon">
-                            </a>
-                        </div>
-                        <a class="sidebar_title-link" href="{{ route('users_controll') }}">{{ __('Управління Користувачами') }}</a>
-                    </li>
+                    @if( Auth::user()->role == "student" || "teacher" || "admin")
+                        <li class="sidebar_title-inner">
+                            <div class="sidebar_title-imgBox">
+                                <a href="{{ route('courses_controll') }}">
+                                    <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-2.png') }}" alt="icon">
+                                </a>
+                            </div>
+                            <a class="sidebar_title-link" href="{{ route('courses_controll') }}">{{ __('Управління Курсами') }}</a>
+                        </li>
+                    @endif
+                    @if( Auth::user()->role == "teacher" || "admin")
+                        <li class="sidebar_title-inner">
+                            <div class="sidebar_title-imgBox">
+                                <a href="{{ route('groups_controll') }}">
+                                    <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-3.png') }}" alt="icon">
+                                </a>
+                            </div>
+                            <a class="sidebar_title-link" href="{{ route('groups_controll') }}">{{ __('Управління Групами') }}</a>
+                        </li>
+                        <li class="sidebar_title-inner">
+                            <div class="sidebar_title-imgBox">
+                                <a href="{{ route('students_controll') }}">
+                                    <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-4.png') }}" alt="icon">
+                                </a>
+                            </div>
+                            <a class="sidebar_title-link" href="{{ route('students_controll') }}">{{ __('Управління Студентами') }}</a>
+                        </li>
+                    @endif
+                    @if( Auth::user()->role == "admin")
+                        <li class="sidebar_title-inner">
+                            <div class="sidebar_title-imgBox">
+                                <a href="{{ route('users_controll') }}">
+                                    <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-5.png') }}" alt="icon">
+                                </a>
+                            </div>
+                            <a class="sidebar_title-link" href="{{ route('users_controll') }}">{{ __('Управління Користувачами') }}</a>
+                        </li>
+                    @endif
                     <li class="sidebar_title-inner">
                         <div class="sidebar_title-imgBox">
                             <a href="{{ route('logout') }}">
