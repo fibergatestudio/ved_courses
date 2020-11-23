@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div style="display:none;" class="container">
+{{-- <div style="display:none;" class="container">
     <div class="row justify-content-center">
         <div class="col-md-3">
             @include('layouts.admin_sidebar')
@@ -83,66 +83,33 @@
     <!-- deleteBtn modal-page (end) -->
 
     <!-- questionType modal-page (begin) -->
-    <!-- questionType modal-page (end) -->
+    <!-- questionType modal-page (end) --> --}}
 
-    <section class="courseControl">
-        <div class="courseControl-separator direction-separator">
-        </div>
-        <div class="courseControl-container sticky-container container container-height">
-            <div class="sidebar">
-                <div class="sidebar-sticky">
-                    <div class="sidebar-top_wrapper">
-                        <div class="sidebar-top_burger-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-                        <!-- changeling block mobile-btn (start) -->
-                        <div class="sidebar-top_mobile-btn">
-                            <div class="sidebar-top_mobile-img">
-                                <img src="assets/img/teacher-mobileMenu-2.png" alt="icon">
-                            </div>
-                            <div class="sidebar-top_mobile-name">
-                                Управління курсами
-                            </div>
-                        </div>
-                        <!-- changeling block mobile-btn (end) -->
+<section class="courseControl">
+    <div class="courseControl-separator direction-separator">
+    </div>
+    <div class="courseControl-container sticky-container container container-height">
 
-                    </div>
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Панель Адміна'])
 
-                </div>
+        <div class="cource-container--mobile">
+            <div class="multipleChoice-top-title">
+                <h3 class="multipleChoice-title">Панель Адміна</h3>
             </div>
-            <!-- sidebar-menu (end) -->
-            <div class="cource-container--mobile">
-               
-                    <div class="multipleChoice-top-title">
-                        <h3 class="multipleChoice-title">Панель Адміна</h3>
-                    </div>
-
-                    <div class="multipleChoice-block newTest-block active">
-                        
-                    </div>
-
-                    <div class="multipleChoice-block newTest-block active">
-                        <div class="newTest-top active">
-                            Вітаю!
-                        </div>
-                        <div class="newTest-wrapper show">
-                            Для управління використовуйте панель зліва.
-                        </div>
-                    </div>
-
-                </div>
-            </form>
-
+            <div class="multipleChoice-block newTest-block active">
+            </div>
+            <div class="multipleChoice-block newTest-block active">
+                <div class="newTest-top active">Вітаю!</div>
+                <div class="newTest-wrapper show">Для управління використовуйте панель зліва.</div>
+            </div>
+        </div>
+    </div>
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> --}}
 
-</body>
+{{-- </body> --}}
 
 @endsection
