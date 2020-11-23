@@ -22,7 +22,7 @@
                 <div class="card-body">
                     @if (session('status'))
                         <div class="alert alert-success" role="alert">
-                            {{ session('status') }} 
+                            {{ session('status') }}
                         </div>
                     @endif
 
@@ -33,7 +33,7 @@
                             <label>Название Теста</label>
                             <input type="text" class="form-control" name="name" value="{{ $course_info->name }}">
                         </div>
-                        
+
                         <div id="studentsAdd" class="form-group">
                             <label>Описание Теста</label>
                             <textarea type="text" class="form-control" name="description" value="">{{ $course_info->description }}</textarea>
@@ -52,7 +52,7 @@
                             <table class="table table-bordered data-table">
                                 <thead>
                                     <tr>
-                                        <th>#</th> 
+                                        <th>#</th>
                                         <th>Описание</th>
                                         <th></th>
                                     </tr>
@@ -80,7 +80,7 @@
                             <table class="table table-bordered data-table">
                                 <thead>
                                     <tr>
-                                        <th>#</th> 
+                                        <th>#</th>
                                         <th>Вопрос</th>
                                         <th>Ответ</th>
                                         <th></th>
@@ -128,7 +128,7 @@
                             <table class="table table-bordered data-table">
                                 <thead>
                                     <tr>
-                                        <th>#</th> 
+                                        <th>#</th>
                                         <th>Имя</th>
                                         <th>Действие</th>
                                     </tr>
@@ -148,7 +148,7 @@
                         </div>
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
-                    
+
                         <a href="{{ route('courses_controll') }}">
                             <button class="btn btn-danger">Назад</button>
                         </a>
@@ -250,26 +250,26 @@
     <!-- deleteBtn modal-page (end) -->
 
      <!-- deleteMENU modal-page (begin) -->
-     <div class="bootstrap-restylingStudent modal fade" id="deleteMENU" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-     <div class="modal-dialog course-edit-deleteMenu_modal">
-         <div class="modal-content">
-            <ul class="course-edit-deleteMenu_wrapper">
-                <li class="deleteMenu_inner">
-                    <img src="/img/del-menu-icon.png" alt="delete-menu-icon">
-                </li>
-                <li class="deleteMenu_inner">
-                    Ви точно бажаєте видалити
-                    урок ?
-                </li>
-                <li class="deleteMenu_inner">
-                    <a class="deleteMenu_inner-btn" href="##">
-                        <span>видалити</span>
-                    </a>
-                </li>
-            </ul>
-         </div>
-     </div>
- </div>
+    <div class="bootstrap-restylingStudent modal fade" id="deleteMENU" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog course-edit-deleteMenu_modal">
+            <div class="modal-content">
+                <ul class="course-edit-deleteMenu_wrapper">
+                    <li class="deleteMenu_inner">
+                        <img src="/img/del-menu-icon.png" alt="delete-menu-icon">
+                    </li>
+                    <li class="deleteMenu_inner">
+                        Ви точно бажаєте видалити
+                        урок ?
+                    </li>
+                    <li class="deleteMenu_inner">
+                        <a class="deleteMenu_inner-btn" href="##">
+                            <span>видалити</span>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
 
  <!-- deleteMENU modal-page (end) -->
     <section class="courseControl">
@@ -279,7 +279,7 @@
 
             <!-- sidebar-menu (start) -->
 
-            <div class="sidebar">
+            {{-- <div class="sidebar">
 
                 <div class="sidebar-sticky">
 
@@ -302,23 +302,23 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div>
+                    </div> --}}
                     @if(Auth::user()->role == "admin")
-                        @include('layouts.front.includes.admin_sidebar_vrst')
+                        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
                     @elseif(Auth::user()->role == "teacher")
                         @include('layouts.front.includes.teacher_sidebar_vrst')
                     @endif
-
+{{--
                 </div>
 
-            </div>
+            </div> --}}
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
                 <form action="{{ route('edit_course_apply', ['course_id' => $course_info->id ]) }}" id="edit_course_form" method="POST" enctype="multipart/form-data">
                     @csrf
                 <h3 class="courseEdit-title courseControl-title">Редагування курсу</h3>
-            
+
                 <div class="courseEdit-block">
                     <div class="courseEdit-top">
                         Назва та опис курсу
@@ -335,7 +335,7 @@
                                 <input class="course-faq--input courseAdditional--input" name="name" value="{{ $course_info->name }}" type="text">
                             </div>
                         </div>
-                        
+
                         <div class="courseAdd-inner courseAdd-inner_margbottom">
                             <div class="courseAdd-inner_left">
                                 <div class="courseAdd_left--name">
@@ -345,7 +345,7 @@
                             <div class="courseAdd-inner_right">
                                     <textarea class="tinyMCE-area" name="description" value="">{{ $course_info->description }}</textarea>
                             </div>
-                        </div>                     
+                        </div>
 
                     </div>
                 </div>
@@ -375,21 +375,21 @@
 
                             </div>
                             <div class="courseAdd-grid_item">
-                                Короткі зауваження щодо додавання фото курсу. 
+                                Короткі зауваження щодо додавання фото курсу.
                             </div>
-                        
+
                         </div>
                     </div>
                 </div>
 
-            
+
                 <div class="courseEdit-block">
                     <div class="courseEdit-top">
                         Про курс
                     </div>
                     <div class="courseEdit-about">
                     <h5 class="courseEdit-about_title">Про цей курс</h5>
-                    
+
                     <div class="courseEdit-textblock main-textblock">
                         {{ strip_tags($course_information->course_description) }}
                     </div>
@@ -398,7 +398,7 @@
                         <h4 class="courseEdit-learn main-learn_title">Чого ви навчитесь</h4>
                         <div class="courseEdit-learn_wrapper main-learn_wrapper">
                             @foreach(json_decode($course_information->course_learn_arr) as $learn)
-                                
+
                                 <div class="main-learn_inner">
                                     <div class="main-learn_inner--icon"></div>
                                     <div class="main-learn_inner--text">{{ $learn }}</div>
@@ -414,20 +414,20 @@
                         </div>
                 </div>
                 </div>
-            
+
 
                 <div class="courseEdit-block">
                     <div class="courseEdit-top">
                         Викладачi
                     </div>
-                        
+
                     <div class="newTest-mark-string courseEdit-select_restyling">
                         <div class="newTest-mark-inner_left">
                             Викладач курсу
                         </div>
                         <div class="newTest-mark-inner_right">
                             <div class="newTest-mark-wrapper">
-                                <select class="newTest-mark-select" name="assigned_teacher_id"> 
+                                <select class="newTest-mark-select" name="assigned_teacher_id">
                                     <option>Выберите</option>
                                     @foreach($teachers as $teacher)
                                     <option value="{{ $teacher->id }}" @if($teacher->id == $course_info->assigned_teacher_id ) selected @endif>{{ $teacher->name }}</option>
@@ -440,13 +440,13 @@
                     @foreach($assigned_teachers as $teacher)
                         <div class="courseEdit-teachers teachers-grid_wrapper">
                         <div class="teachers-grid_item">
-                            <div class="courseEdit-item_photo">              
+                            <div class="courseEdit-item_photo">
                             </div>
                         </div>
                         <div class="teachers-grid_item">
                             <div class="teachers-item_name">{{ $teacher->surname }}{{ $teacher->name }}{{ $teacher->patronymic }}</div>
                             <div class="courseEdit-item_position teachers-item_position">Професор наук</div>
-                        
+
                         </div>
                         <div class="teachers-grid_item">
                             <div class="courseEdit-item_text teachers-item_text">
@@ -469,9 +469,9 @@
                             </div>
                             <div class="newTest-mark-inner_right">
                                 <div class="newTest-mark-wrapper">
-                                    <select class="newTest-mark-select" name="visibility"> 
-                                        <option value="all" @if($course_info->visibility == "all") selected @endif>Всі користувачі</option> 
-                                        <option value="register" @if($course_info->visibility == "register") selected @endif>Тільки зареєстровані користувачі</option>                                   
+                                    <select class="newTest-mark-select" name="visibility">
+                                        <option value="all" @if($course_info->visibility == "all") selected @endif>Всі користувачі</option>
+                                        <option value="register" @if($course_info->visibility == "register") selected @endif>Тільки зареєстровані користувачі</option>
                                     </select>
                                     <div class="newTest-mark_arrowBlock"></div>
                                     </div>
@@ -497,9 +497,9 @@
                                 <picture>
                                         <source srcset="/img/pencil-edit-small.png" media="(max-width:592px)">
                                     <img class="courseEdit-item_image" src="/img/pencil-edit.png" alt="pencil-image">
-                                </picture> 
+                                </picture>
                                 </div>
-                            
+
                             </div>
                             <div class="courseEdit-grid_item">
                                 <div class="programs-item_text">{{ $lesson->course_description }}</div>
@@ -520,7 +520,7 @@
                                             <td class="courseEdit-hidden_column hidden-menu_column">{{ $lesson->learning_time }} хв.</td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ $lesson->course_description }}</a></td>
-                                        </tr>                              
+                                        </tr>
                                     </tbody>
                                 </table>
                                 </div>
@@ -536,7 +536,7 @@
                                             <td class="courseEdit-hidden_column hidden-menu_column">{{ $lesson->learning_protocol_time }} хв.</td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ $lesson->course_protocol_descr }}</a></td>
-                                        </tr>                              
+                                        </tr>
                                     </tbody>
                                 </table>
                                 </div>
@@ -574,7 +574,7 @@
                                             <td class="courseEdit-hidden_column hidden-menu_column">3 хв.</td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                        </tr>                              
+                                        </tr>
                                     </tbody>
                                 </table>
                                 </div>
@@ -592,7 +592,7 @@
                                             <td class="courseEdit-hidden_column hidden-menu_column">20 хв.</td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                        </tr>                              
+                                        </tr>
                                     </tbody>
                                 </table>
                                 </div>
@@ -613,7 +613,7 @@
                     <div class="courseEdit-top">
                         Поширені запитання
                     </div>
-    
+
                     @foreach($courses_question_answers as $faq)
                     <div class="main-faq_panel active">{{ strip_tags($faq->course_question) }}</div>
                     <div class="main-faq_panel--inner show">{{ strip_tags($faq->course_answer) }}</div>
@@ -637,21 +637,21 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
-   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    <script> 
-        $(document).ready(function() { 
-            $('input[type="file"]').change(function(e) { 
-                var geekss = e.target.files[0].name; 
+    <script>
+        $(document).ready(function() {
+            $('input[type="file"]').change(function(e) {
+                var geekss = e.target.files[0].name;
                 //alert(geekss);
-                $("#img_upload_name").text(geekss); 
-  
-            }); 
-        }); 
-    </script> 
+                $("#img_upload_name").text(geekss);
+
+            });
+        });
+    </script>
 
     <script>
 
@@ -670,9 +670,9 @@
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 
+            toolbar:
                 'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist | ' + 
+                'alignright alignjustify | bullist numlist | ' +
                 'insertfile link image media pageembed template ' ,
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });

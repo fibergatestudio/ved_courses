@@ -191,42 +191,11 @@
         </div>
         <div class="courseControl-container sticky-container container">
 
-            <!-- sidebar-menu (start) -->
-
-            <div class="sidebar">
-
-                <div class="sidebar-sticky">
-
-                    <div class="sidebar-top_wrapper">
-                        <div class="sidebar-top_burger-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <!-- changeling block mobile-btn (start) -->
-                        <div class="sidebar-top_mobile-btn">
-                            <div class="sidebar-top_mobile-img">
-                                <img src="/img/teacher-mobileMenu-2.png" alt="icon">
-                            </div>
-                            <div class="sidebar-top_mobile-name">
-                                Управління групами
-                            </div>
-                        </div>
-                        <!-- changeling block mobile-btn (end) -->
-
-                    </div>
-                    @if(Auth::user()->role == "admin")
-                        @include('layouts.front.includes.admin_sidebar_vrst')
-                    @elseif(Auth::user()->role == "teacher")
-                        @include('layouts.front.includes.teacher_sidebar_vrst')
-                    @endif
-
-                </div>
-
-            </div>
-            <!-- sidebar-menu (end) -->
+            @if(Auth::user()->role == "admin")
+                @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+            @elseif(Auth::user()->role == "teacher")
+                @include('layouts.front.includes.teacher_sidebar_vrst')
+            @endif
 
             <div class="groups-control">
                 <div class="groups-head">
@@ -335,7 +304,7 @@
                                     <a class="flexTable-btn_edit groups-btn-edit-restyle elem-bgc-white" href="##"
                                         data-toggle="modal" data-target="#showStudentsMob{{ $group->id }}"><span>Студенти</span></a>
 
-                                
+
                                 </div>
                             </div>
                             <div class="groups-row__elem">

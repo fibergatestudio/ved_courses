@@ -101,7 +101,7 @@
 
             <!-- sidebar-menu (start) -->
 
-            <div class="sidebar">
+            {{-- <div class="sidebar">
 
                 <div class="sidebar-sticky">
 
@@ -124,12 +124,12 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div>
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+                    </div> --}}
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
 
-                </div>
+                {{-- </div>
 
-            </div>
+            </div> --}}
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
@@ -186,7 +186,7 @@
                         <div class="courseAdd-inner courseAdd-inner_margbottom">
                             <div class="courseAdd-inner_left">
                                 <div class="courseAdd_left--name">
-                                    Опис<sup>*</sup>                                    
+                                    Опис<sup>*</sup>
                                 </div>
                             </div>
                             <div class="courseAdd-inner_right">
@@ -209,7 +209,7 @@
                             Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
                         </div>
 
-                        <div class="courseAdditional-flexbox"> 
+                        <div class="courseAdditional-flexbox">
                             <div class="courseAdditional-flexbox_item courseAdditional-mobile-only">
                                 Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
                             </div>
@@ -255,7 +255,7 @@
                         Відеолекція
                     </div>
                     <div class="courseAdd-wrapper">
-                       
+
                         <div class="courseAdditional-topName">
                             У разі відсутності відеоматеріалу до заняття буде відображено  повідомлення для студента <span> "В цьому занятті немає відео супроводу"</span>
                         </div>
@@ -284,7 +284,7 @@
                                     </div>
                                 </div>
 
-                            
+
 
                                 <div class="courseAdditional-flexbox">
                                     <div class="courseAdditional-flexbox_item">
@@ -352,10 +352,10 @@
                         Тест
                     </div>
                     <div class="courseAdd-wrapper">
-                       
+
                         <div class="courseAdditional-topName">
                             Коротка інструкція щодо створення тестування, або рекомендації Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        </div>                           
+                        </div>
 
                         <a class="courseAdditional-btn courseAdditional-btn_bottom" href="{{ route('add_lesson_redirect', ['course_id' => $course_info->id ]) }}">
                             <span>Створити новий тест</span>
@@ -366,7 +366,7 @@
                         <table class="table table-bordered data-table">
                             <thead>
                                 <tr>
-                                    <th>#</th> 
+                                    <th>#</th>
                                     <th>Имя</th>
                                     <th>Описание</th>
                                     <th></th>
@@ -401,7 +401,7 @@
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    
+
     <script>
         var currentCounter = 0;
         var app1 = new Vue({
@@ -414,19 +414,19 @@
             methods: {
                 addNewEntry: function(){
                     currentCounter = currentCounter + 1;
-                    
+
                     this.ids.push({id: currentCounter});
                     //document.getElementById("videos_counter").value = currentCounter;
                     $('#videos_counter').val(currentCounter);
-                    
+
                 },
-                
+
             }
         });
     </script>
     <script>
-    
-    
+
+
         var docsCounter = 0;
         var docs = new Vue({
             el: '#docs',
@@ -445,10 +445,10 @@
                     //document.getElementById("docs_counter").value = docsCounter;
                     $('#docs_counter').val(currentCounter);
                 },
-                
+
             }
         });
-    
+
     </script>
 
     <script>

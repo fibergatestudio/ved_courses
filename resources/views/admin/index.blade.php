@@ -90,7 +90,7 @@
     </div>
     <div class="courseControl-container sticky-container container container-height">
 
-        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Панель Адміна'])
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Панель Адміна', 'imgPath' => 'img/teacher-mobileMenu-1.png'])
 
         <div class="cource-container--mobile">
             <div class="multipleChoice-top-title">
@@ -104,7 +104,7 @@
             </div>
         </div>
     </div>
-    </section>
+</section>
 
     {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>

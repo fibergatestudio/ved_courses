@@ -12,7 +12,7 @@
             </div>
         @endif --}}
 
-        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління користувачами'])
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління користувачами', 'imgPath' => 'img/teacher-mobileMenu-5.png'])
 
         <div class="groups-control ug__group">
             <div class="groups-head">

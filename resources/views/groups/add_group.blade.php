@@ -249,7 +249,7 @@
 
                     </div>
                     @if(Auth::user()->role == "admin")
-                        @include('layouts.front.includes.admin_sidebar_vrst')
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                     @elseif(Auth::user()->role == "teacher")
                         @include('layouts.front.includes.teacher_sidebar_vrst')
                     @endif
@@ -278,7 +278,7 @@
                             <div class="groups-edit__student-add-form">
                                 <input class='eg-input add-style' type="text" id="student" name="student" id="getCourseName"
                                     placeholder="Введіть ім'я студента">
-                                    
+
                                 <a class="add-student" id="addstudent">Додати</a>
                                 <div id="studentList">
                                 </div>
@@ -342,7 +342,7 @@
         var students_array = new Array();
         var count_t = 1;
 
-        $('#student').keyup(function(){ 
+        $('#student').keyup(function(){
             var query = $(this).val();
             if(query != '')
             {
@@ -352,17 +352,17 @@
             method:"POST",
             data:{query:query, _token:_token},
             success:function(data){
-            $('#studentList').fadeIn();  
+            $('#studentList').fadeIn();
                         $('#studentList').html(data);
             }
             });
             }
         });
 
-        $(document).on('click', 'li', function(){  
-            $('#student').val($(this).text());  
-            $('#studentList').fadeOut();  
-        });  
+        $(document).on('click', 'li', function(){
+            $('#student').val($(this).text());
+            $('#studentList').fadeOut();
+        });
 
         $('#addstudent').click(function() {
             /* Берем имя текущего студента */
@@ -380,7 +380,7 @@
                 count_t++;
                 students_array.push(curr_stud);
             }
-        
+
         });
 
         $('#createGroup').click(function(e){

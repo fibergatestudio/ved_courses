@@ -32,7 +32,7 @@
                             <label>Название Курса</label>
                             <input type="text" class="form-control" name="name" value="">
                         </div>
-                        
+
                         <div id="studentsAdd" class="form-group">
                             <label>Описание Курса</label>
                             <textarea type="text" class="form-control" name="description" value=""></textarea>
@@ -115,48 +115,17 @@
         </div>
         <div class="courseControl-container sticky-container container">
 
-            <!-- sidebar-menu (start) -->
-
-            <div class="sidebar">
-
-                <div class="sidebar-sticky">
-
-                    <div class="sidebar-top_wrapper">
-                        <div class="sidebar-top_burger-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <!-- changeling block mobile-btn (start) -->
-                        <div class="sidebar-top_mobile-btn">
-                            <div class="sidebar-top_mobile-img">
-                                <img src="assets/img/teacher-mobileMenu-2.png" alt="icon">
-                            </div>
-                            <div class="sidebar-top_mobile-name">
-                                Управління курсами
-                            </div>
-                        </div>
-                        <!-- changeling block mobile-btn (end) -->
-
-                    </div>
-                    @if(Auth::user()->role == "admin")
-                        @include('layouts.front.includes.admin_sidebar_vrst')
-                    @elseif(Auth::user()->role == "teacher")
-                        @include('layouts.front.includes.teacher_sidebar_vrst')
-                    @endif
-
-                </div>
-
-            </div>
-            <!-- sidebar-menu (end) -->
+            @if(Auth::user()->role == "admin")
+                @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
+            @elseif(Auth::user()->role == "teacher")
+                @include('layouts.front.includes.teacher_sidebar_vrst')
+            @endif
 
             <div class="cource-container--mobile">
                 <form action="{{ route('create_course') }}" method="POST" id="create_course" enctype="multipart/form-data">
                     @csrf
                         <h3 class="courseEdit-title courseControl-title">Створити курс</h3>
-                    
+
                         <div class="courseEdit-block">
                             <div class="courseEdit-top">
                                 Назва та опис курсу
@@ -173,7 +142,7 @@
                                         <input class="course-faq--input courseAdditional--input"  name="name" type="text">
                                     </div>
                                 </div>
-                                
+
                                 <div class="courseAdd-inner courseAdd-inner_margbottom">
                                     <div class="courseAdd-inner_left">
                                         <div class="courseAdd_left--name">
@@ -181,9 +150,9 @@
                                         </div>
                                     </div>
                                     <div class="courseAdd-inner_right">
-                                            <textarea class="tinyMCE-area" name="description"></textarea>
+                                        <textarea class="tinyMCE-area" name="description"></textarea>
                                     </div>
-                                </div>                     
+                                </div>
 
                             </div>
                         </div>
@@ -213,9 +182,9 @@
 
                                     </div>
                                     <div class="courseAdd-grid_item">
-                                        Короткі зауваження щодо додавання фото курсу. 
+                                        Короткі зауваження щодо додавання фото курсу.
                                     </div>
-                                
+
                                 </div>
                             </div>
                         </div>
@@ -234,21 +203,21 @@
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
-   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    <script> 
-        $(document).ready(function() { 
-            $('input[type="file"]').change(function(e) { 
-                var geekss = e.target.files[0].name; 
+    <script>
+        $(document).ready(function() {
+            $('input[type="file"]').change(function(e) {
+                var geekss = e.target.files[0].name;
                 //alert(geekss);
-                $("#img_upload_name").text(geekss); 
-  
-            }); 
-        }); 
-    </script> 
+                $("#img_upload_name").text(geekss);
+
+            });
+        });
+    </script>
     <script>
 
     $( "#submit_button" ).click(function() {
@@ -266,9 +235,9 @@
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 
+            toolbar:
                 'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist | ' + 
+                'alignright alignjustify | bullist numlist | ' +
                 'insertfile link image media pageembed template ' ,
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
@@ -286,7 +255,7 @@
 <script>
 $(document).ready(function(){
 
-    $('#student').keyup(function(){ 
+    $('#student').keyup(function(){
         var query = $(this).val();
         if(query != '')
         {
@@ -296,17 +265,17 @@ $(document).ready(function(){
           method:"POST",
           data:{query:query, _token:_token},
           success:function(data){
-           $('#studentList').fadeIn();  
+           $('#studentList').fadeIn();
                     $('#studentList').html(data);
           }
          });
         }
     });
 
-    $(document).on('click', 'li', function(){  
-        $('#student').val($(this).text());  
-        $('#studentList').fadeOut();  
-    });  
+    $(document).on('click', 'li', function(){
+        $('#student').val($(this).text());
+        $('#studentList').fadeOut();
+    });
 
     /* Создаем аррей с студентами */
     var students_array = new Array();
@@ -325,7 +294,7 @@ $(document).ready(function(){
             /* Добавляем текущего студента в аррей */
             students_array.push(curr_stud);
         }
-       
+
     });
 
 });

@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div style="display:none;" class="container">
+{{-- <div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -48,7 +48,7 @@
                                     @if($course->course_image_path != "")
                                     <img src="{{url('/images/' . $course->course_image_path)}}" height="50" width="80" alt="Image"/>
                                     @endif
-                                </td>   
+                                </td>
                                 <td></td>
                                 <td></td>
                                 <td>{{ $course->creator_id }} {{ $course->creator_name }}</td>
@@ -58,7 +58,7 @@
                                     @else
                                         Только для зарегистрированных
                                     @endif
-                                
+
                                 </td>
                                 <td>
                                     <a href="{{ route('edit_course', ['course_id' => $course->id ]) }}">
@@ -81,7 +81,7 @@
 
 
 
-<body>
+
 
     <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
@@ -150,63 +150,30 @@
     <!-- deleteBtn modal-page (begin) -->
 
 
-    <!-- deleteBtn modal-page (end) -->
+    <!-- deleteBtn modal-page (end) --> --}}
 
-    <section class="courseControl" style="min-height: 420px;">
-        <div class="courseControl-separator direction-separator">
-        </div>
-        <div class="courseControl-container sticky-container container">
+<section class="courseControl" style="min-height: 420px;">
+    <div class="courseControl-separator direction-separator">
+    </div>
+    <div class="courseControl-container sticky-container container">
 
-            <!-- sidebar-menu (start) -->
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
 
-            <div class="sidebar">
+        <h3 class="courseControl-title">Управління курсами<a href="{{ route('new_course') }}"><button style="display: initial; margin-left:5px;" class="flexTable-btn_edit">Створити курс</button></a></h3>
 
-                <div class="sidebar-sticky">
-
-                    <div class="sidebar-top_wrapper">
-                        <div class="sidebar-top_burger-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <!-- changeling block mobile-btn (start) -->
-                        <div class="sidebar-top_mobile-btn">
-                            <div class="sidebar-top_mobile-img">
-                                <img src="/img/teacher-mobileMenu-2.png" alt="icon">
-                            </div>
-                            <div class="sidebar-top_mobile-name">
-                                Управління курсами
-                            </div>
-                        </div>
-                        <!-- changeling block mobile-btn (end) -->
-
+        <div class="flexTable-wrapper">
+            <div class="flexTable-scrollContainer">
+                <div class="flexTable-scrollInner">
+                    <div class="flexTable-topTitle">
+                        <div class="flexTable-topTitle_inner">№</div>
+                        <div class="flexTable-topTitle_inner">Назва курсу</div>
+                        <div class="flexTable-topTitle_inner">Опис</div>
+                        <div class="flexTable-topTitle_inner">Перегляів</div>
+                        <div class="flexTable-topTitle_inner">Пройдено разів</div>
+                        <div class="flexTable-topTitle_inner">Творець (id)</div>
+                        <div class="flexTable-topTitle_inner">Управління</div>
                     </div>
-                    
-                    @include('layouts.front.includes.admin_sidebar_vrst')
-
-                </div>
-
-            </div>
-            <!-- sidebar-menu (end) -->
-
-            <h3 class="courseControl-title">Управління курсами<a href="{{ route('new_course') }}"><button style="display: initial; margin-left:5px;" class="flexTable-btn_edit">Створити курс</button></a></h3>
-
-            <div class="flexTable-wrapper">
-                <div class="flexTable-scrollContainer">
-                    <div class="flexTable-scrollInner">
-
-                        <div class="flexTable-topTitle">
-                            <div class="flexTable-topTitle_inner">№</div>
-                            <div class="flexTable-topTitle_inner">Назва курсу</div>
-                            <div class="flexTable-topTitle_inner">Опис</div>
-                            <div class="flexTable-topTitle_inner">Перегляів</div>
-                            <div class="flexTable-topTitle_inner">Пройдено разів</div>
-                            <div class="flexTable-topTitle_inner">Творець (id)</div>
-                            <div class="flexTable-topTitle_inner">Управління</div>
-                        </div>
-                        @foreach($courses as $course)
+                    @foreach($courses as $course)
                         <div class="flexTable-string">
                             <div class="flexTable-string_inner">{{ $course->id }}.</div>
                             <div class="flexTable-string_inner">{{ $course->name }}</div>
@@ -218,37 +185,32 @@
                                 <a class="flexTable-btn_edit" href="{{ route('edit_course', ['course_id' => $course->id ]) }}"><span>Редагувати</span></a>
                                 <a class="flexTable-btn_delete" href="##" data-toggle="modal"
                                     data-target="#deleteModal{{ $course->id }}"><span>Видалити</span></a>
-                                    <div class="bootstrap-restylingStudent modal fade" id="deleteModal{{ $course->id }}" tabindex="-1" role="dialog"
+                                <div class="bootstrap-restylingStudent modal fade" id="deleteModal{{ $course->id }}" tabindex="-1" role="dialog"
                                         aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog  modal-dialog_restyle">
-                                            <div class="modal-content">
-                                                <div class="deleteMenu-wrapper">
-
-                                                    <div class="deleteMenu-topImg">
-                                                        <img src="/img/basket.png" alt="icon">
-                                                    </div>
-                                                    <div class="deleteMenu-text">
-                                                        Ви точно бажаєте видалити <br> Курс {{ $course->name }} ?
-                                                    </div>
-                                                    <div class="deleteMenu-btn">
-                                                        <a class="flexTable-btn_delete" href="{{ route('delete_course', ['course_id' => $course->id ]) }}"><span>Видалити</span></a>
-                                                    </div>
+                                    <div class="modal-dialog  modal-dialog_restyle">
+                                        <div class="modal-content">
+                                            <div class="deleteMenu-wrapper">
+                                                <div class="deleteMenu-topImg">
+                                                    <img src="/img/basket.png" alt="icon">
                                                 </div>
-                                                </ul>
+                                                <div class="deleteMenu-text">
+                                                    Ви точно бажаєте видалити <br> Курс {{ $course->name }} ?
+                                                </div>
+                                                <div class="deleteMenu-btn">
+                                                    <a class="flexTable-btn_delete" href="{{ route('delete_course', ['course_id' => $course->id ]) }}"><span>Видалити</span></a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                        @endforeach
-
-                    </div>
+                    @endforeach
                 </div>
             </div>
-
-            <div class="flexMobile-wrapper">
-
-                @foreach($courses as $course)
+        </div>
+        <div class="flexMobile-wrapper">
+            @foreach($courses as $course)
                 <div class="flexMobile-block">
                     <div class="flexMobile-string">
                         <div class="flexMobile-string_inner blackFont">№</div>
@@ -283,19 +245,8 @@
                             data-target="#deleteModal"><span>Видалити</span></a>
                     </div>
                 </div>
-                @endforeach
-
-            </div>
-
-
+            @endforeach
         </div>
-
-
-    </section>
-
-
-</body>
-
-
-
+    </div>
+</section>
 @endsection
