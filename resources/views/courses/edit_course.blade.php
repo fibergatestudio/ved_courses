@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div class="container">
+<div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -315,7 +315,7 @@
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
-                <form action="{{ route('edit_course_apply', ['course_id' => $course_info->id ]) }}" id="test_form" method="POST" >
+                <form action="{{ route('edit_course_apply', ['course_id' => $course_info->id ]) }}" id="edit_course_form" method="POST" enctype="multipart/form-data">
                     @csrf
                 <h3 class="courseEdit-title courseControl-title">Редагування курсу</h3>
             
@@ -363,12 +363,12 @@
 
                                 <div class="courseAdditional-input-wrapper">
                                     <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
-                                    <input class="courseAdditional-input_button" type="file">
+                                    <input class="courseAdditional-input_button" type="file" name="course_image">
                                     <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                 </div>
 
                                 <div class="courseAdd-info-wrapper">
-                                    <a class="courseAdditional-docName docName-restyling" href="##">
+                                    <a class="courseAdditional-docName docName-restyling" id="img_upload_name" href="##">
                                         Довга назва фото
                                     </a>
                                 </div>
@@ -389,29 +389,21 @@
                     </div>
                     <div class="courseEdit-about">
                     <h5 class="courseEdit-about_title">Про цей курс</h5>
+                    
                     <div class="courseEdit-textblock main-textblock">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printerLorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printerLorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
+                        {{ strip_tags($course_information->course_description) }}
                     </div>
 
                     <div class="main-learn">
                         <h4 class="courseEdit-learn main-learn_title">Чого ви навчитесь</h4>
                         <div class="courseEdit-learn_wrapper main-learn_wrapper">
-                            <div class="main-learn_inner">
-                                <div class="main-learn_inner--icon"></div>
-                                <div class="main-learn_inner--text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</div>
-                            </div>
-                            <div class="main-learn_inner">
-                                <div class="main-learn_inner--icon"></div>
-                                <div class="main-learn_inner--text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</div>
-                            </div>
-                            <div class="main-learn_inner">
-                                <div class="main-learn_inner--icon"></div>
-                                <div class="main-learn_inner--text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</div>
-                            </div>
-                            <div class="main-learn_inner">
-                                <div class="main-learn_inner--icon"></div>
-                                <div class="main-learn_inner--text">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an</div>
-                            </div>
+                            @foreach(json_decode($course_information->course_learn_arr) as $learn)
+                                
+                                <div class="main-learn_inner">
+                                    <div class="main-learn_inner--icon"></div>
+                                    <div class="main-learn_inner--text">{{ $learn }}</div>
+                                </div>
+                            @endforeach
                         </div>
                     </div>
                     <div class="courseEdit-separator separator"></div>
@@ -435,23 +427,24 @@
                         </div>
                         <div class="newTest-mark-inner_right">
                             <div class="newTest-mark-wrapper">
-                                <select class="newTest-mark-select" name="teacher"> 
-                                    <option value="1" selected="">Іванов Іван Іванович</option> 
-                                    <option value="2">Іванов Іван Остапович</option>
-                                    <option value="3">Іванов Іван Венедиктович</option>
+                                <select class="newTest-mark-select" name="assigned_teacher_id"> 
+                                    <option>Выберите</option>
+                                    @foreach($teachers as $teacher)
+                                    <option value="{{ $teacher->id }}" @if($teacher->id == $course_info->assigned_teacher_id ) selected @endif>{{ $teacher->name }}</option>
+                                    @endforeach
                                 </select>
                                 <div class="newTest-mark_arrowBlock"></div>
                                 </div>
                         </div>
                     </div>
-
-                    <div class="courseEdit-teachers teachers-grid_wrapper">
+                    @foreach($assigned_teachers as $teacher)
+                        <div class="courseEdit-teachers teachers-grid_wrapper">
                         <div class="teachers-grid_item">
                             <div class="courseEdit-item_photo">              
                             </div>
                         </div>
                         <div class="teachers-grid_item">
-                            <div class="teachers-item_name">Іванов Іван Іванович </div>
+                            <div class="teachers-item_name">{{ $teacher->surname }}{{ $teacher->name }}{{ $teacher->patronymic }}</div>
                             <div class="courseEdit-item_position teachers-item_position">Професор наук</div>
                         
                         </div>
@@ -461,6 +454,7 @@
                             </div>
                         </div>
                     </div>
+                    @endforeach
                 </div>
 
                 <div class="courseEdit-block">
@@ -633,7 +627,7 @@
 
                 </div>
                 <div class="courseEdit-btn-watch_wrapper">
-                    <a class="courseEdit-btn-watch btn-watch--more" href="##"><span>Зберегти курс</span></a>
+                    <a class="courseEdit-btn-watch btn-watch--more" id="submit_button" href="##"><span>Зберегти курс</span></a>
                 </div>
             </form>
         </div>
@@ -647,6 +641,25 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script> 
+        $(document).ready(function() { 
+            $('input[type="file"]').change(function(e) { 
+                var geekss = e.target.files[0].name; 
+                //alert(geekss);
+                $("#img_upload_name").text(geekss); 
+  
+            }); 
+        }); 
+    </script> 
+
+    <script>
+
+    $( "#submit_button" ).click(function() {
+        $( "#edit_course_form" ).submit();
+    });
+
+    </script>
 
     <script>
         tinymce.init({

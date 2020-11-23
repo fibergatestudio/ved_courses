@@ -31,7 +31,7 @@ class CoursesController extends Controller
     public function create_course(Request $request){
 
         $all_info = $request->all();
-
+        //dd($all_info);
         //dd($request->course_image);
         //$img_path = $request->course_image;
 
@@ -99,9 +99,10 @@ class CoursesController extends Controller
             $assigned_teachers = [];
             $teachers = DB::table('users')->where('role', 'teacher')->get();
         }
-        
+        //dd($assigned_teachers);
+        $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();        
 
-        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers') );
+        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers', 'course_information') );
     }
 
     public function delete_course($course_id){
@@ -136,13 +137,22 @@ class CoursesController extends Controller
 
     public function edit_course_apply($course_id, Request $request){
 
-        //dd($request->visibility);
+        //dd($request->all());
 
+        // Таблица курсов
         $current_course = DB::table('courses')->where('id', $course_id)->first();
-        //$tecaher_arr = json_encode()
+        
+        // Получаем картинку // Если картинка есть
+        if($request->hasFile('course_image')){
+            $filename = time().'.'.request()->course_image->getClientOriginalExtension();
+            request()->course_image->move(public_path('images'), $filename);
 
-        // $teachers_arr = [];
-        // //dd($current_course->assigned_teacher_id);
+            // Обновляем картинку в базе
+            DB::table('courses')->where('id',$course_id)->update([
+                'course_image_path' => $filename,
+            ]);
+        }
+        
         if($current_course->assigned_teacher_id){
             //array_push($teachers_arr, )
             $teacher_arr = json_decode($current_course->assigned_teacher_id);
@@ -151,11 +161,15 @@ class CoursesController extends Controller
             $teacher_arr = [];
         }
 
-        //$teacher_arr = [];
+
         $t_id = $request->assigned_teacher_id;
-        array_push($teacher_arr, $t_id);
-        $teachers = json_encode($teacher_arr);
-        //dd($teachers);
+        if($t_id != "Выберите"){
+            array_push($teacher_arr, $t_id);
+            $teachers = json_encode($teacher_arr);
+        } else {
+            $teachers = $teacher_arr;
+        }
+
 
         DB::table('courses')->where('id',$course_id)->update([
             'name' => $request->name,
@@ -165,7 +179,6 @@ class CoursesController extends Controller
         ]);
 
         return redirect()->back();
-        //return redirect('courses_controll')->with('message_success', 'Курс успешно изменен!');
     }
 
     // edit_about
