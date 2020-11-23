@@ -12,11 +12,11 @@
             </div>
         @endif --}}
 
-        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => __('Управління користувачами')])
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління користувачами'])
 
         <div class="groups-control ug__group">
             <div class="groups-head">
-                <h1 class="groups-head__title ug__head-title">{{ __('Управління користувачами') }}</h1>
+                <h1 class="groups-head__title ug__head-title">Управління користувачами</h1>
             </div>
             <div class="groups-body ug__body">
                 {{-- @if (session('status'))
@@ -25,11 +25,11 @@
                     </div>
                 @endif --}}
                 <div class="groups-title ug__content">
-                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('№') }}</div>
-                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Логін') }}</div>
-                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Email') }}</div>
-                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Роль') }}</div>
-                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">{{ __('Управління') }}</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">№'</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">Логін</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">Email</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">Роль</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem">Управління</div>
                 </div>
                 <div class="groups-content ug__content">
                     @foreach($users as $user)
@@ -55,7 +55,7 @@
         </div>
         <div class="groups-control-mobile">
             <div class="groups-head">
-                <h1 class="groups-head__title ug_m-head-title">{{ __('Управління користувачами') }}</h1>
+                <h1 class="groups-head__title ug_m-head-title">Управління користувачами</h1>
             </div>
             <div class="groups-body">
                 @foreach($users as $user)
@@ -63,24 +63,22 @@
                     <div class="groups-row groups-row_style">
                         <div class="groups-row__elem">
                             <div
-                                class="groups-title__elem  groups-row__elem_restyle ug__m-row-title ug__mt-bl-reset">
-                                {{ __('№') }}
-                            </div>
+                                class="groups-title__elem  groups-row__elem_restyle ug__m-row-title ug__mt-bl-reset">№</div>
                             <div
                                 class="groups__elem groups-row__elem_restyle ug__m-row-title ug__mobile-row-elem ug__mt-bl-reset">
                                 {{ $user->id }}.
                             </div>
                         </div>
                         <div class="groups-row__elem">
-                            <div class="groups-title__elem  ug__m-row-title">{{ __('Логін') }}</div>
+                            <div class="groups-title__elem  ug__m-row-title">Логін</div>
                             <div class="groups__elem ug__m-row-title ug__mobile-row-elem">{{ $user->name }}</div>
                         </div>
                         <div class="groups-row__elem">
-                            <div class="groups-title__elem  ug__m-row-title">{{ __('Email') }}</div>
+                            <div class="groups-title__elem  ug__m-row-title">Email</div>
                             <div class="groups__elem ug__m-row-title ug__mobile-row-elem">{{ $user->email }}</div>
                         </div>
                         <div class="groups-row__elem">
-                            <div class="groups-title__elem  ug__m-row-title">{{ __('Роль') }}</div>
+                            <div class="groups-title__elem  ug__m-row-title">Роль</div>
                             <div class="groups__elem ug__m-row-title ug__mobile-row-elem">{{ $user->role }}</div>
                         </div>
                         <div class="groups-row__elem">

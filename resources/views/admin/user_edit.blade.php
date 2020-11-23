@@ -6,12 +6,12 @@
     </div>
     <div class="courseControl-container sticky-container container">
 
-        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => __('Редагування користувача')])
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Редагування користувача'])
 
         <div class="groups-control_edit-block">
             <form action="{{ route('user_edit_apply', ['user_id' => $user->id]) }}" method="POST">
             @csrf
-            <h1 class='groups-head__title uge__title uge__title_first-child'>{{__('Редагування користувача')}} {{ $user->name }}</h1>
+            <h1 class='groups-head__title uge__title uge__title_first-child'>Редагування користувача {{ $user->name }}</h1>
             @if(session()->has('message_success'))
                 <div class="alert alert-success">
                     {{ session()->get('message_success') }}
@@ -67,8 +67,10 @@
                     </div>
                 </div>
                 <div class="groups-edit__group uge__row uge__mb_30">
-                    <p class="groups-edit__group-name uge_row_text-style">Номер телефону</p>
-                    <input class='eg-input uge__input_style uge__row uge__mb-0' type="tel" name="course-name"
+                    <p class="groups-edit__group-name uge_row_text-style">Номер студентського квитка<!--Номер телефону--></p>
+                    <input class='eg-input uge__input_style' type="text" name="student_number" value="{{ $student_info->student_number }}" id="getStudentName"
+                                placeholder="2">
+                    {{--<input class='eg-input uge__input_style uge__row uge__mb-0' type="tel" name="course-name"
                             id="getPhoneNumber" placeholder="+XX (XXX) XXX-XX-XX"
                             pattern="\+38\s?[\(]{0,1}[0-9]{3}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}">
                             {{-- \+38\s?[\(]{0,1}9[0-9]{2}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2} --}}

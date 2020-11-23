@@ -85,39 +85,30 @@
     <!-- questionType modal-page (begin) -->
     <!-- questionType modal-page (end) --> --}}
 
-    <section class="courseControl">
-        <div class="courseControl-separator direction-separator">
+<section class="courseControl">
+    <div class="courseControl-separator direction-separator">
+    </div>
+    <div class="courseControl-container sticky-container container container-height">
+
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Панель Адміна'])
+
+        <div class="cource-container--mobile">
+            <div class="multipleChoice-top-title">
+                <h3 class="multipleChoice-title">Панель Адміна</h3>
+            </div>
+            <div class="multipleChoice-block newTest-block active">
+            </div>
+            <div class="multipleChoice-block newTest-block active">
+                <div class="newTest-top active">Вітаю!</div>
+                <div class="newTest-wrapper show">Для управління використовуйте панель зліва.</div>
+            </div>
         </div>
-        <div class="courseControl-container sticky-container container container-height">
-
-            @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => __('Панель Адміна')])
-
-            <div class="cource-container--mobile">
-                    <div class="multipleChoice-top-title">
-                    <h3 class="multipleChoice-title">{{ __('Панель Адміна') }}</h3>
-                    </div>
-
-                    <div class="multipleChoice-block newTest-block active">
-
-                    </div>
-
-                    <div class="multipleChoice-block newTest-block active">
-                        <div class="newTest-top active">
-                            {{ __('Вітаю') }}!
-                        </div>
-                        <div class="newTest-wrapper show">
-                            {{ __('Для управління використовуйте панель зліва') }}.
-                        </div>
-                    </div>
-
-                </div>
-            </form>
-
+    </div>
     </section>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script> --}}
 
 {{-- </body> --}}
 
