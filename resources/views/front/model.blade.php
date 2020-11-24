@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('title')
-    Протокол
+    3D модель
 @endsection
 
 @section('content')
@@ -32,10 +32,10 @@
                 <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'video']) }}"><span>Відеолекція</span></a>
             </div>
             <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'model']) }}"><span>3D модель</span></a>
+                <a class="string-menu_btn active" href="{{ route('view_lesson', [$course->id, $lesson->id, 'model']) }}"><span>3D модель</span></a>
             </div>
             <div class="string-menu_inner">
-                <a class="string-menu_btn  active" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
+                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
             </div>
             <div class="string-menu_inner">
                 <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'test']) }}"><span>Тест</span></a>
@@ -45,24 +45,11 @@
 
         </div>
 
-      <!--<div class="protocole_book programs-item_book">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's </div>-->
+        <div class="string-text">
 
-      <div class="protocole-text string-text">
-        {!! $lesson->course_protocol_descr !!}
+        3D модель
+
       </div>
-
-      @forelse (collect(json_decode($lesson->add_document)) as $document)
-            <a class="protocole-btn btn-watch--more" href="{{ asset('docs/'.$document) }}"><span>Протокол № {{ $loop->iteration }}</span></a>
-      @empty
-      <div class="string-text">
-        Протоколи відсутні
-      </div>
-      @endforelse
-
-
-
-
-
     </div>
 </section>
 @endsection
