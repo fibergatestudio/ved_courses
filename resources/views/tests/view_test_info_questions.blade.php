@@ -211,33 +211,35 @@
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
-
-                    <h3 class="courseEdit-title courseControl-title">Редагування тесту</h3>
-                <div class="editing-string-top">
-                    <div class="editing-top_inner">
-                        Питань:<span><?php echo count($test_question_answers); ?></span>
-                    </div>
-                    <div class="editing-top_inner">
-                        Тест відкритий
-                    </div>
-                </div>
                 
-                <div class="editing-string-middle">
-                    <div class="editing-middle_inner">
-                        Максимальна оцінка
+                <form action="{{ route('update_test_info_questions', ['test_info_id' => $test_info_id]) }}" id="test_edit_form" method="POST" >
+                    @csrf
+                    <h3 class="courseEdit-title courseControl-title">Редагування тесту 1</h3>
+                    <div class="editing-string-top">
+                        <div class="editing-top_inner">
+                            Питань:<span><?php echo count($test_question_answers); ?></span>
+                        </div>
+                        <div class="editing-top_inner">
+                            Тест відкритий
+                        </div>
                     </div>
-                    <div class="editing-middle_inner">
-                        <input class="editing-input" type="number" step='0.01' value='0.00' placeholder='100.00'>
-                    </div>
-                    <div class="editing-middle_inner">
-                        <a class="editing-btn-save" href="##"> <span>ЗБЕРЕГТИ</span> </a>
-                    </div>
+                    
+                    <div class="editing-string-middle">
+                        <div class="editing-middle_inner">
+                            Максимальна оцінка
+                        </div>
+                        <div class="editing-middle_inner">
+                            <input class="editing-input" type="number" step='0.01' value='0.00' placeholder='100.00'>
+                        </div>
+                        <div class="editing-middle_inner">
+                            <a class="editing-btn-save" href="##"> <span>ЗБЕРЕГТИ</span> </a>
+                        </div>
 
-                </div>
-                
-                <div class="editing-string-bottom">
-                    Всього балів :<span>69.00</span> 
-                </div>
+                    </div>
+                    
+                    <div class="editing-string-bottom">
+                        Всього балів :<span>69.00</span> 
+                    </div>
                 
 
 
@@ -263,9 +265,6 @@
                                     </div>
                                     <textarea class="editing-textarea_textarea" name="editing"  cols="30" rows="1" placeholder="{{ $test->question_name }}"></textarea>
                                     <div class="editing-textarea_btns">
-                                    <a href="##" class="editing-textarea_btns--search">
-                                            <img src="/img/search-ico.png" alt="icon">
-                                    </a>
                                     <a href="##" class="editing-textarea_btns--close">
                                             <img src="/img/close-ico.png" alt="icon">
                                     </a>
@@ -292,14 +291,14 @@
                     </div>
 
                     <div class="editing-btn-wrapper">
-                        <a class="editing-btn-saveBottom" href="##">Зберегти</a>
+                        <button type="submit" id="submit_button" class="editing-btn-saveBottom" href="##">Зберегти</button>
                     </div>
-
+                </form>
                         <div class="bootstrap-restylingQuestionType modal fade" id="questionType" tabindex="-1" role="dialog"
                         aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog">
                                 <div class="modal-content">
-                                    <div class="questionType-top"> <span>Виберіть тип питання 1</span> </div>
+                                    <div class="questionType-top"> <span>Виберіть тип питання</span> </div>
                                     <div class="questionType-wrapper">
                                         <form action="{{ route('question_type_submit',['test_info_id' => $test_info_id]) }}" id="add_new_quest_form" method="POST" >
                                             @csrf
@@ -350,7 +349,7 @@
                                                     <div class="questionType-innerFalse_left"></div>
                                                     <div class="questionType-innerFalse_right">
                                                         <a href="##" class="questionType-btn-add" id="submit_button"><span>Додати</span></a> 
-                                                        <a href="##" class="questionType-btn-delete"><span>Скасувати</span></a>
+                                                        <a href="##" data-dismiss="modal" class="questionType-btn-delete"><span>Скасувати</span></a>
                                                     </div>
                                                 </div>
                                         </form>
@@ -367,6 +366,14 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+
+        $( "#submit_button" ).click(function() {
+            $( "#test_edit_form" ).submit();
+        });
+
+    </script>
 
     <script>
         tinymce.init({

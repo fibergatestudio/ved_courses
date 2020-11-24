@@ -53,7 +53,7 @@
                                 <div class="questionType-innerFalse_left"></div>
                                 <div class="questionType-innerFalse_right">
                                     <a href="##" class="questionType-btn-add" onclick="document.getElementById('course_type').submit();"><span>Додати</span></a> 
-                                    <a href="##" class="questionType-btn-delete"><span>Скасувати</span></a>
+                                    <a href="##" data-dismiss="modal" class="questionType-btn-delete"><span>Скасувати</span></a>
                                 </div>
                             </div>
                     </form>
@@ -65,6 +65,7 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
+
 
     $( document ).ready(function() {
         //console.log( "ready!" );

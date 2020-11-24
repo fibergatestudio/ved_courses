@@ -324,7 +324,7 @@
                         <a class="multipleChoice-btn-center btn-center_restyling" href="##" onclick="document.getElementById('true_false_form').submit();">
                             <span>Зберегти питання</span>
                         </a>
-                        <a class="multipleChoice-btn-right" href="##">
+                        <a class="multipleChoice-btn-right" href="{{ URL::previous() }}">
                             <span>Видалити питання</span>
                         </a>
 

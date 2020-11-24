@@ -683,7 +683,7 @@
                                             <div class="questionType-innerFalse_left"></div>
                                             <div class="questionType-innerFalse_right">
                                                 <a href="##" class="questionType-btn-add" onclick="document.getElementById('create_test_form').submit();"><span>Додати</span></a> 
-                                                <a href="##" class="questionType-btn-delete"><span>Скасувати</span></a>
+                                                <a href="##" data-dismiss="modal" class="questionType-btn-delete"><span>Скасувати</span></a>
                                             </div>
                                         </div>
                             </div>

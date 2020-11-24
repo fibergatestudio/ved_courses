@@ -399,7 +399,7 @@
                         <button type="submit" class="multipleChoice-btn-center" href="##">
                             <span>Зберегти питання</span>
                         </button>
-                        <a class="multipleChoice-btn-right" href="##">
+                        <a class="multipleChoice-btn-right" href="{{ URL::previous() }}">
                             <span>Видалити питання</span>
                         </a>
 
