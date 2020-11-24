@@ -375,7 +375,7 @@
                     <a class="multipleChoice-btn-center" href="##" onclick="document.getElementById('drag_drop_form').submit();">
                         <span>Зберегти питання</span>
                     </a>
-                    <a class="multipleChoice-btn-right" href="##">
+                    <a class="multipleChoice-btn-right" href="{{ URL::previous() }}">
                         <span>Видалити питання</span>
                     </a>
 

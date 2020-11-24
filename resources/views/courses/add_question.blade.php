@@ -60,7 +60,7 @@
 
 <body>
 
-    <!-- Burger-menu (begin)-->
+    {{-- <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
 
         <li class="menu_title-inner">
@@ -147,7 +147,7 @@
     </div>
 
 
-    <!-- deleteBtn modal-page (end) -->
+    <!-- deleteBtn modal-page (end) --> --}}
     <section class="courseControl">
         <div class="courseControl-separator direction-separator">
         </div>

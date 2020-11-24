@@ -5,7 +5,7 @@
 
 <body>
 
-    <!-- Burger-menu (begin)-->
+    {{-- <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
 
         <li class="menu_title-inner">
@@ -92,7 +92,7 @@
     </div>
 
 
-    <!-- deleteBtn modal-page (end) -->
+    <!-- deleteBtn modal-page (end) --> --}}
 
     <section class="courseControl">
         <div class="courseControl-separator direction-separator">
@@ -305,6 +305,7 @@
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-flexbox_text">
                                         Короткі зауваження щодо додавання відеофайлу або посилань з інших джерел.
+                                        Формат файлу: mp4, Максимальний розмір: 300mb
                                         </div>
                                     </div>
                                 </div>
@@ -332,12 +333,14 @@
                                     </div>
 
                                 </div>
+                                <a class="courseAdditional-docName docName-styling" :id="'video_text'+index" href="##">
+                                    Довга назва посилання або завантаженого відео
+                                </a>
                             </div>
+
                         </div>
 
-                        <a class="courseAdditional-docName docName-styling" href="##">
-                            Довга назва посилання або завантаженого відео
-                        </a>
+
 
                         <a class="courseAdditional-btn" href="##" onclick="app1.addNewEntry()">
                             <span>Додати наступне відео</span>
@@ -379,8 +382,8 @@
                                     <td>{{ $test->name }}</td>
                                     <td>{{ strip_tags($test->description) }}</td>
                                     <td>
-                                        <a href="{{ route('view_test_info_questions', ['test_info_id' => $test->id ]) }}"><div class="btn btn-success">Редактировать</div></a>
-                                        <a href="{{ route('delete_test', ['test_info_id' => $test->id ]) }}" class="btn btn-danger">Удалить</div></a>
+                                        <a href="{{ route('view_test_info_questions', ['test_info_id' => $test->id ]) }}"><div style="margin-bottom: 5px;" class="courseEdit-btn-watch btn-watch--more">Редактировать</div></a>
+                                        <a href="{{ route('delete_test', ['test_info_id' => $test->id ]) }}" style="background-color: #c64b3f;" class="courseEdit-btn-watch btn-watch--more">Удалить</div></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -401,7 +404,16 @@
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+<<<<<<< HEAD
 
+=======
+    <script>
+
+
+    </script>
+
+
+>>>>>>> origin/florko_branch
     <script>
         var currentCounter = 0;
         var app1 = new Vue({

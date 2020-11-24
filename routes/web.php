@@ -233,6 +233,8 @@ use Illuminate\Support\Facades\Auth;
 
         // Просмотра теста и вопросов\ответов
         Route::get('/tests_controll/new_test_info/{test_info_id}/view', 'TestsController@view_test_info_questions')->name('view_test_info_questions')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
+            // Обновить
+            Route::post('/tests_controll/new_test_info/{test_info_id}/update_info', 'TestsController@update_test_info_questions')->name('update_test_info_questions')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
     //
 //
 

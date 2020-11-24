@@ -216,7 +216,8 @@ class TestsController extends Controller
         //} 
 
 
-        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
     }
 
     public function true_false($test_info_id){
@@ -254,7 +255,8 @@ class TestsController extends Controller
             'test_answers_id'       => $insrt_id,
         ]);     
 
-        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
         
     }
 
@@ -291,7 +293,8 @@ class TestsController extends Controller
             'test_answers_id'       => $insrt_id,
         ]);    
 
-        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
         
     }
 
@@ -350,7 +353,8 @@ class TestsController extends Controller
             'test_answers_id'       => $insrt_id,
         ]);
 
-        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
     }
 
     // Просмотр теста вопросов\ответов 
@@ -398,6 +402,13 @@ class TestsController extends Controller
         //dd($test_question_answers);
 
         return view('tests.view_test_info_questions', compact('test_info_id', 'test_view_info', 'test_question_answers'));
+    }
+
+    public function update_test_info_questions($test_info_id){
+
+        //dd($test_info_id);
+
+        return back();
     }
     // -----------------Конец создания новых тестов-------------------------
 

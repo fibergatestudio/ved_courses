@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div style="display:none;" class="container">
+{{-- <div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -52,12 +52,12 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 <body>
 
-    <!-- Burger-menu (begin)-->
+    {{-- <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
 
         <li class="menu_title-inner">
@@ -109,17 +109,19 @@
      <!-- deleteMENU modal-page (begin) -->
 
 
-    <!-- deleteMENU modal-page (end) -->
+    <!-- deleteMENU modal-page (end) --> --}}
     <section class="courseControl">
         <div class="courseControl-separator direction-separator">
         </div>
         <div class="courseControl-container sticky-container container">
 
-            @if(Auth::user()->role == "admin")
+            @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
+
+            {{-- @if(Auth::user()->role == "admin")
                 @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
             @elseif(Auth::user()->role == "teacher")
                 @include('layouts.front.includes.teacher_sidebar_vrst')
-            @endif
+            @endif --}}
 
             <div class="cource-container--mobile">
                 <form action="{{ route('create_course') }}" method="POST" id="create_course" enctype="multipart/form-data">

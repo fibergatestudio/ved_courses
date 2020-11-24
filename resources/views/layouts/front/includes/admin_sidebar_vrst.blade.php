@@ -15,7 +15,7 @@
                     <img src="{{ asset($imgPath) }}" alt="icon">
                 </div>
                 <div class="sidebar-top_mobile-name ug__top-name">
-                    {{ $headTitle }}
+                   {{ $headTitle }}
                 </div>
             </div>
             <!-- changeling block mobile-btn (end) -->
