@@ -29,7 +29,7 @@
 @endsection
 
 @section('content')
-<div style="display:none;" class="container">
+{{-- <div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -103,12 +103,12 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 <body>
 
-    <!-- Burger-menu (begin)-->
+    {{-- <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
 
         <li class="menu_title-inner">
@@ -224,7 +224,7 @@
         </div>
     </div>
 
-    <!-- Change group name modal end  -->
+    <!-- Change group name modal end  --> --}}
 
 
 
@@ -234,7 +234,7 @@
         </div>
         <div class="courseControl-container sticky-container container">
 
-            <!-- sidebar-menu (start) -->
+            {{-- <!-- sidebar-menu (start) -->
 
             <div class="sidebar ">
 
@@ -259,8 +259,11 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div>
-                    @if(Auth::user()->role == "admin")
+                    </div> --}}
+
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+
+                    {{-- @if(Auth::user()->role == "admin")
                     @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                     @elseif(Auth::user()->role == "teacher")
                         @include('layouts.front.includes.teacher_sidebar_vrst')
@@ -269,7 +272,7 @@
                 </div>
 
             </div>
-            <!-- sidebar-menu (end) -->
+            <!-- sidebar-menu (end) --> --}}
 
             <div class="ge">
                 <form action="{{ route('apply_edit_group',['group_id' => $group_info->id]) }}" method="POST">
