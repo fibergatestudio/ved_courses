@@ -1,7 +1,7 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div style="display:none;" class="container">
+{{-- <div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -185,17 +185,18 @@
 
     <!-- deleteBtn modal-page (end) -->
 
-    <!-- show students modal end -->
+    <!-- show students modal end --> --}}
     <section class="courseControl" style="min-height: 400px;">
         <div class="courseControl-separator direction-separator">
         </div>
         <div class="courseControl-container sticky-container container">
 
-            @if(Auth::user()->role == "admin")
+            @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+            {{-- @if(Auth::user()->role == "admin")
                 @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
             @elseif(Auth::user()->role == "teacher")
                 @include('layouts.front.includes.teacher_sidebar_vrst')
-            @endif
+            @endif --}}
 
             <div class="groups-control">
                 <div class="groups-head">
@@ -375,6 +376,6 @@
     </section>
 
 
-</body>
+{{-- </body> --}}
 
 @endsection
