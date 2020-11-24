@@ -12,7 +12,7 @@
     <div class="container">
         <ul class="breadcrumbs_list">
             <li class="breadcrumbs_item">
-                <a href="{{ route('home') }}" class="breadcrumbs_link">Головна</a>
+                <a href="{{ route('main') }}" class="breadcrumbs_link">Головна</a>
             </li>
             <li class="breadcrumbs_item">
                 <a href="{{ route('view_course', $course->id) }}" class="breadcrumbs_link">{{ $course->name }}</a>
@@ -37,17 +37,7 @@
                 <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'test']) }}"><span>Тест</span></a>
             </div>
 
-            @if ($prevLesson)
-                <a class="control_btn-prev" href="{{ route('view_lesson', [$course->id, $prevLesson->id]) }}"><span></span></a>
-            @else
-                <a class="control_btn-prev disable" href="#"><span></span></a>
-            @endif
-
-            @if ($nextLesson)
-                <a class="control_btn-next" href="{{ route('view_lesson', [$course->id, $nextLesson->id]) }}"><span></span></a>
-            @else
-                <a class="control_btn-next disable" href="#"><span></span></a>
-            @endif
+            @include('layouts.front.includes.nextprevlesson')
 
         </div>
 
