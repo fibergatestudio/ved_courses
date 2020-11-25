@@ -22,6 +22,7 @@ class CreateStudentsTable extends Migration
             $table->string('course_number')->nullable();
             $table->string('group_number')->nullable();
             $table->string('student_number')->nullable();
+            $table->string('student_phone_number')->nullable();
             // // //
             //Привязанный учитель
             $table->string('assigned_teacher_id')->nullable();

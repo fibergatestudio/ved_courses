@@ -184,7 +184,8 @@
 
                     </div>
                     
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+                    
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління користувачами'])
 
                 </div>
 
