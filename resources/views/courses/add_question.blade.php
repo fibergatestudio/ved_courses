@@ -47,7 +47,7 @@
 
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
-                    
+
                         <a href="{{ route('courses_controll') }}">
                             <button class="btn btn-danger">Назад</button>
                         </a>
@@ -60,7 +60,7 @@
 
 <body>
 
-    <!-- Burger-menu (begin)-->
+    {{-- <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
 
         <li class="menu_title-inner">
@@ -147,7 +147,7 @@
     </div>
 
 
-    <!-- deleteBtn modal-page (end) -->
+    <!-- deleteBtn modal-page (end) --> --}}
     <section class="courseControl">
         <div class="courseControl-separator direction-separator">
         </div>
@@ -155,7 +155,7 @@
 
             <!-- sidebar-menu (start) -->
 
-            <div class="sidebar">
+            {{-- <div class="sidebar">
 
                 <div class="sidebar-sticky">
 
@@ -178,13 +178,13 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div>
+                    </div> --}}
 
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
 
-                </div>
+                {{-- </div>
 
-            </div>
+            </div> --}}
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
@@ -211,7 +211,7 @@
                                             <input class="course-faq--input courseAdditional--input" :name="'course_question'+index" type="text">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="courseAdd-inner courseAdd-inner_margbottom">
                                         <div class="courseAdd-inner_left">
                                             <div class="courseAdd_left--name">
@@ -221,9 +221,9 @@
                                         <div class="courseAdd-inner_right">
                                                 <textarea class="tinyMCE-area" :id="'question_text'+index" :name="'course_answer'+index"></textarea>
                                         </div>
-                                    </div>               
+                                    </div>
                                 </div>
-                            </div>                             
+                            </div>
 
                             <div class="courseEdit-btn_wrapper">
                                 <a href="##" class="courseEdit-btn courseEdit-btn-add" onclick="app1.addNewEntry()">
@@ -236,7 +236,7 @@
                     <div class="courseEdit-btn-watch_wrapper">
                         <a onclick="document.getElementById('add_question_form').submit();" class="courseEdit-btn-watch btn-watch--more courseAdd-btn"><span style="color:white;">Зберегти</span></a>
                     </div>
-                    
+
                 </form>
 
     </section>
@@ -266,7 +266,7 @@
                     this.ids.push({id: currentCounter});
                     document.getElementById("counter").value = currentCounter;
 
-                    
+
                 },
             }
         });
@@ -280,9 +280,9 @@
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 
+            toolbar:
                 'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist | ' + 
+                'alignright alignjustify | bullist numlist | ' +
                 'insertfile link image media pageembed template ' ,
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });

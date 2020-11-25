@@ -29,7 +29,7 @@
 @endsection
 
 @section('content')
-<div style="display:none;" class="container">
+{{--<div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -96,12 +96,12 @@
             </div>
         </div>
     </div>
-</div>
+</div>--}}
 
 
-<body>
+ <body>
 
-    <!-- Burger-menu (begin)-->
+    {{--<!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
 
         <li class="menu_title-inner">
@@ -216,13 +216,13 @@
 
     <!-- deleteBtn modal-page (end) -->
 
-    <!-- show students modal end -->
+    <!-- show students modal end -->--}}
     <section class="courseControl">
         <div class="courseControl-separator direction-separator">
         </div>
         <div class="courseControl-container sticky-container container">
 
-            <!-- sidebar-menu (start) -->
+            {{--<!-- sidebar-menu (start) -->
 
             <div class="sidebar">
 
@@ -247,9 +247,11 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div>
-                    @if(Auth::user()->role == "admin")
-                        @include('layouts.front.includes.admin_sidebar_vrst')
+                    </div> --}}
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+
+                    {{-- @if(Auth::user()->role == "admin")
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                     @elseif(Auth::user()->role == "teacher")
                         @include('layouts.front.includes.teacher_sidebar_vrst')
                     @endif
@@ -257,7 +259,7 @@
                 </div>
 
             </div>
-            <!-- sidebar-menu (end) -->
+            <!-- sidebar-menu (end) --> --}}
 
             <div class="groups-control_edit-block">
                 <h1 class='groups-head__title'>Додати групу</h1>
@@ -278,7 +280,7 @@
                             <div class="groups-edit__student-add-form">
                                 <input class='eg-input add-style' type="text" id="student" name="student" id="getCourseName"
                                     placeholder="Введіть ім'я студента">
-                                    
+
                                 <a class="add-student" id="addstudent">Додати</a>
                                 <div id="studentList">
                                 </div>
@@ -342,7 +344,7 @@
         var students_array = new Array();
         var count_t = 1;
 
-        $('#student').keyup(function(){ 
+        $('#student').keyup(function(){
             var query = $(this).val();
             if(query != '')
             {
@@ -352,17 +354,17 @@
             method:"POST",
             data:{query:query, _token:_token},
             success:function(data){
-            $('#studentList').fadeIn();  
+            $('#studentList').fadeIn();
                         $('#studentList').html(data);
             }
             });
             }
         });
 
-        $(document).on('click', 'li', function(){  
-            $('#student').val($(this).text());  
-            $('#studentList').fadeOut();  
-        });  
+        $(document).on('click', 'li', function(){
+            $('#student').val($(this).text());
+            $('#studentList').fadeOut();
+        });
 
         $('#addstudent').click(function() {
             /* Берем имя текущего студента */
@@ -380,7 +382,7 @@
                 count_t++;
                 students_array.push(curr_stud);
             }
-        
+
         });
 
         $('#createGroup').click(function(e){
