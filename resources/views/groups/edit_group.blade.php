@@ -29,7 +29,7 @@
 @endsection
 
 @section('content')
-<div style="display:none;" class="container">
+{{-- <div style="display:none;" class="container">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -72,11 +72,11 @@
                         <div id="studentsAdd" class="form-group">
                             <label>Список текущих студентов</label><br>
                             @foreach($students_array as $student)
-                                <div class="btn btn-success student"> {{ $student-> full_name }} 
+                                <div class="btn btn-success student"> {{ $student-> full_name }}
                                     <input type="hidden" class="ids" name="student_name[]" value="{{ $student->full_name }}">
                                     <button type="button" class="btn close remove">
                                         <span aria-hidden="true">×</span>
-                                    </button> 
+                                    </button>
                                 </div>
                             @endforeach
                         </div>
@@ -103,12 +103,12 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 
 <body>
 
-    <!-- Burger-menu (begin)-->
+    {{-- <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
 
         <li class="menu_title-inner">
@@ -224,7 +224,7 @@
         </div>
     </div>
 
-    <!-- Change group name modal end  -->
+    <!-- Change group name modal end  --> --}}
 
 
 
@@ -234,7 +234,7 @@
         </div>
         <div class="courseControl-container sticky-container container">
 
-            <!-- sidebar-menu (start) -->
+            {{-- <!-- sidebar-menu (start) -->
 
             <div class="sidebar ">
 
@@ -259,9 +259,12 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div>
-                    @if(Auth::user()->role == "admin")
-                        @include('layouts.front.includes.admin_sidebar_vrst')
+                    </div> --}}
+
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+
+                    {{-- @if(Auth::user()->role == "admin")
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                     @elseif(Auth::user()->role == "teacher")
                         @include('layouts.front.includes.teacher_sidebar_vrst')
                     @endif
@@ -269,7 +272,7 @@
                 </div>
 
             </div>
-            <!-- sidebar-menu (end) -->
+            <!-- sidebar-menu (end) --> --}}
 
             <div class="ge">
                 <form action="{{ route('apply_edit_group',['group_id' => $group_info->id]) }}" method="POST">
@@ -306,7 +309,7 @@
                             <div class="groups-edit__student-add-form ">
                                 <input class='eg-input add-style ccec__input' id="student" type="text" name="course-name"
                                      placeholder="Іванов Іван Іванович">
-                                    
+
                                 <a id="addstudent" class="add-student ccec__button ge__m-button" id="egAddStudent">Додати</a>
                                 <div id="studentList">
                                 </div>
@@ -419,8 +422,8 @@
                             </a>
                         </div>
                     </div>
-                    
-                    
+
+
                     <div class="groups-edit__group uge__row ge__select-block_style">
                         <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
                         <div class="select uge__select_block ge__select_style">
@@ -482,7 +485,7 @@
     <script>
     $(document).ready(function(){
 
-        $('#student').keyup(function(){ 
+        $('#student').keyup(function(){
             var query = $(this).val();
             if(query != '')
             {
@@ -492,17 +495,17 @@
             method:"POST",
             data:{query:query, _token:_token},
             success:function(data){
-            $('#studentList').fadeIn();  
+            $('#studentList').fadeIn();
                         $('#studentList').html(data);
             }
             });
             }
         });
 
-        $(document).on('click', 'li', function(){  
-            $('#student').val($(this).text());  
-            $('#studentList').fadeOut();  
-        });  
+        $(document).on('click', 'li', function(){
+            $('#student').val($(this).text());
+            $('#studentList').fadeOut();
+        });
 
         /* Создаем аррей с студентами */
         var students_array = new Array();
@@ -536,11 +539,11 @@
                 s_count++;
                 students_array.push(curr_stud);
             }
-        
+
         });
 
         $(".remove").click(function(){
-            //var remove_id = 
+            //var remove_id =
             var remove_name = $(this).closest(".student").find(".ids").val();
 
             console.log( remove_name );

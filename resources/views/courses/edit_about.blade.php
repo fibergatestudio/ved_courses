@@ -21,7 +21,7 @@
 
                 <div class="card-body">
                     @if (session('status'))
-                        <div class="alert alert-success" role="alert"> 
+                        <div class="alert alert-success" role="alert">
                             {{ session('status') }}
                         </div>
                     @endif
@@ -31,12 +31,12 @@
 
                         <div class="form-group">
                             <label>Описание</label>
-                            <textarea id="question_text" class="question_text" name="course_description"> 
+                            <textarea id="question_text" class="question_text" name="course_description">
 
                             @if(isset($course_i->course_description))
                                 {{ $course_i->course_description }}
                             @endif
-                            
+
                             </textarea>
                         </div>
                         <div class="form-group">
@@ -56,7 +56,7 @@
 
                         <button type="submit" class="btn btn-success">Применить</button>
                     </form>
-                    
+
                         <a href="{{ route('courses_controll') }}">
                             <button class="btn btn-danger">Назад</button>
                         </a>
@@ -162,7 +162,7 @@
 
             <!-- sidebar-menu (start) -->
 
-            <div class="sidebar">
+            {{-- <div class="sidebar">
 
                 <div class="sidebar-sticky">
 
@@ -185,14 +185,14 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div>
+                    </div> --}}
 
-                    @include('layouts.front.includes.admin_sidebar_vrst')
-                    
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
 
-                </div>
 
-            </div>
+                {{-- </div>
+
+            </div> --}}
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
@@ -230,7 +230,7 @@
                                     //var_dump($test); ?>
                                     <input type="hidden" id="mtest" value="<?php echo count($questions_count); ?>">
                                 <?php } ?>
-                                
+
 
                             <div id="app1">
                                 <div v-for="(id,index) in ids" >
@@ -306,7 +306,7 @@
 
     });
 
-    
+
     $( "#form_submit" ).click(function(event ) {
         event.preventDefault();
 
@@ -318,7 +318,7 @@
             $( "#edit_about_form" ).submit();
         }
 
-        
+
     });
 
     </script>
@@ -346,20 +346,20 @@
                         'searchreplace visualblocks code fullscreen',
                         'insertdatetime media table paste code help wordcount'
                     ],
-                    toolbar: 
+                    toolbar:
                         'bold italic backcolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist | ' + 
+                        'alignright alignjustify | bullist numlist | ' +
                         'insertfile link image media pageembed template ' ,
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                    }); 
-                                    
-                    
+                    });
+
+
                     }, 100);
 
                     this.ids.push({id: currentCounter});
                     document.getElementById("counter").value = currentCounter;
 
-                    
+
                 },
                 addNewEntryWithText: function(value){
                     currentCounter = currentCounter + 1;
@@ -373,9 +373,9 @@
                         'searchreplace visualblocks code fullscreen',
                         'insertdatetime media table paste code help wordcount'
                     ],
-                    toolbar: 
+                    toolbar:
                         'bold italic backcolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist | ' + 
+                        'alignright alignjustify | bullist numlist | ' +
                         'insertfile link image media pageembed template ' ,
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
                     setup: function (editor) {
@@ -383,15 +383,15 @@
                             editor.setContent(value);
                             tinymce.triggerSave();
                         })
-                    }, }); 
-                                    
-                    
+                    }, });
+
+
                     }, 100);
 
                     this.ids.push({id: currentCounter});
                     document.getElementById("counter").value = currentCounter;
 
-                    
+
                 },
             }
         });
@@ -406,9 +406,9 @@
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 
+            toolbar:
                 'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist | ' + 
+                'alignright alignjustify | bullist numlist | ' +
                 'insertfile link image media pageembed template ' ,
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });

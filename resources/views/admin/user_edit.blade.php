@@ -6,7 +6,7 @@
     </div>
     <div class="courseControl-container sticky-container container">
 
-        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Редагування користувача'])
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Редагування користувача', 'imgPath' => 'img/teacher-mobileMenu-5.png'])
 
         <div class="groups-control_edit-block">
             <form action="{{ route('user_edit_apply', ['user_id' => $user->id]) }}" method="POST">
