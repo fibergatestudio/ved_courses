@@ -87,7 +87,9 @@
                 @endforelse
             </tbody>
         </table>
-    <ved-video-player video-names="{{ $lesson->video_name }}" video-paths="{{ $lesson->video_file }}"></ved-video-player>
+        <div id="app">
+            <ved-video-player video-names="{{ $lesson->video_name }}" video-paths="{{ $lesson->video_file }}"></ved-video-player>
+        </div>
     </div>
 </section>
 @endsection

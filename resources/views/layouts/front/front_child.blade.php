@@ -25,10 +25,8 @@
             </div>
         </div>
     </header>
-    
-    <div id="app">
-        @yield('content')
-    </div>
+
+    @yield('content')
 
     @include('layouts.front.includes.footer')
 
