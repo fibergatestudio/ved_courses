@@ -15,7 +15,7 @@ mix.js('resources/js/app.js', 'public/js')
 //FrontEnd Styles + JS
 mix.styles(['resources/css/style.css', 'resources/css/sign.css', 'resources/css/style_add.css'],'public/css/style.css');
 mix.styles('resources/css/slick.css','public/css/slick.css');
-mix.js('resources/js/main.js', 'public/js');
+mix.js(['resources/js/main.js' , 'resources/js/tooltips.js'], 'public/js');
 mix.copy('resources/js/slick.min.js', 'public/js/slick.min.js');
 mix.copyDirectory('resources/img', 'public/img');
 mix.copyDirectory('resources/js/tinymce', 'public/js/tinymce');

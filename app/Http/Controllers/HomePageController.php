@@ -122,6 +122,9 @@ class HomePageController extends Controller
         case 'video':
             return view('front.video_collection', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
             break;
+        case 'model':
+                return view('front.model', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+                break;
         case 'protocol':
             return view('front.protocol', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
             break;

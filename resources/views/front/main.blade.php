@@ -96,17 +96,17 @@
             @foreach($courses as $course)
                 @if($course->visibility == "all")
 
-                    <div class="direction-inner">
+                    <a href="{{ route('view_course', $course->id) }}" class="direction-inner d-block">
                         <div class="direction-inner_top">
                             @if($course->course_image_path != "")
-                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
+                                <img class="direction-inner_img" src="{{url('/images/' . $course->course_image_path)}}" alt="img">
                             @else
-                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
+                                <img class="direction-inner_img" src="{{ asset('img/direction_3.jpg') }}" alt="img">
                             @endif
-                            <a class="image-btn" href="{{ route('view_course', $course->id) }}">
+                            <span class="image-btn">
                                 <span>До курсу</span>
                                 <!--<div class="image-btn_arrow"></div>-->
-                            </a>
+                            </span>
                         </div>
                         <div class="direction-inner_bottom">
                             <div class="direction-inner_bottom--title">
@@ -116,21 +116,21 @@
                                 {{ $course->description }}
                             </div>
                         </div>
-                    </div>
+                    </a>
 
                 @elseif($course->visibility == "register")
                     @if (Auth::check())
-                    <div class="direction-inner">
+                    <a href="{{ route('view_course', $course->id) }}" class="direction-inner d-block">
                         <div class="direction-inner_top">
                             @if($course->course_image_path != "")
-                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
+                                <img class="direction-inner_img" src="{{url('/images/' . $course->course_image_path)}}" alt="img">
                             @else
-                                <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
+                                <img class="direction-inner_img" src="{{ asset('img/direction_3.jpg') }}" alt="img">
                             @endif
-                            <a class="image-btn" href="{{ route('view_course', $course->id) }}">
+                            <span class="image-btn">
                                 <span>До курсу</span>
                                 <!--<div class="image-btn_arrow"></div>-->
-                            </a>
+                            </span>
                         </div>
                         <div class="direction-inner_bottom">
                             <div class="direction-inner_bottom--title">
@@ -140,7 +140,7 @@
                                 {{ $course->description }}
                             </div>
                         </div>
-                    </div>
+                    </a>
                     @endif
                 @endif
             @endforeach

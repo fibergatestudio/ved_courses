@@ -320,14 +320,29 @@ $(document).ready(function () {
 
 /***/ }),
 
+/***/ "./resources/js/tooltips.js":
+/*!**********************************!*\
+  !*** ./resources/js/tooltips.js ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+//Enable Bootstrap Tooltips EveryWhere
+$(function () {
+  $('[data-toggle="tooltip"]').tooltip();
+});
+
+/***/ }),
+
 /***/ 1:
-/*!************************************!*\
-  !*** multi ./resources/js/main.js ***!
-  \************************************/
+/*!***************************************************************!*\
+  !*** multi ./resources/js/main.js ./resources/js/tooltips.js ***!
+  \***************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! D:\merenkov2\PHP\laragon\www\ved_courses\resources\js\main.js */"./resources/js/main.js");
+__webpack_require__(/*! D:\Fibergate\LARAGON\www\ved_courses\resources\js\main.js */"./resources/js/main.js");
+module.exports = __webpack_require__(/*! D:\Fibergate\LARAGON\www\ved_courses\resources\js\tooltips.js */"./resources/js/tooltips.js");
 
 
 /***/ })
