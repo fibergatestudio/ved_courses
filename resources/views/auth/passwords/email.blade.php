@@ -30,6 +30,8 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn-entrance btn btn-secondary"
                                 data-dismiss="modal"> {{ __('Send Password Reset Link') }}</button>
+                                <a href="{{ url()->previous() }}" class="btn-entrance btn btn-secondary"
+                                >Назад</a>
                         </div>
                     </form>
                 </div>

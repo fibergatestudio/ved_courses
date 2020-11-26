@@ -94,6 +94,8 @@
                             <div class="modal-footer">
                                 <button type="submit" class="btn-entrance btn btn-secondary"
                                     data-dismiss="modal">Увійти</button>
+                                <a href="{{ route('main') }}" class="btn-entrance btn btn-secondary"
+                                    >Назад</a>
                             </div>
                         </div>
                     </div>
