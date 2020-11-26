@@ -20,40 +20,33 @@
                         @guest
                             <div class="f0f__btns">
                                 <a class="flexTable-btn_edit groups-edit__back-to-groups sc__student-edit f0f__to-main-page"
-                                    href="{{ route('main') }}"><span>На головну
-                                    </span>
+                                    href="{{ route('main') }}">
+                                    <span>На головну</span>
                                 </a>
-                                <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login" href="{{ route('login') }}">Зареєструватися /
-                                    Увійти
-                                </a>
+                                <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login"
+                                    href="{{ route('login') }}">Зареєструватися / Увійти</a>
                             </div>
                         @endguest
 
                         @auth
                             @if( Auth::user()->role == "admin")
                                 <div class="f0f__btns">
-                                    <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login f0fa__back-to-sp" href="{{ route('admin_panel') }}">Повернутись
-                                        на панель
-                                        керування
-                                    </a>
+                                    <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login f0fa__back-to-sp"
+                                        href="{{ route('admin_panel') }}">Повернутись до панелі керування</a>
                                 </div>
                             @endif
 
                             @if( Auth::user()->role == "teacher")
                                 <div class="f0f__btns">
-                                    <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login f0fa__back-to-sp" href="{{ route('teacher_panel') }}">Повернутись
-                                        на панель
-                                        керування
-                                    </a>
+                                    <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login f0fa__back-to-sp"
+                                        href="{{ route('teacher_panel') }}">Повернутись до панелі керування</a>
                                 </div>
                             @endif
 
                             @if( Auth::user()->role == "student")
                                 <div class="f0f__btns">
-                                    <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login f0fa__back-to-sp" href="{{ route('home') }}">Повернутись
-                                        на панель
-                                        керування
-                                    </a>
+                                    <a class="flexTable-btn_edit sc__student-success-btn f0f__reg-login f0fa__back-to-sp"
+                                        href="{{ route('home') }}">Повернутись до панелі керування</a>
                                 </div>
                             @endif
                         @endauth
