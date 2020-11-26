@@ -68,7 +68,7 @@ class CoursesController extends Controller
         foreach($course_lessons as $lesson){
 
             //dd(json_decode($lesson->video_name));
-            if($lesson->video_name == "null"){
+            if($lesson->video_name == "null"){ 
                 $lesson->video_count = 0;
             } else {
                 $lesson->video_count = count(json_decode($lesson->video_name));
