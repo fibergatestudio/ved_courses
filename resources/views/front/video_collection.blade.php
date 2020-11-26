@@ -51,35 +51,18 @@
 
         </div>
 
-        @if (collect(json_decode($lesson->video_name))->count() > 0)
-        <div class="programs-item_video">
-
-            {{ collect(json_decode($lesson->video_name))->count() }} відео
-
-        </div>
-        @endif
         <table class="video-collection_table hidden-menu">
             <tbody>
                 @forelse (collect(json_decode($lesson->video_name)) as $video_name)
-                <tr class="video-collection_string hidden-menu_string">
-                    <td class="hidden-menu_column">
-                        @if (null !== collect(json_decode($lesson->video_length))->get($loop->index))
-                        {{ collect(json_decode($lesson->video_length))->get($loop->index) }} хв.
-                        @endif
-                    </td>
-                    <td class="hidden-menu_column">
-                        <div class="hidden-menu_dot"></div>
-                    </td>
-                    <td class="hidden-menu_column">{{ $video_name }}
-                        (@if (null !== collect(json_decode($lesson->video_file))->get($loop->index))
-                        <a
-                            href="{{ asset('video_files/'.collect(json_decode($lesson->video_file))->get($loop->index)) }}">Файл</a>
-                        @endif
-                        @if (null !== collect(json_decode($lesson->video_link))->get($loop->index))
-                        <a href="{{ collect(json_decode($lesson->video_link))->get($loop->index) }}">Посилання</a>
-                        @endif)
-                    </td>
-                </tr>
+                <div id="app">
+                    <ved-video-player
+                        :video-names=@json(json_decode($lesson->video_name))
+                        :video-paths=@json(json_decode($lesson->video_file))
+                        :video-links=@json(json_decode($lesson->video_link))
+                        :video-lengthes=@json(json_decode($lesson->video_length))
+                        asset-path={{ asset('video_files') }}
+                    ></ved-video-player>
+                </div>
                 @empty
                 <div class="string-text">
                     Відеo відсутні
@@ -87,9 +70,6 @@
                 @endforelse
             </tbody>
         </table>
-        <div id="app">
-            <ved-video-player video-names="{{ $lesson->video_name }}" video-paths="{{ $lesson->video_file }}"></ved-video-player>
-        </div>
     </div>
 </section>
 @endsection

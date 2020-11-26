@@ -8856,6 +8856,17 @@ element.style {
     border-radius: 9px 9px 0px 0px;
 }
 
+/*Video collection restyle*/
+.hidden-menu_column:first-child {
+    max-width: 40px;
+    min-width: 0;
+}
+
+.hidden-menu_column:nth-child(2) {
+    max-width: 30px;
+    min-width: 0;
+}
+
 
 
 /* Groups control page */
