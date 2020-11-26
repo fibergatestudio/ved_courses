@@ -222,7 +222,7 @@
         </div>
         <div class="courseControl-container sticky-container container">
 
-            {{--<!-- sidebar-menu (start) -->
+            <!-- sidebar-menu (start) -->
 
             <div class="sidebar">
 
@@ -247,19 +247,19 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div> --}}
-                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+                    </div>
+                    {{-- @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png']) --}}
 
-                    {{-- @if(Auth::user()->role == "admin")
-                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+                    @if(Auth::user()->role == "admin")
+                        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                     @elseif(Auth::user()->role == "teacher")
-                        @include('layouts.front.includes.teacher_sidebar_vrst')
+                        @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                     @endif
 
                 </div>
 
             </div>
-            <!-- sidebar-menu (end) --> --}}
+            <!-- sidebar-menu (end) -->
 
             <div class="groups-control_edit-block">
                 <h1 class='groups-head__title'>Додати групу</h1>
@@ -304,7 +304,7 @@
                         <div class="groups-edit__add-teacher-block">
                             <p class="groups-edit__current-teacher eg-text-style">Додати викладача</p>
                             <div class="select">
-                                <select name="select-teacher" class="select-teacher" name="teacher_id" id="selectTeacher">
+                                <select class="select-teacher" name="teacher_id" id="selectTeacher">
                                     <option>Нет</option>
                                     @foreach($teachers_list as $teacher)
                                         <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>

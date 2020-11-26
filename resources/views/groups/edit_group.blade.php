@@ -234,7 +234,7 @@
         </div>
         <div class="courseControl-container sticky-container container">
 
-            {{-- <!-- sidebar-menu (start) -->
+            <!-- sidebar-menu (start) -->
 
             <div class="sidebar ">
 
@@ -261,18 +261,18 @@
 
                     </div> --}}
 
-                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+                    {{-- @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png']) --}}
 
-                    {{-- @if(Auth::user()->role == "admin")
-                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+                    @if(Auth::user()->role == "admin")
+                        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                     @elseif(Auth::user()->role == "teacher")
-                        @include('layouts.front.includes.teacher_sidebar_vrst')
+                        @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                     @endif
 
                 </div>
 
             </div>
-            <!-- sidebar-menu (end) --> --}}
+            <!-- sidebar-menu (end) -->
 
             <div class="ge">
                 <form action="{{ route('apply_edit_group',['group_id' => $group_info->id]) }}" method="POST">
@@ -296,7 +296,7 @@
                             <p class="groups-edit__group-name eg-text-style ge__m-input-header">Назва групи</p>
                             <div class="groups-edit__student-add-form ">
                                 <input class='eg-input add-style ccec__input' type="text" name="name" value="{{ $group_info->name }}"
-                                    id="getCourseName" placeholder="Повна назва курсу студента">
+                                    id="getCourseName" placeholder="Повна назва групи">
                                 <button class="add-student ccec__button ge__m-button" id="changeGroupName"
                                     data-toggle="modal" data-target="#changeGroupName">Зберегти</button>
                             </div>

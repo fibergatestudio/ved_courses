@@ -243,8 +243,7 @@
                             <div class="groups__elem groups__elem_style">
                                 <a class="flexTable-btn_edit groups-btn-edit-restyle"
                                 href="{{ route('edit_group',['group_id' => $group->id]) }}"><span>Редагувати</span></a>
-                                <a class="flexTable-btn_delete" href="{{ route('delete_group',['group_id' => $group->id]) }}" data-toggle="modal"
-                                    data-target="#deleteModal"><span>Видалити</span></a>
+                                <a class="flexTable-btn_delete" href="{{ route('delete_group',['group_id' => $group->id]) }}" ><span>Видалити 1</span></a>
                             </div>
 
                         </div>
@@ -316,8 +315,8 @@
                                 <div class="groups__elem groups__elem-last-child groups__elem_style">
                                     <a class="flexTable-btn_edit groups-btn-edit-restyle"
                                     href="{{ route('edit_group',['group_id' => $group->id]) }}"><span>Редагувати</span></a>
-                                    <a class="flexTable-btn_delete groups-btn-edit-restyle" hhref="{{ route('delete_group',['group_id' => $group->id]) }}"
-                                        data-toggle="modal" data-target="#deleteModal"><span>Видалити</span></a>
+                                    <a class="flexTable-btn_delete groups-btn-edit-restyle" href="{{ route('delete_group',['group_id' => $group->id]) }}"
+                                        ><span>Видалити</span></a>
                                 </div>
                             </div>
                         </div>
