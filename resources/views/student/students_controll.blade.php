@@ -6,7 +6,13 @@
     </div>
     <div class="courseControl-container sticky-container container">
 
-        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління студентами', 'imgPath' => 'img/teacher-mobileMenu-4.png'])
+        {{-- @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління студентами', 'imgPath' => 'img/teacher-mobileMenu-4.png']) --}}
+
+        @if(Auth::user()->role == "admin")
+            @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-4.png'])
+        @elseif(Auth::user()->role == "teacher")
+            @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-4.png'])
+        @endif
 
         <h3 class="sc__main-title">Управління студентами</h3>
         <div class="sc-header">

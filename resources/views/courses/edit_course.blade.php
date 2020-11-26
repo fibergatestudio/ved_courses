@@ -390,13 +390,16 @@
                     <div class="courseEdit-about">
                     <h5 class="courseEdit-about_title">Про цей курс</h5>
 
-                    <div class="courseEdit-textblock main-textblock">
-                        {{ strip_tags($course_information->course_description) }}
+                    <div class="courseEdit-textblock main-textblock"> 
+                        @if(isset($course_information->course_description))
+                            {{ strip_tags($course_information->course_description) }}
+                        @endif
                     </div>
 
                     <div class="main-learn">
                         <h4 class="courseEdit-learn main-learn_title">Чого ви навчитесь</h4>
                         <div class="courseEdit-learn_wrapper main-learn_wrapper">
+                        @if(isset($course_information->course_learn_arr))
                             @foreach(json_decode($course_information->course_learn_arr) as $learn)
 
                                 <div class="main-learn_inner">
@@ -404,6 +407,7 @@
                                     <div class="main-learn_inner--text">{{ $learn }}</div>
                                 </div>
                             @endforeach
+                        @endif
                         </div>
                     </div>
                     <div class="courseEdit-separator separator"></div>
