@@ -51,23 +51,31 @@
 
         </div>
 
+        @php
+        $video_names = json_encode(json_decode($lesson->video_name));
+        $video_files = json_encode(json_decode($lesson->video_file));
+        $video_links = json_encode(json_decode($lesson->video_link));
+        $video_lengthes = json_encode(json_decode($lesson->video_length));
+        @endphp
+
         <table class="video-collection_table hidden-menu">
             <tbody>
-                @forelse (collect(json_decode($lesson->video_name)) as $video_name)
-                <div id="app">
+                @if (null !== collect(json_decode($lesson->video_name)))
+                    <div id="app">
                     <ved-video-player
-                        :video-names=@json(json_decode($lesson->video_name))
-                        :video-paths=@json(json_decode($lesson->video_file))
-                        :video-links=@json(json_decode($lesson->video_link))
-                        :video-lengthes=@json(json_decode($lesson->video_length))
-                        asset-path={{ asset('video_files') }}
-                    ></ved-video-player>
+                        :video-names="{{$video_names}}"
+                        :video-paths="{{$video_files}}"
+                        :video-links="{{$video_links}}"
+                        :video-lengthes="{{$video_lengthes}}"
+                        asset-path="{{ asset('/video_files') }}"
+                        >
+                    </ved-video-player>
                 </div>
-                @empty
+                @else
                 <div class="string-text">
                     Відеo відсутні
                 </div>
-                @endforelse
+                @endif
             </tbody>
         </table>
     </div>

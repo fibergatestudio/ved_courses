@@ -38310,7 +38310,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "hidden-menu_column" }, [
                 _vm._v(
-                  "\n          " + _vm._s(name) + "\n          (\n          "
+                  "\n            " +
+                    _vm._s(name) +
+                    "\n            (\n            "
                 ),
                 _vm.videoPaths && _vm.videoPaths[index]
                   ? _c(
@@ -38326,7 +38328,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("\n           Відеофайл\n          ")]
+                      [_vm._v("\n             Відеофайл\n            ")]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -38342,10 +38344,10 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("\n           Посилання\n          ")]
+                      [_vm._v("\n             Посилання\n            ")]
                     )
                   : _vm._e(),
-                _vm._v("\n          )\n        ")
+                _vm._v("\n            )\n          ")
               ])
             ]
           )
@@ -38366,12 +38368,12 @@ var render = function() {
             [
               _c("source", { attrs: { src: _vm.video, type: "video/mp4" } }),
               _vm._v(
-                "\n      Тег video не підтримується вашим браузером.\n      "
+                "\n        Тег video не підтримується вашим браузером.\n        "
               ),
               _c("a", { attrs: { href: _vm.video } }, [
                 _vm._v("Скачайте або відкрийте відео у новій вкладці")
               ]),
-              _vm._v(".\n    ")
+              _vm._v(".\n      ")
             ]
           )
         ])
@@ -38384,11 +38386,17 @@ var render = function() {
             {
               key: _vm.video,
               staticClass: "video-collection_iframe",
-              attrs: { src: _vm.video }
+              attrs: {
+                src: _vm.video,
+                frameborder: "0",
+                allow:
+                  "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+                allowfullscreen: ""
+              }
             },
             [
               _vm._v(
-                "\n          Ваш браузер не поддерживает плавающие фреймы!\n      "
+                "\n            Ваш браузер не поддерживает плавающие фреймы!\n        "
               )
             ]
           )

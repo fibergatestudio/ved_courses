@@ -1,5 +1,5 @@
 <template>
-  <div>
+<div>
     <div class="programs-item_video">{{ videoNames.length }} відео</div>
     <table class="video-collection_table hidden-menu">
       <tbody>
@@ -47,7 +47,7 @@
       </video>
     </div>
     <div v-if="show && youtube" class="player_wrapper">
-        <iframe :key="video" :src="video" class="video-collection_iframe">
+        <iframe :key="video" :src="video" class="video-collection_iframe" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
             Ваш браузер не поддерживает плавающие фреймы!
         </iframe>
     </div>
