@@ -1997,6 +1997,9 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
     videoNames: {
@@ -2029,20 +2032,27 @@ __webpack_require__.r(__webpack_exports__);
     return {
       video: '',
       youtube: false,
-      show: false
+      //show: false,
+      title: ''
     };
   },
-  mounted: function mounted() {},
+  mounted: function mounted() {
+    if (this.videoPaths[0]) {
+      this.showVideo(this.assetPath + '/' + this.videoPaths[0], this.videoNames[0]);
+    } else {
+      this.showYoutube(this.videoLinks[0], this.videoNames[0]);
+    }
+  },
   methods: {
-    showVideo: function showVideo(filePath) {
+    showVideo: function showVideo(filePath, title) {
       this.video = filePath;
       this.youtube = false;
-      this.show = true;
+      this.title = title;
     },
-    showYoutube: function showYoutube(linkPath) {
+    showYoutube: function showYoutube(linkPath, title) {
       this.video = linkPath;
       this.youtube = true;
-      this.show = true;
+      this.title = title;
     }
   }
 });
@@ -6491,7 +6501,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Styles */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Styles */\n", ""]);
 
 // exports
 
@@ -38302,7 +38312,9 @@ var render = function() {
             [
               _c("td", { staticClass: "hidden-menu_column" }, [
                 _vm.videoLengthes
-                  ? _c("span", [_vm._v(_vm._s(name) + " хв.")])
+                  ? _c("span", [
+                      _vm._v(_vm._s(_vm.videoLengthes[index]) + " хв.")
+                    ])
                   : _vm._e()
               ]),
               _vm._v(" "),
@@ -38323,7 +38335,8 @@ var render = function() {
                           click: function($event) {
                             $event.preventDefault()
                             return _vm.showVideo(
-                              _vm.assetPath + "/" + _vm.videoPaths[index]
+                              _vm.assetPath + "/" + _vm.videoPaths[index],
+                              _vm.videoNames[index]
                             )
                           }
                         }
@@ -38340,7 +38353,10 @@ var render = function() {
                         on: {
                           click: function($event) {
                             $event.preventDefault()
-                            return _vm.showYoutube(_vm.videoLinks[index])
+                            return _vm.showYoutube(
+                              _vm.videoLinks[index],
+                              _vm.videoNames[index]
+                            )
                           }
                         }
                       },
@@ -38356,14 +38372,18 @@ var render = function() {
       )
     ]),
     _vm._v(" "),
-    _vm.show && !_vm.youtube
+    _c("div", { staticClass: "string-text text-center mb-1" }, [
+      _vm._v("\n        " + _vm._s(_vm.title) + "\n    ")
+    ]),
+    _vm._v(" "),
+    !_vm.youtube
       ? _c("div", { staticClass: "player_wrapper" }, [
           _c(
             "video",
             {
               key: _vm.video,
               staticClass: "video-collection_iframe",
-              attrs: { controls: "", autoplay: "" }
+              attrs: { controls: "" }
             },
             [
               _c("source", { attrs: { src: _vm.video, type: "video/mp4" } }),
@@ -38371,7 +38391,7 @@ var render = function() {
                 "\n        Тег video не підтримується вашим браузером.\n        "
               ),
               _c("a", { attrs: { href: _vm.video } }, [
-                _vm._v("Скачайте або відкрийте відео у новій вкладці")
+                _vm._v("Скачайте або відкрийте відео у новій вкладці.")
               ]),
               _vm._v(".\n      ")
             ]
@@ -38379,7 +38399,7 @@ var render = function() {
         ])
       : _vm._e(),
     _vm._v(" "),
-    _vm.show && _vm.youtube
+    _vm.youtube
       ? _c("div", { staticClass: "player_wrapper" }, [
           _c(
             "iframe",
@@ -38390,15 +38410,11 @@ var render = function() {
                 src: _vm.video,
                 frameborder: "0",
                 allow:
-                  "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
+                  "accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture",
                 allowfullscreen: ""
               }
             },
-            [
-              _vm._v(
-                "\n            Ваш браузер не поддерживает плавающие фреймы!\n        "
-              )
-            ]
+            [_vm._v("\n            Ваш браузер не підтримує фрейми.\n        ")]
           )
         ])
       : _vm._e()
@@ -50840,8 +50856,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Fibergate\LARAGON\www\ved_courses\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Fibergate\LARAGON\www\ved_courses\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! D:\Fibergate\LARAGON\www\ved_courses\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! D:\Fibergate\LARAGON\www\ved_courses\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

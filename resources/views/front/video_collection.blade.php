@@ -60,7 +60,7 @@
 
         <table class="video-collection_table hidden-menu">
             <tbody>
-                @if (null !== collect(json_decode($lesson->video_name)))
+                @if (("null" !== $video_names) && isset($video_names))
                     <div id="app">
                     <ved-video-player
                         :video-names="{{$video_names}}"
