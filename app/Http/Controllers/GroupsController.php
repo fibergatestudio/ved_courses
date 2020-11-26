@@ -60,7 +60,7 @@ class GroupsController extends Controller
 
         // Получаем информацию о учителе
         $teacher = DB::table('users')->where('id', $request->teacher_id)->first();
-
+        
         if(isset($teacher)){
             $teacher_id = $teacher->id;
             $teacher_name = $teacher->name;

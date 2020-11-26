@@ -404,16 +404,6 @@
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-<<<<<<< HEAD
-
-=======
-    <script>
-
-
-    </script>
-
-
->>>>>>> origin/florko_branch
     <script>
         var currentCounter = 0;
         var app1 = new Vue({

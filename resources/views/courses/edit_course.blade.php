@@ -425,7 +425,7 @@
                         Викладачi
                     </div>
 
-                    <div class="newTest-mark-string courseEdit-select_restyling">
+                    <div class="newTest-mark-string courseEdit-select_restyling courseEdit-btn-margin">
                         <div class="newTest-mark-inner_left">
                             Викладач курсу
                         </div>
@@ -624,7 +624,7 @@
                     @endforeach
 
                     <div class="courseEdit-btn_wrapper">
-                        <a href="{{ route('add_question', ['course_id' => $course_info->id ]) }}" class="courseEdit-btn courseEdit-btn-add courseEdit-btn-margin">
+                        <a href="{{ route('add_question', ['course_id' => $course_info->id ]) }}" style="max-width:310px;" class="courseEdit-btn courseEdit-btn-add courseEdit-btn-margin">
                             <span>Додати запитання</span>
                         </a>
                     </div>
