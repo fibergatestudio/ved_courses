@@ -62,7 +62,7 @@
                     @endisset
                 </div>
                 <div class="programs-grid_item">
-                    <div class="programs-item_video"><a href="##">{{ collect(json_decode($lesson->video_name))->count() }} відео, {{ collect(json_decode($lesson->add_document))->count() }} матеріалів для самостійного вивчення, {{ collect(json_decode($lesson->test_id))->whereNotNull()->count() }} тести</a></div>
+                    <div class="programs-item_video">{{ collect(json_decode($lesson->video_name))->count() }} відео, {{ collect(json_decode($lesson->add_document))->count() }} матеріалів для самостійного вивчення, {{ collect(json_decode($lesson->test_id))->whereNotNull()->count() }} тести</div>
 
                 </div>
                 <div class="programs-grid_item">

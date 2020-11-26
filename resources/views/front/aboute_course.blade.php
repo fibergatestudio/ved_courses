@@ -46,7 +46,7 @@
         </div>
         <h4 class="main-title_middle" id="anchor_course">Про цей курс</h4>
         <div class="main-textblock">
-            {!! $course_information->course_description ?? 'Немає опису курсу' !!}
+            {!! $course->description ?? 'Немає опису курсу' !!}
         </div>
         @isset($course_information->course_learn_arr)
         <div class="main-learn">
