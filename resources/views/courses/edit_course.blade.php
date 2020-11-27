@@ -390,9 +390,9 @@
                     <div class="courseEdit-about">
                     <h5 class="courseEdit-about_title">Про цей курс</h5>
 
-                    <div class="courseEdit-textblock main-textblock"> 
+                    <div class="courseEdit-textblock main-textblock">
                         @if(isset($course_information->course_description))
-                            {{ strip_tags($course_information->course_description) }}
+                            {!! $course_information->course_description !!}
                         @endif
                     </div>
 
@@ -404,7 +404,7 @@
 
                                 <div class="main-learn_inner">
                                     <div class="main-learn_inner--icon"></div>
-                                    <div class="main-learn_inner--text">{{ $learn }}</div>
+                                    <div class="main-learn_inner--text">{!! $learn !!}</div>
                                 </div>
                             @endforeach
                         @endif
@@ -424,7 +424,7 @@
                     <div class="courseEdit-top">
                         Викладачi
                     </div>
-
+                    <div class="courseAdd-wrapper">
                     <div class="newTest-mark-string courseEdit-select_restyling courseEdit-btn-margin">
                         <div class="newTest-mark-inner_left">
                             Викладач курсу
@@ -440,6 +440,7 @@
                                 <div class="newTest-mark_arrowBlock"></div>
                                 </div>
                         </div>
+                    </div>
                     </div>
                     @foreach($assigned_teachers as $teacher)
                         <div class="courseEdit-teachers teachers-grid_wrapper">
@@ -467,7 +468,7 @@
                     </div>
                     <div class="courseAdd-wrapper">
 
-                        <div class="newTest-mark-string courseAdd-access_restyling">
+                        <div class="newTest-mark-string courseAdd-access_restyling courseEdit-btn-margin">
                             <div class="newTest-mark-inner_left">
                                 Доступ до курсу мають
                             </div>
