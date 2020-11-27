@@ -77,10 +77,10 @@
                                 @endif
                             </div>
                             <div class="sc-string_inner">
-                                @if(empty($student->student_number))
+                                @if(empty($student->student_phone_number))
                                     Пусто
                                 @else
-                                    {{ $student->student_number }}
+                                    {{ $student->student_phone_number }}
                                 @endif
                             </div>
                             <div class="sc-string_inner">

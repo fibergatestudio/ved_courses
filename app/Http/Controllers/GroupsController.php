@@ -145,13 +145,33 @@ class GroupsController extends Controller
     // Автокомплит
     public function fetch(Request $request){
 
+        //$arr = [];
+        $test = $request->students;
+        $arr = explode(',', $test);
+        if($test != NULL){
+            //$arr[] = $test;
+            //array_push($arr, $test);
+        }
+        
+        //var_dump($arr);
+        //echo $test; 
 
         if($request->get('query'))
         {
             $query = $request->get('query');
-            $data = DB::table('students')
+            // if($arr != null){
+            //     $data = DB::table('students')
+            //         ->where('full_name', 'LIKE', "%{$query}%")
+            //         ->whereNotIn('full_name', $arr)
+            //         ->get();
+            // } else {
+                $data = DB::table('students')
                 ->where('full_name', 'LIKE', "%{$query}%")
+                ->whereNotIn('full_name', $arr)
                 ->get();
+            //}
+
+
             $output = '<ul class="dropdown-menu-list" style="display:block; position:relative">';
             foreach($data as $row) {
                 $output .= '

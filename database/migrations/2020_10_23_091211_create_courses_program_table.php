@@ -21,7 +21,7 @@ class CreateCoursesProgramTable extends Migration
             $table->string('learning_time')->nullable(); 
             
             // Протокол
-            $table->string('course_protocol_descr')->nullable(); 
+            $table->longText('course_protocol_descr')->nullable(); 
             $table->string('learning_protocol_time')->nullable(); 
             $table->json('add_document')->nullable(); 
 

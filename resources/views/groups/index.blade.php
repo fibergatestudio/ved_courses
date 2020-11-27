@@ -142,7 +142,7 @@
                 <div class="deleteMenu-wrapper">
 
                     <div class="deleteMenu-topImg">
-                        <img src="assets/img/basket.png" alt="icon">
+                        <img src="/img/basket.png" alt="icon">
                     </div>
                     <div class="deleteMenu-text">
                         Ви точно бажаєте видалити <br> групу?
@@ -228,7 +228,7 @@
                                             <div class="modal-content">
                                                 <div class="deleteMenu-wrapper">
                                                     <div class="deleteMenu-text">
-                                                        <h3 class="modal-students-title">ПІБ Студента {{ $group->id }}</h3>
+                                                        <h3 class="modal-students-title">ПІБ Студентів групи {{ $group->name }}</h3>
                                                         @foreach($group->students_array as $student)
                                                         <div class="groups__elem student-data"><span>1. &nbsp;</span>{{ $student->full_name }}</div>
                                                         @endforeach
@@ -243,7 +243,28 @@
                             <div class="groups__elem groups__elem_style">
                                 <a class="flexTable-btn_edit groups-btn-edit-restyle"
                                 href="{{ route('edit_group',['group_id' => $group->id]) }}"><span>Редагувати</span></a>
-                                <a class="flexTable-btn_delete" href="{{ route('delete_group',['group_id' => $group->id]) }}" ><span>Видалити 1</span></a>
+                                <a class="flexTable-btn_delete" data-toggle="modal" data-target="#deleteGroup{{ $group->id }}"><span>Видалити</span></a>
+
+                                <div class="bootstrap-restylingStudent modal fade" id="deleteGroup{{ $group->id }}" tabindex="-1" role="dialog"
+                                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog  modal-dialog_restyle">
+                                        <div class="modal-content">
+                                            <div class="deleteMenu-wrapper">
+
+                                                <div class="deleteMenu-topImg">
+                                                    <img src="/img/basket.png" alt="icon">
+                                                </div>
+                                                <div class="deleteMenu-text">
+                                                    Ви точно бажаєте видалити <br> групу?
+                                                </div>
+                                                <div class="deleteMenu-btn">
+                                                    <a class="flexTable-btn_delete" href="{{ route('delete_group',['group_id' => $group->id]) }}"><span>Видалити</span></a>
+                                                </div>
+                                            </div>
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
 
                         </div>

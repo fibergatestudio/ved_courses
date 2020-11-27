@@ -49,6 +49,10 @@
                             <input type="number" class="form-control" name="student_number" value="{{ $student->student_number }}">
                         </div>
                         <div class="form-group">
+                            <label>Номер телефона</label>
+                            <input type="number" class="form-control" name="student_phone_number" value="">
+                        </div>
+                        <div class="form-group">
                             <label>Назначенный преподаватель</label>
                             <select class="form-control" name="assigned_teacher_id">
                                     <option value="">Нет</option>

@@ -214,7 +214,7 @@
                 
                 <form action="{{ route('update_test_info_questions', ['test_info_id' => $test_info_id]) }}" id="test_edit_form" method="POST" >
                     @csrf
-                    <h3 class="courseEdit-title courseControl-title">Редагування тесту 1</h3>
+                    <h3 class="courseEdit-title courseControl-title">Редагування тесту</h3>
                     <div class="editing-string-top">
                         <div class="editing-top_inner">
                             Питань:<span><?php echo count($test_question_answers); ?></span>
@@ -348,7 +348,7 @@
                                                 <div class="questionType-innerFalse">
                                                     <div class="questionType-innerFalse_left"></div>
                                                     <div class="questionType-innerFalse_right">
-                                                        <a href="##" class="questionType-btn-add" id="submit_button"><span>Додати</span></a> 
+                                                        <a href="##" class="questionType-btn-add" id="question_submit_button"><span>Додати</span></a> 
                                                         <a href="##" data-dismiss="modal" class="questionType-btn-delete"><span>Скасувати</span></a>
                                                     </div>
                                                 </div>
@@ -367,13 +367,6 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    <script>
-
-        $( "#submit_button" ).click(function() {
-            $( "#test_edit_form" ).submit();
-        });
-
-    </script>
 
     <script>
         tinymce.init({
@@ -406,7 +399,7 @@
 
     <script>
 
-    $( "#submit_button" ).click(function() {
+    $( "#question_submit_button" ).click(function() {
         $( "#add_new_quest_form" ).submit();
     });
 
