@@ -8867,6 +8867,12 @@ element.style {
     min-width: 0;
 }
 
+/* Back Button */
+.bootstrap-restyling .btn-entrance {
+    margin-top: 0px;
+    margin-bottom: 20px;
+}
+
 
 
 /* Groups control page */
