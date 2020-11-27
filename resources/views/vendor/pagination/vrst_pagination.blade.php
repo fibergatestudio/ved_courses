@@ -2,7 +2,8 @@
     <div class="groups-footer groups-footer_style ug__footer-pagination-margin">
         <div class="groops-pagination">
             <div class="groops-pagination__btn-previous">
-                <a class="groops-pagination__btn-previous_not-active" href="{{ $paginator->previousPageUrl() }}">Назад</a>
+            <a class="groops-pagination__btn-previous{{ $paginator->previousPageUrl()=='' ? '_not-active' : ''}}"
+                href="{{ $paginator->previousPageUrl() }}">Назад</a>
             </div>
             @foreach ($elements as $element)
                 {{-- "Three Dots" Separator --}}
@@ -26,7 +27,8 @@
                 @endif
             @endforeach
             <div class="groops-pagination__btn-forward">
-                <a href="{{ $paginator->nextPageUrl() }}">Вперед</a>
+                <a class="groops-pagination__btn-previous{{ $paginator->nextPageUrl()=='' ? '_not-active' : ''}}"
+                    href="{{ $paginator->nextPageUrl() }}">Вперед</a>
             </div>
         </div>
 
