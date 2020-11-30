@@ -11,7 +11,7 @@ class CoursesController extends Controller
     public function index(){
 
         $courses = DB::table('courses')->get();
-        
+
         //dd($courses);
         foreach($courses as $course){
             $creator = DB::table('users')->where('id', $course->creator_id)->first();
@@ -27,7 +27,7 @@ class CoursesController extends Controller
         return view('courses.create_course');
     }
 
-    
+
     public function create_course(Request $request){
 
         $all_info = $request->all();
@@ -52,7 +52,7 @@ class CoursesController extends Controller
             'creator_id' => Auth::user()->id,
             'visibility' => 'all',
         ]);
-        
+
         return redirect('courses_controll')->with('message_success', 'Курс успешно создан!');
     }
 
@@ -68,12 +68,12 @@ class CoursesController extends Controller
         foreach($course_lessons as $lesson){
 
             //dd(json_decode($lesson->video_name));
-            if($lesson->video_name == "null"){ 
+            if($lesson->video_name == "null"){
                 $lesson->video_count = 0;
             } else {
                 $lesson->video_count = count(json_decode($lesson->video_name));
             }
-            
+
             // $video_arr = [];
             // $i = 0;
             // foreach(json_decode($lesson->video_name) as $video){
@@ -100,7 +100,7 @@ class CoursesController extends Controller
             $teachers = DB::table('users')->where('role', 'teacher')->get();
         }
         //dd($assigned_teachers);
-        $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();        
+        $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
 
         return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers', 'course_information') );
     }
@@ -131,7 +131,7 @@ class CoursesController extends Controller
         ]);
 
 
-        
+
         return redirect()->back();
     }
 
@@ -141,7 +141,7 @@ class CoursesController extends Controller
 
         // Таблица курсов
         $current_course = DB::table('courses')->where('id', $course_id)->first();
-        
+
         // Получаем картинку // Если картинка есть
         if($request->hasFile('course_image')){
             $filename = time().'.'.request()->course_image->getClientOriginalExtension();
@@ -152,7 +152,7 @@ class CoursesController extends Controller
                 'course_image_path' => $filename,
             ]);
         }
-        
+
         if($current_course->assigned_teacher_id){
             //array_push($teachers_arr, )
             $teacher_arr = json_decode($current_course->assigned_teacher_id);
@@ -188,8 +188,8 @@ class CoursesController extends Controller
 
         $course_i = DB::table('courses_information')->where('course_id', $course_id)->first();
         //dd($course_i);
-        
-        
+
+
 
         return view('courses.edit_about', compact('course_info', 'course_i'));
     }
@@ -206,10 +206,10 @@ class CoursesController extends Controller
         for($i = 1; $i <= $q_c; $i++){
             $c = "course_learn" . $i;
             //dd($c);
-            array_push($course_lrn_arr, strip_tags ($request->$c));
+            array_push($course_lrn_arr, $request->$c);//strip_tags ($request->$c));
         }
         //dd($course_lrn_arr);
-        
+
         $courses_arr = json_encode($course_lrn_arr, JSON_UNESCAPED_UNICODE);
 
         // Берем информацию описания курса
@@ -238,7 +238,7 @@ class CoursesController extends Controller
     // add_lesson
     public function add_lesson($course_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first(); 
+        $course_info = DB::table('courses')->where('id', $course_id)->first();
 
         $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
         //dd($courses_program);
@@ -264,16 +264,16 @@ class CoursesController extends Controller
     public function add_lesson_apply($course_id, Request $request){
 
         //dd($request->all());
-        
+
         // Количество видео
         $video_counter = $request->videos_counter;
- 
+
         // Арреи под инфу видео
         $video_name_arr = [];
         $video_lenght_arr = [];
         $video_file_arr = [];
         $video_link_arr = [];
- 
+
         // Перебираем и берем информацию о каждом видео
         for($i = 0; $i <= $video_counter; $i++){
             // Формируем реквест имя
@@ -301,7 +301,7 @@ class CoursesController extends Controller
             if($video_length == null){ $video_lenght_arr = null; } else { array_push($video_lenght_arr, $video_length); }
             if($filename == null){ $video_file_arr = null; } else { array_push($video_file_arr, $filename); }
             if($video_link == null){ $video_link_arr = null; } else { array_push($video_link_arr, $video_link); }
-            
+
         }
         //dd($video_file_arr);
 
@@ -340,7 +340,7 @@ class CoursesController extends Controller
             'video_file' =>  json_encode($video_file_arr),
             'video_link' => json_encode($video_link_arr),
         ]);
-        
+
         return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
     }
     // add_ lesson
@@ -389,7 +389,7 @@ class CoursesController extends Controller
 
     //     dd($course_id);
 
-    //     return view('courses.course_view', compact('course_id')); 
+    //     return view('courses.course_view', compact('course_id'));
     // }
 
 
