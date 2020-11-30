@@ -79,7 +79,7 @@
                         id="saveUser">Зберегти </button>
                 <button class="groups-edit__back-to-groups sce__buttons-restyle uge__buttons-style"
                         id="backToUsers"
-                        onClick="event.preventDefault(); window.location.href='{{ route('users_controll') }}'">Назад</button>
+                        onClick="event.preventDefault(); window.location.href='{{ redirect()->back()->getTargetUrl() }}'">Назад</button>
             </div>
         </form>
     </div>

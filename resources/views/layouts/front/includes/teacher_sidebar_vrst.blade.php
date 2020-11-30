@@ -11,10 +11,12 @@
             <!-- changeling block mobile-btn (start) -->
             <div class="sidebar-top_mobile-btn ug__mobile-top-block">
                 <div class="sidebar-top_mobile-img">
-                    <img src="{{ asset($imgPath) }}" alt="icon">
+                    <img src="@if(isset($headTitle)) {{ asset($imgPath) }} @endif" alt="icon">
                 </div>
                 <div class="sidebar-top_mobile-name ug__top-name">
-                   {{ $headTitle }}
+                    @if(isset($headTitle))
+                        {{ $headTitle }}
+                    @endif
                 </div>
             </div>
             <!-- changeling block mobile-btn (end) -->

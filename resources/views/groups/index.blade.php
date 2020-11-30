@@ -191,12 +191,12 @@
         </div>
         <div class="courseControl-container sticky-container container">
 
-            {{-- @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png']) --}}
-            @if(Auth::user()->role == "admin")
+            @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+            {{-- @if(Auth::user()->role == "admin")
                 @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
             @elseif(Auth::user()->role == "teacher")
                 @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
-            @endif
+            @endif --}}
 
             <div class="groups-control">
                 <div class="groups-head">

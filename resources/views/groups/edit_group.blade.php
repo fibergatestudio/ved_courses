@@ -234,45 +234,13 @@
         </div>
         <div class="courseControl-container sticky-container container">
 
-            <!-- sidebar-menu (start) -->
+            @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
 
-            <div class="sidebar ">
-
-                <div class="sidebar-sticky">
-
-                    <div class="sidebar-top_wrapper">
-                        <div class="sidebar-top_burger-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <!-- changeling block mobile-btn (start) -->
-                        <div class="sidebar-top_mobile-btn">
-                            <div class="sidebar-top_mobile-img">
-                                <img src="assets/img/005-lecture.png" alt="icon">
-                            </div>
-                            <div class="sidebar-top_mobile-name">
-                                Управління групами
-                            </div>
-                        </div>
-                        <!-- changeling block mobile-btn (end) -->
-
-                    </div> --}}
-
-                    {{-- @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png']) --}}
-
-                    @if(Auth::user()->role == "admin")
-                        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
-                    @elseif(Auth::user()->role == "teacher")
-                        @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
-                    @endif
-
-                </div>
-
-            </div>
-            <!-- sidebar-menu (end) -->
+            {{-- @if(Auth::user()->role == "admin")
+                @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+            @elseif(Auth::user()->role == "teacher")
+                @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+            @endif --}}
 
             <div class="ge">
                 <form action="{{ route('apply_edit_group',['group_id' => $group_info->id]) }}" method="POST">
