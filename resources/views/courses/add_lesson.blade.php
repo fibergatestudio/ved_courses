@@ -182,7 +182,22 @@
                     <div class="courseEdit-top">
                         Протокол
                     </div>
+
                     <div class="courseAdd-wrapper">
+                        <div class="newTest-mark-string courseAdd-access_restyling courseEdit-btn-margin">
+                            <div class="newTest-mark-inner_left">
+                                Показати протокол
+                            </div>
+                            <div class="newTest-mark-inner_right">
+                                <div class="newTest-mark-wrapper">
+                                    <select class="newTest-mark-select" name="show_protocol">
+                                        <option value="0">Hi</option>
+                                        <option value="1">Так</option>
+                                    </select>
+                                    <div class="newTest-mark_arrowBlock"></div>
+                                    </div>
+                            </div>
+                        </div>
                         <div class="courseAdd-inner courseAdd-inner_margbottom">
                             <div class="courseAdd-inner_left">
                                 <div class="courseAdd_left--name">
@@ -346,6 +361,26 @@
                             <span>Додати наступне відео</span>
                         </a>
 
+
+                    </div>
+                </div>
+
+                <div class="courseEdit-block">
+                    <div class="courseEdit-top">
+                        3D модель
+                    </div>
+                    <div class="courseAdd-wrapper">
+
+                        <div class="courseAdditional-bottom-inner">
+                            <div class="courseAdditional-bottom_left">
+                                <div class="courseAdd_left--name">
+                                    Посилання<sup>*</sup>
+                                </div>
+                            </div>
+                            <div class="courseAdditional-bottom_right">
+                                <input class="courseAdditional--input" name="model3d_link" type="text">
+                            </div>
+                        </div><br>
 
                     </div>
                 </div>
