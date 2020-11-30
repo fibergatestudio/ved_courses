@@ -126,7 +126,12 @@ class HomePageController extends Controller
                 return view('front.model', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
                 break;
         case 'protocol':
-            return view('front.protocol', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+            if ($lesson->show_protocol) {
+                return view('front.protocol', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+            }
+            else {
+                return redirect()->route('view_lesson', ['course_id' => $course_id, 'lesson_id' => $lesson_id]);
+            }
             break;
         /*case 'test':
             return view('front.test_a', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));

@@ -332,6 +332,7 @@ class CoursesController extends Controller
             'course_name' => $request->course_name,
             'course_description' => $request->course_description,
             'learning_time' => $request->learning_time,
+            'show_protocol' => $request->show_protocol,
             'course_protocol_descr' => $request->course_protocol_descr,
             'learning_protocol_time' => $request->learning_protocol_time,
             'add_document' => json_encode($docs_arr),
@@ -339,6 +340,7 @@ class CoursesController extends Controller
             'video_length' => json_encode($video_lenght_arr),
             'video_file' =>  json_encode($video_file_arr),
             'video_link' => json_encode($video_link_arr),
+            'model3d_link' => $request->model3d_link,
         ]);
 
         return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
