@@ -6501,7 +6501,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n/* Styles */\n", ""]);
+exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* Styles */\r\n", ""]);
 
 // exports
 
@@ -38322,9 +38322,9 @@ var render = function() {
               _vm._v(" "),
               _c("td", { staticClass: "hidden-menu_column" }, [
                 _vm._v(
-                  "\n            " +
+                  "\r\n            " +
                     _vm._s(name) +
-                    "\n            (\n            "
+                    "\r\n            (\r\n            "
                 ),
                 _vm.videoPaths && _vm.videoPaths[index]
                   ? _c(
@@ -38341,7 +38341,7 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("\n             Відеофайл\n            ")]
+                      [_vm._v("\r\n             Відеофайл\r\n            ")]
                     )
                   : _vm._e(),
                 _vm._v(" "),
@@ -38360,10 +38360,10 @@ var render = function() {
                           }
                         }
                       },
-                      [_vm._v("\n             Посилання\n            ")]
+                      [_vm._v("\r\n             Посилання\r\n            ")]
                     )
                   : _vm._e(),
-                _vm._v("\n            )\n          ")
+                _vm._v("\r\n            )\r\n          ")
               ])
             ]
           )
@@ -38373,7 +38373,7 @@ var render = function() {
     ]),
     _vm._v(" "),
     _c("div", { staticClass: "string-text text-center mb-1" }, [
-      _vm._v("\n        " + _vm._s(_vm.title) + "\n    ")
+      _vm._v("\r\n        " + _vm._s(_vm.title) + "\r\n    ")
     ]),
     _vm._v(" "),
     !_vm.youtube
@@ -38388,12 +38388,12 @@ var render = function() {
             [
               _c("source", { attrs: { src: _vm.video, type: "video/mp4" } }),
               _vm._v(
-                "\n        Тег video не підтримується вашим браузером.\n        "
+                "\r\n        Тег video не підтримується вашим браузером.\r\n        "
               ),
               _c("a", { attrs: { href: _vm.video } }, [
                 _vm._v("Скачайте або відкрийте відео у новій вкладці.")
               ]),
-              _vm._v(".\n      ")
+              _vm._v(".\r\n      ")
             ]
           )
         ])
@@ -38414,7 +38414,11 @@ var render = function() {
                 allowfullscreen: ""
               }
             },
-            [_vm._v("\n            Ваш браузер не підтримує фрейми.\n        ")]
+            [
+              _vm._v(
+                "\r\n            Ваш браузер не підтримує фрейми.\r\n        "
+              )
+            ]
           )
         ])
       : _vm._e()
@@ -50856,8 +50860,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! D:\Fibergate\LARAGON\www\ved_courses\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! D:\Fibergate\LARAGON\www\ved_courses\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! E:\.Programing\laragon\www\ved_courses\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! E:\.Programing\laragon\www\ved_courses\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

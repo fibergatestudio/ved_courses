@@ -8,7 +8,7 @@
             @foreach ($elements as $element)
                 {{-- "Three Dots" Separator --}}
                 @if (is_string($element))
-                <div class="groops-pagination__pagination-item">{{ $element }}</div>
+                    <div class="groops-pagination__pagination-item">{{ $element }}</div>
                 @endif
                 @if (is_array($element))
                     @foreach ($element as $page => $url)

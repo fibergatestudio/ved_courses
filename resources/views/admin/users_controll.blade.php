@@ -9,24 +9,24 @@
 
         @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління користувачами', 'imgPath' => 'img/teacher-mobileMenu-5.png'])
 
-        <div class="groups-control ug__group mw-100">
+        <div class="groups-control ug__group mer-mw">
             <div class="groups-head">
                 <h1 class="groups-head__title ug__head-title">Управління користувачами</h1>
             </div>
-            <div class="groups-body ug__body mw-100">
-                <div class="groups-title ug__content mw-100">
+            <div class="groups-body ug__body mer-mw">
+                <div class="groups-title ug__content mer-mw">
                     <div class="groups-title__elem groups-title__elem_style ug__title-elem">№'</div>
                     <div class="groups-title__elem groups-title__elem_style ug__title-elem">Логін</div>
-                    <div class="groups-title__elem groups-title__elem_style ug__title-elem" style="width: 33%">Email</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem mer-e">Email</div>
                     <div class="groups-title__elem groups-title__elem_style ug__title-elem">Роль</div>
-                    <div class="groups-title__elem groups-title__elem_style ug__title-elem" style="width: 27%">Управління</div>
+                    <div class="groups-title__elem groups-title__elem_style ug__title-elem mer-w20">Управління</div>
                 </div>
-                <div class="groups-content ug__content mw-100">
+                <div class="groups-content ug__content mer-mw">
                     @foreach($users as $user)
                     <div class="groups-row ug__row">
                         <div class="groups__elem ug__elem">{{ $user->id }}.</div>
                         <div class="groups__elem ug__elem">{{ $user->name }}</div>
-                        <div class="groups__elem ug__elem text-truncate" style="width: 33%">{{ $user->email }}</div>
+                        <div class="groups__elem ug__elem w-wrap mer-e">{{ $user->email }}</div>
                         <div class="groups__elem ug__elem">
                             @switch($user->role)
                                 @case('student')
@@ -39,7 +39,7 @@
                                     Адмiн
                             @endswitch
                         </div>
-                        <div class="groups__elem ug__elem" style="width: 27%">
+                        <div class="groups__elem ug__elem mer-w22">
                             <a class="flexTable-btn_edit groups-btn-edit-restyle ug_btn-edit"
                                 href="{{ route('user_edit', ['user_id' => $user->id]) }}"><span>Редагувати</span></a>
                             @if($user->role != 'admin')
@@ -52,7 +52,7 @@
                     @endforeach
                 </div>
             </div>
-            {{ $users->links('vendor.pagination.vrst_pagination') }}
+            {{ $users->onEachSide(0)->links('vendor.pagination.vrst_pagination') }}
         </div>
         <div class="groups-control-mobile">
             <div class="groups-head">
@@ -108,7 +108,7 @@
                     </div>
                 </div>
                 @endforeach
-                {{ $users->links('vendor.pagination.vrst_pagination') }}
+                {{ $users->onEachSide(0)->links('vendor.pagination.vrst_pagination') }}
             </div>
         </div>
     </div>
