@@ -737,6 +737,8 @@
     <script>
         $('.datepicker').datepicker({
                 weekStart: 1,
+                minDate: new Date(),
+                startDate: new Date(),
                 daysOfWeekHighlighted: "6,0",
                 autoclose: true,
                 timepicker: true,

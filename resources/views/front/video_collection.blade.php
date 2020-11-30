@@ -38,13 +38,14 @@
                 <a class="string-menu_btn"
                     href="{{ route('view_lesson', [$course->id, $lesson->id, 'model']) }}"><span>3D модель</span></a>
             </div>
+            @if ($lesson->show_protocol)
+                <div class="string-menu_inner">
+                    <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
+                </div>
+            @endif
             <div class="string-menu_inner">
                 <a class="string-menu_btn"
-                    href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn"
-                    href="{{ route('view_lesson', [$course->id, $lesson->id, 'test']) }}"><span>Тест</span></a>
+                    href="{{ route('view_lesson', [$course->id, $lesson->id, 'test']) }}"><span>Завдання</span></a>
             </div>
 
             @include('layouts.front.includes.nextprevlesson')

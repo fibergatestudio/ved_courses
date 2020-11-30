@@ -226,6 +226,9 @@ use Illuminate\Support\Facades\Auth;
                 // Сохранить вопрос "Перетаскивание в тексте" (POST)
                 Route::post('/tests_controll/new_test_info/{test_info_id}/drag_drop/create', 'TestsController@create_drag_drop')->name('create_drag_drop')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
 
+                // Редактировать вопрос.
+                
+
             //----- Типы вопросов -----//
 
 
@@ -235,6 +238,9 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/tests_controll/new_test_info/{test_info_id}/view', 'TestsController@view_test_info_questions')->name('view_test_info_questions')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
             // Обновить
             Route::post('/tests_controll/new_test_info/{test_info_id}/update_info', 'TestsController@update_test_info_questions')->name('update_test_info_questions')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
+
+            // Удалить
+            Route::get('/tests_controll/new_test_info/{test_info_id}/delete_question/{question_id}', 'TestsController@delete_test_question')->name('delete_test_question')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
     //
 //
 

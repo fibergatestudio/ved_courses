@@ -211,7 +211,7 @@
                                     </div>
                                 </div>
                                 <div class="courseAdd-inner_right">
-                                        <textarea class="tinyMCE-area" id="question_text" name="course_description"></textarea>
+                                        <textarea class="tinyMCE-area" id="question_text" name="course_description">{!! $course_i->course_description!!}</textarea>
                                 </div>
                             </div>
 
@@ -294,7 +294,7 @@
         const myServices = [];
         @if(isset($course_i))
             @foreach (json_decode($course_i->course_learn_arr) as $service)
-                myServices.push('{{ $service }}');
+                myServices.push('{!! $service !!}');
             @endforeach
         @endif
         console.log(myServices);
