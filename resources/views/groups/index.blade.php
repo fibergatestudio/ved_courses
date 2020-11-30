@@ -186,10 +186,10 @@
     <!-- deleteBtn modal-page (end) -->
 
     <!-- show students modal end --> --}}
-    <section class="courseControl" style="min-height: 400px;">
+    <section class="courseControl">
         <div class="courseControl-separator direction-separator">
         </div>
-        <div class="courseControl-container sticky-container container">
+        <div class="courseControl-container sticky-container container container-height">
 
             @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
             {{-- @if(Auth::user()->role == "admin")

@@ -152,10 +152,10 @@
 
     <!-- deleteBtn modal-page (end) --> --}}
 
-<section class="courseControl" style="min-height: 420px;">
+<section class="courseControl">
     <div class="courseControl-separator direction-separator">
     </div>
-    <div class="courseControl-container sticky-container container">
+    <div class="courseControl-container sticky-container container container-height">
 
         @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
 

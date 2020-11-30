@@ -44,15 +44,15 @@
             <div class="groups-edit__group groups-edit__group_sce-restyle">
                 <p class="groups-edit__group-name eg-text-style">Номер телефону</p>
                 <input class='eg-input groups-edit__group_sce-restyle' type="text" name="student_phone_number"
-                    id="getPhoneNumber" placeholder="+XX (XXX) XXX-XX-XX" value=""
-                    pattern="\+38\s?[\(]{0,1}[0-9]{3}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}">
+                        id="getPhoneNumber" placeholder="+XX (XXX) XXX-XX-XX" value="{{ $student->student_phone_number }}"
+                        pattern="\+38\s?[\(]{0,1}[0-9]{3}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}">
             </div>
             <div class="groups-edit__group groups-edit__group_sce-restyle select-teacher_sce__block_restyle">
                 <p class="groups-edit__current-teacher eg-text-style">ПІБ викладача</p>
                 <div class="select">
                     <select name="assigned_teacher_id" class="select-teacher select-teacher_sce_restyle"
                         id="selectTeacher">
-                        <option value="Ivanov">Немає</option>
+                        <option value="">Немає</option>
                         @foreach($teachers as $teacher)
                             @if($teacher->id == $student->assigned_teacher_id)
                                 <option value="{{ $teacher->id }}" selected>{{ $teacher->name }}</option>

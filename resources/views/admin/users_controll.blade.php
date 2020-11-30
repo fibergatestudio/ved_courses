@@ -5,7 +5,7 @@
 <section class="courseControl">
     <div class="courseControl-separator direction-separator">
     </div>
-    <div class="courseControl-container sticky-container container">
+    <div class="courseControl-container sticky-container container container-height">
 
         @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління користувачами', 'imgPath' => 'img/teacher-mobileMenu-5.png'])
 
