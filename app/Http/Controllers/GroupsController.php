@@ -88,11 +88,16 @@ class GroupsController extends Controller
         $students_array = array();
         foreach($students_ids as $student_id){
             $student = DB::table('students')->where('user_id', $student_id)->first();
+            $assigned_teacher = DB::table('users')->where('id', $student->assigned_teacher_id)->first();
+            if($assigned_teacher){
+                $student->teacher_fio = $assigned_teacher->surname . " " . $assigned_teacher->surname . " " . $assigned_teacher->patronymic;
+            }
             //dd($test);
             array_push($students_array, $student);
         }
 
         $teachers = DB::table('users')->where('role', 'teacher')->get();
+        //dd($students_array);
 
         return view('groups.edit_group', compact('group_info', 'teachers', 'students_array'));
     }
@@ -101,7 +106,7 @@ class GroupsController extends Controller
 
         $post_info = $request->all();
 
-        //dd($post_info);
+        dd($post_info);
 
         // Создаем аррей студентов
         $students_array = array();
@@ -132,7 +137,8 @@ class GroupsController extends Controller
             'assigned_teacher_name' => $teacher_name,
         ]);
 
-        return redirect('groups');
+        return back();
+        //return redirect('groups');
     }
 
     public function delete_group($group_id){

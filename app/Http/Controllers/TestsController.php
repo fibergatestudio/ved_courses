@@ -404,10 +404,46 @@ class TestsController extends Controller
         return view('tests.view_test_info_questions', compact('test_info_id', 'test_view_info', 'test_question_answers'));
     }
 
-    public function update_test_info_questions($test_info_id){
+    public function update_test_info_questions($test_info_id, Request $request){
 
-        //dd($test_info_id);
+        //dd($request->all());
 
+        $max_score = $request->max_score;
+
+        if($max_score == null){
+            $max_score = 0;
+        }
+
+        DB::table('tests_info')->where('id', $test_info_id)->update([
+            'max_score' => $max_score,
+        ]);
+
+        $info = DB::table('tests_questions')->where('id', $test_info_id)->first();
+        // dd($info);
+        // return \Redirect::route('add_lesson', $info->test_id);
+        return back();
+    }
+
+    public function delete_test_question($test_info_id, $question_id, Request $request){
+
+        // Получаем тип вопроса с запроса
+        $question_type = $request->question_type;
+
+            // Если тип вопроса равен = опр. типу
+            if($question_type == "Правильно/неправильно"){
+                // Удаляем вопрос
+                $tf = DB::table('tests_true_false')->where('id', $test_info_id)->delete();
+            }
+            if($question_type == "Множинний вибір"){
+                $mc = DB::table('tests_multiple_choice')->where('id', $test_info_id)->delete();
+            }
+            if($question_type == "Перетягування в тексті"){
+                $dd = DB::table('tests_drag_drop')->where('id', $test_info_id)->delete();
+            }
+            // Удаляем вопрос из вопросов теста
+            DB::table('tests_questions')->where('id', $question_id)->delete();
+
+        // Возвращаем назад
         return back();
     }
     // -----------------Конец создания новых тестов-------------------------

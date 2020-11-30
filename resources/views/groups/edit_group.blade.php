@@ -337,14 +337,14 @@
 
                                 <div class="sc-string ccec__row">
                                     <div class="ccec__string-inner">1.</div>
-                                    <div class="ccec__string-inner">{{ $student-> full_name }} </div>
+                                    <div class="ccec__string-inner">{{ $student->full_name }} </div>
                                     <div class="ccec__string-inner">2</div>
                                     <div class="ccec__string-inner">+38 (097) 123 - 45 - 67</div>
                                     <div class="ccec__string-inner ccec__string-inner_cust-style">
                                         admin@mail.com
                                     </div>
                                     <div class="ccec__string-inner ccec__string-inner_cust-style">12345678910111213</div>
-                                    <div class="ccec__string-inner">{{ $student-> full_name }} </div>
+                                    <div class="ccec__string-inner">@if(isset($student->teacher_fio)) {{ $student->teacher_fio }} @else Нет@endif</div>
                                     <div class="ccec__string-inner">
                                         <a class="flexTable-btn_delete ccec__delete-btn" href="##" data-toggle="modal"
                                             data-target="#deleteModal"><span>Видалити</span>
@@ -442,37 +442,10 @@
 
                 </div>
 
-
-                <!-- <div class="groups-footer groups-footer_style sc-footer-pagination_restyle">
-                    <div class="groops-pagination">
-                        <div class="groops-pagination__btn-previous"><a class="groops-pagination__btn-previous_not-active"
-                                href="#">Назад</a>
-                        </div>
-                        <div class="groops-pagination__pagination-item groops-pagination__pagination-item_style">
-                            <a class="groops-pagination__pagination-item_active" href="#">
-                                1
-                            </a>
-                        </div>
-                        <div class="groops-pagination__pagination-item groops-pagination__pagination-item_style">
-                            <a href="#">2</a>
-                        </div>
-                        <div class="groops-pagination__pagination-item groops-pagination__pagination-item_style">
-                            <a href="#">3</a>
-                        </div>
-                        <div class="groops-pagination__pagination-item">...</div>
-                        <div class="groops-pagination__pagination-item groops-pagination__pagination-item_style">
-                            <a href="#">25</a>
-                        </div>
-                        <div class="groops-pagination__btn-forward">
-                            <a href="#">Вперед</a>
-                        </div>
-                    </div>
-
-                </div> -->
                 <div class="groups-edit__buttons-block ccec__back-save-btns">
-                    <button
+                    <a href="{{ url()->previous() }}"
                         class="groups-edit__back-to-groups sce__buttons-restyle uge__buttons-style ugea__button_style ccec__btn"
-                        id="backToUsers">Назад </button>
+                        id="backToUsers" style="text-align: center;">Назад </a>
                     <button class="groups-edit__create-group sce__buttons-restyle uge__buttons-style ugea__button_style"
                         id="saveUser">Зберегти </button>
                 </div>
@@ -491,12 +464,13 @@
             {
             var _token = $('input[name="_token"]').val();
             $.ajax({
-            url:"{{ route('autocomplete.fetch') }}",
+            /* url:"{{ route('autocomplete.fetch') }}", */
+            url:"{{ route('autocomplete.fetch') }}" + "/?students=" + students_array,
             method:"POST",
             data:{query:query, _token:_token},
             success:function(data){
             $('#studentList').fadeIn();
-                        $('#studentList').html(data);
+                $('#studentList').html(data);
             }
             });
             }

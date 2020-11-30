@@ -229,17 +229,17 @@
                             Максимальна оцінка
                         </div>
                         <div class="editing-middle_inner">
-                            <input class="editing-input" type="number" step='0.01' value='0.00' placeholder='100.00'>
+                            <input class="editing-input" type="number" step='0.01' value="{{ $test_view_info->max_score }}" name="max_score">
                         </div>
                         <div class="editing-middle_inner">
-                            <a class="editing-btn-save" href="##"> <span>ЗБЕРЕГТИ</span> </a>
+                            <a class="editing-btn-save" href="##" id="update_max_score"> <span>ЗБЕРЕГТИ</span> </a>
                         </div>
 
                     </div>
                     
-                    <div class="editing-string-bottom">
+                    <!-- <div class="editing-string-bottom">
                         Всього балів :<span>69.00</span> 
-                    </div>
+                    </div> -->
                 
 
 
@@ -265,9 +265,9 @@
                                     </div>
                                     <textarea class="editing-textarea_textarea" name="editing"  cols="30" rows="1" placeholder="{{ $test->question_name }}"></textarea>
                                     <div class="editing-textarea_btns">
-                                    <a href="##" class="editing-textarea_btns--close">
-                                            <img src="/img/close-ico.png" alt="icon">
-                                    </a>
+                                        <a href="{{ route('delete_test_question', ['test_info_id' => $test_info_id, 'question_id' => $test->id, 'question_type' => $test->question_type] ) }}" class="editing-textarea_btns--close">
+                                                <img src="/img/close-ico.png" alt="icon">
+                                        </a>
                                     </div>
                                     <div class="editing-textarea_edit">
                                         <div class="editing-textarea_edit--left">
@@ -397,7 +397,10 @@
             // $('.datepicker').datepicker("setDate", new Date());
     </script>
 
-    <script>
+    <script>                    
+    $('#update_max_score').click(function() {
+        $( "#test_edit_form" ).submit();
+    });
 
     $( "#question_submit_button" ).click(function() {
         $( "#add_new_quest_form" ).submit();

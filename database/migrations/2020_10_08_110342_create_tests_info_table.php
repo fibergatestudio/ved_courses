@@ -25,6 +25,8 @@ class CreateTestsInfoTable extends Migration
             $table->string('when_time_is_up')->nullable();
             // Оценка
             $table->string('passing_score')->nullable();
+            // Макс оценка
+            $table->string('max_score')->nullable();
             $table->string('available_attempts')->nullable();
             $table->string('assessment_method')->nullable();
             // Макет
