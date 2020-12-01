@@ -115,6 +115,31 @@ class HomePageController extends Controller
             }
         }
 
+        // Тесты
+        $test_id = DB::table('courses_program')->where('id', $course->id)->first();
+        $testInfo = DB::table('tests_info')->where('id', $test_id->id)->first();
+
+            // Вопросы теста
+            $testQuestions = DB::table('tests_questions')->where('test_id', $testInfo->id)->get();
+
+            foreach($testQuestions as $testQuest){
+                if($testQuest->question_type == "Множинний вибір"){
+                    $testMultiply = DB::table('tests_multiple_choice')->where('id', $testQuest->test_answers_id)->get();
+                    //dd($testMultiply);
+                }
+                if($testQuest->question_type == "Правильно/неправильно"){
+                    $testTrueFalse = DB::table('tests_true_false')->where('id', $testQuest->test_answers_id)->get();
+                    //dd($testTrueFalse);
+                }
+                if($testQuest->question_type == "Перетягування в тексті"){
+                    $testDragDrop = DB::table('tests_drag_drop')->where('id', $testQuest->test_answers_id)->get();
+                    //dd($testDragDrop);
+                }
+
+            }
+            //dd($testQuestions);
+        //dd($testInfo);
+
         switch ($tab) {
         case 'strings':
             return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
@@ -133,9 +158,9 @@ class HomePageController extends Controller
                 return redirect()->route('view_lesson', ['course_id' => $course_id, 'lesson_id' => $lesson_id]);
             }
             break;
-        /*case 'test':
-            return view('front.test_a', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
-            break;*/
+        case 'test':
+            return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson', 'testInfo', 'testDragDrop'));
+            break;
         default:
             return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));;
             break;

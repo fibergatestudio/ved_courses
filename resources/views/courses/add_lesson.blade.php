@@ -242,13 +242,13 @@
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
                                             <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
-                                            <input class="courseAdditional-input_button" type="file" :name="'add_document' + index">
+                                            <input class="courseAdditional-input_button" type="file" :name="'add_document' + index" onchange="showFile(this)">
                                             <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                         </div>
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
-                                        <a class="courseAdditional-docName" href="##">
-                                            Назва документу.docx<span>15 Мб</span>
+                                        <a class="courseAdditional-docName" href="##" @click="removeNewEntry(index)">
+                                            
                                         </a>
                                     </div>
 
@@ -313,7 +313,7 @@
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
                                             <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
-                                            <input class="courseAdditional-input_button" type="file" :name="'video_file' + index">
+                                            <input class="courseAdditional-input_button" type="file" :name="'video_file' + index" onchange="show(this)">
                                             <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                         </div>
                                     </div>
@@ -348,9 +348,9 @@
                                     </div>
 
                                 </div>
-                                <a class="courseAdditional-docName docName-styling" :id="'video_text'+index" href="##">
+                                <!-- <a class="courseAdditional-docName docName-styling" :id="'video_text'+index" href="##">
                                     Довга назва посилання або завантаженого відео
-                                </a>
+                                </a> -->
                             </div>
 
                         </div>
@@ -439,6 +439,21 @@
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+    <script type="text/javascript">
+        function show(input) {
+            var fileName = input.files[0].name;
+            var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);            
+        }
+
+        function showFile(input){
+            var fileName = input.files[0].name;
+            var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
+            console.log(test);
+            alert(fileName);
+        }
+
+    </script>
+
     <script>
         var currentCounter = 0;
         var app1 = new Vue({
@@ -482,6 +497,11 @@
                     //document.getElementById("docs_counter").value = docsCounter;
                     $('#docs_counter').val(currentCounter);
                 },
+                removeNewEntry: function(index){
+                    currentCounter = currentCounter - 1;
+                    this.ids.splice(index, 1);
+                    document.getElementById("docs_counter").value = currentCounter;
+                },
 
             }
         });
@@ -510,7 +530,6 @@
 
 
 @section('scripts')
-
 @endsection
 
 

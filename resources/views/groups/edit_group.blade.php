@@ -426,6 +426,10 @@
     <script>
     $(document).ready(function(){
 
+
+        /* Создаем аррей с студентами */
+        var students_array = new Array();
+
         $('#student').keyup(function(){
             var query = $(this).val();
             if(query != '')
@@ -448,9 +452,6 @@
             $('#student').val($(this).text());
             $('#studentList').fadeOut();
         });
-
-        /* Создаем аррей с студентами */
-        var students_array = new Array();
 
         /* Берем все текущие значения */
         var values = $("input[name='student_name[]']")

@@ -585,9 +585,11 @@
                                 </div>
 
                                 <div class="courseEdit-item_test courseEdit-item_button">
-                                    <a href="##">Тест
+                                    @if(isset($lesson->test_id))
+                                    <a href="{{ route('view_test_info_questions', ['test_info_id' => $lesson->test_id ]) }}">Тест
                                         <img class="courseEdit-item_image" src="/img/pencil-edit-small.png" alt="pencil-image">
                                     </a>
+                                    @endif
                                 </div>
                                 <div class="courseEdit-hidden">
                                     <div class="courseEdit-underline"></div>
