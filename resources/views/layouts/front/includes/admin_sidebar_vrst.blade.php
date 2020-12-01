@@ -29,19 +29,19 @@
                     @if(Route::current()->getName() == 'admin_panel' || Route::current()->getName() == 'teacher_panel')
                         <li class="sidebar_title-inner bg-curent-menu">
                             <div class="sidebar_title-imgBox">
-                                <a href="@if(Auth::user()->role == "admin") {{ route('admin_panel') }}
-                                        @else {{ route('teacher_panel') }}
+                                <a href="@if(Auth::user()->role == "admin") {{ $curentPath = route('admin_panel') }}
+                                        @else {{ $curentPath = route('teacher_panel') }}
                                         @endif">
                                     <img class="sidebar_title-image" src="{{ asset('img/teacher-mobileMenu-1.png') }}" alt="icon">
                                 </a>
                             </div>
-                            <a class="sidebar_title-link bg-curent-menu" href="{{ isset($curentPath) ? $curentPath : '' }}">{{ __('Головна') }}</a>
+                            <a class="sidebar_title-link" style="color: #fff" href="{{ isset($curentPath) ? $curentPath : '' }}">{{ __('Головна') }}</a>
                         </li>
                     @else
                         <li class="sidebar_title-inner">
                             <div class="sidebar_title-imgBox">
-                                <a href="@if(Auth::user()->role == "admin") {{ route('admin_panel') }}
-                                    @else {{ route('teacher_panel') }}
+                                <a href="@if(Auth::user()->role == "admin") {{ $curentPath = route('admin_panel') }}
+                                    @else {{ $curentPath = route('teacher_panel') }}
                                     @endif">
                                     <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-1.png') }}" alt="icon">
                                 </a>
@@ -57,7 +57,7 @@
                                         <img class="sidebar_title-image" src="{{ asset('img/teacher-mobileMenu-2.png') }}" alt="icon">
                                     </a>
                                 </div>
-                                <a class="sidebar_title-link bg-curent-menu" href="{{ route('courses_controll') }}">{{ __('Управління Курсами') }}</a>
+                                <a class="sidebar_title-link" style="color: #fff" href="{{ route('courses_controll') }}">{{ __('Управління Курсами') }}</a>
                             </li>
                         @else
                             <li class="sidebar_title-inner">
@@ -77,7 +77,7 @@
                                     <img class="sidebar_title-image" src="{{ asset('img/teacher-mobileMenu-3.png') }}" alt="icon">
                                 </a>
                             </div>
-                            <a class="sidebar_title-link bg-curent-menu" href="{{ route('groups_controll') }}">{{ __('Управління Групами') }}</a>
+                            <a class="sidebar_title-link" style="color: #fff" href="{{ route('groups_controll') }}">{{ __('Управління Групами') }}</a>
                         </li>
                     @else
                         <li class="sidebar_title-inner">
@@ -96,7 +96,7 @@
                                     <img class="sidebar_title-image" src="{{ asset('img/teacher-mobileMenu-4.png') }}" alt="icon">
                                 </a>
                             </div>
-                            <a class="sidebar_title-link bg-curent-menu" href="{{ route('students_controll') }}">{{ __('Управління Студентами') }}</a>
+                            <a class="sidebar_title-link" style="color: #fff" href="{{ route('students_controll') }}">{{ __('Управління Студентами') }}</a>
                         </li>
                     @else
                         <li class="sidebar_title-inner">
@@ -116,7 +116,7 @@
                                         <img class="sidebar_title-image" src="{{ asset('img/teacher-mobileMenu-5.png') }}" alt="icon">
                                     </a>
                                 </div>
-                                <a class="sidebar_title-link bg-curent-menu" href="{{ route('users_controll') }}">{{ __('Управління Користувачами') }}</a>
+                                <a class="sidebar_title-link" style="color: #fff" href="{{ route('users_controll') }}">{{ __('Управління Користувачами') }}</a>
                             </li>
                         @else
                             <li class="sidebar_title-inner">
