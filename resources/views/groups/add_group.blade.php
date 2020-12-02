@@ -209,27 +209,26 @@
                     @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
                 @endif --}}
 
-            <div class="groups-control_edit-block">
+            <div class="groups-control_edit-block mer-mw mer-pl-5">
                 <h1 class='groups-head__title'>Додати групу</h1>
                 <div class="groups-edit">
                     <form action="{{ route('add_group_apply') }}" id="group_add_form" method="POST">
-                            @csrf
+                        @csrf
                         <!-- <div class="groups-edit__teacher-block">
                             <p class="groups-edit__current-teacher eg-text-style">Поточний викладач: &nbsp;</p>
                             <p class="groups-edit__teachers-name"> Іванов Іван Іванович</p>
                         </div> -->
-                        <div class="groups-edit__group">
+                        <div class="groups-edit__group mw-100">
                             <p class="groups-edit__group-name eg-text-style">Назва групи</p>
                             <input class='eg-input' type="text" name="name" id="getCourseName"
                                 placeholder="Повна назва групи">
                         </div>
-                        <div class="groups-edit__group">
+                        <div class="groups-edit__group mw-100">
                             <p class="groups-edit__group-name eg-text-style">Додати студента</p>
                             <div class="groups-edit__student-add-form">
                                 <input class='eg-input add-style' type="text" id="student" name="student" id="getCourseName"
                                     placeholder="Введіть ім'я студента">
-
-                                <a class="add-student" id="addstudent">Додати</a>
+                                <a class="add-student mer-w20" id="addstudent">Додати</a>
                                 <div id="studentList">
                                 </div>
                             </div>
@@ -237,22 +236,16 @@
                         <!-- <div id="studentsAdd" class="form-group">
                             <label>Список студентов</label><br>
                         </div> -->
-                        <div class="groups-edit__students-list">
+                        <div class="groups-edit__students-list mw-100">
                             <p class="groups-edit__group-name eg-text-style">Список студентів:</p>
-                            <div class="groups-edit__student-col col" id="studentsAdd">
-
-                            </div>
-                            <div class="groups-edit__student-col col">
-
-                            </div>
-                            <div class="groups-edit__student-col col">
-
-                            </div>
+                            <div class="groups-edit__student-col col" id="studentsAdd1"></div>
+                            <div class="groups-edit__student-col col" id="studentsAdd2"></div>
+                            <div class="groups-edit__student-col col" id="studentsAdd3"></div>
                         </div>
-                        <div class="groups-edit__add-teacher-block">
+                        <div class="groups-edit__add-teacher-block mw-100">
                             <p class="groups-edit__current-teacher eg-text-style">Додати викладача</p>
                             <div class="select">
-                                <select class="select-teacher" name="teacher_id" id="selectTeacher">
+                                <select class="select-teacher mw-100" name="teacher_id" id="selectTeacher">
                                     <option>Нет</option>
                                     @foreach($teachers_list as $teacher)
                                         <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
@@ -260,22 +253,15 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="groups-edit__buttons-block">
-                            <button type="submit" class="groups-edit__create-group" id="createGroup">Створити </button>
-                            <button class="groups-edit__back-to-groups" id="backToGroups">Назад </button>
-
+                        <div class="groups-edit__buttons-block mw-100">
+                            <button type="submit" class="groups-edit__create-group" id="createGroup">Створити</button>
+                            <button class="groups-edit__back-to-groups" id="backToGroups">Назад</button>
                         </div>
                     </form>
                 </div>
             </div>
-
-
         </div>
-
-
     </section>
-
-
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="assets/js/slick.min.js"></script>
@@ -285,10 +271,7 @@
     <script src="assets/js/main.js"></script>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script>
 
-
-    </script>
     <script>
 
         /* Создаем аррей с студентами */
@@ -321,16 +304,18 @@
         });
 
         $('#addstudent').click(function() {
+            var col_id;
             /* Берем имя текущего студента */
             var curr_stud = $('#student').val();
-            console.log(curr_stud);
-            console.log(students_array);
+            // console.log(curr_stud);
+            // console.log(students_array);
             curr_stud = curr_stud.replace(/\s+/g, ' ').trim();
             /*Валидация на пустое значение или пустую строку*/
             if(curr_stud.replace(/\s/g,"") == ""){
                 alert("Введіть студента правильно!");
             }else{
                 /*НУЖНА проверка на соответсвие студента с БД!*/
+
 
 
                 /* Если студент есть в аррее */
@@ -342,13 +327,24 @@
                     //$('#studentsAdd').append( "<button class='btn btn-success m-1' disabled>"+ curr_stud + "</button>" );
                     $('#studentsAdd').append( "<input type='hidden' name='student_name[]' value='" + curr_stud +"'>" ); */
 
+                    /*Проверка столбца для ввода*/
+                    if(count_t <= 11){
+                        col_id = 1;
+                    }else if(count_t > 11 && count_t <= 22){
+                        col_id = 2;
+                    }else if(count_t > 22 && count_t <= 33){
+                        col_id = 3;
+                    }else{
+                        alert("Максимум студентів у группі!");
+                    }
+
                     /* Общий */
-                    $('#studentsAdd').append("\
-                    <div id='name"+count_t+"'>\
-                        <div class='groups-edit__student-row'>\
-                            <p class='student-number'>" + count_t + ". &nbsp;</p>\
-                            <p class='groups-edit__student'>" + curr_stud + "</p>\
-                            <a class='delete-student' href='' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a>\
+                    $('#studentsAdd'+col_id).append("\
+                    <div class='w-100' id='name"+count_t+"'>\
+                        <div class='groups-edit__student-row mw-100 "+cust_even(count_t)+"'>\
+                            <p class='student-number student-number-mer'>" + count_t + ". &nbsp;</p>\
+                            <p class='groups-edit__student groups-edit__student-mer'>" + curr_stud + "</p>\
+                            <a class='delete-student delete-student-mer' href='' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a>\
                         </div>\
                         <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
                             <div class='modal-dialog  modal-dialog_restyle'>\
@@ -378,6 +374,15 @@
                 }
             }
         });
+
+        /*Проверка на четный нечетный*/
+        function cust_even(count_t){
+            if (count_t % 2 == 0)
+                return '';
+            if (count_t % 2 == 1)
+                return 'bgc-mer';
+        }
+
         function removeStud(curr_stud) {
             students_array.splice( $.inArray(curr_stud,students_array) ,1 );
             var div_name = "#name" + curr_stud;
