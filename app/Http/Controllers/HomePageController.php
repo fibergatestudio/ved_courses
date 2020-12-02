@@ -121,22 +121,31 @@ class HomePageController extends Controller
 
             // Вопросы теста
             $testQuestions = DB::table('tests_questions')->where('test_id', $testInfo->id)->get();
-
+            $testMultiplyIDS = [];
+            $testTrueFalseIDS = [];
+            $testDragDropIDS = [];
             foreach($testQuestions as $testQuest){
                 if($testQuest->question_type == "Множинний вибір"){
-                    $testMultiply = DB::table('tests_multiple_choice')->where('id', $testQuest->test_answers_id)->get();
+                    //$testMultiplyOne = DB::table('tests_multiple_choice')->where('id', $testQuest->test_answers_id)->first();
+                    array_push($testMultiplyIDS, $testQuest->test_answers_id);
                     //dd($testMultiply);
-                }
+                } else { $testMultiplyOne = ""; }
                 if($testQuest->question_type == "Правильно/неправильно"){
-                    $testTrueFalse = DB::table('tests_true_false')->where('id', $testQuest->test_answers_id)->get();
+                    //$testTrueFalseOne = DB::table('tests_true_false')->where('id', $testQuest->test_answers_id)->get();
+                    array_push($testTrueFalseIDS, $testQuest->test_answers_id);
                     //dd($testTrueFalse);
-                }
+                } else { $testTrueFalseOne = ""; }
                 if($testQuest->question_type == "Перетягування в тексті"){
-                    $testDragDrop = DB::table('tests_drag_drop')->where('id', $testQuest->test_answers_id)->get();
+                    //$testDragDropOne = DB::table('tests_drag_drop')->where('id', $testQuest->test_answers_id)->get();//
+                    array_push($testDragDropIDS, $testQuest->test_answers_id);
                     //dd($testDragDrop);
-                }
+                } else { $testDragDropOne = ""; }
 
             }
+            $testMultiply = DB::table('tests_multiple_choice')->whereIn('id', $testMultiplyIDS)->get();
+            $testTrueFalse = DB::table('tests_true_false')->whereIn('id', $testTrueFalseIDS)->get();
+            $testDragDrop = DB::table('tests_drag_drop')->whereIn('id', $testDragDropIDS)->get();
+            //dd($testMultiply);
             //dd($testQuestions);
         //dd($testInfo);
 
@@ -159,7 +168,7 @@ class HomePageController extends Controller
             }
             break;
         case 'test':
-            return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson', 'testInfo', 'testDragDrop'));
+            return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson', 'testInfo', 'testDragDrop', 'testMultiply', 'testTrueFalse'));
             break;
         default:
             return view('front.strings', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));;
