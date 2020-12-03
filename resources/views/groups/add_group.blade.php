@@ -248,7 +248,7 @@
                                 <select class="select-teacher mw-100" name="teacher_id" id="selectTeacher">
                                     <option>Нет</option>
                                     @foreach($teachers_list as $teacher)
-                                        <option value="{{ $teacher->id }}">{{ $teacher->name }}</option>
+                                        <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
                                     @endforeach
                                 </select>
                             </div>
@@ -277,9 +277,11 @@
         /* Создаем аррей с студентами */
         var students_array = new Array();
         var count_t = 1;
+        var col_id = 1;
 
         $('#student').keyup(function(){
-            var query = $(this).val();
+            /*Запрет на ввод английских букв и цифр*/
+            var query = $(this).val($(this).val().replace(/[A-Za-z]|[0-9]/g, ''));
             if(query != ''){
                /* var product_id = 15;
                 var url = '{{ route("autocomplete.fetch", ":id") }}';
@@ -304,15 +306,13 @@
         });
 
         $('#addstudent').click(function() {
-            var col_id;
-            /* Берем имя текущего студента */
-            var curr_stud = $('#student').val();
+            /* Берем имя текущего студента и убираем лишние пробелы и цифры*/
+            var curr_stud = $('#student').val().replace(/\s+/g, ' ').trim().replace(/[0-9]/g,"");
             // console.log(curr_stud);
             // console.log(students_array);
-            curr_stud = curr_stud.replace(/\s+/g, ' ').trim();
             /*Валидация на пустое значение или пустую строку*/
-            if(curr_stud.replace(/\s/g,"") == ""){
-                alert("Введіть студента правильно!");
+            if(curr_stud.replace(/\s|[0-9]/g,"") == ""){
+                alert("Неприпустимий формат строки! Будь ласка додайте мінімум одного студента!");
             }else{
                 /*НУЖНА проверка на соответсвие студента с БД!*/
 
@@ -321,22 +321,11 @@
                 /* Если студент есть в аррее */
                 if(jQuery.inArray(curr_stud, students_array) != -1 ){
                     alert("Студент "+ curr_stud + " Вже доданий!");
-                } else {
+                }else{
                     /* $('#studentsAdd').append("<div class='groups-edit__student-row'><p class='student-number'>" + count_t + ". &nbsp;</p><p class='groups-edit__student'>" + curr_stud + "</p><a class='delete-student' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a></div>");
                     $('#studentsAdd').append("<div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'><div class='modal-dialog  modal-dialog_restyle'><div class='modal-content'><div class='deleteMenu-wrapper'><div class='deleteMenu-topImg'><img src='/img/basket.png' alt='icon'></div><div class='deleteMenu-text'>Ви дійсно бажаєте видалити <br> студента "+curr_stud+"зі списку?</div><div class='deleteMenu-btn'><a class='flexTable-btn_delete' id='removeStudent' href='##' onclick='removeStud("+count_t+")'><span>Видалити</span></a></div></div></ul></div></div></div>");
                     //$('#studentsAdd').append( "<button class='btn btn-success m-1' disabled>"+ curr_stud + "</button>" );
                     $('#studentsAdd').append( "<input type='hidden' name='student_name[]' value='" + curr_stud +"'>" ); */
-
-                    /*Проверка столбца для ввода*/
-                    if(count_t <= 11){
-                        col_id = 1;
-                    }else if(count_t > 11 && count_t <= 22){
-                        col_id = 2;
-                    }else if(count_t > 22 && count_t <= 33){
-                        col_id = 3;
-                    }else{
-                        alert("Максимум студентів у группі!");
-                    }
 
                     /* Общий */
                     $('#studentsAdd'+col_id).append("\
@@ -371,6 +360,16 @@
                     /* Добавляем текущего студента в аррей */
                     count_t++;
                     students_array.push(curr_stud);
+
+                    alert($this);
+                    /*Проверка столбца для ввода*/
+                    if(col_id == 1){
+                        col_id = 2;
+                    }else if(col_id == 2){
+                        col_id = 3;
+                    }else if(col_id == 3){
+                        col_id = 1;
+                    }
                 }
             }
         });

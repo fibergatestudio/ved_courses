@@ -100,8 +100,9 @@
                                 </a>
                                 @if($user->role != 'admin')
                                     <a class="flexTable-btn_delete ug__btn-delete" href="##" data-toggle="modal"
-                                        data-target="#deleteModalm{{ $user->id }}"><span>Видалити</span></a>
-                                    @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModalm'])
+                                        data-target="#deleteModalm{{ $user->id }}"><span>Видалити</span>
+                                    </a>
+                                    @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModalm', 'secondId' => $user->id, 'modalPath' => route('user_delete', ['user_id' =>  $user->id ]) ])
                                 @endif
                             </div>
                         </div>
