@@ -1246,7 +1246,8 @@ element.style {
     text-transform: uppercase;
     color: #fff;
     font-size: 31px;
-    line-height: 1.3125em
+    line-height: 1.3125em;
+    text-align: center;
 }
 
 .direction-separator_badge,
