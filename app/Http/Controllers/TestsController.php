@@ -308,24 +308,22 @@ class TestsController extends Controller
         //dd($request->all());
 
         $answers_counter = $request->answers_counter;
+        $answers_counter = $answers_counter - 1;
         //dd($answers_counter);
         $answers_arr = [];
-        for($i = 1; $i <= $answers_counter; $i++){
+        $arr_answ = [];
+        for($i = 0; $i <= $answers_counter; $i++){
             $answer = "answer" . $i;
 
             $answer_text =  $request->$answer;
-            // $arr_ = [
-            //     'grade' => $request->$grade,
-            //     'review' => strip_tags ($request->$comment),
-            // ];
 
-            //dd($c);
-            array_push($answers_arr, $answer_text);
+            array_push($arr_answ, $answer_text);
         }
 
         $r_answer_arr = [
             'right_answer' => $request->right_answer,
         ];
+        $answers_arr['answers'] = $arr_answ;
         $answers_arr['right_answer'] = $request->right_answer;
         //dd($answers_arr);
 

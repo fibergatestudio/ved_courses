@@ -325,6 +325,12 @@ class CoursesController extends Controller
             if($filename_doc == null){ $docs_arr = null; } else { array_push($docs_arr, $filename_doc); }
             //array_push($docs_arr, $filename);
         }
+        // show prot
+        if($request->show_protocol){
+            $protocol = $request->show_protocol;
+        } else {
+            $protocol = false;
+        }
 
         // Инсерт в базу
         $courses_program_id = DB::table('courses_program')->insertGetId([
@@ -332,7 +338,7 @@ class CoursesController extends Controller
             'course_name' => $request->course_name,
             'course_description' => $request->course_description,
             'learning_time' => $request->learning_time,
-            'show_protocol' => $request->show_protocol,
+            'show_protocol' => $protocol,
             'course_protocol_descr' => $request->course_protocol_descr,
             'learning_protocol_time' => $request->learning_protocol_time,
             'add_document' => json_encode($docs_arr),

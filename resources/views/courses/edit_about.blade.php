@@ -211,7 +211,11 @@
                                     </div>
                                 </div>
                                 <div class="courseAdd-inner_right">
-                                        <textarea class="tinyMCE-area" id="question_text" name="course_description">{!! $course_i->course_description!!}</textarea>
+                                        <textarea class="tinyMCE-area" id="question_text" name="course_description">
+                                            @if(isset($course_i->course_description))
+                                                {!! $course_i->course_description !!}
+                                            @endif
+                                        </textarea>
                                 </div>
                             </div>
 

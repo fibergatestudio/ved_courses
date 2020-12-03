@@ -145,6 +145,8 @@ class HomePageController extends Controller
             $testMultiply = DB::table('tests_multiple_choice')->whereIn('id', $testMultiplyIDS)->get();
             $testTrueFalse = DB::table('tests_true_false')->whereIn('id', $testTrueFalseIDS)->get();
             $testDragDrop = DB::table('tests_drag_drop')->whereIn('id', $testDragDropIDS)->get();
+
+            //dd($testDragDrop);
             //dd($testMultiply);
             //dd($testQuestions);
         //dd($testInfo);
