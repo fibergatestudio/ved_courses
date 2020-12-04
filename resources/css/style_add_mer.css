@@ -77,3 +77,20 @@
     border: none;
 	border-radius: 9px;
 }
+.ccec__string-inner-mer{
+	text-align: left;
+	font-family: SegoeUI, sans-serif;
+    font-weight: 400;
+	font-size: 12px;
+	line-height: 16px;
+}
+.ccec__string-inner-mer{
+	font-family: SegoeUI, sans-serif;
+    font-weight: 400;
+	font-size: 12px;
+	line-height: 16px;
+}
+.mer-pl15-pr30{
+    padding-left: 15px !important;
+    padding-right: 30px !important;
+}
