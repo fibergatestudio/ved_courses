@@ -47,7 +47,7 @@
                     </div>
                     @foreach($students as $student)
                         <div class="sc-string">
-                            <div class="sc-string_inner">{{ $student->user_id }}.</div>
+                            <div class="sc-string_inner">{{ $loop->iteration }}.</div>
                             <div class="sc-string_inner">
                                 @if(empty($student->full_name))
                                     Пусто

@@ -216,7 +216,7 @@
 
                     <div class="groups-content">
                         <div class="groups-row groups-row_style">
-                            <div class="groups__elem groups__elem_style">{{ $group->id }}.</div>
+                            <div class="groups__elem groups__elem_style">{{ $loop->iteration }}.</div>
                             <div class="groups__elem groups__elem_style">{{ $group->name }}</div>
                             <div class="groups__elem groups__elem_style">
                                 <a class="flexTable-btn_edit groups-btn-edit-restyle elem-bgc-white" href="##"
@@ -230,7 +230,10 @@
                                                     <div class="deleteMenu-text">
                                                         <h3 class="modal-students-title">ПІБ Студентів групи {{ $group->name }}</h3>
                                                         @foreach($group->students_array as $student)
-                                                        <div class="groups__elem student-data"><span>1. &nbsp;</span>{{ $student->full_name }}</div>
+                                                            <div class="groups__elem student-data">
+                                                                <span>{{ $loop->iteration }}. &nbsp;</span>
+                                                                {{ $student->full_name }}
+                                                            </div>
                                                         @endforeach
                                                     </div>
                                                 </div>

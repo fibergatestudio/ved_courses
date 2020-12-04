@@ -11671,6 +11671,15 @@ p.program_wwl-protocol{
 .w-wrap{
     word-break: break-all;
 }
+.w-15{
+    width: 15% !important;
+}
+.w-85{
+    width: 85% !important;
+}
+.mw-30{
+    max-width: 30%;
+}
 .mer-w20{
     width: 20% !important;
     max-width: 20% !important;
@@ -11707,6 +11716,30 @@ p.program_wwl-protocol{
         max-width: 580px !important;
     }
 }
+.mer-pl-5{
+    padding-left: 5% !important;
+}
 .bg-curent-menu{
     background-color: #8a4f9f !important;
+}
+.student-number-mer{
+    width: 0% !important;
+    padding-right: 35px;
+    position: relative;
+    left: 5px;
+}
+.groups-edit__student-mer{
+    width: 100%;
+    word-break: break-all;
+}
+.delete-student-mer{
+    width: 0% !important;
+    padding-left: 15px;
+    position: relative;
+    right: 11px;
+}
+.bgc-mer{
+    background-color: #f2e9f5;
+    border: none;
+	border-radius: 9px;
 }
