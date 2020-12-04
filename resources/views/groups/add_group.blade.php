@@ -325,58 +325,70 @@
             var curr_stud = $('#student').val();
             console.log(curr_stud);
             console.log(students_array);
-            curr_stud = curr_stud.replace(/\s+/g, ' ').trim();
-            /*Валидация на пустое значение или пустую строку*/
-            if(curr_stud.replace(/\s/g,"") == ""){
-                alert("Введіть студента правильно!");
-            }else{
-                /*НУЖНА проверка на соответсвие студента с БД!*/
+
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+             /* url:"{{ route('autocomplete.fetch') }}", */
+                url:"{{ route('autocomplete.fetch.check') }}" + "/?student=" + curr_stud,
+                method:"POST",
+                data:{_token:_token},
+                success:function(data){
+                    console.log(data);
+                    if(data == "Нет студента"){
+                        alert('Студент не найден, пожалуйста выберите студента из выпадающего списка!')
+                    } else {
+                        curr_stud = curr_stud.replace(/\s+/g, ' ').trim();
+                        /*Валидация на пустое значение или пустую строку*/
+                        if(curr_stud.replace(/\s/g,"") == ""){
+                            alert("Введіть студента правильно!");
+                        }else{
+                            /*НУЖНА проверка на соответсвие студента с БД!*/
 
 
-                /* Если студент есть в аррее */
-                if(jQuery.inArray(curr_stud, students_array) != -1 ){
-                    alert("Студент "+ curr_stud + " Вже доданий!");
-                } else {
-                    /* $('#studentsAdd').append("<div class='groups-edit__student-row'><p class='student-number'>" + count_t + ". &nbsp;</p><p class='groups-edit__student'>" + curr_stud + "</p><a class='delete-student' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a></div>");
-                    $('#studentsAdd').append("<div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'><div class='modal-dialog  modal-dialog_restyle'><div class='modal-content'><div class='deleteMenu-wrapper'><div class='deleteMenu-topImg'><img src='/img/basket.png' alt='icon'></div><div class='deleteMenu-text'>Ви дійсно бажаєте видалити <br> студента "+curr_stud+"зі списку?</div><div class='deleteMenu-btn'><a class='flexTable-btn_delete' id='removeStudent' href='##' onclick='removeStud("+count_t+")'><span>Видалити</span></a></div></div></ul></div></div></div>");
-                    //$('#studentsAdd').append( "<button class='btn btn-success m-1' disabled>"+ curr_stud + "</button>" );
-                    $('#studentsAdd').append( "<input type='hidden' name='student_name[]' value='" + curr_stud +"'>" ); */
+                            /* Если студент есть в аррее */
+                            if(jQuery.inArray(curr_stud, students_array) != -1 ){
+                                alert("Студент "+ curr_stud + " Вже доданий!");
+                            } else {
 
-                    /* Общий */
-                    $('#studentsAdd').append("\
-                    <div id='name"+count_t+"'>\
-                        <div class='groups-edit__student-row'>\
-                            <p class='student-number'>" + count_t + ". &nbsp;</p>\
-                            <p class='groups-edit__student'>" + curr_stud + "</p>\
-                            <a class='delete-student' href='' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a>\
-                        </div>\
-                        <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
-                            <div class='modal-dialog  modal-dialog_restyle'>\
-                                <div class='modal-content'>\
-                                    <div class='deleteMenu-wrapper'>\
-                                        <div class='deleteMenu-topImg'>\
-                                            <img src='/img/basket.png' alt='icon'>\
-                                        </div>\
-                                        <div class='deleteMenu-text'>\
-                                            Ви дійсно бажаєте видалити <br> студента "+curr_stud+"зі списку?\
-                                        </div>\
-                                        <div class='deleteMenu-btn'>\
-                                            <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_t+")'>\
-                                                <span>Видалити</span>\
-                                            </a>\
+                                /* Общий */
+                                $('#studentsAdd').append("\
+                                <div id='name"+count_t+"'>\
+                                    <div class='groups-edit__student-row'>\
+                                        <p class='student-number'>" + count_t + ". &nbsp;</p>\
+                                        <p class='groups-edit__student'>" + curr_stud + "</p>\
+                                        <a class='delete-student' href='' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a>\
+                                    </div>\
+                                    <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
+                                        <div class='modal-dialog  modal-dialog_restyle'>\
+                                            <div class='modal-content'>\
+                                                <div class='deleteMenu-wrapper'>\
+                                                    <div class='deleteMenu-topImg'>\
+                                                        <img src='/img/basket.png' alt='icon'>\
+                                                    </div>\
+                                                    <div class='deleteMenu-text'>\
+                                                        Ви дійсно бажаєте видалити <br> студента "+curr_stud+"зі списку?\
+                                                    </div>\
+                                                    <div class='deleteMenu-btn'>\
+                                                        <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_t+")'>\
+                                                            <span>Видалити</span>\
+                                                        </a>\
+                                                    </div>\
+                                                </div>\
+                                            </div>\
                                         </div>\
                                     </div>\
+                                    <input type='hidden' name='student_name[]' value='" + curr_stud +"'>\
                                 </div>\
-                            </div>\
-                        </div>\
-                        <input type='hidden' name='student_name[]' value='" + curr_stud +"'>\
-                    </div>\
-                    ");
-                    /* Добавляем текущего студента в аррей */
-                    count_t++;
-                    students_array.push(curr_stud);
+                                ");
+                                /* Добавляем текущего студента в аррей */
+                                count_t++;
+                                students_array.push(curr_stud);
+                            }
+                        }
+                    }
                 }
-            }
+            });
+
         });
         function removeStud(curr_stud) {
             students_array.splice( $.inArray(curr_stud,students_array) ,1 );

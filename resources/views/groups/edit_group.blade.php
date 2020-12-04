@@ -252,21 +252,21 @@
                                     class="ccec-header_style">Поточний викладач:
                                     &nbsp;</span><span class="ccec-header_style" id="currentTeacher">{{ $group_info->assigned_teacher_name }}</span>
                             </p>
-                            <p class="groups-edit__current-teacher eg-text-style"><span class="ccec-header_style">Назва
+                            <!--<p class="groups-edit__current-teacher eg-text-style"><span class="ccec-header_style">Назва
                                     курсу :
                                     &nbsp;</span><span class="ccec-header_style" id="courseNamer">Довга назва курсу
                                     вивчення Lorem ipsum dolor sit, amet consectetur adipisicing elit. Totam explicabo,
                                     error nesciunt fugiat iusto consequuntur incidunt exercitationem distinctio assumenda
                                     ullam, debitis molestiae fugit beatae nostrum eius quaerat iure. Odio, quibusdam?</span>
-                            </p>
+                            </p> -->
                         </div>
                         <div class="groups-edit__group ccec__add-student-block_style inputs-row">
                             <p class="groups-edit__group-name eg-text-style ge__m-input-header">Назва групи</p>
                             <div class="groups-edit__student-add-form ">
                                 <input class='eg-input add-style ccec__input' type="text" name="name" value="{{ $group_info->name }}"
                                     id="getCourseName" placeholder="Повна назва групи">
-                                <button class="add-student ccec__button ge__m-button" id="changeGroupName"
-                                    data-toggle="modal" data-target="#changeGroupName">Зберегти</button>
+                                <a class="add-student ccec__button ge__m-button" id="changeGroupName"
+                                    data-toggle="modal" data-target="#changeGroupName">Зберегти</a>
                             </div>
                             <p class="groups-edit__group-name eg-text-style ge__input-subtext">Назву курсу редагується при
                                 гострій
@@ -307,12 +307,12 @@
                                     <div class="ccec__string-inner">1.</div>
                                     <div class="ccec__string-inner">{{ $student->full_name }} </div>
                                     <div class="ccec__string-inner">2</div>
-                                    <div class="ccec__string-inner">+38 (097) 123 - 45 - 67</div>
+                                    <div class="ccec__string-inner">{{ $student->student_phone_number }}</div>
                                     <div class="ccec__string-inner ccec__string-inner_cust-style">
-                                        admin@mail.com
+                                        {{ $student->email }}
                                     </div>
                                     <div class="ccec__string-inner ccec__string-inner_cust-style">12345678910111213</div>
-                                    <div class="ccec__string-inner">@if(isset($student->teacher_fio)) {{ $student->teacher_fio }} @else Нет@endif</div>
+                                    <div class="ccec__string-inner">@if(isset($student->teacher_fio)) {{ $student->teacher_fio }} @else Нет @endif</div>
                                     <div class="ccec__string-inner">
                                         <a class="flexTable-btn_delete ccec__delete-btn" href="##" data-toggle="modal"
                                             data-target="#deleteModal"><span>Видалити</span>
@@ -441,9 +441,9 @@
             method:"POST",
             data:{query:query, _token:_token},
             success:function(data){
-            $('#studentList').fadeIn();
-                $('#studentList').html(data);
-            }
+                $('#studentList').fadeIn();
+                    $('#studentList').html(data);
+                }
             });
             }
         });
@@ -469,19 +469,35 @@
             /* Берем имя текущего студента */
             var curr_stud = $('#student').val();
             var s_count = 1;
-            console.log(curr_stud);
-            console.log(students_array);
-            /* Если студент есть в аррее */
-            if(jQuery.inArray(curr_stud, students_array) != -1 ){
-                alert("Студент "+ curr_stud + " Уже добавлен!");
-            } else {
-                $('#studentsAdd').append( "<div class='sc-string ccec__row'><div class='ccec__string-inner'>"+s_count+".</div><div class='ccec__string-inner'>"+curr_stud+"</div><div class='ccec__string-inner'>2</div><div class='ccec__string-inner'>+38 (097) 123 - 45 - 67</div><div class='ccec__string-inner ccec__string-inner_cust-style'>admin@mail.com</div><div class='ccec__string-inner ccec__string-inner_cust-style'>12345678910111213</div><div class='ccec__string-inner'>" + curr_stud +"</div><div class='ccec__string-inner'><a class='flexTable-btn_delete ccec__delete-btn' href='##' data-toggle='modal' data-target='#deleteModal'><span>Видалити</span></a></div></div>" );
-                //$('#studentsAdd').append( "<button class='btn btn-success m-1' disabled>"+ curr_stud + "</button>" );
-                $('#studentsAdd').append( "<input type='hidden' name='student_name[]' value='" + curr_stud +"'>" );
-                /* Добавляем текущего студента в аррей */
-                s_count++;
-                students_array.push(curr_stud);
-            }
+            
+           /* Проверка на существующего студента в базе */
+            var _token = $('input[name="_token"]').val();
+            $.ajax({
+             /* url:"{{ route('autocomplete.fetch') }}", */
+                url:"{{ route('autocomplete.fetch.check') }}" + "/?student=" + curr_stud,
+                method:"POST",
+                data:{_token:_token},
+                success:function(data){
+                    console.log(data);
+                    if(data == "Нет студента"){
+                        alert('Студент не найден, пожалуйста выберите студента из выпадающего списка!')
+                    } else {
+                        /* Если студент есть в аррее */
+                        if(jQuery.inArray(curr_stud, students_array) != -1 ){
+                            alert("Студент "+ curr_stud + " Уже добавлен!");
+                        } else {
+                            $('#studentsAdd').append( "<div class='sc-string ccec__row'><div class='ccec__string-inner'>"+s_count+".</div><div class='ccec__string-inner'>"+curr_stud+"</div><div class='ccec__string-inner'>2</div><div class='ccec__string-inner'>+38 (097) 123 - 45 - 67</div><div class='ccec__string-inner ccec__string-inner_cust-style'>admin@mail.com</div><div class='ccec__string-inner ccec__string-inner_cust-style'>12345678910111213</div><div class='ccec__string-inner'>" + curr_stud +"</div><div class='ccec__string-inner'><a class='flexTable-btn_delete ccec__delete-btn' href='##' data-toggle='modal' data-target='#deleteModal'><span>Видалити</span></a></div></div>" );
+                            //$('#studentsAdd').append( "<button class='btn btn-success m-1' disabled>"+ curr_stud + "</button>" );
+                            $('#studentsAdd').append( "<input type='hidden' name='student_name[]' value='" + curr_stud +"'>" );
+                            /* Добавляем текущего студента в аррей */
+                            s_count++;
+                            students_array.push(curr_stud);
+                        }
+                    }
+                }
+            });
+
+
 
         });
 

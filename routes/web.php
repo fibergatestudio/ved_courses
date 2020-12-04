@@ -83,6 +83,8 @@ use Illuminate\Support\Facades\Auth;
         Route::get('groups/add_group', 'GroupsController@add_group')->name('add_group')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
             // Автокомплит студентов
             Route::get('/autocomplete/fetch', 'GroupsController@fetch')->name('autocomplete.fetch')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
+            // Аджакс проверка
+            Route::get('/autocomplete/fetchСheck', 'GroupsController@fetchCheck')->name('autocomplete.fetch.check')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
             // Применить добавление группы
             Route::post('groups/add_group/apply', 'GroupsController@add_group_apply')->name('add_group_apply')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
 

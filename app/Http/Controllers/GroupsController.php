@@ -88,6 +88,10 @@ class GroupsController extends Controller
         $students_array = array();
         foreach($students_ids as $student_id){
             $student = DB::table('students')->where('user_id', $student_id)->first();
+            // Имейл студента
+            $stud_email = DB::table('users')->where('id', $student_id)->first();
+            $student->email = $stud_email->email;
+
             $assigned_teacher = DB::table('users')->where('id', $student->assigned_teacher_id)->first();
             if($assigned_teacher){
                 $student->teacher_fio = $assigned_teacher->surname . " " . $assigned_teacher->surname . " " . $assigned_teacher->patronymic;
@@ -106,7 +110,7 @@ class GroupsController extends Controller
 
         $post_info = $request->all();
 
-        dd($post_info);
+        //dd($post_info);
 
         // Создаем аррей студентов
         $students_array = array();
@@ -154,13 +158,7 @@ class GroupsController extends Controller
         //$arr = [];
         $test = $request->students;
         $arr = explode(',', $test);
-        if($test != NULL){
-            //$arr[] = $test;
-            //array_push($arr, $test);
-        }
-        
-        //var_dump($arr);
-        //echo $test; 
+        if($test != NULL){ }
 
         if($request->get('query'))
         {
@@ -187,5 +185,20 @@ class GroupsController extends Controller
             $output .= '</ul>';
             echo $output;
         }
+    }
+
+    public function fetchCheck(Request $request){
+
+        $input_stud = $request->student;
+
+        $data = DB::table('students')
+        ->where('full_name', $input_stud)
+        ->first();
+        if($data){
+            return "Есть студента";
+        } else {
+            return "Нет студента";
+        }
+
     }
 }
