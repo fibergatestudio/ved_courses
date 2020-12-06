@@ -48,7 +48,7 @@
                             <p class="groups-edit__group-name eg-text-style">Додати студента</p>
                             <div class="groups-edit__student-add-form">
                                 <input class='eg-input add-style' type="text" id="student" name="student" id="getCourseName"
-                                    placeholder="Введіть ім'я студента">
+                                    placeholder="Введіть ім'я студента" autocomplete="off">
                                 <a class="add-student mer-w20" id="addstudent">Додати</a>
                                 <div id="studentList">
                                 </div>
@@ -56,9 +56,10 @@
                         </div>
                         <div class="groups-edit__students-list mw-100">
                             <p class="groups-edit__group-name eg-text-style">Список студентів:</p>
-                            <div class="groups-edit__student-col col" id="studentsAdd1"></div>
-                            <div class="groups-edit__student-col col" id="studentsAdd2"></div>
-                            <div class="groups-edit__student-col col" id="studentsAdd3"></div>
+                            <div class="col mer-studlist" id="studentsAdd1"></div>
+                            <div class="col mer-studlist" id="studentsAdd2"></div>
+                            <div class="col mer-studlist" id="studentsAdd3"></div>
+                            <div class="col mer-studlist-m" id="studentsAdd"></div>
                         </div>
                         <div class="groups-edit__add-teacher-block mw-100">
                             <p class="groups-edit__current-teacher eg-text-style">Додати викладача</p>
@@ -128,10 +129,10 @@
             var _token = $('input[name="_token"]').val();
             $.ajax({
                 url:"{{ route('autocomplete.fetch.check') }}" + "/?student=" + curr_stud,
-                method:"GET",
-                data:{query:query, _token:_token},
+                method:"POST",
+                data:{_token:_token},
                 success:function(data){
-                    console.log(data);
+                    // console.log(data);
                     if(data == "Нет студента"){
                         alert('Студент не найден, пожалуйста выберите студента из выпадающего списка!')
                     } else {
@@ -140,7 +141,7 @@
                             alert("Студент "+ curr_stud + " Вже доданий!");
                         } else {
                             /* Общий */
-                            $('#studentsAdd'+col_id).append("\
+                            $('#studentsAdd'+col_id+', #studentsAdd').append("\
                                 <div class='w-100' id='name"+count_t+"'>\
                                     <div class='groups-edit__student-row mw-100 "+cust_even(count_t)+"'>\
                                         <p class='student-number student-number-mer'>"+count_t+". &nbsp;</p>\
@@ -166,8 +167,10 @@
                                             </div>\
                                         </div>\
                                     </div>\
-                                    <input type='hidden' name='student_name[]' value='" + curr_stud +"'>\
                                 </div>\
+                            ");
+                            $('#studentsAdd'+col_id).append("\
+                            <input type='hidden' name='student_name[]' value='" + curr_stud +"'>\
                             ");
                             /* Добавляем текущего студента в аррей */
                             count_t++;
@@ -204,6 +207,7 @@
             console.log(students_array);
             console.log("RemoveStud " + curr_stud);
         }
+
         $('#createGroup').click(function(e){
             e.preventDefault();
 
@@ -213,6 +217,7 @@
                 $('#group_add_form').submit();
             }
         });
+
         $('#backToGroups').click(function(e){
             e.preventDefault();
             window.location.href = "/groups";

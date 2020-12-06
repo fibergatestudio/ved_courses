@@ -45,7 +45,12 @@
                             @if($user->role != 'admin')
                                 <a class="flexTable-btn_delete ug__btn-delete" href="##" data-toggle="modal"
                                     data-target="#deleteModal{{ $user->id }}"><span>Видалити</span></a>
-                                @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModal', 'secondId' => $user->id, 'modalPath' => route('user_delete', ['user_id' =>  $user->id ]) ])
+                                @include('layouts.front.includes.modals.delete_user', [
+                                    'modalId' => 'deleteModal',
+                                    'secondId' => $user->id,
+                                    'modalPath' => route('user_delete', ['user_id' =>  $user->id ]),
+                                    'target' => $user->name
+                                ])
                             @endif
                         </div>
                     </div>
@@ -102,7 +107,12 @@
                                     <a class="flexTable-btn_delete ug__btn-delete" href="##" data-toggle="modal"
                                         data-target="#deleteModalm{{ $user->id }}"><span>Видалити</span>
                                     </a>
-                                    @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModalm', 'secondId' => $user->id, 'modalPath' => route('user_delete', ['user_id' =>  $user->id ]) ])
+                                    @include('layouts.front.includes.modals.delete_user', [
+                                        'modalId' => 'deleteModalm',
+                                        'secondId' => $user->id,
+                                        'modalPath' => route('user_delete', ['user_id' =>  $user->id ]),
+                                        'target' => $user->name
+                                    ])
                                 @endif
                             </div>
                         </div>

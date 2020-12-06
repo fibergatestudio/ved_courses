@@ -56,8 +56,9 @@
                             <div class="groups-edit__student-add-form ">
                                 <input class='eg-input add-style ccec__input' type="text" name="name" value="{{ $group_info->name }}"
                                     id="getCourseName" placeholder="Повна назва групи">
-                                <button class="add-student ccec__button ge__m-button" id="changeGroupName"
-                                    data-toggle="modal" data-target="#changeGroupName">Зберегти</button>
+                                <a class="add-student ccec__button ge__m-button" href="##" id="changeGroupName"
+                                    data-toggle="modal" data-target="#changeGroupNameM">Зберегти</a>
+                                @include('layouts.front.includes.modals.change_group_name', ['modalPath' => ''])
                             </div>
                             <p class="groups-edit__group-name eg-text-style ge__input-subtext">
                                 Назву курсу редагується при гострій необхідності та при узгодженні з Адміністрацією закладу.
@@ -67,7 +68,7 @@
                             <p class="groups-edit__group-name eg-text-style ge__m-input-header">Додати студента</p>
                             <div class="groups-edit__student-add-form ">
                                 <input class='eg-input add-style ccec__input' id="student" type="text" name="student_name"
-                                    placeholder="Іванов Іван Іванович">
+                                    placeholder="Іванов Іван Іванович" autocomplete="off">
                                 <a id="addstudent" class="add-student ccec__button ge__m-button" id="egAddStudent">Додати</a>
                                 <div id="studentList"></div>
                             </div>
@@ -114,7 +115,14 @@
                                         <a class="flexTable-btn_delete ccec__delete-btn" href="##" data-toggle="modal"
                                             data-target="#deleteModal{{ $loop->iteration }}"><span>Видалити</span>
                                         </a>
-                                        {{-- @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModal', 'secondId' => '{{ $loop->iteration }}', 'modalPath' => '' ]) --}}
+                                        @include('layouts.front.includes.modals.delete_user', [
+                                            'modalId' => 'deleteModal',
+                                            'secondId' => $loop->iteration,
+                                            'imgPath' => asset('img/graduation-cap.png'),
+                                            'modalPath' => '',
+                                            'target' => $student->full_name
+                                        ])
+                                        {{-- @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModal', 'secondId' => '{{ $loop->iteration }}', 'modalPath' => '', 'target' => $student->full_name ]) --}}
                                     </div>
                                 </div>
                             @endforeach
@@ -360,10 +368,10 @@
 
     </script>
 
-
+@endsection
 
 @section('scripts')
 @endsection
 
 
-@endsection
+

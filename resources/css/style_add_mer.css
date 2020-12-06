@@ -94,3 +94,26 @@
     padding-left: 15px !important;
     padding-right: 30px !important;
 }
+@media (min-width: 767px){
+    .mer-studlist-m{
+        display: none;
+    }
+    .mer-studlist{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+    }
+}
+@media (max-width:768px){
+    .mer-studlist-m{
+        display: flex;
+        flex-direction: column;
+        justify-content: start;
+        align-items: start;
+    }
+    .mer-studlist{
+        display: none;
+    }
+}
+
