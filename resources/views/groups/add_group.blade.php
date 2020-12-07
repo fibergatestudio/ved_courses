@@ -201,11 +201,10 @@
         function removeStud(curr_stud) {
             students_array.splice( $.inArray(curr_stud,students_array) ,1 );
             var div_name = "#name" + curr_stud;
-            console.log(div_name);
+            // console.log(div_name);
             setTimeout(function(){ $( div_name ).remove(); count_t--; }, 500);
-
-            console.log(students_array);
-            console.log("RemoveStud " + curr_stud);
+            // console.log(students_array);
+            // console.log("RemoveStud " + curr_stud);
         }
 
         $('#createGroup').click(function(e){
