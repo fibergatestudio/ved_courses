@@ -246,7 +246,7 @@
                             <div class="groups__elem groups__elem_style">
                                 <a class="flexTable-btn_edit groups-btn-edit-restyle"
                                 href="{{ route('edit_group',['group_id' => $group->id]) }}"><span>Редагувати</span></a>
-                                <a class="flexTable-btn_delete" data-toggle="modal" data-target="#deleteGroup{{ $group->id }}"><span>Видалити</span></a>
+                                <a class="flexTable-btn_delete" data-toggle="modal" href="" data-target="#deleteGroup{{ $group->id }}"><span>Видалити</span></a>
 
                                 <div class="bootstrap-restylingStudent modal fade" id="deleteGroup{{ $group->id }}" tabindex="-1" role="dialog"
                                     aria-labelledby="exampleModalLabel" aria-hidden="true">

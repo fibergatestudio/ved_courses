@@ -124,8 +124,10 @@ class GroupsController extends Controller
 
         if(!empty($request->student_name)) {
             foreach($request->student_name as $student){
+                dd($student);
                 // Получаем информацию о студенте
                 $stud_info = DB::table('students')->where('full_name', $student)->first();
+                dd($stud_info);
                 // Заносим данные в аррей
                 array_push($students_array, $stud_info->user_id);
             }
@@ -206,6 +208,14 @@ class GroupsController extends Controller
         } else {
             return "Нет студента";
         }
+
+    }
+
+    public function changeGroupName(Request $request){
+
+        $nameGroup = $request->nameGroup;
+        // $grId = $request->group_info->id;
+        return $nameGroup;
 
     }
 }

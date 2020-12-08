@@ -95,7 +95,8 @@ use Illuminate\Support\Facades\Auth;
         Route::get('groups/edit_group/{group_id}', 'GroupsController@edit_group')->name('edit_group')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
             // Применить изменения группы
             Route::post('groups/edit_group/{group_id}/apply', 'GroupsController@apply_edit_group')->name('apply_edit_group')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
-
+            //Изменение
+            Route::post('/groups/edit_group/name_change', 'GroupsController@changeGroupName')->name('edit_group.name_change')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
 
 //////////
 
@@ -229,7 +230,7 @@ use Illuminate\Support\Facades\Auth;
                 Route::post('/tests_controll/new_test_info/{test_info_id}/drag_drop/create', 'TestsController@create_drag_drop')->name('create_drag_drop')->middleware(['auth','can:admin_rights' || 'can:teacher_rights']);
 
                 // Редактировать вопрос.
-                
+
 
             //----- Типы вопросов -----//
 

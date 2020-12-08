@@ -54,11 +54,11 @@
                         <div class="groups-edit__group ccec__add-student-block_style inputs-row">
                             <p class="groups-edit__group-name eg-text-style ge__m-input-header">Назва групи</p>
                             <div class="groups-edit__student-add-form ">
-                                <input class='eg-input add-style ccec__input' type="text" name="name" value="{{ $group_info->name }}"
+                                <input class='eg-input add-style ccec__input' type="text" name="nameGroup" value="{{ $group_info->name }}"
                                     id="getCourseName" placeholder="Повна назва групи">
-                                <a class="add-student ccec__button ge__m-button" href="##" id="changeGroupName"
+                                <a class="add-student ccec__button ge__m-button" href="##"
                                     data-toggle="modal" data-target="#changeGroupNameM">Зберегти</a>
-                                @include('layouts.front.includes.modals.change_group_name', ['modalPath' => ''])
+                                @include('layouts.front.includes.modals.change_group_name')
                             </div>
                             <p class="groups-edit__group-name eg-text-style ge__input-subtext">
                                 Назву курсу редагується при гострій необхідності та при узгодженні з Адміністрацією закладу.
@@ -79,7 +79,7 @@
                 <div class="flexTable-wrapper ge">
                     <div class="flexTable-scrollContainer">
                         <div class="sc-scrollInner">
-                            <div class="sc-topTitle" style="padding: 0 30px 0 15px">
+                            <div class="sc-topTitle" style="padding: 0 30px 0 15px" id="name0">
                                 <div class="ccec__sc-topTitle_inner-mer student-number-mer">№</div>
                                 <div class="ccec__sc-topTitle_inner-mer col text-center">ПІБ студента</div>
                                 <div class="ccec__sc-topTitle_inner-mer col text-center">Номер групи</div>
@@ -213,6 +213,8 @@
         crossorigin="anonymous"></script>
     {{-- <script src="assets/js/main.js"></script> --}}
     <script>
+        // const axios = require('axios');
+
         var students_array = new Array();
         var count_t = 1;
 
@@ -255,7 +257,7 @@
 
     $('#addstudent').click(function() {
         /* Берем имя текущего студента */
-        var curr_stud = $('#student').val().replace(/[A-Za-z]|[0-9]/g, '');
+        var curr_stud = $('#student').val().replace(/[A-Za-z]|[0-9]|\s+/g, '');
         // var s_count = 1;
 
         /* Проверка на существующего студента в базе */
@@ -273,13 +275,17 @@
                     if(jQuery.inArray(curr_stud, students_array) != -1 ){
                         alert("Студент "+curr_stud+" Уже добавлен!");
                     } else {
-
+                        /*Ищу последнюю строку со студентом и получаю порядковый*/
+                        var count_stud = $("div[id^='name']:last").attr("id").replace("name", "");
+                        // console.log(count_stud);
+                        count_stud++;
+                        // console.log(count_stud);
                         // console.log(curr_stud);
                         // console.log(students_array);
 
                         $("div[id^='name']:last").after("\
-                            <div class='sc-string ccec__row' id='name"+count_t+"'>\
-                                <div class='ccec__string-inner-mer student-number-mer'>"+count_t+"</div>\
+                            <div class='sc-string ccec__row' id='name"+count_stud+"'>\
+                                <div class='ccec__string-inner-mer student-number-mer'>"+count_stud+"</div>\
                                 <div class='ccec__string-inner-mer col text-center'>"+curr_stud+"</div>\
                                 <div class='ccec__string-inner-mer col text-center'>group_number</div>\
                                 <div class='ccec__string-inner-mer col text-center'>student_phone_number</div>\
@@ -288,10 +294,10 @@
                                 <div class='ccec__string-inner-mer col text-center'>teacher_fio</div>\
                                 <div class='ccec__string-inner-mer col text-center'>\
                                     <a class='flexTable-btn_delete ccec__delete-btn' href='##' data-toggle='modal'\
-                                        data-target='#deleteModal"+count_t+"'><span>Видалити</span>\
+                                        data-target='#deleteModal"+count_stud+"'><span>Видалити</span>\
                                     </a>\
                                 </div>\
-                                <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
+                                <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_stud+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
                                     <div class='modal-dialog  modal-dialog_restyle'>\
                                         <div class='modal-content'>\
                                             <div class='deleteMenu-wrapper'>\
@@ -326,25 +332,48 @@
         students_array.splice( $.inArray(curr_stud,students_array) ,1 );
         var div_name = "#name" + curr_stud;
         // console.log(div_name);
-        setTimeout(function(){ $( div_name ).remove(); count_t--; }, 500);
+        setTimeout(function(){
+            $( div_name ).remove();
+            count_t--;
+        }, 500);
         // console.log(students_array);
         // console.log("RemoveStud " + curr_stud);
         /*Не убирался серый фон от модала, с этим костылем работает*/
         $('.modal-backdrop').hide();
     }
 
-    // $(".remove").click(function(){
-    //     //var remove_id =
-    //     var remove_name = $(this).closest(".student").find(".ids").val();
+    $('#changeGroupName').click(function(e){
+        e.preventDefault();
+        var nameGroup = $('input[name="nameGroup"]').val().replace(/\s+/g, ' ').trim();
+        alert(nameGroup);
 
-    //     console.log( remove_name );
-    //     //alert(remove_id);
+        // axios.post("{{ route('edit_group.name_change') }}", {
+        //     nameGroup: nameGroup,
+        // })
+        // .then(function (response) {
+        //     console.log(response);
+        // })
+        // .catch(function (error) {
+        //     console.log(error);
+        // });
 
-    //     students_array.splice( $.inArray(remove_name,students_array) ,1 );
-
-    //     $(this).closest(".student").remove();
-    // });
-
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url:"{{ route('edit_group.name_change') }}",
+            method:"POST",
+            data:{nameGroup: nameGroup},
+            success:function(data){
+                alert("YES!"+data);
+            },
+            errors:function(err){
+                alert("NO!"+err);
+            }
+        });
+    });
 
     </script>
 
