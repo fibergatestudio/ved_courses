@@ -36,6 +36,9 @@ use Illuminate\Support\Facades\Auth;
     // Просмотр урока курса
     Route::get('/course/{course_id}/lesson/{lesson_id}/{tab?}', 'HomePageController@view_lesson')->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|model|protocol|test'])->name('view_lesson');
 
+    // Отправка курса
+    Route::post('/course/{course_id}/lesson/{lesson_id}/send_test/{test_id}', 'HomePageController@send_test')->name('send_test');
+
 // Авторизация
     Auth::routes();
     // Логаут

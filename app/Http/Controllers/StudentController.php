@@ -253,6 +253,7 @@ class StudentController extends Controller
     {
         // Получаем всю инфу с запроса
         $all_info = $request->all();
+        //dd($all_info);
         // Файл импорта
         $file = $request->file('import_file');
         // Формируем из экселя аррей

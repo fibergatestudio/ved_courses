@@ -29,16 +29,9 @@ class CreateTestsInfoTable extends Migration
             $table->string('max_score')->nullable();
             $table->string('available_attempts')->nullable();
             $table->string('assessment_method')->nullable();
-            // Макет
-            //$table->string('new_page')->nullable();
-            //$table->string('transition_method')->nullable();
             // Поведение вопросов
             $table->string('random_answers_order')->nullable();
             $table->string('getting_result')->nullable();
-            // Параметры просмотра 
-            //$table->json('view_options')->nullable();
-            // Вид
-            //$table->string('photo_and_student_name')->nullable();
             // Разширенный ответ
             $table->json('extended_feedback')->nullable();
             // Общие настройки модуля
