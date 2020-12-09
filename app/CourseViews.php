@@ -14,7 +14,11 @@ class CourseViews extends Model
             $postsViews->course_name = $course->name;
             $postsViews->url = \Request::url();
             $postsViews->session_id = \Request::getSession()->getId();
-            $postsViews->user_id = \Auth::user()->id;
+            if(isset(\Auth::user()->id)){
+                $postsViews->user_id = \Auth::user()->id;
+            } else {
+                $postsViews->user_id = 0;
+            }
             $postsViews->ip = \Request::getClientIp();
             $postsViews->agent = \Request::header('User-Agent');
             $postsViews->save();
