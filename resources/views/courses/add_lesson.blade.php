@@ -449,7 +449,7 @@
             var fileName = input.files[0].name;
             var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
             console.log(test);
-            alert(fileName);
+            /* alert(fileName); */
         }
 
     </script>

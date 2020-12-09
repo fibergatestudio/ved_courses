@@ -27,7 +27,7 @@
                     <form action="{{ route('import_students_apply') }}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <label class="custom-upload-form" for="baseUpload">
-                            <input class='eg-input add-style base-upload' type="file" id="baseUpload" name="import_file">
+                            <input class='eg-input add-style base-upload' type="file" id="baseUpload" name="import_file" required>
                             <p id="upld_file_name">Назва файлу.xlsx</p>
                         </label>
                         <button type="submit" class="add-student add-student_restyle" id="egAddStudent">Додати</button>

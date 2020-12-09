@@ -31,7 +31,9 @@ class TestsController extends Controller
         $course_id = request()->course_id;
         $courses_program_id = request()->courses_program_id;
 
-        return view('tests.create_test_info', compact('course_id', 'courses_program_id'));
+        $groups = DB::table('groups')->get();
+
+        return view('tests.create_test_info', compact('course_id', 'courses_program_id', 'groups'));
     }
 
     public function create_new_test_info(Request $request){

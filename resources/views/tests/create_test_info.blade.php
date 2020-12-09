@@ -1,6 +1,19 @@
 @extends('layouts.front.front_child')
 
 @section('content')
+
+<style>
+
+.today{
+    background-color: #8a4f9f4f;
+    color: #8a4f9f;
+}
+.table-condensed{
+    text-align: center;
+}
+
+</style>
+
 {{-- <div class="container" style="display:none;">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
@@ -582,8 +595,9 @@
                                 <div class="newTest-quest-wrapper">
                                     <select class="newTest-quest-select" name="operating_mode" >
                                         <option value="1" selected="">Доступні групи</option>
-                                        <option value="2">Опция 2</option>
-                                        <option value="3">Опция 3</option>
+                                        @foreach($groups as $group)
+                                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="newTest-quest_arrowBlock"></div>
                                     </div>
@@ -676,6 +690,7 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.uk.min.js" integrity="sha512-zj4XeRYWp+L81MSZ3vFuy6onVEgypIi1Ntv1YAA6ThjX4fRhEtW7x+ppVnbugFttWDFe/9qBVdeWRdv9betzqQ==" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script>
@@ -740,12 +755,22 @@
                 minDate: new Date(),
                 startDate: new Date(),
                 daysOfWeekHighlighted: "6,0",
+                todayHighlight: true,
+                language: 'uk',
                 autoclose: true,
                 timepicker: true,
                 datepicker: true,
                 format: 'dd/mm/yyyy',
                         });
-            // $('.datepicker').datepicker("setDate", new Date());
+
+        /* $.fn.datetimepicker.dates['en'] = {
+            days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Декабрь"],
+            monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            today: "Today"
+        }; */
     </script>
 
     <script>

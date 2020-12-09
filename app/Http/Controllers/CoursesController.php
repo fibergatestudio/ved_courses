@@ -11,11 +11,20 @@ class CoursesController extends Controller
     public function index(){
 
         $courses = DB::table('courses')->get();
-
+        //dd("test");
         //dd($courses);
         foreach($courses as $course){
+            // Получаем имя создателя
             $creator = DB::table('users')->where('id', $course->creator_id)->first();
             $course->creator_name = $creator->name;
+            // Получаем кол-во просмотров курса
+            $course_views = DB::table('course_views')->where('course_name', $course->name)->count();
+            if($course_views){ 
+                $course->views = $course_views;
+            } else {
+                $course->views = 0;
+            }
+            //$course->views = $course_views;
         }
         //dd($courses);
 

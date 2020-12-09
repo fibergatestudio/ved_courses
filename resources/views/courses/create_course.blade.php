@@ -30,7 +30,7 @@
                         @csrf
                         <div class="form-group">
                             <label>Название Курса</label>
-                            <input type="text" class="form-control" name="name" value="">
+                            <input type="text" class="form-control" name="name" value="" >
                         </div>
 
                         <div id="studentsAdd" class="form-group">
@@ -141,7 +141,7 @@
                                         </div>
                                     </div>
                                     <div class="courseAdd-inner_right">
-                                        <input class="course-faq--input courseAdditional--input"  name="name" type="text">
+                                        <input class="course-faq--input courseAdditional--input"  name="name" type="text" required>
                                     </div>
                                 </div>
 

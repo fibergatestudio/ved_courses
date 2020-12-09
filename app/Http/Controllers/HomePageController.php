@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\User;
+use App\CourseViews;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
@@ -58,6 +59,15 @@ class HomePageController extends Controller
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
         $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->orderBy('id')->get();
         $course_faq = DB::table('courses_faq')->where('course_id', $course_id)->orderBy('id')->get();
+
+        // Добавляем просмотр курса
+        //$check_dup_ip = CourseViews::where('ip', \Request::getClientIp() )->first();
+        //if(!$check_dup){
+        $course_view = CourseViews::createViewLog($course);
+        //}
+        
+        // end 
+
         if (is_null($course)) {
             abort(404);
         }
@@ -84,6 +94,7 @@ class HomePageController extends Controller
             return view('front.aboute_course', compact('course', 'course_information'));
             break;
         }
+        
     }
 
     public function view_lesson($course_id, $lesson_id = null, $tab = null) {
