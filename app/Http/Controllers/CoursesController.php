@@ -11,11 +11,20 @@ class CoursesController extends Controller
     public function index(){
 
         $courses = DB::table('courses')->get();
-        
+        //dd("test");
         //dd($courses);
         foreach($courses as $course){
+            // Получаем имя создателя
             $creator = DB::table('users')->where('id', $course->creator_id)->first();
             $course->creator_name = $creator->name;
+            // Получаем кол-во просмотров курса
+            $course_views = DB::table('course_views')->where('course_name', $course->name)->count();
+            if($course_views){ 
+                $course->views = $course_views;
+            } else {
+                $course->views = 0;
+            }
+            //$course->views = $course_views;
         }
         //dd($courses);
 
@@ -27,11 +36,11 @@ class CoursesController extends Controller
         return view('courses.create_course');
     }
 
-    
+
     public function create_course(Request $request){
 
         $all_info = $request->all();
-
+        //dd($all_info);
         //dd($request->course_image);
         //$img_path = $request->course_image;
 
@@ -52,7 +61,7 @@ class CoursesController extends Controller
             'creator_id' => Auth::user()->id,
             'visibility' => 'all',
         ]);
-        
+
         return redirect('courses_controll')->with('message_success', 'Курс успешно создан!');
     }
 
@@ -64,6 +73,31 @@ class CoursesController extends Controller
         //dd($courses_question_answers);
 
         $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
+        //$videos_arr = [];
+        foreach($course_lessons as $lesson){
+
+            //dd(json_decode($lesson->video_name));
+            if($lesson->video_name == "null"){
+                $lesson->video_count = 0;
+            } else {
+                $lesson->video_count = count(json_decode($lesson->video_name));
+            }
+
+            // $video_arr = [];
+            // $i = 0;
+            // foreach(json_decode($lesson->video_name) as $video){
+            //     $video_arr["video_name"] = $video;
+            //     $i++;
+            // }
+            // $a = 0;
+            // foreach(json_decode($lesson->video_length) as $video_l){
+            //     $video_arr["video_length"] = $video_l;
+            //     //$a++;
+            // }
+            // dd($video_arr);
+
+        }
+
 
         $teacher_arr = json_decode($course_info->assigned_teacher_id);
         //dd($teacher_arr);
@@ -74,9 +108,22 @@ class CoursesController extends Controller
             $assigned_teachers = [];
             $teachers = DB::table('users')->where('role', 'teacher')->get();
         }
-        
+        //dd($assigned_teachers);
+        $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
 
-        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers') );
+        return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers', 'course_information') );
+    }
+
+    public function delete_course($course_id){
+
+        //dd($course_id);
+
+        DB::table('courses')->where('id', $course_id)->delete();
+        DB::table('courses_faq')->where('course_id', $course_id)->delete();
+        DB::table('courses_information')->where('course_id', $course_id)->delete();
+        DB::table('courses_program')->where('course_id', $course_id)->delete();
+
+        return back();
     }
 
     public function delete_teacher_course($course_id, $teacher_id){
@@ -93,19 +140,28 @@ class CoursesController extends Controller
         ]);
 
 
-        
+
         return redirect()->back();
     }
 
     public function edit_course_apply($course_id, Request $request){
 
-        //dd($request->visibility);
+        //dd($request->all());
 
+        // Таблица курсов
         $current_course = DB::table('courses')->where('id', $course_id)->first();
-        //$tecaher_arr = json_encode()
 
-        // $teachers_arr = [];
-        // //dd($current_course->assigned_teacher_id);
+        // Получаем картинку // Если картинка есть
+        if($request->hasFile('course_image')){
+            $filename = time().'.'.request()->course_image->getClientOriginalExtension();
+            request()->course_image->move(public_path('images'), $filename);
+
+            // Обновляем картинку в базе
+            DB::table('courses')->where('id',$course_id)->update([
+                'course_image_path' => $filename,
+            ]);
+        }
+
         if($current_course->assigned_teacher_id){
             //array_push($teachers_arr, )
             $teacher_arr = json_decode($current_course->assigned_teacher_id);
@@ -114,11 +170,15 @@ class CoursesController extends Controller
             $teacher_arr = [];
         }
 
-        //$teacher_arr = [];
+
         $t_id = $request->assigned_teacher_id;
-        array_push($teacher_arr, $t_id);
-        $teachers = json_encode($teacher_arr);
-        //dd($teachers);
+        if($t_id != "Выберите"){
+            array_push($teacher_arr, $t_id);
+            $teachers = json_encode($teacher_arr);
+        } else {
+            $teachers = $teacher_arr;
+        }
+
 
         DB::table('courses')->where('id',$course_id)->update([
             'name' => $request->name,
@@ -128,7 +188,6 @@ class CoursesController extends Controller
         ]);
 
         return redirect()->back();
-        //return redirect('courses_controll')->with('message_success', 'Курс успешно изменен!');
     }
 
     // edit_about
@@ -138,8 +197,8 @@ class CoursesController extends Controller
 
         $course_i = DB::table('courses_information')->where('course_id', $course_id)->first();
         //dd($course_i);
-        
-        
+
+
 
         return view('courses.edit_about', compact('course_info', 'course_i'));
     }
@@ -156,10 +215,10 @@ class CoursesController extends Controller
         for($i = 1; $i <= $q_c; $i++){
             $c = "course_learn" . $i;
             //dd($c);
-            array_push($course_lrn_arr, strip_tags ($request->$c));
+            array_push($course_lrn_arr, $request->$c);//strip_tags ($request->$c));
         }
         //dd($course_lrn_arr);
-        
+
         $courses_arr = json_encode($course_lrn_arr, JSON_UNESCAPED_UNICODE);
 
         // Берем информацию описания курса
@@ -188,7 +247,7 @@ class CoursesController extends Controller
     // add_lesson
     public function add_lesson($course_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first(); 
+        $course_info = DB::table('courses')->where('id', $course_id)->first();
 
         $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
         //dd($courses_program);
@@ -214,16 +273,16 @@ class CoursesController extends Controller
     public function add_lesson_apply($course_id, Request $request){
 
         //dd($request->all());
-        
+
         // Количество видео
         $video_counter = $request->videos_counter;
- 
+
         // Арреи под инфу видео
         $video_name_arr = [];
         $video_lenght_arr = [];
         $video_file_arr = [];
         $video_link_arr = [];
- 
+
         // Перебираем и берем информацию о каждом видео
         for($i = 0; $i <= $video_counter; $i++){
             // Формируем реквест имя
@@ -251,7 +310,7 @@ class CoursesController extends Controller
             if($video_length == null){ $video_lenght_arr = null; } else { array_push($video_lenght_arr, $video_length); }
             if($filename == null){ $video_file_arr = null; } else { array_push($video_file_arr, $filename); }
             if($video_link == null){ $video_link_arr = null; } else { array_push($video_link_arr, $video_link); }
-            
+
         }
         //dd($video_file_arr);
 
@@ -275,12 +334,20 @@ class CoursesController extends Controller
             if($filename_doc == null){ $docs_arr = null; } else { array_push($docs_arr, $filename_doc); }
             //array_push($docs_arr, $filename);
         }
+        // show prot
+        if($request->show_protocol){
+            $protocol = $request->show_protocol;
+        } else {
+            $protocol = false;
+        }
 
         // Инсерт в базу
         $courses_program_id = DB::table('courses_program')->insertGetId([
             'course_id' => $course_id,
+            'course_name' => $request->course_name,
             'course_description' => $request->course_description,
             'learning_time' => $request->learning_time,
+            'show_protocol' => $protocol,
             'course_protocol_descr' => $request->course_protocol_descr,
             'learning_protocol_time' => $request->learning_protocol_time,
             'add_document' => json_encode($docs_arr),
@@ -288,8 +355,9 @@ class CoursesController extends Controller
             'video_length' => json_encode($video_lenght_arr),
             'video_file' =>  json_encode($video_file_arr),
             'video_link' => json_encode($video_link_arr),
+            'model3d_link' => $request->model3d_link,
         ]);
-        
+
         return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
     }
     // add_ lesson
@@ -338,7 +406,7 @@ class CoursesController extends Controller
 
     //     dd($course_id);
 
-    //     return view('courses.course_view', compact('course_id')); 
+    //     return view('courses.course_view', compact('course_id'));
     // }
 
 

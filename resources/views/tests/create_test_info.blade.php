@@ -1,7 +1,20 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div class="container" style="display:none;">
+
+<style>
+
+.today{
+    background-color: #8a4f9f4f;
+    color: #8a4f9f;
+}
+.table-condensed{
+    text-align: center;
+}
+
+</style>
+
+{{-- <div class="container" style="display:none;">
     @if(session()->has('message_success'))
         <div class="alert alert-success">
             {{ session()->get('message_success') }}
@@ -18,7 +31,7 @@
         <div class="col-md-9">
             <div class="card">
                 <div class="card-header">
-                    {{ __('Создание теста') }} 
+                    {{ __('Создание теста') }}
                     @if($course_id)
                         - Для курса # {{ $course_id }}
                     @endif
@@ -37,7 +50,7 @@
                             <label>Название Теста</label>
                             <input type="text" class="form-control" name="name" value="">
                         </div>
-                        
+
                         <div id="studentsAdd" class="form-group">
                             <label>Описание Теста</label>
                             <textarea type="text" class="form-control" name="description" value=""></textarea>
@@ -45,11 +58,11 @@
                         <hr>
                         <div class="form-group">
                             <label>Начало Тестирования</label>
-                            <input type="text" class="form-control datetimepicker" name="start_date_time"> 
+                            <input type="text" class="form-control datetimepicker" name="start_date_time">
                             <label>Окончание Тестирования</label>
-                            <input type="text" class="form-control datetimepicker" name="end_date_time"> 
+                            <input type="text" class="form-control datetimepicker" name="end_date_time">
                             <label>Ограничение времени</label>
-                            <input type="number" class="form-control" name="time_limit"> 
+                            <input type="number" class="form-control" name="time_limit">
                             <label>Когда время заканчивается</label>
                             <select class="form-control" name="when_time_is_up">
                                 <option>Выберите</option>
@@ -73,7 +86,7 @@
                                 <option>ПОследняя попытка</option>
                             </select>
                         </div>
-                        <hr> 
+                        <hr>
 
 
                         <hr>
@@ -164,7 +177,7 @@
                         <br>
                         <button type="submit" class="btn btn-success">Добавить вопрос</button>
                     </form> -->
-                    
+
                         <a href="{{ route('tests_controll') }}">
                             <button class="btn btn-danger">Назад</button>
                         </a>
@@ -174,8 +187,8 @@
     </div>
 </div>
 
-
-<body>
+--}}
+ <body>{{--
 
     <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
@@ -262,44 +275,18 @@
             </div>
         </div>
     </div>
-    <!-- deleteBtn modal-page (end) -->
+    <!-- deleteBtn modal-page (end) --> --}}
     <section class="courseControl">
         <div class="courseControl-separator direction-separator">
         </div>
         <div class="courseControl-container sticky-container container">
 
-            <!-- sidebar-menu (start) -->
+            @if(Auth::user()->role == "admin")
+                @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+            @elseif(Auth::user()->role == "teacher")
+                @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+            @endif
 
-            <div class="sidebar">
-
-                <div class="sidebar-sticky">
-
-                    <div class="sidebar-top_wrapper">
-                        <div class="sidebar-top_burger-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <!-- changeling block mobile-btn (start) -->
-                        <div class="sidebar-top_mobile-btn">
-                            <div class="sidebar-top_mobile-img">
-                                <img src="assets/img/teacher-mobileMenu-2.png" alt="icon">
-                            </div>
-                            <div class="sidebar-top_mobile-name">
-                                Управління курсами
-                            </div>
-                        </div>
-                        <!-- changeling block mobile-btn (end) -->
-
-                    </div>
-                    @include('layouts.front.includes.admin_sidebar_vrst')
-
-                </div>
-
-            </div>
-            <!-- sidebar-menu (end) -->
             <form action="{{ route('create_new_test_info', ['course_id' => $course_id, 'courses_program_id'=>$courses_program_id ]) }}" id="create_test_form" method="POST" >
                 @csrf
             <div class="cource-container--mobile">
@@ -309,7 +296,7 @@
                             Загальне
                         </div>
                         <div class="newTest-wrapper show">
-                        
+
                             <div class="courseAdd-inner courseAdd-inner_margbottom">
                                 <div class="courseAdd-inner_left">
                                     <div class="courseAdd_left--name">
@@ -320,7 +307,7 @@
                                     <input class="course-faq--input courseAdditional--input" name="name" type="text">
                                 </div>
                             </div>
-                            
+
                             <div class="courseAdd-inner courseAdd-inner_margbottom">
                                 <div class="courseAdd-inner_left">
                                     <div class="courseAdd_left--name">
@@ -330,7 +317,7 @@
                                 <div class="courseAdd-inner_right">
                                         <textarea class="tinyMCE-area" name="description"></textarea>
                                 </div>
-                            </div>            
+                            </div>
                         </div>
                     </div>
 
@@ -339,7 +326,7 @@
                             Вибір часу
                         </div>
                         <div class="newTest-wrapper show">
-                        
+
                             <div class="newTest-date-inner">
                                 <div class="newTest-date-item">Початок
                                 </div>
@@ -352,10 +339,10 @@
                                 <div class="newTest-date-item">Завершити
                                 </div>
                                 <div class="newTest-date-item">
-                                    <input type="text" name="end_date_time" class="datepicker form-control date-input-restyling">                               
+                                    <input type="text" name="end_date_time" class="datepicker form-control date-input-restyling">
                                 </div>
                             </div>
-                            
+
                             <!-- <a href="##" class="newTest-saveBtn">
                                 <span>
                                     Зберегти
@@ -385,8 +372,8 @@
                                 </div>
                                 <div class="newTest-timeInstruction-inner">
                                     <div class="newTest-timeInstruction-wrapper">
-                                    <select class="newTest-timeInstruction-select" name="when_time_is_up"> 
-                                        <option value="1" selected>Відповіді повинні бути відправлені до завершення часу, інакше вони не зарахуються</option> 
+                                    <select class="newTest-timeInstruction-select" name="when_time_is_up">
+                                        <option value="1" selected>Відповіді повинні бути відправлені до завершення часу, інакше вони не зарахуються</option>
                                         <option value="2" >Опция 2</option>
                                         <option value="3">Опция 3</option>
                                     </select>
@@ -398,7 +385,7 @@
 
                         </div>
                     </div>
-                
+
                     <div class="newTest-block active">
                         <div class="newTest-top active">
                             Оцінка
@@ -418,8 +405,8 @@
                             </div>
                             <div class="newTest-mark-inner_right">
                                 <div class="newTest-mark-wrapper">
-                                    <select class="newTest-mark-select" name="available_attempts" > 
-                                        <option value="1" selected>Одна спроба</option> 
+                                    <select class="newTest-mark-select" name="available_attempts" >
+                                        <option value="1" selected>Одна спроба</option>
                                         <option value="2">Перша спроба</option>
                                         <option value="3">Остання спроба</option>
                                     </select>
@@ -433,10 +420,10 @@
                             </div>
                             <div class="newTest-mark-inner_right">
                                 <div class="newTest-mark-wrapper">
-                                    <select class="newTest-mark-select" name="assessment_method"> 
-                                        <option value="1" selected>Краща оцінка</option> 
+                                    <select class="newTest-mark-select" name="assessment_method">
+                                        <option value="1" selected>Краща оцінка</option>
                                         <option value="2">Середня оцінка</option>
-                                        <option value="3">Незадовiльнa оцінка</option>                                   
+                                        <option value="3">Незадовiльнa оцінка</option>
                                     </select>
                                     <div class="newTest-mark_arrowBlock"></div>
                                     </div>
@@ -459,9 +446,9 @@
                             </div>
                             <div class="newTest-quest-inner_right">
                                 <div class="newTest-quest-wrapper">
-                                    <select class="newTest-quest-select" name="random_answers_order"> 
-                                        <option value="1" selected>Так</option> 
-                                        <option value="2">Нi</option>                                   
+                                    <select class="newTest-quest-select" name="random_answers_order">
+                                        <option value="1" selected>Так</option>
+                                        <option value="2">Нi</option>
                                     </select>
                                     <div class="newTest-quest_arrowBlock"></div>
                                     </div>
@@ -473,16 +460,16 @@
                             </div>
                             <div class="newTest-quest-inner_right">
                                 <div class="newTest-quest-wrapper">
-                                    <select class="newTest-quest-select" name="getting_result"> 
-                                        <option value="1" selected>Після відправлення всього тексту</option> 
+                                    <select class="newTest-quest-select" name="getting_result">
+                                        <option value="1" selected>Після відправлення всього тексту</option>
                                         <option value="2">Інтерактивно за кількома спробами</option>
                                         <option value="3">Адаптивний режим</option>
                                         <option value="4">Адаптивний режим (без штрафних балів)</option>
                                         <option value="5">Негайно після відповіді</option>
                                         <option value="6">Негайно після відповіді з відміткою ступеня впевненості</option>
-                                        <option value="7">Після відправлення всього тесту</option>   
-                                        <option value="8">Після відправлення всього тесту з відміткою ступеня впевненості</option> 
-                                        <option value="9">Ручна оцінка</option>                             
+                                        <option value="7">Після відправлення всього тесту</option>
+                                        <option value="8">Після відправлення всього тесту з відміткою ступеня впевненості</option>
+                                        <option value="9">Ручна оцінка</option>
                                     </select>
                                     <div class="newTest-quest_arrowBlock"></div>
                                     </div>
@@ -499,18 +486,18 @@
                             Розширений відгук
                         </div>
                         <div class="newTest-wrapper show">
-                        
+
                             <div class="review-inner">
                                 <div class="review-inner_left">
                                     <div class="review_left--name">
-                                        Гранична оцінка 
+                                        Гранична оцінка
                                     </div>
                                 </div>
                                 <div class="review-inner_right">
                                 100%
                                 </div>
                             </div>
-                            
+
                             <div class="courseAdd-inner courseAdd-inner_margbottom">
                                 <div class="courseAdd-inner_left">
                                     <div class="courseAdd_left--name">
@@ -535,7 +522,7 @@
                                             <input class="newTest-dedline-input_left" :name="'extended_feedback_grade'+index" type="number">
                                         </div>
                                     </div>
-                                    
+
                                     <div class="courseAdd-inner courseAdd-inner_margbottom">
                                         <div class="courseAdd-inner_left">
                                             <div class="courseAdd_left--name">
@@ -552,14 +539,14 @@
                             <div class="review-inner">
                                 <div class="review-inner_left">
                                     <div class="review_left--name">
-                                        Гранична оцінка 
+                                        Гранична оцінка
                                     </div>
                                 </div>
                                 <div class="review-inner_right">
                                 0%
                                 </div>
                             </div>
-                            
+
                             <div class="courseAdd-inner courseAdd-inner_margbottom">
                                 <div class="courseAdd-inner_left">
                                     <div class="courseAdd_left--name">
@@ -591,10 +578,10 @@
                             </div>
                             <div class="newTest-quest-inner_right">
                                 <div class="newTest-quest-wrapper">
-                                    <select class="newTest-quest-select" name="availability"> 
-                                        <option value="1" selected="">Показати на сторінці курсу</option> 
+                                    <select class="newTest-quest-select" name="availability">
+                                        <option value="1" selected="">Показати на сторінці курсу</option>
                                         <option value="2">Опция 2</option>
-                                        <option value="3">Опция 3</option>                                     
+                                        <option value="3">Опция 3</option>
                                     </select>
                                     <div class="newTest-quest_arrowBlock"></div>
                                     </div>
@@ -606,10 +593,11 @@
                             </div>
                             <div class="newTest-quest-inner_right">
                                 <div class="newTest-quest-wrapper">
-                                    <select class="newTest-quest-select" name="operating_mode" > 
-                                        <option value="1" selected="">Доступні групи</option> 
-                                        <option value="2">Опция 2</option>
-                                        <option value="3">Опция 3</option>                                          
+                                    <select class="newTest-quest-select" name="operating_mode" >
+                                        <option value="1" selected="">Доступні групи</option>
+                                        @foreach($groups as $group)
+                                            <option value="{{ $group->id }}">{{ $group->name }}</option>
+                                        @endforeach
                                     </select>
                                     <div class="newTest-quest_arrowBlock"></div>
                                     </div>
@@ -622,8 +610,8 @@
                 </div>
 
                 <!-- onclick="document.getElementById('create_test_form').submit();" -->
-                <div class="addquestion-btn_wrapper"> 
-                    <a class="addquestion-btn" data-toggle="modal" data-target="#questionType"><span style="color:white;">Додати питання</span></a> 
+                <div class="addquestion-btn_wrapper">
+                    <a class="addquestion-btn" data-toggle="modal" data-target="#questionType"><span style="color:white;">Додати питання</span></a>
                     <div class="addquestion-btn_text">
                         Текст для супроводу створення тесту
                     </div>
@@ -682,26 +670,27 @@
                                         <div class="questionType-innerFalse">
                                             <div class="questionType-innerFalse_left"></div>
                                             <div class="questionType-innerFalse_right">
-                                                <a href="##" class="questionType-btn-add" onclick="document.getElementById('create_test_form').submit();"><span>Додати</span></a> 
-                                                <a href="##" class="questionType-btn-delete"><span>Скасувати</span></a>
+                                                <a href="##" class="questionType-btn-add" onclick="document.getElementById('create_test_form').submit();"><span>Додати</span></a>
+                                                <a href="##" data-dismiss="modal" class="questionType-btn-delete"><span>Скасувати</span></a>
                                             </div>
                                         </div>
                             </div>
-                        
+
                         </div>
                     </div>
             </div>
 
-                
+
         </form>
     </section>
 
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
-   
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.9.0/locales/bootstrap-datepicker.uk.min.js" integrity="sha512-zj4XeRYWp+L81MSZ3vFuy6onVEgypIi1Ntv1YAA6ThjX4fRhEtW7x+ppVnbugFttWDFe/9qBVdeWRdv9betzqQ==" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script>
@@ -728,9 +717,9 @@
                         'searchreplace visualblocks code fullscreen',
                         'insertdatetime media table paste code help wordcount'
                     ],
-                    toolbar: 
+                    toolbar:
                         'bold italic backcolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist | ' + 
+                        'alignright alignjustify | bullist numlist | ' +
                         'insertfile link image media pageembed template ' ,
                     content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
                     });  }, 100);
@@ -738,7 +727,7 @@
                     this.ids.push({id: currentCounter});
                     document.getElementById("counter").value = currentCounter;
 
-                    
+
                 },
             }
         });
@@ -752,9 +741,9 @@
                 'searchreplace visualblocks code fullscreen',
                 'insertdatetime media table paste code help wordcount'
             ],
-            toolbar: 
+            toolbar:
                 'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist | ' + 
+                'alignright alignjustify | bullist numlist | ' +
                 'insertfile link image media pageembed template ' ,
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
@@ -763,13 +752,25 @@
     <script>
         $('.datepicker').datepicker({
                 weekStart: 1,
+                minDate: new Date(),
+                startDate: new Date(),
                 daysOfWeekHighlighted: "6,0",
-                autoclose: true,                
+                todayHighlight: true,
+                language: 'uk',
+                autoclose: true,
                 timepicker: true,
                 datepicker: true,
-                format: 'dd/mm/yyyy',            
+                format: 'dd/mm/yyyy',
                         });
-            // $('.datepicker').datepicker("setDate", new Date());
+
+        /* $.fn.datetimepicker.dates['en'] = {
+            days: ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"],
+            daysShort: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+            daysMin: ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa", "Su"],
+            months: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "Декабрь"],
+            monthsShort: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+            today: "Today"
+        }; */
     </script>
 
     <script>
@@ -780,15 +781,15 @@
     });
 
     $( "#multiply_choice" ).click(function() {
-        
+
         $('#question_type').val("Множинний вибір");
     });
     $( "#true_false" ).click(function() {
-        
+
         $('#question_type').val("Правильно/неправильно");
     });
     $( "#drag_drop" ).click(function() {
-        
+
         $('#question_type').val("Перетягування в тексті");
     });
 
@@ -798,22 +799,6 @@
 
 @section('scripts')
 
-
-<!-- <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet"> -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.css" integrity="sha256-b5ZKCi55IX+24Jqn638cP/q3Nb2nlx+MH/vMMqrId6k=" crossorigin="anonymous" />
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.26.0/moment.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/js/bootstrap-datetimepicker.min.js" integrity="sha256-5YmaxAwMjIpMrVlK84Y/+NjCpKnFYa8bWWBbUHSBGfU=" crossorigin="anonymous"></script>
-
-<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script> -->
-
-<script>
-
-$(function () {
-    $('.datetimepicker').datetimepicker();
-});
-
-</script>
 
 @endsection
 

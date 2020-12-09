@@ -5,7 +5,9 @@
     <div class="modal-content">
             <div class="modal-body tab-content radius">
                 <div class="">
-                    <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                    <a class="entrance-logo" href="{{ route('main')}}">
+                        <img class="w-100" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                    </a>
                     <h3 class="entrance-title mt-3">{{ __('Reset Password') }}</h3>
                 </div>
 
@@ -28,6 +30,8 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn-entrance btn btn-secondary"
                                 data-dismiss="modal"> {{ __('Send Password Reset Link') }}</button>
+                                <a href="{{ url()->previous() }}" class="btn-entrance btn btn-secondary"
+                                >Назад</a>
                         </div>
                     </form>
                 </div>

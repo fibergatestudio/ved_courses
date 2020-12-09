@@ -43,9 +43,9 @@
             </li>
         @endif
         @if( Auth::user()->role == "teacher")
-            <li class="menu_title-inner">
+            <!--<li class="menu_title-inner">
                 <a class="menu_title-link" href="##">Студент</a>
-            </li>
+            </li>-->
             <li class="menu_title-inner menu_title-innerStudent">
                 <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
             </li>
@@ -60,9 +60,9 @@
             </li>
         @endif
         @if( Auth::user()->role == "student")
-            <li class="menu_title-inner">
+            <!--<li class="menu_title-inner">
                 <a class="menu_title-link" href="##">Викладач</a>
-            </li>
+            </li>-->
             <li class="menu_title-inner menu_title-innerStudent">
                 <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
             </li>

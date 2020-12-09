@@ -5,7 +5,7 @@
 
 <body>
 
-    <!-- Burger-menu (begin)-->
+    {{-- <!-- Burger-menu (begin)-->
     <ul class="menu_title-wrapper">
 
         <li class="menu_title-inner">
@@ -92,7 +92,7 @@
     </div>
 
 
-    <!-- deleteBtn modal-page (end) -->
+    <!-- deleteBtn modal-page (end) --> --}}
 
     <section class="courseControl">
         <div class="courseControl-separator direction-separator">
@@ -101,7 +101,7 @@
 
             <!-- sidebar-menu (start) -->
 
-            <div class="sidebar">
+            {{-- <div class="sidebar">
 
                 <div class="sidebar-sticky">
 
@@ -124,12 +124,12 @@
                         </div>
                         <!-- changeling block mobile-btn (end) -->
 
-                    </div>
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+                    </div> --}}
+                    @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
 
-                </div>
+                {{-- </div>
 
-            </div>
+            </div> --}}
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
@@ -141,6 +141,7 @@
                         Як це працює
                     </div>
                     <div class="courseAdd-wrapper">
+
                         <div class="courseAdd-inner courseAdd-inner_margbottom">
                             <div class="courseAdd-inner_left">
                                 <div class="courseAdd_left--name">
@@ -151,6 +152,17 @@
                                     <textarea class="tinyMCE-area" name="course_description"></textarea>
                             </div>
                         </div>
+
+                        <div class="courseAdditional-bottom-inner">
+                            <div class="courseAdditional-bottom_left">
+                                <div class="courseAdd_left--name">
+                                    Назва<sup>*</sup>
+                                </div>
+                            </div>
+                            <div class="courseAdditional-bottom_right">
+                                <input class="courseAdditional--input" name="course_name" type="text">
+                            </div>
+                        </div><br>
 
                         <div class="courseAdditional-bottom-inner">
                             <div class="courseAdditional-bottom_left">
@@ -170,11 +182,26 @@
                     <div class="courseEdit-top">
                         Протокол
                     </div>
+
                     <div class="courseAdd-wrapper">
+                        <div class="newTest-mark-string courseAdd-access_restyling courseEdit-btn-margin">
+                            <div class="newTest-mark-inner_left">
+                                Показати протокол
+                            </div>
+                            <div class="newTest-mark-inner_right">
+                                <div class="newTest-mark-wrapper">
+                                    <select class="newTest-mark-select" name="show_protocol">
+                                        <option value="0">Hi</option>
+                                        <option value="1">Так</option>
+                                    </select>
+                                    <div class="newTest-mark_arrowBlock"></div>
+                                    </div>
+                            </div>
+                        </div>
                         <div class="courseAdd-inner courseAdd-inner_margbottom">
                             <div class="courseAdd-inner_left">
                                 <div class="courseAdd_left--name">
-                                    Опис<sup>*</sup>                                    
+                                    Опис<sup>*</sup>
                                 </div>
                             </div>
                             <div class="courseAdd-inner_right">
@@ -197,7 +224,7 @@
                             Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
                         </div>
 
-                        <div class="courseAdditional-flexbox"> 
+                        <div class="courseAdditional-flexbox">
                             <div class="courseAdditional-flexbox_item courseAdditional-mobile-only">
                                 Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
                             </div>
@@ -215,13 +242,13 @@
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
                                             <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
-                                            <input class="courseAdditional-input_button" type="file" :name="'add_document' + index">
+                                            <input class="courseAdditional-input_button" type="file" :name="'add_document' + index" onchange="showFile(this)">
                                             <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                         </div>
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
-                                        <a class="courseAdditional-docName" href="##">
-                                            Назва документу.docx<span>15 Мб</span>
+                                        <a class="courseAdditional-docName" href="##" @click="removeNewEntry(index)">
+                                            
                                         </a>
                                     </div>
 
@@ -243,7 +270,7 @@
                         Відеолекція
                     </div>
                     <div class="courseAdd-wrapper">
-                       
+
                         <div class="courseAdditional-topName">
                             У разі відсутності відеоматеріалу до заняття буде відображено  повідомлення для студента <span> "В цьому занятті немає відео супроводу"</span>
                         </div>
@@ -272,7 +299,7 @@
                                     </div>
                                 </div>
 
-                            
+
 
                                 <div class="courseAdditional-flexbox">
                                     <div class="courseAdditional-flexbox_item">
@@ -286,13 +313,14 @@
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
                                             <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
-                                            <input class="courseAdditional-input_button" type="file" :name="'video_file' + index">
+                                            <input class="courseAdditional-input_button" type="file" :name="'video_file' + index" onchange="show(this)">
                                             <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                         </div>
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-flexbox_text">
                                         Короткі зауваження щодо додавання відеофайлу або посилань з інших джерел.
+                                        Формат файлу: mp4, Максимальний розмір: 300mb
                                         </div>
                                     </div>
                                 </div>
@@ -320,12 +348,14 @@
                                     </div>
 
                                 </div>
+                                <!-- <a class="courseAdditional-docName docName-styling" :id="'video_text'+index" href="##">
+                                    Довга назва посилання або завантаженого відео
+                                </a> -->
                             </div>
+
                         </div>
 
-                        <a class="courseAdditional-docName docName-styling" href="##">
-                            Довга назва посилання або завантаженого відео
-                        </a>
+
 
                         <a class="courseAdditional-btn" href="##" onclick="app1.addNewEntry()">
                             <span>Додати наступне відео</span>
@@ -337,13 +367,33 @@
 
                 <div class="courseEdit-block">
                     <div class="courseEdit-top">
+                        3D модель
+                    </div>
+                    <div class="courseAdd-wrapper">
+
+                        <div class="courseAdditional-bottom-inner">
+                            <div class="courseAdditional-bottom_left">
+                                <div class="courseAdd_left--name">
+                                    Посилання<sup>*</sup>
+                                </div>
+                            </div>
+                            <div class="courseAdditional-bottom_right">
+                                <input class="courseAdditional--input" name="model3d_link" type="text">
+                            </div>
+                        </div><br>
+
+                    </div>
+                </div>
+
+                <div class="courseEdit-block">
+                    <div class="courseEdit-top">
                         Тест
                     </div>
                     <div class="courseAdd-wrapper">
-                       
+
                         <div class="courseAdditional-topName">
                             Коротка інструкція щодо створення тестування, або рекомендації Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                        </div>                           
+                        </div>
 
                         <a class="courseAdditional-btn courseAdditional-btn_bottom" href="{{ route('add_lesson_redirect', ['course_id' => $course_info->id ]) }}">
                             <span>Створити новий тест</span>
@@ -354,7 +404,7 @@
                         <table class="table table-bordered data-table">
                             <thead>
                                 <tr>
-                                    <th>#</th> 
+                                    <th>#</th>
                                     <th>Имя</th>
                                     <th>Описание</th>
                                     <th></th>
@@ -367,8 +417,8 @@
                                     <td>{{ $test->name }}</td>
                                     <td>{{ strip_tags($test->description) }}</td>
                                     <td>
-                                        <a href="{{ route('view_test_info_questions', ['test_info_id' => $test->id ]) }}"><div class="btn btn-success">Редактировать</div></a>
-                                        <div class="btn btn-danger">Удалить</div>
+                                        <a href="{{ route('view_test_info_questions', ['test_info_id' => $test->id ]) }}"><div style="margin-bottom: 5px;" class="courseEdit-btn-watch btn-watch--more">Редактировать</div></a>
+                                        <a href="{{ route('delete_test', ['test_info_id' => $test->id ]) }}" style="background-color: #c64b3f;" class="courseEdit-btn-watch btn-watch--more">Удалить</div></a>
                                     </td>
                                 </tr>
                                 @endforeach
@@ -389,7 +439,21 @@
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
-    
+    <script type="text/javascript">
+        function show(input) {
+            var fileName = input.files[0].name;
+            var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);            
+        }
+
+        function showFile(input){
+            var fileName = input.files[0].name;
+            var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
+            console.log(test);
+            /* alert(fileName); */
+        }
+
+    </script>
+
     <script>
         var currentCounter = 0;
         var app1 = new Vue({
@@ -402,19 +466,19 @@
             methods: {
                 addNewEntry: function(){
                     currentCounter = currentCounter + 1;
-                    
+
                     this.ids.push({id: currentCounter});
                     //document.getElementById("videos_counter").value = currentCounter;
                     $('#videos_counter').val(currentCounter);
-                    
+
                 },
-                
+
             }
         });
     </script>
     <script>
-    
-    
+
+
         var docsCounter = 0;
         var docs = new Vue({
             el: '#docs',
@@ -433,10 +497,15 @@
                     //document.getElementById("docs_counter").value = docsCounter;
                     $('#docs_counter').val(currentCounter);
                 },
-                
+                removeNewEntry: function(index){
+                    currentCounter = currentCounter - 1;
+                    this.ids.splice(index, 1);
+                    document.getElementById("docs_counter").value = currentCounter;
+                },
+
             }
         });
-    
+
     </script>
 
     <script>
@@ -461,7 +530,6 @@
 
 
 @section('scripts')
-
 @endsection
 
 

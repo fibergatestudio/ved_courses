@@ -228,7 +228,11 @@
                         <!-- changeling block mobile-btn (end) -->
 
                     </div>
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+                    @if(Auth::user()->role == "admin")
+                        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+                    @elseif(Auth::user()->role == "teacher")
+                        @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+                    @endif
 
                 </div>
 
@@ -375,7 +379,7 @@
                     <a class="multipleChoice-btn-center" href="##" onclick="document.getElementById('drag_drop_form').submit();">
                         <span>Зберегти питання</span>
                     </a>
-                    <a class="multipleChoice-btn-right" href="##">
+                    <a class="multipleChoice-btn-right" href="{{ URL::previous() }}">
                         <span>Видалити питання</span>
                     </a>
 

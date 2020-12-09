@@ -234,7 +234,11 @@
                         <!-- changeling block mobile-btn (end) -->
 
                     </div>
-                    @include('layouts.front.includes.admin_sidebar_vrst')
+                    @if(Auth::user()->role == "admin")
+                        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+                    @elseif(Auth::user()->role == "teacher")
+                        @include('layouts.front.includes.teacher_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
+                    @endif
 
                 </div>
 
@@ -399,7 +403,7 @@
                         <button type="submit" class="multipleChoice-btn-center" href="##">
                             <span>Зберегти питання</span>
                         </button>
-                        <a class="multipleChoice-btn-right" href="##">
+                        <a class="multipleChoice-btn-right" href="{{ URL::previous() }}">
                             <span>Видалити питання</span>
                         </a>
 

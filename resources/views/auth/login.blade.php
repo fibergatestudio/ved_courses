@@ -7,7 +7,9 @@
             @csrf
             <div class="modal-body">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
-                    <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                    <a class="entrance-logo" href="{{ route('main')}}">
+                        <img class="w-100" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                    </a>
                     <li class="nav-item">
                         <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab"
                             aria-controls="home" aria-selected="true">Увійти</a>
@@ -92,6 +94,8 @@
                             <div class="modal-footer">
                                 <button type="submit" class="btn-entrance btn btn-secondary"
                                     data-dismiss="modal">Увійти</button>
+                                <a href="{{ route('main') }}" class="btn-entrance btn btn-secondary"
+                                    >Назад</a>
                             </div>
                         </div>
                     </div>

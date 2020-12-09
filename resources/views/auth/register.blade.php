@@ -12,7 +12,9 @@
         </div> -->
         <div class="modal-body">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
-                <img class="entrance-logo" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                <a class="entrance-logo" href="{{ route('main')}}">
+                    <img class="w-100" src="{{ asset('img/entrance-logo.svg') }}" alt="logo">
+                </a>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('login') }}" role="tab" aria-controls="home"
                         aria-selected="true">Увійти</a>
@@ -43,7 +45,7 @@
                                             src="{{ asset('img/login-facebook.png') }}" alt="img">
                                 </a></picture>
                             </div>
-                            <!--<div class="entrance-social_item">
+                            {{--<div class="entrance-social_item">
                                 <a href="##">
                                     <picture>
                                         <source srcset="{{ asset('img/login-instagram-small.pn') }}g"
@@ -66,7 +68,7 @@
                                             media="(max-width:768px"> <img class="entrance-social_image"
                                             src="{{ asset('img/login-privatebank.png') }}" alt="img">
                                 </a></picture>
-                            </div>-->
+                            </div>--}}
                         </div>
                         <div class="entrance-separator"></div>
                         <p>або</p>
@@ -123,6 +125,8 @@
                         <div class="modal-footer">
                             <button type="submit" class="btn-entrance btn btn-secondary"
                                 data-dismiss="modal">Зареєструватися</button>
+                                <a href="{{ route('main') }}" class="btn-entrance btn btn-secondary"
+                                    >Назад</a>
                         </div>
                     </div>
                 </div>

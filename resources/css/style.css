@@ -1246,7 +1246,8 @@ element.style {
     text-transform: uppercase;
     color: #fff;
     font-size: 31px;
-    line-height: 1.3125em
+    line-height: 1.3125em;
+    text-align: center;
 }
 
 .direction-separator_badge,
@@ -3233,6 +3234,23 @@ element.style {
 }
 
 .string-menu_inner:nth-child(3) .string-menu_btn span:before {
+    content: url(../img/virtual-reality-purple.svg);
+    position: absolute;
+    left: 0;
+    top: 50%;
+    -webkit-transform: translateY(-50%);
+    -ms-transform: translateY(-50%);
+    transform: translateY(-50%);
+    width: 23px;
+    height: 23px
+}
+
+.string-menu_inner:nth-child(3) .string-menu_btn.active span:before,
+.string-menu_inner:nth-child(3) .string-menu_btn:hover span:before {
+    content: url(../img/virtual-reality-white.svg)
+}
+
+.string-menu_inner:nth-child(4) .string-menu_btn span:before {
     content: url(../img/notebook-purple.svg);
     position: absolute;
     left: 0;
@@ -3244,12 +3262,12 @@ element.style {
     height: 27px
 }
 
-.string-menu_inner:nth-child(3) .string-menu_btn.active span:before,
-.string-menu_inner:nth-child(3) .string-menu_btn:hover span:before {
+.string-menu_inner:nth-child(4) .string-menu_btn.active span:before,
+.string-menu_inner:nth-child(4) .string-menu_btn:hover span:before {
     content: url(../img/notebook-white.svg)
 }
 
-.string-menu_inner:nth-child(4) .string-menu_btn span:before {
+.string-menu_inner:nth-child(5) .string-menu_btn span:before {
     content: url(../img/test-purple.svg);
     position: absolute;
     left: 0;
@@ -3261,8 +3279,8 @@ element.style {
     height: 27px
 }
 
-.string-menu_inner:nth-child(4) .string-menu_btn.active span:before,
-.string-menu_inner:nth-child(4) .string-menu_btn:hover span:before {
+.string-menu_inner:nth-child(5) .string-menu_btn.active span:before,
+.string-menu_inner:nth-child(5) .string-menu_btn:hover span:before {
     content: url(../img/test-white.svg)
 }
 

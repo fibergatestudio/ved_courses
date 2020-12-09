@@ -31,7 +31,9 @@ class TestsController extends Controller
         $course_id = request()->course_id;
         $courses_program_id = request()->courses_program_id;
 
-        return view('tests.create_test_info', compact('course_id', 'courses_program_id'));
+        $groups = DB::table('groups')->get();
+
+        return view('tests.create_test_info', compact('course_id', 'courses_program_id', 'groups'));
     }
 
     public function create_new_test_info(Request $request){
@@ -164,7 +166,7 @@ class TestsController extends Controller
 
         //dd($request->all());
 
-        $q_type = "Множественный выбор";
+        $q_type = "Множинний вибір";
 
         $a_counter = $request->answer_counter;
         //dd($a_counter);
@@ -216,7 +218,8 @@ class TestsController extends Controller
         //} 
 
 
-        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
     }
 
     public function true_false($test_info_id){
@@ -228,7 +231,7 @@ class TestsController extends Controller
 
         //dd($request->all());
 
-        $q_type = "Верно\Не верно";
+        $q_type = "Правильно/неправильно";
 
         // Формирование Инфы для джсона
         $a_data = "";
@@ -254,7 +257,8 @@ class TestsController extends Controller
             'test_answers_id'       => $insrt_id,
         ]);     
 
-        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
         
     }
 
@@ -291,7 +295,8 @@ class TestsController extends Controller
             'test_answers_id'       => $insrt_id,
         ]);    
 
-        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
         
     }
 
@@ -305,30 +310,28 @@ class TestsController extends Controller
         //dd($request->all());
 
         $answers_counter = $request->answers_counter;
+        $answers_counter = $answers_counter - 1;
         //dd($answers_counter);
         $answers_arr = [];
-        for($i = 1; $i <= $answers_counter; $i++){
+        $arr_answ = [];
+        for($i = 0; $i <= $answers_counter; $i++){
             $answer = "answer" . $i;
 
             $answer_text =  $request->$answer;
-            // $arr_ = [
-            //     'grade' => $request->$grade,
-            //     'review' => strip_tags ($request->$comment),
-            // ];
 
-            //dd($c);
-            array_push($answers_arr, $answer_text);
+            array_push($arr_answ, $answer_text);
         }
 
         $r_answer_arr = [
             'right_answer' => $request->right_answer,
         ];
+        $answers_arr['answers'] = $arr_answ;
         $answers_arr['right_answer'] = $request->right_answer;
         //dd($answers_arr);
 
         
 
-        $q_type = "Перетаскивание в тексте";
+        $q_type = "Перетягування в тексті";
         // Енкод инфы
         $answers_json = json_encode($answers_arr);
 
@@ -350,7 +353,8 @@ class TestsController extends Controller
             'test_answers_id'       => $insrt_id,
         ]);
 
-        return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
     }
 
     // Просмотр теста вопросов\ответов 
@@ -363,21 +367,34 @@ class TestsController extends Controller
         // Подтяжка вопросов\ответов
         foreach($test_question_answers as $t_quest){
             // Если тип вопроса множественнный выбор
-            if($t_quest->question_type == "Множественный выбор"){
+            if($t_quest->question_type == "Множинний вибір"){
                 $answer_info = DB::table('tests_multiple_choice')->where('id', $t_quest->test_answers_id)->first();
-                $t_quest->question_name = $answer_info->question_name;
+                if($answer_info->question_name){
+                    $t_quest->question_name = $answer_info->question_name;
+                } else {
+                    $t_quest->question_name = "";
+                }
+                
             }
-            if($t_quest->question_type == "Верно\Не верно"){
+            if($t_quest->question_type == "Правильно/неправильно"){
                 $answer_info = DB::table('tests_true_false')->where('id', $t_quest->test_answers_id)->first();
-                $t_quest->question_name = $answer_info->question_name;
+                if($answer_info->question_name){
+                    $t_quest->question_name = $answer_info->question_name;
+                } else {
+                    $t_quest->question_name = "";
+                }
             }
-            if($t_quest->question_type == "Краткий ответ"){
-                $answer_info = DB::table('tests_short_answer')->where('id', $t_quest->test_answers_id)->first();
-                $t_quest->question_name = $answer_info->question_name;
-            }
-            if($t_quest->question_type == "Перетаскивание в тексте"){
+            // if($t_quest->question_type == "Краткий ответ"){
+            //     $answer_info = DB::table('tests_short_answer')->where('id', $t_quest->test_answers_id)->first();
+            //     $t_quest->question_name = $answer_info->question_name;
+            // }
+            if($t_quest->question_type == "Перетягування в тексті"){
                 $answer_info = DB::table('tests_drag_drop')->where('id', $t_quest->test_answers_id)->first();
-                $t_quest->question_name = $answer_info->question_name;
+                if($answer_info->question_name){
+                    $t_quest->question_name = $answer_info->question_name;
+                } else {
+                    $t_quest->question_name = "";
+                }
             }
 
         }
@@ -385,6 +402,49 @@ class TestsController extends Controller
         //dd($test_question_answers);
 
         return view('tests.view_test_info_questions', compact('test_info_id', 'test_view_info', 'test_question_answers'));
+    }
+
+    public function update_test_info_questions($test_info_id, Request $request){
+
+        //dd($request->all());
+
+        $max_score = $request->max_score;
+
+        if($max_score == null){
+            $max_score = 0;
+        }
+
+        DB::table('tests_info')->where('id', $test_info_id)->update([
+            'max_score' => $max_score,
+        ]);
+
+        $info = DB::table('tests_questions')->where('id', $test_info_id)->first();
+        // dd($info);
+        // return \Redirect::route('add_lesson', $info->test_id);
+        return back();
+    }
+
+    public function delete_test_question($test_info_id, $question_id, Request $request){
+
+        // Получаем тип вопроса с запроса
+        $question_type = $request->question_type;
+
+            // Если тип вопроса равен = опр. типу
+            if($question_type == "Правильно/неправильно"){
+                // Удаляем вопрос
+                $tf = DB::table('tests_true_false')->where('id', $test_info_id)->delete();
+            }
+            if($question_type == "Множинний вибір"){
+                $mc = DB::table('tests_multiple_choice')->where('id', $test_info_id)->delete();
+            }
+            if($question_type == "Перетягування в тексті"){
+                $dd = DB::table('tests_drag_drop')->where('id', $test_info_id)->delete();
+            }
+            // Удаляем вопрос из вопросов теста
+            DB::table('tests_questions')->where('id', $question_id)->delete();
+
+        // Возвращаем назад
+        return back();
     }
     // -----------------Конец создания новых тестов-------------------------
 
@@ -592,13 +652,13 @@ class TestsController extends Controller
         //dd($questions);
 
         foreach($questions as $question){
-            if($question->question_type == "Множественный выбор"){
+            if($question->question_type == "Множинний вибір"){
                 DB::table('tests_multiple_choice')->where('id', $question->test_answers_id)->delete();
-            } else if($question->question_type == "Верно\Не верно"){
+            } else if($question->question_type == "Правильно/неправильно"){
                 DB::table('tests_true_false')->where('id', $question->test_answers_id)->delete();
             } else if($question->question_type == "Краткий ответ"){
                 DB::table('tests_short_answer')->where('id', $question->test_answers_id)->delete();
-            } else if($question->question_type == "Перетаскивание в тексте"){ 
+            } else if($question->question_type == "Перетягування в тексті"){ 
                 DB::table('tests_drag_drop')->where('id', $question->test_answers_id)->delete();
             }
         }

@@ -201,7 +201,7 @@ class StudentController extends Controller
         return view('student.students_controll_edit', compact('student', 'teachers') );
     }
 
-    public function students_controll_apply($student_id, Request $request){
+    public function students_controll_apply($student_id, Request $request){ 
 
         $all_info = $request->all();
         //dd($all_info);
@@ -212,6 +212,7 @@ class StudentController extends Controller
             'course_number' => $request->course_number,
             'group_number' => $request->group_number,
             'student_number' => $request->student_number,
+            'student_phone_number' => $request->student_phone_number,
             'assigned_teacher_id' => $request->assigned_teacher_id,
         ]);
 
@@ -252,6 +253,7 @@ class StudentController extends Controller
     {
         // Получаем всю инфу с запроса
         $all_info = $request->all();
+        //dd($all_info);
         // Файл импорта
         $file = $request->file('import_file');
         // Формируем из экселя аррей

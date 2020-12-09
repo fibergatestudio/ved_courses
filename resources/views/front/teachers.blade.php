@@ -45,18 +45,24 @@
             @forelse ($course_teachers as $teacher)
             <div class="teachers-grid_wrapper mb-2">
                 <div class="teachers-grid_item">
+                    @if (App\User::find($teacher->user_id)->getMedia('photos')->last())
+                    <div class="teachers-item_photo" style="background-image: url({{ asset(App\User::find($teacher->user_id)->getMedia('photos')->last()->getUrl('thumb_big')) }}) !important;">
+
+                    </div>
+                    @else
                     <div class="teachers-item_photo">
                     </div>
+                    @endif
                 </div>
                 <div class="teachers-grid_item">
                     <div class="teachers-item_name">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
-                    <div class="teachers-item_position">Професор наук ???</div>
+                    <!--<div class="teachers-item_position">Професор наук ???</div>
                     <div class="teachers-item_students"><span>???</span> &nbspучнів</div>
-                    <div class="teachers-item_course"><span>??</span> &nbspкурсів</div>
+                    <div class="teachers-item_course"><span>??</span> &nbspкурсів</div>-->
                 </div>
                 <div class="teachers-grid_item">
                     <div class="teachers-item_text">
-                        ???
+                        {{ $teacher->descr }}
                     </div>
                 </div>
             </div>

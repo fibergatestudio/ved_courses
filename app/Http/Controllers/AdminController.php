@@ -7,7 +7,7 @@ use DB;
 
 class AdminController extends Controller
 {
-    
+
     // Индекс
     public function index(){
 
@@ -17,7 +17,7 @@ class AdminController extends Controller
     // Управление пользователями
     public function users_controll(){
 
-        $users = DB::table('users')->get();
+        $users = DB::table('users')->paginate(6);
 
         return view('admin.users_controll', compact('users'));
     }
@@ -49,7 +49,7 @@ class AdminController extends Controller
                 'email' => $request->email,
             ]);
         //}
-        
+
         // Если пользователь студент - обновить
         if($request->role == "student"){
             DB::table('students')->where('user_id', $user_id)->update([
@@ -63,11 +63,11 @@ class AdminController extends Controller
         } else if ($request->role == "teacher"){
             //dd("Techer");
             // DB::table('teachers')->where('user_id', $user_id)->update([
-            //     'status' 
+            //     'status'
             // ]);
         }
 
-        return redirect()->back()->with('message_success', 'Пользователь изменен!');
+        return redirect()->back()->with('message_success', 'Користувача змінено!');
     }
 
     // Подтверждение учителя(перевод из сутдентов)

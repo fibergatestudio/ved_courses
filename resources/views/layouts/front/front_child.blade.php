@@ -25,6 +25,7 @@
             </div>
         </div>
     </header>
+
     @yield('content')
 
     @include('layouts.front.includes.footer')

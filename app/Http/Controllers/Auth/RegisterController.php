@@ -83,7 +83,7 @@ class RegisterController extends Controller
                 'status' => 'unconfirmed'
             ]);
 
-            $studen_fio = $data['name'] . " " . $data['surname'] . " " . $data['patronymic'] . " ";
+            $studen_fio = $data['surname'] . " " . $data['name'] . " " . $data['patronymic'];
 
             // Создаем для него запись в стундентах
             DB::table('students')->insert(

@@ -7,18 +7,19 @@
 @section('content')
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>Заняття {{ $lessonNumber }}</span></div>
+        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
     </div>
     <div class="container">
+
         <ul class="breadcrumbs_list">
             <li class="breadcrumbs_item">
-                <a href="{{ route('home') }}" class="breadcrumbs_link">Головна</a>
+                <a href="{{ route('main') }}" class="breadcrumbs_link">Головна</a>
             </li>
             <li class="breadcrumbs_item">
                 <a href="{{ route('view_course', $course->id) }}" class="breadcrumbs_link">{{ $course->name }}</a>
             </li>
             <li class="breadcrumbs_item">
-                <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}" class="breadcrumbs_link breadcrumbs_active">Заняття {{ $lessonNumber }}</a>
+                <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}" class="breadcrumbs_link breadcrumbs_active">{{ $lesson->course_name ?? 'Без назви' }}</a>
             </li>
 
         </ul>
@@ -31,23 +32,16 @@
                 <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'video']) }}"><span>Відеолекція</span></a>
             </div>
             <div class="string-menu_inner">
-                <a class="string-menu_btn active" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
+                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'model']) }}"><span>3D модель</span></a>
             </div>
             <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'test']) }}"><span>Тест</span></a>
+                <a class="string-menu_btn  active" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
+            </div>
+            <div class="string-menu_inner">
+                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'test']) }}"><span>Завдання</span></a>
             </div>
 
-            @if ($prevLesson)
-                <a class="control_btn-prev" href="{{ route('view_lesson', [$course->id, $prevLesson->id]) }}"><span></span></a>
-            @else
-                <a class="control_btn-prev disable" href="#"><span></span></a>
-            @endif
-
-            @if ($nextLesson)
-                <a class="control_btn-next" href="{{ route('view_lesson', [$course->id, $nextLesson->id]) }}"><span></span></a>
-            @else
-                <a class="control_btn-next disable" href="#"><span></span></a>
-            @endif
+            @include('layouts.front.includes.nextprevlesson')
 
         </div>
 
@@ -58,7 +52,7 @@
       </div>
 
       @forelse (collect(json_decode($lesson->add_document)) as $document)
-            <a class="protocole-btn btn-watch--more" href="{{ asset('/docs').'/'.$document }}"><span>Протокол № {{ $loop->iteration }}</span></a>
+            <a class="protocole-btn btn-watch--more" href="{{ asset('docs/'.$document) }}"><span>Протокол № {{ $loop->iteration }}</span></a>
       @empty
       <div class="string-text">
         Протоколи відсутні

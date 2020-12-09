@@ -1,93 +1,87 @@
-@extends('layouts.app')
+@extends('layouts.front.front_child')
 
 @section('content')
-<div class="container">
-    @if(session()->has('message_success'))
-        <div class="alert alert-success">
-            {{ session()->get('message_success') }}
-        </div>
-    @endif
-    <div class="row justify-content-center">
-        <div class="col-md-3">
-            @include('layouts.admin_sidebar')
-        </div>
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">{{ __('Редактирование пользователя ') }} {{ $user->name }}</div>
+<section class="courseControl">
+    <div class="courseControl-separator direction-separator">
+    </div>
+    <div class="courseControl-container sticky-container container">
 
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
+        @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Редагування користувача', 'imgPath' => 'img/teacher-mobileMenu-5.png'])
 
-                    <form action="{{ route('user_edit_apply',['user_id' => $user->id]) }}" method="POST">
-                        @csrf
-                        <div class="form-group">
-                            <label>Логин</label>
-                            <input type="text" class="form-control" name="name" value="{{ $user->name }}">
-                        </div>
-                        <div class="form-group">
-                            <label>Email</label>
-                            <input type="text" class="form-control" name="email" value="{{ $user->email }}">
-                        </div>
-                        <div class="form-group">
-                            <label>Роль</label>
-                            <input type="hidden" class="form-control" name="role" value="{{ $user->role }}">
-                            <input type="text" class="form-control" value="{{ $user->role }}" disabled>
-                        </div>
-                        <div class="form-group">
-                            <label>Роль</label>
-                            <input type="text" class="form-control" value="{{ $user->status }}" disabled>
-                        </div>
-                        <!-- <div class="form-group">
-                            <label>Роль</label>
-
-                            <select class="form-control" name="role">
-                                <option value="admin">Админ</option>
-                                <option value="teacher">Учитель</option>
-                                <option value="student">Студент</option>
-                            </select>
-                        </div> -->
-                        <hr>
-                        @if($student_info != '')
-                        <div class="form-group">
-                            <label>ФИО</label>
-                            <input type="text" class="form-control" name="full_name" value="{{ $student_info->full_name }}">
-                        </div>
-                        <div class="form-group">
-                            <label>Название университета</label>
-                            <input type="text" class="form-control" name="university_name" value="{{ $student_info->university_name }}">
-                        </div>
-                        <div class="form-group">
-                            <label>Номер курса</label>
-                            <input type="number" class="form-control" name="course_number" value="{{ $student_info->course_number }}">
-                        </div>
-                        <div class="form-group">
-                            <label>Номер группы</label>
-                            <input type="number" class="form-control" name="group_number" value="{{ $student_info->group_number }}">
-                        </div>
-                        <div class="form-group">
-                            <label>Номер студенчиского билета</label>
-                            <input type="number" class="form-control" name="student_number" value="{{ $student_info->student_number }}">
-                        </div>
-                        @endif
-                        <br>
-                        <button type="submit" class="btn btn-success">Применить</button>
-                    </form>
-
-                        @if($user->status != 'confirmed')
-                        <a href="{{ route('teacher_apply', ['user_id' => $user->id]) }}">
-                            <button class="btn btn-primary">Подтвердить</button>
-                        </a>
-                        @endif
-                        <a href="{{ route('users_controll') }}">
-                            <button class="btn btn-danger">Назад</button>
-                        </a>
+            <form class="groups-control_edit-block" action="{{ route('user_edit_apply', ['user_id' => $user->id]) }}" method="POST">
+            @csrf
+            <h1 class='groups-head__title uge__title uge__title_first-child'>Редагування користувача {{ $user->name }}</h1>
+            @if(session()->has('message_success'))
+                <div class="alert alert-success groups-edit__group-name uge_row_text-style uge__row">
+                    {{ session()->get('message_success') }}
+                </div>
+            @endif
+            <div class="groups-edit__group uge__row">
+                <p class="groups-edit__group-name uge_row_text-style">Логін </p>
+                <input class='eg-input uge__input_style' type="text" name="name" value="{{ $user->name }}" id="getLogin"
+                    placeholder="Логін">
+            </div>
+            <div class="groups-edit__group uge__row">
+                <p class="groups-edit__group-name uge_row_text-style">Email</span></p>
+                <input class='eg-input uge__input_style' type="text" name="email" value="{{ $user->email }}" id="getEmail"
+                    placeholder="example@mail.com">
+            </div>
+            <div class="groups-edit__group uge__row">
+                <p class="groups-edit__group-name uge_row_text-style">Роль</p>
+                <input type="hidden" class="form-control" name="role" value="{{ $user->role }}">
+                <div class="select uge__select_block">
+                    <select name="select-teacher"
+                        class="select-teacher select-teacher_sce_restyle uge__select_style" id="selectTeacher">
+                        <option value="role-1" {{ $user->role == 'admin'  ? 'selected="selected"' : ''}}>Адмiн</option>
+                        <option value="role-2" {{ $user->role == 'teacher'  ? 'selected="selected"' : ''}}>Викладач</option>
+                        <option value="role-3" {{ $user->role == 'student'  ? 'selected="selected"' : ''}}>Студент</option>
+                    </select>
                 </div>
             </div>
-        </div>
+            @if($student_info != '')
+                <h1 class='groups-head__title uge__title uge__title_third-child'>{{__('Редагування даних')}}</h1>
+                <div class="groups-edit__group uge__row">
+                    <p class="groups-edit__group-name uge_row_text-style">ПІБ: <span id="studentName">Іванов Іван Іванович</span></p>
+                    <input class='eg-input uge__input_style' type="text" name="full_name" value="{{ $student_info->full_name }}" id="getNames"
+                        placeholder="Іванов Іван Іванович">
+                </div>
+                <div class="groups-edit__group uge__row">
+                    <p class="groups-edit__group-name uge_row_text-style">Назва ВУЗу</p>
+                    <input class='eg-input uge__input_style' type="text" name="university_name" value="{{ $student_info->university_name }}" id="getUniversityName"
+                        placeholder="Повна назва ВУЗу">
+                </div>
+                <div class="sce__course-number">
+                    <div class="groups-edit__group uge__row sce_width-55">
+                        <p class="groups-edit__group-name uge_row_text-style">Назва курсу</p>
+                        <input class='eg-input uge__input_style' type="text" name="course_number" value="{{ $student_info->course_number }}" id="getCourseName"
+                            placeholder="Повна назва курсу студента">
+                    </div>
+                    <div class="groups-edit__group uge__row sce_width-40">
+                        <p class="groups-edit__group-name uge_row_text-style">Номер групи</p>
+                        <input class='eg-input uge__input_style' type="text" name="group_number" value="{{ $student_info->group_number }}" id="getGroupName"
+                                placeholder="2">
+                    </div>
+                </div>
+                <div class="groups-edit__group uge__row uge__mb_30">
+                    <p class="groups-edit__group-name uge_row_text-style">Номер студентського квитка</p>
+                    <input class='eg-input uge__input_style' type="text" name="student_number" value="{{ $student_info->student_number }}" id="getStudentName"
+                            placeholder="2">
+                </div>
+                <div class="groups-edit__group uge__row uge__mb_30">
+                    <p class="groups-edit__group-name uge_row_text-style">Номер телефону</p>
+                    <input class='eg-input uge__input_style uge__row uge__mb-0' type="text" name="course-name"
+                        id="getPhoneNumber" placeholder="+XX (XXX) XXX-XX-XX" value=""
+                        pattern="\+38\s?[\(]{0,1}[0-9]{3}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}">
+                </div>
+            @endif
+            <div class="groups-edit__buttons-block uge__mb_30">
+                <button type="submit" class="groups-edit__create-group sce__buttons-restyle uge__buttons-style"
+                        id="saveUser">Зберегти </button>
+                <button class="groups-edit__back-to-groups sce__buttons-restyle uge__buttons-style"
+                        id="backToUsers"
+                        onClick="event.preventDefault(); window.location.href='{{ redirect()->back()->getTargetUrl() }}'">Назад</button>
+            </div>
+        </form>
     </div>
-</div>
+</section>
 @endsection
