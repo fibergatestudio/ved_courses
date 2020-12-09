@@ -104,9 +104,9 @@ use Illuminate\Support\Facades\Auth;
     // Личная информация студента
     Route::get('/student/information', 'StudentController@student_information' )->name('student_information')->middleware('auth','role:student');
     // Применить изменения студента
-    Route::post('/student/information/apply', 'StudentController@student_information_apply')->name('student_information_apply')->middleware('auth','role:student');
+    Route::post('/student/information/apply', 'StudentController@student_information_apply')->name('student_information_apply')->middleware('auth','role:student,teacher');
     // Применить изменения описания студента
-    Route::post('/student/descr/apply', 'StudentController@student_descr_apply')->name('student_descr_apply')->middleware('auth','role:student');
+    Route::post('/student/descr/apply', 'StudentController@student_descr_apply')->name('student_descr_apply')->middleware('auth','role:student,teacher');
     // Изменение пароля
     Route::post('/student/information/change_password', 'StudentController@student_information_change_password')->name('student_information_change_password')->middleware('auth','role:student');
     // Тесты студента
