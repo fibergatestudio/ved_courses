@@ -486,6 +486,7 @@
                     </div>
                 </div>
 
+                <?php $course_num=1; ?>
                 @foreach($course_lessons as $lesson)
 
                 <div class="courseEdit-block">
@@ -494,8 +495,8 @@
                     </div>
                         <div class="courseEdit-grid_wrapper">
                             <div class="courseEdit-grid_item">
-                                <div class="programs-item_lesson--number">01</div>
-                                <div class="programs-item_lesson--text">Заняття {{ $lesson->id }}</div>
+                                <div class="programs-item_lesson--number">0{{ $course_num }}</div>
+                                <div class="programs-item_lesson--text">Заняття {{ $course_num }}</div>
                             </div>
                             <div class="courseEdit-grid_item">
                                 <div class="courseEdit-item_chapter programs-item_chapter">{{ $lesson->course_name }}
@@ -607,6 +608,7 @@
                             </div>
                         </div>
                 </div>
+                <?php $course_num++; ?>
                 @endforeach
 
 
@@ -620,10 +622,10 @@
                     <div class="courseEdit-top">
                         Поширені запитання
                     </div>
-
                     @foreach($courses_question_answers as $faq)
                     <div class="main-faq_panel active">{{ strip_tags($faq->course_question) }}</div>
-                    <div class="main-faq_panel--inner show">{{ strip_tags($faq->course_answer) }}</div>
+                    <?php $clear_answer = str_replace("&nbsp;", '', $faq->course_answer); ?>
+                    <div class="main-faq_panel--inner show">{{ strip_tags($clear_answer) }}</div>
                     @endforeach
 
                     <div class="courseEdit-btn_wrapper">

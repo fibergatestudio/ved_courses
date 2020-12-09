@@ -1,6 +1,11 @@
 @extends('layouts.front.front_child')
 
 @section('content')
+@if(session()->has('message_success'))
+    <div class="alert alert-success">
+        {{ session()->get('message_success') }}
+    </div>
+@endif
 <section class="courseControl">
     <div class="courseControl-separator direction-separator">
     </div>
@@ -19,11 +24,15 @@
             <p class="sc-header__desc .order-1">Додати базу студентів</p>
             <div class="groups-edit__group groups-edit__group_restyle  order-3 margin-0">
                 <div class="groups-edit__student-add-form base-upload-block">
-                    <label class="custom-upload-form" for="baseUpload">
-                        <input class='eg-input add-style base-upload' type="file" id="baseUpload">
-                        Назва файлу.xlsx
-                    </label>
-                    <button class="add-student add-student_restyle" id="egAddStudent">Додати</button>
+                    <form action="{{ route('import_students_apply') }}" method="POST" enctype="multipart/form-data">
+                        @csrf
+                        <label class="custom-upload-form" for="baseUpload">
+                            <input class='eg-input add-style base-upload' type="file" id="baseUpload" name="import_file" required>
+                            <p id="upld_file_name">Назва файлу.xlsx</p>
+                        </label>
+                        <button type="submit" class="add-student add-student_restyle" id="egAddStudent">Додати</button>
+                    </form>
+
                 </div>
             </div>
             <p class="sc-header__desc sc-header__desc_restyle .order-2">
@@ -328,4 +337,17 @@
         </div>
     </div>
 </div> --}}
+<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+<script>
+
+        $(document).ready(function() {
+            $('input[type="file"]').change(function(e) {
+                var geekss = e.target.files[0].name;
+                //alert(geekss);
+                $("#upld_file_name").text(geekss);
+
+            });
+        });
+
+</script>
 @endsection

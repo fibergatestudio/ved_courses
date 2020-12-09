@@ -16,7 +16,7 @@ class CreateCoursesFaqTable extends Migration
         Schema::create('courses_faq', function (Blueprint $table) {
             $table->id();
             $table->string('course_id')->nullable();
-            $table->string('course_question')->nullable();
+            $table->longText('course_question')->nullable();
             $table->longText('course_answer')->nullable();
             $table->timestamps();
         });
