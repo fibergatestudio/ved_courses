@@ -86,7 +86,7 @@ class AdminController extends Controller
         DB::table('students')->where('user_id', $user_id)->delete();
         DB::table('teachers')->where('user_id', $user_id)->delete();
 
-        return redirect()->back()->with('message_success', 'Пользователь удален!');
+        return redirect()->back()->with('message_success', 'Користувач був видалений!');
     }
 
 }

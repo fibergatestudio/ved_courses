@@ -80,8 +80,8 @@ use Illuminate\Support\Facades\Auth;
         Route::get('groups/add_group', 'GroupsController@add_group')->name('add_group')->middleware('auth','role:admin,teacher');
             // Автокомплит студентов
             Route::get('/autocomplete/fetch', 'GroupsController@fetch')->name('autocomplete.fetch')->middleware('auth','role:admin,teacher');
-            // Аджакс проверка
-            Route::get('/autocomplete/fetchСheck', 'GroupsController@fetchCheck')->name('autocomplete.fetch.check')->middleware('auth','role:admin,teacher');
+            // проверка наличия студента в БД
+            Route::post('/autocomplete/fetchСheck', 'GroupsController@fetchCheck')->name('autocomplete.fetch.check')->middleware('auth','role:admin,teacher');
             // Применить добавление группы
             Route::post('groups/add_group/apply', 'GroupsController@add_group_apply')->name('add_group_apply')->middleware('auth','role:admin,teacher');
 
@@ -92,8 +92,10 @@ use Illuminate\Support\Facades\Auth;
         Route::get('groups/edit_group/{group_id}', 'GroupsController@edit_group')->name('edit_group')->middleware('auth','role:admin,teacher');
             // Применить изменения группы
             Route::post('groups/edit_group/{group_id}/apply', 'GroupsController@apply_edit_group')->name('apply_edit_group')->middleware('auth','role:admin,teacher');
-            //Изменение
+            //Изменение названия группы
             Route::post('/groups/edit_group/name_change', 'GroupsController@changeGroupName')->name('edit_group.name_change')->middleware('auth','role:admin,teacher');
+            //Вернуть старое(не перезаписанное пока) название группы(из БД)
+            Route::post('/groups/edit_group/name_change_discard', 'GroupsController@discardGroupNameChanges')->name('edit_group.name_change_discard')->middleware('auth','role:admin,teacher');
 
 // Студент
     // Индекс Студента

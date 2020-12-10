@@ -114,7 +114,7 @@
             }
         });
 
-        $(document).on('click', 'li', function(){
+        $('#studentList').on('click', 'li', function(){
             $('#student').val($(this).text());
             $('#studentList').fadeOut();
         });

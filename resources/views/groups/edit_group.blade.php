@@ -40,6 +40,11 @@
             @csrf
                 <div class="ge">
                     <h3 class="ccec__main-title">Редагування групи</h3>
+                    @if(session()->has('message_success'))
+                        <div class="alert alert-success groups-edit__group-name uge_row_text-style uge__row">
+                            {{ session()->get('message_success') }}
+                        </div>
+                    @endif
                     <div class="ccec-header ge__header">
                         <div class="groups-edit__teacher-block ge__teacher-course">
                             <p class="groups-edit__current-teacher eg-text-style ge__mb-20">
@@ -175,7 +180,7 @@
                             <div class="groups-edit__group uge__row ge__select-block_style">
                                 <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
                                     <div class="select uge__select_block ge__select_style">
-                                        <select name="select-teacher"
+                                        <select name="teacher_id"
                                             class="select-teacher select-teacher_sce_restyle uge__select_style"
                                             id="selectTeacher">
                                             <option>Нет</option>
@@ -196,14 +201,13 @@
                 <div class="groups-edit__buttons-block ccec__back-save-btns">
                     <a href="{{ url()->previous() }}"
                         class="groups-edit__back-to-groups sce__buttons-restyle uge__buttons-style ugea__button_style ccec__btn"
-                        id="backToUsers" style="text-align: center;">Назад </a>
-                    <button class="groups-edit__create-group sce__buttons-restyle uge__buttons-style ugea__button_style"
-                        id="saveUser">Зберегти </button>
+                        id="backToUsers" style="text-align: center;">Назад</a>
+                    <button type="submit"
+                        class="groups-edit__create-group sce__buttons-restyle uge__buttons-style ugea__button_style">Зберегти</button>
                 </div>
             </form>
         </div>
     </section>
-
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
@@ -212,174 +216,180 @@
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
         crossorigin="anonymous"></script>
     {{-- <script src="assets/js/main.js"></script> --}}
+
     <script>
-        // const axios = require('axios');
-
         var students_array = new Array();
-        var count_t = 1;
+            var count_t = 1;
 
-    $(document).ready(function(){
-        /* Берем все текущие значения */
-        var values = $("input[name='student_name[]']")
-            .map(function(){
-                students_array.push($(this).val());
-                return $(this).val();
-            }).get();
+        $(document).ready(function(){
+            /* Берем все текущие значения */
+            let values = $("input[name='student_name[]']")
+                .map(function(){
+                    students_array.push($(this).val());
+                    return $(this).val();
+                }).get();
 
-        // console.log(count_t);
-        count_t = students_array.length;
-        count_t++;
+            // console.log(count_t);
+            count_t = students_array.length;
+            count_t++;
 
-        // console.log(students_array);
-        // console.log(count_t);
-    });
+            // console.log(students_array);
+            // console.log(count_t);
+        });
 
-    $('#student').keyup(function(){
-        var query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, '');
-        if(query != ''){
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url:"{{ route('autocomplete.fetch') }}" + "/?students=" + students_array,
-                method:"GET",
-                data:{query:query, _token:_token},
-                success:function(data){
-                    $('#studentList').fadeIn();
-                    $('#studentList').html(data);
-                },
-            });
-        }
-    });
+        $('#student').keyup(function(){
+            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, '');
+            if(query != ''){
+                // axios.get("{{ route('autocomplete.fetch') }}", {
+                //     params: {
+                //         query: query,
+                //         students: students_array,
+                //     }
+                // })
+                // .then(function (response) {
+                //     console.log(response);
+                //     // $('#studentList').fadeIn();
+                //     // $('#studentList').html(data);
+                // })
+                // .catch(function (error) {
+                //     console.log(error);
+                // });
+                var _token = $('input[name="_token"]').val();
+                $.ajax({
+                    url:"{{ route('autocomplete.fetch') }}" + "/?students=" + students_array,
+                    method:"GET",
+                    data:{query:query, _token:_token},
+                    success:function(data){
+                        $('#studentList').fadeIn();
+                        $('#studentList').html(data);
+                    },
+                });
+            }
+        });
 
-    $(document).on('click', 'li', function(){
-        $('#student').val($(this).text());
-        $('#studentList').fadeOut();
-    });
+        $('#studentList').on('click', 'li', function(e){
+            e.preventDefault();
+            $('#student').val($(this).text());
+            $('#studentList').fadeOut();
+        });
 
-    $('#addstudent').click(function() {
-        /* Берем имя текущего студента */
-        var curr_stud = $('#student').val().replace(/[A-Za-z]|[0-9]|\s+/g, '');
-        // var s_count = 1;
+        $('#addstudent').click(function() {
+            /* Берем имя текущего студента */
+            let curr_stud = $('#student').val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ');
 
-        /* Проверка на существующего студента в базе */
-        var _token = $('input[name="_token"]').val();
-        $.ajax({
-            url:"{{ route('autocomplete.fetch.check') }}" + "/?student=" + curr_stud,
-            method:"GET",
-            data:{_token:_token},
-            success:function(data){
-                // console.log(data);
-                if(data == "Нет студента"){
-                    alert('Студент не найден, пожалуйста выберите студента из выпадающего списка!')
-                } else {
-                    /* Если студент есть в аррее */
-                    if(jQuery.inArray(curr_stud, students_array) != -1 ){
-                        alert("Студент "+curr_stud+" Уже добавлен!");
-                    } else {
-                        /*Ищу последнюю строку со студентом и получаю порядковый*/
-                        var count_stud = $("div[id^='name']:last").attr("id").replace("name", "");
-                        // console.log(count_stud);
-                        count_stud++;
-                        // console.log(count_stud);
-                        // console.log(curr_stud);
-                        // console.log(students_array);
+            /* Проверка на существующего студента в базе */
+            axios.post("{{ route('autocomplete.fetch.check') }}", {
+                student: curr_stud,
+            })
+            .then(function(response) {
+                if(jQuery.inArray(response.data.full_name, students_array) != -1 ){
+                    alert("Студент "+response.data.full_name+" вже доданий!");
+                }else{
 
-                        $("div[id^='name']:last").after("\
-                            <div class='sc-string ccec__row' id='name"+count_stud+"'>\
-                                <div class='ccec__string-inner-mer student-number-mer'>"+count_stud+"</div>\
-                                <div class='ccec__string-inner-mer col text-center'>"+curr_stud+"</div>\
-                                <div class='ccec__string-inner-mer col text-center'>group_number</div>\
-                                <div class='ccec__string-inner-mer col text-center'>student_phone_number</div>\
-                                <div class='ccec__string-inner-mer col w-wrap text-center'>student_email</div>\
-                                <div class='ccec__string-inner-mer col text-center'>student_number</div>\
-                                <div class='ccec__string-inner-mer col text-center'>teacher_fio</div>\
-                                <div class='ccec__string-inner-mer col text-center'>\
-                                    <a class='flexTable-btn_delete ccec__delete-btn' href='##' data-toggle='modal'\
-                                        data-target='#deleteModal"+count_stud+"'><span>Видалити</span>\
-                                    </a>\
-                                </div>\
-                                <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_stud+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
-                                    <div class='modal-dialog  modal-dialog_restyle'>\
-                                        <div class='modal-content'>\
-                                            <div class='deleteMenu-wrapper'>\
-                                                <div class='deleteMenu-topImg'>\
-                                                    <img src='/img/graduation-cap.png' alt='icon'>\
-                                                </div>\
-                                                <div class='deleteMenu-text'>\
-                                                    Ви дійсно бажаєте видалити <br> студента "+curr_stud+" зі списку?\
-                                                </div>\
-                                                <div class='deleteMenu-btn'>\
-                                                    <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_t+")'>\
-                                                        <span>Видалити</span>\
-                                                    </a>\
-                                                </div>\
+                    /*Перебор обьекта на значения null*/
+                    $.each(response.data, function( key, value ) {
+                        if(value == null || value == undefined){
+                            response.data[key] = '-';
+                        }
+                    });
+                    console.log(response.data);
+
+                    /*Ищу последнюю строку со студентом и получаю порядковый*/
+                    let count_stud = $("div[id^='name']:last").attr("id").replace("name", "");
+                    count_stud++;
+
+                    $("div[id^='name']:last").after("\
+                        <div class='sc-string ccec__row' id='name"+count_stud+"'>\
+                            <div class='ccec__string-inner-mer student-number-mer'>"+count_stud+"</div>\
+                            <div class='ccec__string-inner-mer col text-center'>"+response.data.full_name+"</div>\
+                            <div class='ccec__string-inner-mer col text-center'>"+response.data.group_number+"</div>\
+                            <div class='ccec__string-inner-mer col text-center'>"+response.data.student_phone_number+"</div>\
+                            <div class='ccec__string-inner-mer col w-wrap text-center'>"+response.data.student_email+"</div>\
+                            <div class='ccec__string-inner-mer col text-center'>"+response.data.student_number+"</div>\
+                            <div class='ccec__string-inner-mer col text-center'>"+response.data.teacher_fio+"</div>\
+                            <div class='ccec__string-inner-mer col text-center'>\
+                                <a class='flexTable-btn_delete ccec__delete-btn' href='##' data-toggle='modal'\
+                                    data-target='#deleteModal"+count_stud+"'><span>Видалити</span>\
+                                </a>\
+                            </div>\
+                            <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_stud+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
+                                <div class='modal-dialog  modal-dialog_restyle'>\
+                                    <div class='modal-content'>\
+                                        <div class='deleteMenu-wrapper'>\
+                                            <div class='deleteMenu-topImg'>\
+                                                <img src='/img/graduation-cap.png' alt='icon'>\
+                                            </div>\
+                                            <div class='deleteMenu-text'>\
+                                                Ви дійсно бажаєте видалити <br> студента "+curr_stud+" зі списку?\
+                                            </div>\
+                                            <div class='deleteMenu-btn'>\
+                                                <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_t+")'>\
+                                                    <span>Видалити</span>\
+                                                </a>\
                                             </div>\
                                         </div>\
                                     </div>\
                                 </div>\
-                                <input type='hidden' name='student_name[]' value='"+curr_stud+"'>\
                             </div>\
-                        ");
-                        /* Добавляем текущего студента в аррей */
-                        students_array.push(curr_stud);
-                        count_t++;
-                    }
+                            <input type='hidden' name='student_name[]' value='"+curr_stud+"'>\
+                        </div>\
+                    ");
+                    /* Добавляем текущего студента в аррей */
+                    students_array.push(curr_stud);
+                    count_t++;
                 }
-            }
+            })
+            .catch(function(error) {
+                console.log(error);
+                /*Пока костыль на ошибку*/
+                alert('Студента не знайдено, будь ласка виберіть студента з випадаючого списку!');
+            });
         });
-    });
 
-    function removeStud(curr_stud) {
-        students_array.splice( $.inArray(curr_stud,students_array) ,1 );
-        var div_name = "#name" + curr_stud;
-        // console.log(div_name);
-        setTimeout(function(){
-            $( div_name ).remove();
-            count_t--;
-        }, 500);
-        // console.log(students_array);
-        // console.log("RemoveStud " + curr_stud);
-        /*Не убирался серый фон от модала, с этим костылем работает*/
-        $('.modal-backdrop').hide();
-    }
+        function removeStud(curr_stud) {
+            students_array.splice( $.inArray(curr_stud,students_array) ,1 );
+            let div_name = "#name" + curr_stud;
+            // console.log(div_name);
+            setTimeout(function(){
+                $( div_name ).remove();
+                count_t--;
+            }, 500);
+            // console.log(students_array);
+            // console.log("RemoveStud " + curr_stud);
+            /*Не убирался серый фон от модала, с этим костылем работает*/
+            $('.modal-backdrop').hide();
+        }
 
-    $('#changeGroupName').click(function(e){
-        e.preventDefault();
-        var nameGroup = $('input[name="nameGroup"]').val().replace(/\s+/g, ' ').trim();
-        alert(nameGroup);
-
-        // axios.post("{{ route('edit_group.name_change') }}", {
-        //     nameGroup: nameGroup,
-        // })
-        // .then(function (response) {
-        //     console.log(response);
-        // })
-        // .catch(function (error) {
-        //     console.log(error);
-        // });
-
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
+        $('#changeGroupName').click(function(e){
+            e.preventDefault();
+            //Берем новое название группы
+            let nameGroup = $('input[name="nameGroup"]').val().replace(/\s+/g, ' ').trim();
+            //Берем индентификатор группы
+            let groupId = {{ $group_info->id }};
+            //отправка асинхронного запроса на сервер
+            axios.post("{{ route('edit_group.name_change') }}", {
+                nameGroup: nameGroup,
+                groupId: groupId,
+            })
+            .then(function (response) {
+                alert(response.data);
+            })
+            .catch(function (error) {
+                /*Пока костыль на ошибку*/
+                alert('Не вдалося змінити назву группи');
+            });
+            /*Скрываю модал*/
+            $("#changeGroupNameM").modal('hide');
+            /*Не убирался серый фон от модала, с этим костылем работает*/
+            $('.modal-backdrop').hide();
         });
-        $.ajax({
-            url:"{{ route('edit_group.name_change') }}",
-            method:"POST",
-            data:{nameGroup: nameGroup},
-            success:function(data){
-                alert("YES!"+data);
-            },
-            errors:function(err){
-                alert("NO!"+err);
-            }
-        });
-    });
-
     </script>
 
 @endsection
 
 @section('scripts')
+
+
 @endsection
 
 
