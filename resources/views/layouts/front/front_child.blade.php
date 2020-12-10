@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/slick.css') }}"/>
     <link rel="stylesheet" href="{{ asset('css/style.css') }}"/>
+    @yield('css')
 </head>
 
 <body>
@@ -34,6 +35,7 @@
     <script src="{{ asset('js/app.js') }}"></script>
     <script src="{{ asset('js/slick.min.js') }}"></script>
     <script src="{{ asset('js/main.js') }}"></script>
+    @yield('js')
 </body>
 
 </html>
