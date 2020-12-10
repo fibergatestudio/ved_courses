@@ -2467,7 +2467,7 @@
     <!-- protocol modal window end -->
     <div class="content-wrapper">
        <div class="direction-separator">
-        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
+        <div class="direction-separator_badge"><span>{{ Str::limit($lesson->course_name, 20) ?? 'Без назви' }}</span></div>
     </div>
     <div class="container">
 
