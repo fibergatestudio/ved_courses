@@ -229,7 +229,7 @@
                             <div class="courseAdd-top-text">Додайте <span>4</span> обов'язкових  пунктів</div>
                             <input type="hidden" id="counter" name="questions_counter" value="0">
 
-                            <?php if(isset($course_i)){
+                                <?php if(isset($course_i)){
                                     $questions_count = json_decode($course_i->course_learn_arr);
                                     //var_dump($test); ?>
                                     <input type="hidden" id="mtest" value="<?php echo count($questions_count); ?>">

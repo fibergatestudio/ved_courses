@@ -502,7 +502,7 @@
                                 <div class="courseEdit-item_chapter programs-item_chapter">{{ $lesson->course_name }}
                                 <picture>
                                         <source srcset="/img/pencil-edit-small.png" media="(max-width:592px)">
-                                    <img class="courseEdit-item_image" src="/img/pencil-edit.png" alt="pencil-image">
+                                    <a href="{{ route('edit_lesson', ['course_id' => $course_info->id , 'lesson_id' =>$lesson->id ]) }}"><img class="courseEdit-item_image" src="/img/pencil-edit.png" alt="pencil-image"></a>
                                 </picture>
                                 </div>
 

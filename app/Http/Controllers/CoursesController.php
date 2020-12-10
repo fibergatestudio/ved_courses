@@ -269,6 +269,7 @@ class CoursesController extends Controller
 
         return view('courses.add_lesson', compact('course_info', 'course_tests'));
     }
+
     // add_lesson_apply
     public function add_lesson_apply($course_id, Request $request){
 
@@ -360,6 +361,127 @@ class CoursesController extends Controller
 
         return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
     }
+
+    // edit lesson
+    public function edit_lesson($course_id, $lesson_id){
+
+        // Инфо курса
+        $course_info = DB::table('courses')->where('id', $course_id)->first();
+
+        $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
+        if(!$courses_program->isEmpty()){
+            // Аррей айдишников тестов
+            $test_ids_arr = [];
+            // Берем все айди и заносим в аррей
+            foreach($courses_program as $course_program){
+                array_push($test_ids_arr, $course_program->test_id);
+            }
+            //dd($test_ids_arr);
+            $course_tests = DB::table('tests_info')->whereIn('id', $test_ids_arr)->get();
+        } else {
+            $course_tests = [];
+        }
+        // Инфо урока
+        $lesson_info = DB::table('courses_program')->where('id', $lesson_id)->first();
+
+        return view('courses.edit_lesson', compact('course_info', 'course_tests', 'lesson_info'));
+
+    }
+
+    // edit lesson apply
+    public function edit_lesson_apply($course_id, $lesson_id, Request $request){
+
+        //dd($request->all());
+
+        $video_counter = $request->videos_counter;
+
+        // Арреи под инфу видео
+        $video_name_arr = [];
+        $video_lenght_arr = [];
+        $video_file_arr = [];
+        $video_link_arr = [];
+
+        // Перебираем и берем информацию о каждом видео
+        for($i = 0; $i <= $video_counter; $i++){
+            // Формируем реквест имя
+            $r_video_name = 'video_name' . $i;
+            $r_video_length = 'video_length' . $i;
+            $r_video_file = 'video_file' . $i;
+            $r_video_link = 'video_link' . $i;
+
+            // Получаем информацию по имени
+            $video_name = $request->$r_video_name;
+            $video_length = $request->$r_video_length;
+
+            //$video_file = $request->$r_video_file;
+
+            if($request->hasFile($r_video_file)){
+                $filename = time().'.'.request()->$r_video_file->getClientOriginalExtension();
+                request()->$r_video_file->move(public_path('video_files'), $filename);
+            }else{
+                $filename = null;
+            }
+
+            $video_link = $request->$r_video_link;
+            // Заносим информацию в аррей
+            if($video_name == null){ $video_name_arr = null; } else { array_push($video_name_arr, $video_name); }
+            if($video_length == null){ $video_lenght_arr = null; } else { array_push($video_lenght_arr, $video_length); }
+            if($filename == null){ $video_file_arr = null; } else { array_push($video_file_arr, $filename); }
+            if($video_link == null){ $video_link_arr = null; } else { array_push($video_link_arr, $video_link); }
+
+        }
+        //dd($video_file_arr);
+
+        // Аррей документов
+        $docs_arr = [];
+        // Количество документов
+        $docs_counter = $request->docs_counter;
+        // Перебираем и берем информацию о каждом доке
+        for($a = 0; $a <= $docs_counter; $a++){
+            // Реквест имени дока
+            $r_add_document = 'add_document' . $a;
+
+            // Получаем доку, формируем имя и переносим файл
+            if($request->hasFile($r_add_document)){
+                $filename_doc = time().'.'.request()->$r_add_document->getClientOriginalExtension();
+                request()->$r_add_document->move(public_path('docs'), $filename);
+            }else{
+                $filename_doc = null;
+            }
+            // Передача инфы в аррей
+            if($filename_doc == null){ $docs_arr = null; } else { array_push($docs_arr, $filename_doc); }
+            //array_push($docs_arr, $filename);
+        }
+        // show prot
+        if($request->show_protocol){
+            $protocol = $request->show_protocol;
+        } else {
+            $protocol = false;
+        }
+
+        // Инсерт в базу
+        $courses_program_id = DB::table('courses_program')->where('id', $lesson_id)->update([
+            'course_id' => $course_id,
+            'course_name' => $request->course_name,
+            'course_description' => $request->course_description,
+            'learning_time' => $request->learning_time,
+            'show_protocol' => $protocol,
+            'course_protocol_descr' => $request->course_protocol_descr,
+            'learning_protocol_time' => $request->learning_protocol_time,
+            'add_document' => json_encode($docs_arr),
+            'video_name' =>  json_encode($video_name_arr),
+            'video_length' => json_encode($video_lenght_arr),
+            'video_file' =>  json_encode($video_file_arr),
+            'video_link' => json_encode($video_link_arr),
+            'model3d_link' => $request->model3d_link,
+        ]);
+
+        //dd($courses_program_id);
+
+
+        return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
+    }
+
     // add_ lesson
     public function addLessonRedirect($course_id, Request $request){
 

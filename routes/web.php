@@ -174,6 +174,11 @@ use Illuminate\Support\Facades\Auth;
                 // Добавить тест (POST)
                 Route::post('/courses_controll/edit_course/{course_id}/add_lesson_test/apply')->name('add_lesson_test_apply')->middleware('auth','role:admin');
 
+            // Редактировать занятие
+            Route::get('/courses_controll/edit_course/{course_id}/edit_lesson/{lesson_id}', 'CoursesController@edit_lesson')->name('edit_lesson')->middleware('auth','role:admin');
+                // Редактировать занияте POST
+                Route::post('/courses_controll/edit_course/{course_id}/edit_lesson/{lesson_id}/edit_apply', 'CoursesController@edit_lesson_apply')->name('edit_lesson_apply')->middleware('auth','role:admin');
+
             /// Добавить Вопрос
             Route::get('/courses_controll/edit_course/{course_id}/add_question', 'CoursesController@add_question')->name('add_question')->middleware('auth','role:admin');
                 // Добавить Вопрос POST
