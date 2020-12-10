@@ -8,7 +8,7 @@
 <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
+        <div class="direction-separator_badge"><span>{{ Str::limit($lesson->course_name, 20) ?? 'Без назви' }}</span></div>
     </div>
     <div class="container">
         <!--<a class="breadcrumbs" href="#">Головна сторінка / Курс / Заняття 01</a>-->
@@ -58,12 +58,12 @@
             <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
             <div class="test_a-title_bottom">Оберіть одну, або декілька відповідей на задані питання.</div>
             <div class="test_a separator"></div>
-            
+
                 <!-- Да\Нет -->
                 @if(isset($testInfo))
                     @if($testTrueFalse != "")
                         @foreach($testTrueFalse as $trueFalse)
-                            <div class="test_a-question">{{ $trueFalse->id }}. {{ $trueFalse->question_name }} {{ strip_tags($trueFalse->question_text) }} </div>            
+                            <div class="test_a-question">{{ $trueFalse->id }}. {{ $trueFalse->question_name }} {{ strip_tags($trueFalse->question_text) }} </div>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">
                                     <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
@@ -84,14 +84,14 @@
                     @if($testMultiply != "")
                         @foreach($testMultiply as $multiply)
                             <div class="test_a-question">{{ $multiply->id }}. {{ $multiply->question_name }} {{ strip_tags($multiply->question_text) }} </div>
-                            <?php $answers_json = json_decode($multiply->answers_json); ?>                
+                            <?php $answers_json = json_decode($multiply->answers_json); ?>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">
                                     <input type="hidden" name="multiply_id[]" value="{{ $multiply->id }}">
                                     <?php $answer_number = 0; ?>
                                     @foreach($answers_json as $answer)
                                             <div class="answer-radio">
-                                                <input class="answer-radio_input" type="checkbox" id="{{ $answer->answer }}{{ $answer_number }}" 
+                                                <input class="answer-radio_input" type="checkbox" id="{{ $answer->answer }}{{ $answer_number }}"
                                                     value="{{ $answer->answer }}" name="question_{{ $multiply->id }}[]">
                                                 <label class="answer-radio_label" for="{{ $answer->answer }}{{ $answer_number }}"><?php echo str_replace("\xc2\xa0",' ',$answer->answer); ?></label>
                                             </div>
@@ -117,12 +117,12 @@
 
                             @if($testDragDrop != "")
                                 @foreach($testDragDrop as $dragDrop)
-                                    <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>   
+                                    <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
                                     <div class="test_b-grid_inner">
                                         <div class="test_b-grid_question">
                                             <input type="hidden" name="drag_drop_id[]" value="{{ $dragDrop->id }}">
                                             <input type="hidden" id="true_answer{{ $dragDrop->id }}" name="answer_dragdrop[]" value="">
-                                            
+
                                             <div class="test_b-questionBlock questionBlock-small"><span id="answer{{ $dragDrop->id }}">{{ $dragDrop->id }}</span></div> {{ strip_tags($dragDrop->question_text) }}
                                         </div>
                                     </div>
@@ -138,7 +138,7 @@
                                         </div>
                                     </div>
                                     <script>
-                                    
+
                                         var id = {{ json_encode($dragDrop->id) }};
                                         var answer = 'answer' + id;
                                         var answers = 'answers' + id;
@@ -151,7 +151,7 @@
                                             pull: function (to, from) {
                                                 if(to.el.children.length = 0){
                                                     return;
-                                                } 
+                                                }
                                             }
                                         },
                                         animation: 100
@@ -170,11 +170,11 @@
                                                     var true_answer = '#true_answer' + to_id;
 
                                                     console.log(to.el);
-                                                    
+
                                                     /* var answer_id = '#answer' + id;
                                                     var test = $(answer_id).find("input").val(); */
 
-                                                    setTimeout(function(){  
+                                                    setTimeout(function(){
 
                                                         var passed_answer = answer_el.getElementsByClassName('answer_id').item(0).value;
                                                         console.log(passed_answer);
@@ -182,7 +182,7 @@
                                                         $(true_answer).val(passed_answer);
 
                                                      }, 100);
-                                                    
+
 
                                                     return to.el.children.length < 1;
                                                 }
@@ -202,17 +202,23 @@
                                     </script>
                                 @endforeach
                             @endif
-                            
+
                         </div>
                     @endif
 
              <a class="answer-btn btn-watch--more" href="##" id="test_send"><span>Надіслати тест </span></a>
-
+                @else
+                <div class="container">
+                    <div class="string-text">
+                        Завдання відсутні
+                    </div>
+                </div>
+                    @endif
 
         </div>
         </form>
     </section>
-    @endif
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 

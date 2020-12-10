@@ -82,7 +82,7 @@
 
     if (form !== null )
     {fakeForm.addEventListener('click', func)};
-    
+
 
     function func() {
          form.classList.toggle('active');
@@ -94,11 +94,11 @@
 (function () {
     var courseBTNs = document.querySelectorAll('.courseEdit-item_button');
     var i;
-    
-    
+
+
     if (courseBTNs !== null) {
         for (i = 0; i < courseBTNs.length; i++) {
-        courseBTNs[i].addEventListener('click', func) 
+        courseBTNs[i].addEventListener('click', func)
         }
     }
 
@@ -109,41 +109,41 @@
 })();
 
 (function () {
-    let testBTNs = document.querySelectorAll('.newTest-top');    
+    let testBTNs = document.querySelectorAll('.newTest-top');
     let i
-    
-    if (testBTNs !== null) {      
+
+    if (testBTNs !== null) {
         for (i = 0; i < testBTNs.length; i++) {
-                testBTNs[i].addEventListener('click', func) 
+                testBTNs[i].addEventListener('click', func)
                 }
     }
 
     function func() {
         this.parentNode.classList.toggle('active');
-        this.classList.toggle('active');       
-        this.nextElementSibling.classList.toggle('show');              
+        this.classList.toggle('active');
+        this.nextElementSibling.classList.toggle('show');
     };
 })();
 
- 
+
 (function () {
     let proxyBTN = document.querySelector('.multipleChoice-top');
     let proxyBlocks = document.querySelectorAll('.multipleChoice-wrapper');
     let i
-    
-    if (proxyBTN !== null) { 
+
+    if (proxyBTN !== null) {
         proxyBTN.addEventListener('click', func);
     }
 
     function func() {
         this.parentNode.classList.toggle('active');
-        this.classList.toggle('active');       
+        this.classList.toggle('active');
         this.nextElementSibling.classList.toggle('show');
                 if (proxyBlocks !== null) {
                     for (i = 0; i < proxyBlocks.length; i++) {
                         proxyBlocks[i].classList.toggle('show');
                             }
-                } 
+                }
                 };
 
 })();
@@ -155,7 +155,7 @@
 
     if (questionsBTN !== null) {
         for (i = 0; i < questionsBTN.length; i++) {
-            questionsBTN[i].addEventListener('click', func) 
+            questionsBTN[i].addEventListener('click', func)
                 }
     }
 
@@ -171,9 +171,9 @@
             }
         });
         this.classList.toggle('active');
-        this.nextElementSibling.classList.toggle('show');    
+        this.nextElementSibling.classList.toggle('show');
            };
-   
+
 })();
 
 // slick-slider///////////////////////////////////
@@ -190,7 +190,7 @@ $(document).ready(function () {
 //sidebar-burger////////////////////////////////////
 
 (function () {
-    let sidebarBurgerButton = document.querySelector('.sidebar-top_burger-btn');    
+    let sidebarBurgerButton = document.querySelector('.sidebar-top_burger-btn');
     let sidebarBurgerMenu = document.querySelector('.sidebar_title-wrapper');
     let sideBarBurgerBlock = document.querySelector('.sidebar');
 
@@ -201,11 +201,73 @@ if (sidebarBurgerButton !== null) {
     };
 if (sidebarMobileButton !== null) {
         sidebarMobileButton.addEventListener('click', sidebarBurgerClass);
-    };     
+    };
 
     function sidebarBurgerClass() {
-        sideBarBurgerBlock.classList.toggle('active');       
+        sideBarBurgerBlock.classList.toggle('active');
         sidebarBurgerMenu.classList.toggle('active');
     };
 })();
 
+// protocol page start
+const modalOpenBtn = document.querySelector('#modalWindowOpen');
+const protocolForm = document.querySelector('#protocolForm');
+const contentWrapper = document.querySelector('.content-wrapper');
+const closeForm = document.querySelector('#backToContent');
+const scrollToTopButton = document.querySelector('.to-top-button');
+let position;
+let timer;
+
+modalOpenBtn.addEventListener('click', function () {
+    protocolForm.style.display = 'flex';
+    contentWrapper.style.display = 'none';
+});
+
+closeForm.addEventListener('click', function () {
+    protocolForm.style.display = 'none';
+    contentWrapper.style.display = 'block';
+});
+
+
+//toggle to top btn
+function showToTopButton() {
+    position = window.pageYOffset || document.documentElement.scrollTop;
+
+    if (position > 1200) {
+        scrollToTopButton.classList.add('showBlock');
+    } else {
+        scrollToTopButton.classList.remove('showBlock');
+    }
+}
+
+// scrolling to top
+function backToTop() {
+    if (position > 0) {
+        window.scrollTo(0, position);
+        position -= 200;
+        timer = setTimeout(backToTop, 5)
+    } else {
+        clearTimeout(timer);
+        window.scrollTo(0, 0)
+    }
+}
+
+window.addEventListener('scroll', showToTopButton);
+scrollToTopButton.addEventListener('click', backToTop);
+
+
+//toggle blocks
+const toggleBlocks = document.querySelectorAll('.toggle-content');
+
+toggleBlocks.forEach(block => {
+    block.addEventListener('click', function (e) {
+        e.preventDefault();
+        this.nextElementSibling.classList.toggle('p__hide');
+        this.childNodes[1].classList.toggle('p__rotate');
+    })
+})
+
+
+// protocol page end
+
+autosize($('textarea'));
