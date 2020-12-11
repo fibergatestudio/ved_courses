@@ -284,7 +284,7 @@
                                         Назва відео @{{ index + 1}}
                                     </div>
                                     <div class="courseAdditional-topInput-right">
-                                        <input class="courseAdditional--input" type="text" :name="'video_name' + index">
+                                        <input class="courseAdditional--input" type="text" :id="'video_name' + index" :name="'video_name' + index" value="">
                                     </div>
                                 </div>
 
@@ -295,7 +295,7 @@
                                         </div>
                                     </div>
                                     <div class="courseAdditional-bottom_right">
-                                        <input class="courseAdditional--input" type="text" :name="'video_length' + index">
+                                        <input class="courseAdditional--input" type="text" :id="'video_length' + index" :name="'video_length' + index">
                                     </div>
                                 </div>
 
@@ -336,8 +336,8 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
-                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" >
-                                            <input class="courseAdditional-input_button" type="text" :name="'video_link' + index">
+                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" :id="'video_link' + index" :name="'video_link' + index" required>
+                                            <input class="courseAdditional-input_button" type="text" >
                                             <!-- <a class="courseAdditional-input_FakeButton" href="##">Додати</a> -->
                                         </div>
                                     </div>
@@ -428,7 +428,7 @@
                 </div>
 
                 <div class="courseEdit-btn-watch_wrapper">
-                    <a class="courseAdditional-btn-save" onclick="document.getElementById('add_lesson_form').submit();" href="##"><span>Зберегти заняття</span></a>
+                    <a class="courseAdditional-btn-save" onclick="submitForm()" href="##"><span>Зберегти заняття</span></a>
                 </div>
             </form>
 
@@ -450,6 +450,41 @@
             var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
             console.log(test);
             /* alert(fileName); */
+        }
+
+        function submitForm(){
+
+            // Получаем кол-во видео
+            var video_counter = $('#videos_counter').val();
+
+            // Перебираем поля каждого видео
+            for(i = 0; i <= video_counter; i++){
+                // Имена инпутов для проверки
+                var number = i+1;
+                var v_name = '#video_name' + i;
+                var v_lenght = '#video_length' + i;
+                var v_link = '#video_link' + i;
+
+                // Получаем инфу 
+                var name = $.trim( $(v_name).val() );
+                var length = $.trim( $(v_lenght).val() );
+                var link = $.trim( $(v_link).val() );
+
+                // Check if empty of not
+                if (name  === '') {
+                    alert('Название видео '+ number +' пустое.');
+                    return false;
+                } else if (length  === '') {
+                    alert('Длинна видео '+ number +' пустое.');
+                    return false;
+                } else if (link  === '') {
+                    alert('Ссылка видео '+ number +' пустая.');
+                    return false;
+                } else if(i == video_counter){
+                    document.getElementById('add_lesson_form').submit();
+                }
+            }
+            //});
         }
 
     </script>

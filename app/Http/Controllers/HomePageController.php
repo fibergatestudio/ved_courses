@@ -101,6 +101,7 @@ class HomePageController extends Controller
         $user = Auth::user();
 
         $course = DB::table('courses')->where('id', $course_id)->first();
+
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
 
         if (is_null($course)) {
@@ -127,12 +128,14 @@ class HomePageController extends Controller
         }
 
         // Тесты
-        $test_id = DB::table('courses_program')->where('id', $course->id)->first();
+        $test_id = DB::table('courses_program')->where([
+            'id' => $lesson_id,
+            'course_id' => $course_id,
+            ])->first();
+        //dd("Course_id: " . $course_id . "Lesson_id: " . $lesson_id);
         if(isset($test_id->id)){
-            $testInfo = DB::table('tests_info')->where('id', $test_id->id)->first();
+            $testInfo = DB::table('tests_info')->where('id', $test_id->test_id)->first();
         }
-        //$testInfo = DB::table('tests_info')->where('id', $test_id->id)->first();
-
             // Вопросы теста
             if(isset($testInfo)){
                 $testQuestions = DB::table('tests_questions')->where('test_id', $testInfo->id)->get();
@@ -199,11 +202,11 @@ class HomePageController extends Controller
         }
     }
 
-    public function send_test(Request $request, $test_id, $course_id, $lesson_id){
+    public function send_test($test_id, $course_id, $lesson_id, Request $request){
 
         // Получаем всю POST инфу
         $all_info = $request->all();
-
+        //dd($test_id, $course_id, $lesson_id);
         // Аррей всех ответов
         $test_questions_json = [];
         // Берем текущий тест
@@ -216,99 +219,104 @@ class HomePageController extends Controller
             $true_false_ids = $request->true_false_id;
             $true_false_q = [];
             // Перебираем и берем данные о них с базы
-            foreach($true_false_ids as $key=>$true_false_id){
-                $tf_array = [];
-                // Строка с базы
-                $true_false_db = DB::table('tests_true_false')->where('id', $true_false_id)->first();
-                $tf_array['question_id'] = $true_false_id;
-                $tf_array['question_type'] = "Правильно/неправильно";
-                // Текущий ответы
-                $current_answers = $request->answer_truefalse;
-                $tf_array['selected_answer'] = $current_answers[$key];
-                // Верный ответ
-                $right_answer = $true_false_db->right_answer;
-                $tf_array['right_answer'] = $right_answer;
-                // Проверяем верно ли ответил
-                if($current_answers[$key] == $right_answer){
-                    // Ответил верно
-                    $tf_array['answered_right'] = "Так";
-                } else { 
-                    // Ответил не верно 
-                    $tf_array['answered_right'] = "Ні";
+            if(isset($true_false_ids)){
+                foreach($true_false_ids as $key=>$true_false_id){
+                    $tf_array = [];
+                    // Строка с базы
+                    $true_false_db = DB::table('tests_true_false')->where('id', $true_false_id)->first();
+                    $tf_array['question_id'] = $true_false_id;
+                    $tf_array['question_type'] = "Правильно/неправильно";
+                    // Текущий ответы
+                    $current_answers = $request->answer_truefalse;
+                    $tf_array['selected_answer'] = $current_answers[$key];
+                    // Верный ответ
+                    $right_answer = $true_false_db->right_answer;
+                    $tf_array['right_answer'] = $right_answer;
+                    // Проверяем верно ли ответил
+                    if($current_answers[$key] == $right_answer){
+                        // Ответил верно
+                        $tf_array['answered_right'] = "Так";
+                    } else { 
+                        // Ответил не верно 
+                        $tf_array['answered_right'] = "Ні";
+                    }
+                    array_push($true_false_q, $tf_array);
                 }
-                array_push($true_false_q, $tf_array);
-            }
 
-            array_push($test_questions_json, $true_false_q);
+                array_push($test_questions_json, $true_false_q);
+            }
 
         // Множественный выбор
         //..Множинний вибір'
             $multiply_ids = $request->multiply_id;
-            
             $multiply_q = [];
-            foreach($multiply_ids as $key=>$multiply_id){
-                $multi_array = [];
-                // Строка с базы
-                $multiply_db = DB::table('tests_multiple_choice')->where('id', $multiply_id)->first();
-                //dd($multiply_db);
-                $multi_array['question_id'] = $multiply_id;
-                $multi_array['question_type'] = "Множинний вибір";
+            if(isset($multiply_ids)){
+                foreach($multiply_ids as $key=>$multiply_id){
+                    $multi_array = [];
+                    // Строка с базы
+                    $multiply_db = DB::table('tests_multiple_choice')->where('id', $multiply_id)->first();
+                    //dd($multiply_db);
+                    $multi_array['question_id'] = $multiply_id;
+                    $multi_array['question_type'] = "Множинний вибір";
 
-                // Текущий выбранный ответ
-                $request_name = 'question_' . $multiply_id;
-                //dd($request_name);
-                $current_answers = $request->$request_name;
-                //dd($current_answers);
-                $answers_json = json_decode($multiply_db->answers_json);
+                    // Текущий выбранный ответ
+                    $request_name = 'question_' . $multiply_id;
+                    //dd($request_name);
+                    $current_answers = $request->$request_name;
+                    //dd($current_answers);
+                    $answers_json = json_decode($multiply_db->answers_json);
 
-                foreach($answers_json as $answer){
-                    //dd($answer);
-                    if($answer->answer){
-                        $multi_array['answer_grade'] = $answer->answer_grade;
-                    } else {
-                        $multi_array['answer_grade'] = 0;
+                    foreach($answers_json as $answer){
+                        //dd($answer);
+                        if($answer->answer){
+                            $multi_array['answer_grade'] = $answer->answer_grade;
+                        } else {
+                            $multi_array['answer_grade'] = 0;
+                        }
                     }
+
+
+                    //dd($answers_json);
+                    array_push($multiply_q, $multi_array);
+                    //dd($multi_array);
                 }
-
-
-                //dd($answers_json);
-                array_push($multiply_q, $multi_array);
-                //dd($multi_array);
+                array_push($test_questions_json, $multiply_q);
             }
-            array_push($test_questions_json, $multiply_q);
         // Петераскивание
             // Получаем айди 
             $drag_drop_ids = $request->drag_drop_id;
             $drag_drop_q = [];
-            // Перебираем и берем данные о них с базы
-            foreach($drag_drop_ids as $key=>$drag_drop_id){
-                $dd_array = [];
-                // Строка с базы
-                $drag_drop_db = DB::table('tests_drag_drop')->where('id', $drag_drop_id)->first();
-                $dd_array['question_id'] = $drag_drop_id;
-                $dd_array['question_type'] = "Перетягування в тексті";
-                // Текущий выбранный ответ
-                $current_answers = $request->answer_dragdrop;
-                $dd_array['selected_answer'] = $current_answers[$key];
-                // Аррей с вопросами - разбираем
-                $answers_json = json_decode($drag_drop_db->answers_json);
-                // Берем айди верного ответа
-                $right_answer_id = $answers_json->right_answer;
-                // Берем верный овтвет
-                $right_answer = $answers_json->answers[$right_answer_id];
-                $dd_array['right_answer'] = $right_answer;
-                // Проверяем верно ли ответил
-                if($right_answer == $current_answers[$key]){
-                    // Ответил верно
-                    $dd_array['answered_right'] = "Так";
-                } else { 
-                    // Ответил не верно
-                    $dd_array['answered_right'] = "Ні";
+            if(isset($drag_drop_ids)){
+                // Перебираем и берем данные о них с базы
+                foreach($drag_drop_ids as $key=>$drag_drop_id){
+                    $dd_array = [];
+                    // Строка с базы
+                    $drag_drop_db = DB::table('tests_drag_drop')->where('id', $drag_drop_id)->first();
+                    $dd_array['question_id'] = $drag_drop_id;
+                    $dd_array['question_type'] = "Перетягування в тексті";
+                    // Текущий выбранный ответ
+                    $current_answers = $request->answer_dragdrop;
+                    $dd_array['selected_answer'] = $current_answers[$key];
+                    // Аррей с вопросами - разбираем
+                    $answers_json = json_decode($drag_drop_db->answers_json);
+                    // Берем айди верного ответа
+                    $right_answer_id = $answers_json->right_answer;
+                    // Берем верный овтвет
+                    $right_answer = $answers_json->answers[$right_answer_id];
+                    $dd_array['right_answer'] = $right_answer;
+                    // Проверяем верно ли ответил
+                    if($right_answer == $current_answers[$key]){
+                        // Ответил верно
+                        $dd_array['answered_right'] = "Так";
+                    } else { 
+                        // Ответил не верно
+                        $dd_array['answered_right'] = "Ні";
+                    }
+                    array_push($drag_drop_q, $dd_array);
                 }
-                array_push($drag_drop_q, $dd_array);
+                array_push($test_questions_json, $drag_drop_q);
             }
             //dd($drag_drop_q);
-        array_push($test_questions_json, $drag_drop_q);
 
         //dd($test_questions_json);
 
@@ -332,7 +340,7 @@ class HomePageController extends Controller
         ]);
             
 
-        return redirect()->route('view_lesson', ['course_id' => $course_id, 'lesson_id' => $lesson_id]);
+        return redirect()->route('view_lesson', ['course_id' => $test_id, 'lesson_id' => $course_id]);
         //return back();
     }
 

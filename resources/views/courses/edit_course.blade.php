@@ -362,14 +362,14 @@
                             <div class="courseAdd-grid_item">
 
                                 <div class="courseAdditional-input-wrapper">
-                                    <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
+                                    <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу" id="img_upload_name">
                                     <input class="courseAdditional-input_button" type="file" name="course_image">
                                     <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                 </div>
 
                                 <div class="courseAdd-info-wrapper">
-                                    <a class="courseAdditional-docName docName-restyling" id="img_upload_name" href="##">
-                                        Довга назва фото
+                                    <a class="courseAdditional-docName docName-restyling"  href="##">
+                                        {{ $course_info->course_image_path }}
                                     </a>
                                 </div>
 
@@ -449,7 +449,7 @@
                             </div>
                         </div>
                         <div class="teachers-grid_item">
-                            <div class="teachers-item_name">{{ $teacher->surname }}{{ $teacher->name }}{{ $teacher->patronymic }}</div>
+                            <div class="teachers-item_name">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
                             <div class="courseEdit-item_position teachers-item_position">Професор наук</div>
 
                         </div>
@@ -499,7 +499,7 @@
                                 <div class="programs-item_lesson--text">Заняття {{ $course_num }}</div>
                             </div>
                             <div class="courseEdit-grid_item">
-                                <div class="courseEdit-item_chapter programs-item_chapter">{{ $lesson->course_name }}
+                                <div class="courseEdit-item_chapter programs-item_chapter">{{ strip_tags($lesson->course_name) }}
                                 <picture>
                                         <source srcset="/img/pencil-edit-small.png" media="(max-width:592px)">
                                     <a href="{{ route('edit_lesson', ['course_id' => $course_info->id , 'lesson_id' =>$lesson->id ]) }}"><img class="courseEdit-item_image" src="/img/pencil-edit.png" alt="pencil-image"></a>
@@ -508,7 +508,7 @@
 
                             </div>
                             <div class="courseEdit-grid_item">
-                                <div class="programs-item_text">{{ $lesson->course_description }}</div>
+                                <div class="programs-item_text">{{ strip_tags($lesson->course_description) }}</div>
                             </div>
                             <div class="courseEdit-grid_item">
                                 <div class="programs-item_hours"><a href="##">{{ $lesson->learning_time }} години на завершення</a> </div>
@@ -655,12 +655,13 @@
         $(document).ready(function() {
             $('input[type="file"]').change(function(e) {
                 var geekss = e.target.files[0].name;
-                //alert(geekss);
-                $("#img_upload_name").text(geekss);
+                alert(geekss);
+                $("#img_upload_name").val(geekss);
 
             });
         });
     </script>
+
 
     <script>
 

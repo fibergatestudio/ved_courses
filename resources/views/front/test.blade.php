@@ -50,20 +50,20 @@
 
     </div>
     </section>
-    @if(isset($testInfo->id))
+    @if(isset($testInfo->id)) 
+    <?php $n_answers = 1; ?>
     <section class="test_a">
         <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
         @csrf
         <div class="container">
-            <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
-            <div class="test_a-title_bottom">Оберіть одну, або декілька відповідей на задані питання.</div>
-            <div class="test_a separator"></div>
-
+        <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
                 <!-- Да\Нет -->
                 @if(isset($testInfo))
                     @if($testTrueFalse != "")
+                    <div class="test_a-title_bottom">Оберіть одну відповь.</div>
+                    <div class="test_a separator"></div>
                         @foreach($testTrueFalse as $trueFalse)
-                            <div class="test_a-question">{{ $trueFalse->id }}. {{ $trueFalse->question_name }} {{ strip_tags($trueFalse->question_text) }} </div>
+                            <div class="test_a-question">{{ $n_answers }}. {{ $trueFalse->question_name }} {{ strip_tags($trueFalse->question_text) }} </div>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">
                                     <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
@@ -77,13 +77,15 @@
                                     </div>
                                 </div>
                             </div>
-
+                        <?php $n_answers++; ?>
                         @endforeach
                     @endif
                     <!-- Множественный выбор -->
                     @if($testMultiply != "")
+                    <div class="test_a-title_bottom">Оберіть одну, або декілька відповідей на задані питання.</div>
+                    <div class="test_a separator"></div>
                         @foreach($testMultiply as $multiply)
-                            <div class="test_a-question">{{ $multiply->id }}. {{ $multiply->question_name }} {{ strip_tags($multiply->question_text) }} </div>
+                            <div class="test_a-question">{{ $n_answers }}. {{ $multiply->question_name }} {{ strip_tags($multiply->question_text) }} </div>
                             <?php $answers_json = json_decode($multiply->answers_json); ?>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">
@@ -100,11 +102,11 @@
                                 </div>
                             </div>
 
-
+                            <?php $n_answers++; ?>
                         @endforeach
                     @endif
                     <!-- Претаскивание -->
-                        <div class="test_b-title_wrapper">
+                        <!-- <div class="test_b-title_wrapper">
                             <div class="test_b-title_left">
                                 Перетягуй відповіді в блоки зліва
                             </div>
@@ -113,9 +115,19 @@
                             </div>
                         </div>
                         <div class="test_b separator"></div>
-                        <div class="test_b-grid_wrapper">
+                        <div class="test_b-grid_wrapper"> -->
+                            @if(count($testDragDrop) >= 1)
+                            <div class="test_b-title_wrapper">
+                                <div class="test_b-title_left">
+                                    Перетягуй відповіді в блоки зліва
+                                </div>
+                                <div class="test_b-title_right">
+                                    <!-- Ви маєте право на 3 помилки. <span class="test_b-darkText">Залишилась <span>1 </span> помилка.</span> -->
+                                </div>
+                            </div>
+                            <div class="test_b separator"></div>
+                            <div class="test_b-grid_wrapper">
 
-                            @if($testDragDrop != "")
                                 @foreach($testDragDrop as $dragDrop)
                                     <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
                                     <div class="test_b-grid_inner">
@@ -200,10 +212,12 @@
                                     /* testresponse.push(answer);*/
 
                                     </script>
+                                    <?php $n_answers++; ?>
                                 @endforeach
+                                </div>
                             @endif
 
-                        </div>
+                        <!-- </div> -->
                     @endif
 
              <a class="answer-btn btn-watch--more" href="##" id="test_send"><span>Надіслати тест </span></a>

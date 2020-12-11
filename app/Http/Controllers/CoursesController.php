@@ -251,20 +251,22 @@ class CoursesController extends Controller
 
         $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
         //dd($courses_program);
-        if(!$courses_program->isEmpty()){
-            // Аррей айдишников тестов
-            $test_ids_arr = [];
-            // Берем все айди и заносим в аррей
-            foreach($courses_program as $course_program){
-                array_push($test_ids_arr, $course_program->test_id);
-            }
-            //dd($test_ids_arr);
-            $course_tests = DB::table('tests_info')->whereIn('id', $test_ids_arr)->get();
-        } else {
-            $course_tests = [];
-        }
+        // if(!$courses_program->isEmpty()){
+        //     // Аррей айдишников тестов
+        //     $test_ids_arr = [];
+        //     // Берем все айди и заносим в аррей
+        //     foreach($courses_program as $course_program){
+        //         array_push($test_ids_arr, $course_program->test_id);
+        //     }
+        //     //dd($test_ids_arr);
+        //     $course_tests = DB::table('tests_info')->whereIn('id', $test_ids_arr)->get();
+        // } else {
+        //     $course_tests = [];
+        // }
         //dd($course_tests);
         //dd($tests);
+
+        $course_tests = []; 
 
 
         return view('courses.add_lesson', compact('course_info', 'course_tests'));
@@ -369,18 +371,26 @@ class CoursesController extends Controller
         $course_info = DB::table('courses')->where('id', $course_id)->first();
 
         $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
-        if(!$courses_program->isEmpty()){
-            // Аррей айдишников тестов
-            $test_ids_arr = [];
-            // Берем все айди и заносим в аррей
-            foreach($courses_program as $course_program){
-                array_push($test_ids_arr, $course_program->test_id);
-            }
-            //dd($test_ids_arr);
-            $course_tests = DB::table('tests_info')->whereIn('id', $test_ids_arr)->get();
-        } else {
-            $course_tests = [];
-        }
+        // if(!$courses_program->isEmpty()){
+        //     // Аррей айдишников тестов
+        //     $test_ids_arr = [];
+        //     // Берем все айди и заносим в аррей
+        //     foreach($courses_program as $course_program){
+        //         array_push($test_ids_arr, $course_program->test_id);
+        //     }
+        //     //dd($test_ids_arr);
+        //     $course_tests = DB::table('tests_info')->whereIn('id', $test_ids_arr)->get();
+        // } else {
+        //     $course_tests = [];
+        // }
+
+        $course_tests_id = DB::table('courses_program')->where([
+            'id' => $lesson_id,
+            'course_id' => $course_id
+        ])->first();
+
+        $course_tests = DB::table('tests_info')->where('id', $course_tests_id->test_id)->get();
+
         // Инфо урока
         $lesson_info = DB::table('courses_program')->where('id', $lesson_id)->first();
 
@@ -399,6 +409,7 @@ class CoursesController extends Controller
         $video_name_arr = [];
         $video_lenght_arr = [];
         $video_file_arr = [];
+            $old_video_names = [];
         $video_link_arr = [];
 
         // Перебираем и берем информацию о каждом видео
@@ -413,6 +424,7 @@ class CoursesController extends Controller
             $video_name = $request->$r_video_name;
             $video_length = $request->$r_video_length;
 
+
             //$video_file = $request->$r_video_file;
 
             if($request->hasFile($r_video_file)){
@@ -420,38 +432,70 @@ class CoursesController extends Controller
                 request()->$r_video_file->move(public_path('video_files'), $filename);
             }else{
                 $filename = null;
+                $r_add_video_name = 'video_file_name' . $i;
+                $old_video_name = $request->$r_add_video_name;
+                //dd($old_file_name);
+                if($old_video_name != null){
+                    array_push($old_video_names, $old_video_name);
+                }
             }
 
             $video_link = $request->$r_video_link;
             // Заносим информацию в аррей
-            if($video_name == null){ $video_name_arr = null; } else { array_push($video_name_arr, $video_name); }
-            if($video_length == null){ $video_lenght_arr = null; } else { array_push($video_lenght_arr, $video_length); }
-            if($filename == null){ $video_file_arr = null; } else { array_push($video_file_arr, $filename); }
-            if($video_link == null){ $video_link_arr = null; } else { array_push($video_link_arr, $video_link); }
+            if($video_name == null){  } else { array_push($video_name_arr, $video_name); }
+            if($video_length == null){  } else { array_push($video_lenght_arr, $video_length); }
+            if($filename == null){  } else { array_push($video_file_arr, $filename); }
+            if($video_link == null){  } else { array_push($video_link_arr, $video_link); }
 
         }
+        // Мерджим старые названия с новыми
+        $video_file_arr = array_merge($video_file_arr, $old_video_names);
         //dd($video_file_arr);
 
         // Аррей документов
         $docs_arr = [];
+        // Аррей старых названий
+        $docs_names_arr = [];
         // Количество документов
         $docs_counter = $request->docs_counter;
+
         // Перебираем и берем информацию о каждом доке
         for($a = 0; $a <= $docs_counter; $a++){
+
             // Реквест имени дока
             $r_add_document = 'add_document' . $a;
-
+            //dd($request->hasFile($r_add_document));
             // Получаем доку, формируем имя и переносим файл
             if($request->hasFile($r_add_document)){
                 $filename_doc = time().'.'.request()->$r_add_document->getClientOriginalExtension();
                 request()->$r_add_document->move(public_path('docs'), $filename);
             }else{
                 $filename_doc = null;
+                $r_add_doc_name = 'add_document_name' . $a;
+                $old_file_name = $request->$r_add_doc_name;
+                //dd($old_file_name);
+                if($old_file_name != null){
+                    array_push($docs_names_arr, $old_file_name);
+                }
             }
             // Передача инфы в аррей
-            if($filename_doc == null){ $docs_arr = null; } else { array_push($docs_arr, $filename_doc); }
-            //array_push($docs_arr, $filename);
+            if($filename_doc == null){  } else { array_push($docs_arr, $filename_doc); }
+            //array_push($docs_arr, $filename_doc);
         }
+        // Перебираем старые имена файлов
+        // for($b = 0; $b <= $docs_counter; $b++){
+        //     // Получаем имя старого файла (если есть)
+        //     $r_add_doc_name = 'add_document_name' . $b;
+        //     $old_file_name = $request->$r_add_doc_name;
+        //     //dd($old_file_name);
+        //     if($old_file_name != null){
+        //         array_push($docs_names_arr, $old_file_name);
+        //     }
+        // }
+
+        // Мерджим старые и новые имена
+        $docs_arr = array_merge($docs_arr, $docs_names_arr);
+        //dd($docs_arr);
         // show prot
         if($request->show_protocol){
             $protocol = $request->show_protocol;

@@ -229,26 +229,35 @@
                                 Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
                             </div>
 
-                            <input type="hidden" id="docs_counter" name="docs_counter" value="0">
+                            <!-- <input type="hidden" id="docs_counter" name="docs_counter" value="0"> -->
 
-                                <?php if(isset($lesson_info)){
-                                    $docs_count = json_decode($lesson_info->add_document);
-                                    //var_dump($test); ?>
-                                    <input type="hidden" id="docs_count" value="<?php echo count($docs_count); ?>">
-                                <?php } ?>
+                                @if( isset($lesson_info) )
+                                    <?php 
+                                        $docs_arr = json_decode($lesson_info->add_document);
+                                        $docs_is_count = is_countable($docs_arr);
+                                    ?>
+                                    @if($docs_is_count)
+                                        <input type="hidden" id="docs_count" name="docs_counter" value="<?php echo count($docs_arr); ?>">
+                                    @else
+                                        <input type="hidden" id="docs_counter" name="docs_counter" value="0">
+                                    @endif
+                                @endif
 
                             <div id="docs">
                                 <div v-for="(id,index) in ids" style="display: flex; align-items: center;">
                                     <!-- <input type="file" class="form-control" :name="'add_document' + index" value=""> -->
 
                                     <div class="courseAdditional-flexbox_item">
-                                        <div class="courseAdditional-left_text">
+                                        <div class="courseAdditional-left_text"> 
                                             Додати документ
                                         </div>
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
-                                            <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу" :id="'add_document_name' + index">
+                                            <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу" 
+                                            :id="'add_document_name' + index"
+                                            :name="'add_document_name' + index"
+                                            >
                                             <input class="courseAdditional-input_button" type="file" :name="'add_document' + index" onchange="showFile(this)">
                                             <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                         </div>
@@ -281,7 +290,20 @@
                         <div class="courseAdditional-topName">
                             У разі відсутності відеоматеріалу до заняття буде відображено  повідомлення для студента <span> "В цьому занятті немає відео супроводу"</span>
                         </div>
-                        <input type="hidden" id="videos_counter" name="videos_counter" value="0">
+                        <!-- <input type="hidden" id="videos_counter" name="videos_counter" value="0"> -->
+
+                        @if( isset($lesson_info) )
+                            <?php 
+                                $videos_arr = json_decode($lesson_info->video_name);
+                                $videos_is_count = is_countable($videos_arr);
+                            ?>
+                            @if($videos_is_count)
+                                <input type="hidden" id="videos_counter" name="videos_counter" value="<?php echo count($videos_arr); ?>">
+                            @else
+                                <input type="hidden" id="videos_counter" name="videos_counter" value="0">
+                            @endif
+                        @endif
+
                         <div id="app1">
                             <div v-for="(id,index) in ids" >
                                 <br>
@@ -291,7 +313,7 @@
                                         Назва відео @{{ index + 1}}
                                     </div>
                                     <div class="courseAdditional-topInput-right">
-                                        <input class="courseAdditional--input" type="text" :name="'video_name' + index">
+                                        <input class="courseAdditional--input" type="text" :id="'video_name' + index" :name="'video_name' + index" required>
                                     </div>
                                 </div>
 
@@ -302,7 +324,7 @@
                                         </div>
                                     </div>
                                     <div class="courseAdditional-bottom_right">
-                                        <input class="courseAdditional--input" type="text" :name="'video_length' + index">
+                                        <input class="courseAdditional--input" type="text" :id="'video_length' + index" :name="'video_length' + index" required>
                                     </div>
                                 </div>
 
@@ -319,7 +341,7 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
-                                            <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
+                                            <input class="courseAdditional-input_input" type="text" :name="'video_file_name' + index" placeholder="Назва файлу">
                                             <input class="courseAdditional-input_button" type="file" :name="'video_file' + index" onchange="show(this)">
                                             <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                         </div>
@@ -343,8 +365,8 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
-                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" >
-                                            <input class="courseAdditional-input_button" type="text" :name="'video_link' + index">
+                                            <input class="courseAdditional-input_input" type="text" :id="'video_link' + index" :name="'video_link' + index" placeholder="Посилання" required>
+                                            <input class="courseAdditional-input_button" type="text">
                                             <!-- <a class="courseAdditional-input_FakeButton" href="##">Додати</a> -->
                                         </div>
                                     </div>
@@ -456,35 +478,62 @@
             var fileName = input.files[0].name;
             var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
             console.log(test);
-            /* alert(fileName); */
         }
-
     </script>
 
+    <!-- Формирование доков для вью -->
     <script>
-    
-    $( document ).ready(function() {
-        var q_count = $('#docs_count').val();
-        var i;
+        $( document ).ready(function() {
+            var q_count = $('#docs_count').val();
+            var i;
 
-        const myDocs = [];
-        @if(isset($lesson_info))
-            @foreach (json_decode($lesson_info->add_document) as $doc)
-                myDocs.push('{!! $doc !!}');
-            @endforeach
-        @endif
-        console.log(myDocs);
-        for (i = 0; i < q_count; i++) {
-            //var id_t = '#question_text' + (i);
-            docs.addNewEntryWithText(myDocs[i]);
-        }
+            const myDocs = [];
+            @if(isset($lesson_info))
+                @if(is_countable (json_decode($lesson_info->add_document) ))
+                    @foreach (json_decode($lesson_info->add_document) as $doc)
+                        myDocs.push('{!! $doc !!}');
+                    @endforeach
+                @endif
+            @endif
+            console.log(myDocs);
+            for (i = 0; i < q_count; i++) {
+                //var id_t = '#question_text' + (i);
+                docs.addNewEntryWithText(myDocs[i]);
+            }
 
-
-    });
-
-    
+        });
     </script>
+    <!-- Формирвоание видео для вью -->
+    <script>
+        $( document ).ready(function() {
+            var v_count = $('#videos_counter').val();
+            var i;
+            console.log(v_count);
 
+            const myVideosNames = [];
+            const myVideosLinks = [];
+            const myVideoLenght = [];
+            @if(isset($lesson_info))
+                @if(is_countable (json_decode($lesson_info->video_name) ))
+                    @foreach (json_decode($lesson_info->video_name) as $videoName)
+                        myVideosNames.push('{!! $videoName !!}');
+                    @endforeach
+                    @foreach (json_decode($lesson_info->video_link) as $videoLink)
+                        myVideosLinks.push('{!! $videoLink !!}');
+                    @endforeach
+                    @foreach (json_decode($lesson_info->video_length) as $videoLength)
+                        myVideoLenght.push('{!! $videoLength !!}');
+                    @endforeach
+                @endif
+            @endif
+            console.log(myVideosNames);
+            for (i = 0; i < v_count; i++) {
+                //var id_t = '#question_text' + (i);
+                app1.addNewEntryWithText(myVideosNames[i], myVideosLinks[i], myVideoLenght[i]);
+            }
+
+        });
+    </script>
     <script>
         var currentCounter = 0;
         var app1 = new Vue({
@@ -503,6 +552,20 @@
                     $('#videos_counter').val(currentCounter);
 
                 },
+                addNewEntryWithText(videoName, videoLink, videoLenght){
+                    var video_input_name = '#video_name' + currentCounter;
+                    var video_input_length = '#video_length' + currentCounter;
+                    var video_input_link = '#video_link' + currentCounter;
+                    setTimeout(function(){ 
+                        $(video_input_name).val(videoName); 
+                        $(video_input_length).val(videoLenght); 
+                        $(video_input_link).val(videoLink); 
+                    }, 100);
+                    currentCounter = currentCounter + 1;
+                    
+                    this.ids.push({id: currentCounter});
+                    $('#videos_counter').val(currentCounter);
+                }
 
             }
         });
@@ -534,12 +597,10 @@
                 },
                 addNewEntryWithText(value){
                     var doc_input_name = '#add_document_name' + docsCounter;
-                    $(doc_input_name).val(value);
+                    setTimeout(function(){ $(doc_input_name).val(value); }, 100);
                     docsCounter = docsCounter + 1;
-                    //tinymce.init({ selector: id_t });
-                    console.log(doc_input_name);
+
                     this.ids.push({id: docsCounter});
-                    //document.getElementById("docs_counter").value = docsCounter;
                     $('#docs_counter').val(currentCounter);
                 }
 

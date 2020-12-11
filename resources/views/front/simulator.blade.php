@@ -28,7 +28,7 @@
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_4.jpg') }}" alt="img">
-                    <a class="image-btn" href="{{ route('aboute_course') }}">
+                    <a class="image-btn" href="">
                         <span>Підкатегорії</span>
                         <div class="image-btn_arrow"></div>
                     </a>
@@ -48,7 +48,7 @@
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_5.jpg') }}" alt="img">
-                    <a class="image-btn" href="{{ route('aboute_course') }}">
+                    <a class="image-btn" href="">
                         <span>Підкатегорії</span>
                         <div class="image-btn_arrow"></div>
                     </a>
@@ -68,7 +68,7 @@
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_3.jpg') }}" alt="img">
-                    <a class="image-btn" href="{{ route('aboute_course') }}">
+                    <a class="image-btn" href="">
                         <span>Підкатегорії</span>
                         <div class="image-btn_arrow"></div>
                     </a>
