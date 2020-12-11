@@ -101,6 +101,7 @@ class HomePageController extends Controller
         $user = Auth::user();
 
         $course = DB::table('courses')->where('id', $course_id)->first();
+        dd($course);
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
 
         if (is_null($course)) {
