@@ -499,7 +499,7 @@
                                 <div class="programs-item_lesson--text">Заняття {{ $course_num }}</div>
                             </div>
                             <div class="courseEdit-grid_item">
-                                <div class="courseEdit-item_chapter programs-item_chapter">{{ $lesson->course_name }}
+                                <div class="courseEdit-item_chapter programs-item_chapter">{{ strip_tags($lesson->course_name) }}
                                 <picture>
                                         <source srcset="/img/pencil-edit-small.png" media="(max-width:592px)">
                                     <a href="{{ route('edit_lesson', ['course_id' => $course_info->id , 'lesson_id' =>$lesson->id ]) }}"><img class="courseEdit-item_image" src="/img/pencil-edit.png" alt="pencil-image"></a>
@@ -508,7 +508,7 @@
 
                             </div>
                             <div class="courseEdit-grid_item">
-                                <div class="programs-item_text">{{ $lesson->course_description }}</div>
+                                <div class="programs-item_text">{{ strip_tags($lesson->course_description) }}</div>
                             </div>
                             <div class="courseEdit-grid_item">
                                 <div class="programs-item_hours"><a href="##">{{ $lesson->learning_time }} години на завершення</a> </div>
