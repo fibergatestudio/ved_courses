@@ -284,7 +284,7 @@
                                         Назва відео @{{ index + 1}}
                                     </div>
                                     <div class="courseAdditional-topInput-right">
-                                        <input class="courseAdditional--input" type="text" :name="'video_name' + index">
+                                        <input class="courseAdditional--input" type="text" :name="'video_name' + index" required>
                                     </div>
                                 </div>
 
@@ -336,8 +336,8 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
-                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" >
-                                            <input class="courseAdditional-input_button" type="text" :name="'video_link' + index">
+                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" :name="'video_link' + index" required>
+                                            <input class="courseAdditional-input_button" type="text" >
                                             <!-- <a class="courseAdditional-input_FakeButton" href="##">Додати</a> -->
                                         </div>
                                     </div>

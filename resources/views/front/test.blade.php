@@ -104,7 +104,7 @@
                         @endforeach
                     @endif
                     <!-- Претаскивание -->
-                        <div class="test_b-title_wrapper">
+                        <!-- <div class="test_b-title_wrapper">
                             <div class="test_b-title_left">
                                 Перетягуй відповіді в блоки зліва
                             </div>
@@ -113,9 +113,19 @@
                             </div>
                         </div>
                         <div class="test_b separator"></div>
-                        <div class="test_b-grid_wrapper">
+                        <div class="test_b-grid_wrapper"> -->
+                            @if(count($testDragDrop) >= 1)
+                            <div class="test_b-title_wrapper">
+                                <div class="test_b-title_left">
+                                    Перетягуй відповіді в блоки зліва
+                                </div>
+                                <div class="test_b-title_right">
+                                    Ви маєте право на 3 помилки. <span class="test_b-darkText">Залишилась <span>1 </span> помилка.</span>
+                                </div>
+                            </div>
+                            <div class="test_b separator"></div>
+                            <div class="test_b-grid_wrapper">
 
-                            @if($testDragDrop != "")
                                 @foreach($testDragDrop as $dragDrop)
                                     <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
                                     <div class="test_b-grid_inner">
@@ -201,9 +211,10 @@
 
                                     </script>
                                 @endforeach
+                                </div>
                             @endif
 
-                        </div>
+                        <!-- </div> -->
                     @endif
 
              <a class="answer-btn btn-watch--more" href="##" id="test_send"><span>Надіслати тест </span></a>
