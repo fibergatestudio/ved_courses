@@ -101,7 +101,7 @@ class HomePageController extends Controller
         $user = Auth::user();
 
         $course = DB::table('courses')->where('id', $course_id)->first();
-        dd($course);
+        //dd($course);
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
 
         if (is_null($course)) {
@@ -129,6 +129,7 @@ class HomePageController extends Controller
 
         // Тесты
         $test_id = DB::table('courses_program')->where('id', $course->id)->first();
+        dd($test_id);
         if(isset($test_id->id)){
             $testInfo = DB::table('tests_info')->where('id', $test_id->id)->first();
         }
