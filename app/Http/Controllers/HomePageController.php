@@ -206,7 +206,7 @@ class HomePageController extends Controller
 
         // Получаем всю POST инфу
         $all_info = $request->all();
-
+        dd($all_info);
         // Аррей всех ответов
         $test_questions_json = [];
         // Берем текущий тест
