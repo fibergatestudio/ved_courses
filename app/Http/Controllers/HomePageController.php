@@ -128,13 +128,14 @@ class HomePageController extends Controller
         }
 
         // Тесты
-        $test_id = DB::table('courses_program')->where('id', $course->id)->first();
-
+        $test_id = DB::table('courses_program')->where([
+            'id' => $lesson_id,
+            'course_id' => $course_id,
+            ])->first();
+        //dd("Course_id: " . $course_id . "Lesson_id: " . $lesson_id);
         if(isset($test_id->id)){
             $testInfo = DB::table('tests_info')->where('id', $test_id->test_id)->first();
         }
-        //$testInfo = DB::table('tests_info')->where('id', $test_id->id)->first();
-
             // Вопросы теста
             if(isset($testInfo)){
                 $testQuestions = DB::table('tests_questions')->where('test_id', $testInfo->id)->get();

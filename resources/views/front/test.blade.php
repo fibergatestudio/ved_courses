@@ -50,7 +50,7 @@
 
     </div>
     </section>
-    @if(isset($testInfo->id))
+    @if(isset($testInfo->id)) 
     <section class="test_a">
         <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
         @csrf
