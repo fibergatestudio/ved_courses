@@ -129,9 +129,10 @@ class HomePageController extends Controller
 
         // Тесты
         $test_id = DB::table('courses_program')->where('id', $course->id)->first();
-        dd($test_id);
+        //dd($test_id);
         if(isset($test_id->id)){
             $testInfo = DB::table('tests_info')->where('id', $test_id->id)->first();
+            dd($testInfo);
         }
         //$testInfo = DB::table('tests_info')->where('id', $test_id->id)->first();
 
