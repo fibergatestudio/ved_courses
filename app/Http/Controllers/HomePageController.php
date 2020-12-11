@@ -202,11 +202,11 @@ class HomePageController extends Controller
         }
     }
 
-    public function send_test(Request $request, $test_id, $course_id, $lesson_id){
+    public function send_test($test_id, $course_id, $lesson_id, Request $request){
 
         // Получаем всю POST инфу
         $all_info = $request->all();
-        dd($test_id, $course_id, $lesson_id);
+        //dd($test_id, $course_id, $lesson_id);
         // Аррей всех ответов
         $test_questions_json = [];
         // Берем текущий тест
@@ -340,7 +340,7 @@ class HomePageController extends Controller
         ]);
             
 
-        return redirect()->route('view_lesson', ['course_id' => $course_id, 'lesson_id' => $lesson_id]);
+        return redirect()->route('view_lesson', ['course_id' => $test_id, 'lesson_id' => $course_id]);
         //return back();
     }
 
