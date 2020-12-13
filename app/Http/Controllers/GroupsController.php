@@ -144,7 +144,7 @@ class GroupsController extends Controller
         }
 
         DB::table('groups')->where('id', $group_id)->update([
-            'name'  => $request->name,
+            'name'  => $request->nameGroup,
             'students_array' => json_encode($students_array),
             'assigned_teacher_id' => $teacher_id,
             'assigned_teacher_name' => $teacher_name,
@@ -163,35 +163,32 @@ class GroupsController extends Controller
     // Автокомплит
     public function fetch(Request $request){
 
-        //$arr = [];
-        $test = $request->students;
-        $arr = explode(',', $test);
-        if($test != NULL){ }
+        $ipt_str = $request->ipt_str;
+        $arr = $request->students;
 
-        if($request->get('query'))
-        {
-            $query = $request->get('query');
-            // if($arr != null){
-            //     $data = DB::table('students')
-            //         ->where('full_name', 'LIKE', "%{$query}%")
-            //         ->whereNotIn('full_name', $arr)
-            //         ->get();
-            // } else {
-                $data = DB::table('students')
-                ->where('full_name', 'LIKE', "%{$query}%")
+        if($ipt_str !== ''){
+
+            if(count($arr) >= 1 ){
+
+            $data = DB::table('students')
+                ->where('full_name', 'LIKE', "%{$ipt_str}%")
                 ->whereNotIn('full_name', $arr)
                 ->get();
-            //}
 
+            return response()->json($data);
 
-            $output = '<ul class="dropdown-menu-list" style="display:block; position:relative">';
-            foreach($data as $row) {
-                $output .= '
-                <li><a href="#">'.$row->full_name.'</a></li>
-                ';
+            // $output = '<ul class="dropdown-menu-list" style="display:block; position:relative">';
+            // foreach($data as $row) {
+            //     $output .= '<li><a href="#">'.$row->full_name.'</a></li>';
+            // }
+            // $output .= '</ul>';
+            }else{
+                $data = DB::table('students')
+                ->where('full_name', 'LIKE', "%{$ipt_str}%")
+                ->get();
+
+            return response()->json($data);
             }
-            $output .= '</ul>';
-            echo $output;
         }
     }
 

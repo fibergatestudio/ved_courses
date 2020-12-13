@@ -40,12 +40,12 @@
             @csrf
                 <div class="ge">
                     <h3 class="ccec__main-title">Редагування групи</h3>
-                    @if(session()->has('message_success'))
-                        <div class="alert alert-success groups-edit__group-name uge_row_text-style uge__row">
-                            {{ session()->get('message_success') }}
-                        </div>
-                    @endif
                     <div class="ccec-header ge__header">
+                        @if(session()->has('message_success'))
+                            <div class="alert alert-success groups-edit__group-name uge_row_text-style uge__row">
+                                {{ session()->get('message_success') }}
+                            </div>
+                        @endif
                         <div class="groups-edit__teacher-block ge__teacher-course">
                             <p class="groups-edit__current-teacher eg-text-style ge__mb-20">
                                 <span class="ccec-header_style">Поточний викладач:&nbsp;</span>
@@ -75,7 +75,7 @@
                                 <input class='eg-input add-style ccec__input' id="student" type="text" name="student_name"
                                     placeholder="Іванов Іван Іванович" autocomplete="off">
                                 <a id="addstudent" class="add-student ccec__button ge__m-button">Додати</a>
-                                <div id="studentList"></div>
+                                <ul class="dropdown-menu-list" style="display:block" id="studentList"></ul>
                             </div>
                         </div>
                     </div>
@@ -97,7 +97,7 @@
 
                             @foreach($students_array as $student)
                                 <div class="sc-string ccec__row" id="name{{ $loop->iteration }}">
-                                    <div class="ccec__string-inner-mer student-number-mer">{{ $loop->iteration }}</div>
+                                    <div class="ccec__string-inner-mer student-number-mer">{{ $loop->iteration }}.</div>
                                     <div class="ccec__string-inner-mer col text-center">@if(isset($student->full_name)){{ $student->full_name }}@else-@endif</div>
                                     <div class="ccec__string-inner-mer col text-center">@if(isset($student->group_number)){{ $student->group_number }}@else-@endif</div>
                                     <div class="ccec__string-inner-mer col text-center">@if(isset($student->student_phone_number)){{ $student->student_phone_number }}@else-@endif</div>
@@ -118,82 +118,86 @@
                                 </div>
                             @endforeach
 
-                            {{-- <div class="flexMobile-wrapper sc-wrapper_restyle ccec">
-                                @foreach($students_array as $student)
-                                    <div class="flexMobile-block sc-mobile-block_restyle ccec__m-content">
-                                        <div class="flexMobile-string">
-                                            <div class="flexMobile-string_inner blackFont  sc-mobile-string_restyle ccec__m_mr-15">№</div>
-                                            <div class="flexMobile-string_inner grayFont  sc-mobile-string_restyle">
-                                                {{ $loop->iteration }}
-                                            </div>
-                                        </div>
-                                        <div class="flexMobile-string blackFont ug__mb-0">ПІБ студента</div>
-                                        <div class="flexMobile-string grayFont">
-                                            <div class="text-limiter">
-                                                @if(isset($student->full_name)) {{ $student->full_name }} @else -@endif
-                                            </div>
-                                        </div>
-                                        <div class="flexMobile-string blackFont ug__mb-0">Номер групи</div>
-                                        <div class="flexMobile-string grayFont">
-                                            <div class="text-limiter">
-                                                @if(isset($student->group_number)) {{ $student->group_number }} @else -@endif
-                                            </div>
-                                        </div>
-                                        <div class="flexMobile-string blackFont ug__mb-0">Номер телефону</div>
-                                        <div class="flexMobile-string grayFont sc-margin-b-15">
-                                            <div class="text-limiter">
-                                                @if(isset($student->student_phone_number)) {{ $student->student_phone_number }} @else -@endif
-                                            </div>
-                                        </div>
-                                        <div class="flexMobile-string blackFont ug__mb-0">Email</div>
-                                        <div class="flexMobile-string grayFont">
-                                            <div class="text-limiter">
-                                                @if(isset($student->student_email)) {{ $student->student_email }} @else -@endif
-                                            </div>
-                                        </div>
-                                        <div class="flexMobile-string blackFont ug__mb-0">Номер студ.квитка</div>
-                                        <div class="flexMobile-string grayFont">
-                                            <div class="text-limiter ccec__m_mb-10px">
-                                                @if(isset($student->student_number)) {{ $student->student_number }} @else -@endif
-                                            </div>
-                                        </div>
-                                        <div class="flexMobile-string blackFont ug__mb-0">ПІБ викладача</div>
-                                        <div class="flexMobile-string grayFont sc-margin-b-15">
-                                            <div class="text-limiter">
-                                                @if(isset($student->teacher_fio)) {{ $student->teacher_fio }} @else -@endif
-                                            </div>
-                                        </div>
-                                        <div class="flexMobile-string flex-btns_restyle">
-                                            <a class="flexTable-btn_delete groups-btn-edit-restyle ccec__m_btn-style" href="##"
-                                                data-toggle="modal" data-target="#deleteModalm{{ $loop->iteration }}"><span>Видалити</span>
-                                            </a>
-                                            @include('layouts.front.includes.modals.delete_user', ['modalId' => 'deleteModalm', 'secondId' => '', 'modalPath' => '' ])
-                                        </div>
-                                    </div>
-                                @foreach
-
-                                <div class="sc-string ccec__row" id="studentsAddm" style="display: none;">
-
-                                </div>
-                            </div> --}}
-
                             <div class="groups-edit__group uge__row ge__select-block_style">
                                 <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
-                                    <div class="select uge__select_block ge__select_style">
-                                        <select name="teacher_id"
-                                            class="select-teacher select-teacher_sce_restyle uge__select_style"
-                                            id="selectTeacher">
-                                            <option>Нет</option>
-                                            @foreach($teachers as $teacher)
-                                                @if($group_info->assigned_teacher_name == $teacher->name)
-                                                    <option value="{{ $teacher->id }}" selected>{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
-                                                @else
-                                                    <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
-                                                @endif
-                                            @endforeach
-                                        </select>
-                                    </div>
+                                <div class="select uge__select_block ge__select_style">
+                                    <select name="teacher_id"
+                                        class="select-teacher select-teacher_sce_restyle uge__select_style"
+                                        id="selectTeacher">
+                                        <option>Нет</option>
+                                        @foreach($teachers as $teacher)
+                                            @if($group_info->assigned_teacher_name == $teacher->name)
+                                                <option value="{{ $teacher->id }}" selected>{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
+                                            @else
+                                                <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
+                                            @endif
+                                        @endforeach
+                                    </select>
+                                </div>
                             </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flexMobile-wrapper sc-wrapper_restyle ccec" id="mobi0">
+                    @foreach($students_array as $student)
+                        <div class="flexMobile-block sc-mobile-block_restyle ccec__m-content" id="mobi{{ $loop->iteration }}">
+                            <div class="flexMobile-string">
+                                <div class="flexMobile-string_inner blackFont  sc-mobile-string_restyle ccec__m_mr-15">№</div>
+                                <div class="flexMobile-string_inner grayFont  sc-mobile-string_restyle">{{ $loop->iteration }}.</div>
+                            </div>
+                            <div class="flexMobile-string blackFont ug__mb-0">ПІБ студента</div>
+                            <div class="flexMobile-string grayFont">
+                                <div class="text-limiter">@if(isset($student->full_name)){{ $student->full_name }}@else-@endif</div>
+                            </div>
+                            <div class="flexMobile-string blackFont ug__mb-0">Номер групи</div>
+                            <div class="flexMobile-string grayFont">
+                                <div class="text-limiter">@if(isset($student->group_number)){{ $student->group_number }}@else-@endif</div>
+                            </div>
+                            <div class="flexMobile-string blackFont ug__mb-0">Номер телефону</div>
+                            <div class="flexMobile-string grayFont sc-margin-b-15">
+                                <div class="text-limiter">@if(isset($student->student_phone_number)){{ $student->student_phone_number }}@else-@endif</div>
+                            </div>
+                            <div class="flexMobile-string blackFont ug__mb-0">Email</div>
+                            <div class="flexMobile-string grayFont">
+                                <div class="text-limiter">@if(isset($student->student_email)){{ $student->student_email }}@else-@endif</div>
+                            </div>
+                            <div class="flexMobile-string blackFont ug__mb-0">Номер студ.квитка</div>
+                            <div class="flexMobile-string grayFont">
+                                <div class="text-limiter ccec__m_mb-10px">@if(isset($student->student_number)){{ $student->student_number }}@else-@endif</div>
+                            </div>
+                            <div class="flexMobile-string blackFont ug__mb-0">ПІБ викладача</div>
+                            <div class="flexMobile-string grayFont sc-margin-b-15">
+                                <div class="text-limiter">@if(isset($student->teacher_fio)){{ $student->teacher_fio }}@else-@endif</div>
+                            </div>
+                            <div class="flexMobile-string flex-btns_restyle">
+                                <a class="flexTable-btn_delete groups-btn-edit-restyle ccec__m_btn-style" href="##"
+                                    data-toggle="modal" data-target="#deleteModalm{{ $loop->iteration }}"><span>Видалити</span>
+                                </a>
+                                @include('layouts.front.includes.modals.delete_student', [
+                                    'modalId' => 'deleteModalm',
+                                    'secondId' => $loop->iteration,
+                                    'target' => $student->full_name
+                                ])
+                            </div>
+                        </div>
+                    @endforeach
+
+                    <div class="groups-edit__group uge__row ge__select-block_style">
+                        <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
+                        <div class="select uge__select_block ge__select_style">
+                            <select name="teacher_id"
+                                class="select-teacher select-teacher_sce_restyle uge__select_style"
+                                id="selectTeacher">
+                                <option>Нет</option>
+                                @foreach($teachers as $teacher)
+                                    @if($group_info->assigned_teacher_name == $teacher->name)
+                                        <option value="{{ $teacher->id }}" selected>{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
+                                    @else
+                                        <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
+                                    @endif
+                                @endforeach
+                            </select>
                         </div>
                     </div>
                 </div>
@@ -219,7 +223,7 @@
 
     <script>
         var students_array = new Array();
-            var count_t = 1;
+        // var count_t = 1;
 
         $(document).ready(function(){
             /* Берем все текущие значения */
@@ -228,41 +232,28 @@
                     students_array.push($(this).val());
                     return $(this).val();
                 }).get();
-
-            // console.log(count_t);
-            count_t = students_array.length;
-            count_t++;
-
-            // console.log(students_array);
-            // console.log(count_t);
+            // count_t = students_array.length;
+            // count_t++;
         });
 
         $('#student').keyup(function(){
-            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, '');
+            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ');
             if(query != ''){
-                // axios.get("{{ route('autocomplete.fetch') }}", {
-                //     params: {
-                //         query: query,
-                //         students: students_array,
-                //     }
-                // })
-                // .then(function (response) {
-                //     console.log(response);
-                //     // $('#studentList').fadeIn();
-                //     // $('#studentList').html(data);
-                // })
-                // .catch(function (error) {
-                //     console.log(error);
-                // });
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url:"{{ route('autocomplete.fetch') }}" + "/?students=" + students_array,
-                    method:"GET",
-                    data:{query:query, _token:_token},
-                    success:function(data){
-                        $('#studentList').fadeIn();
-                        $('#studentList').html(data);
-                    },
+                axios.post("{{ route('autocomplete.fetch') }}", {
+                    ipt_str: query,
+                    students: students_array,
+                })
+                .then(function (response) {
+                    // console.log(response.data);
+                    $('#studentList').empty().fadeIn();
+                    response.data.forEach(function callback(currentValue, index, array) {
+                        $('#studentList').append("\
+                            <li><a href='#'>"+currentValue.full_name+"</a></li>\
+                        ");
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
                 });
             }
         });
@@ -300,7 +291,7 @@
 
                     $("div[id^='name']:last").after("\
                         <div class='sc-string ccec__row' id='name"+count_stud+"'>\
-                            <div class='ccec__string-inner-mer student-number-mer'>"+count_stud+"</div>\
+                            <div class='ccec__string-inner-mer student-number-mer'>"+count_stud+".</div>\
                             <div class='ccec__string-inner-mer col text-center'>"+response.data.full_name+"</div>\
                             <div class='ccec__string-inner-mer col text-center'>"+response.data.group_number+"</div>\
                             <div class='ccec__string-inner-mer col text-center'>"+response.data.student_phone_number+"</div>\
@@ -320,10 +311,10 @@
                                                 <img src='/img/graduation-cap.png' alt='icon'>\
                                             </div>\
                                             <div class='deleteMenu-text'>\
-                                                Ви дійсно бажаєте видалити <br> студента "+curr_stud+" зі списку?\
+                                                Ви дійсно бажаєте видалити <br> студента "+response.data.full_name+" зі списку?\
                                             </div>\
                                             <div class='deleteMenu-btn'>\
-                                                <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_t+")'>\
+                                                <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_stud+")' href=''>\
                                                     <span>Видалити</span>\
                                                 </a>\
                                             </div>\
@@ -331,12 +322,71 @@
                                     </div>\
                                 </div>\
                             </div>\
-                            <input type='hidden' name='student_name[]' value='"+curr_stud+"'>\
+                            <input type='hidden' name='student_name[]' value='"+response.data.full_name+"'>\
                         </div>\
                     ");
+
+                    $("div[id^='mobi']:last").after("\
+                        <div class='flexMobile-block sc-mobile-block_restyle ccec__m-content' id='mobi"+count_stud+"'>\
+                            <div class='flexMobile-string'>\
+                                <div class='flexMobile-string_inner blackFont  sc-mobile-string_restyle ccec__m_mr-15'>№</div>\
+                                <div class='flexMobile-string_inner grayFont  sc-mobile-string_restyle'>"+count_stud+".</div>\
+                            </div>\
+                            <div class='flexMobile-string blackFont ug__mb-0'>ПІБ студента</div>\
+                            <div class='flexMobile-string grayFont'>\
+                                <div class='text-limiter'>"+response.data.full_name+"</div>\
+                            </div>\
+                            <div class='flexMobile-string blackFont ug__mb-0'>Номер групи</div>\
+                            <div class='flexMobile-string grayFont'>\
+                                <div class='text-limiter'>"+response.data.group_number+"</div>\
+                            </div>\
+                            <div class='flexMobile-string blackFont ug__mb-0'>Номер телефону</div>\
+                            <div class='flexMobile-string grayFont sc-margin-b-15'>\
+                                <div class='text-limiter'>"+response.data.student_phone_number+"</div>\
+                            </div>\
+                            <div class='flexMobile-string blackFont ug__mb-0'>Email</div>\
+                            <div class='flexMobile-string grayFont'>\
+                                <div class='text-limiter'>"+response.data.student_email+"</div>\
+                            </div>\
+                            <div class='flexMobile-string blackFont ug__mb-0'>Номер студ.квитка</div>\
+                            <div class='flexMobile-string grayFont'>\
+                                <div class='text-limiter ccec__m_mb-10px'>"+response.data.student_number+"</div>\
+                            </div>\
+                            <div class='flexMobile-string blackFont ug__mb-0'>ПІБ викладача</div>\
+                            <div class='flexMobile-string grayFont sc-margin-b-15'>\
+                                <div class='text-limiter'>"+response.data.teacher_fio+"</div>\
+                            </div>\
+                            <div class='flexMobile-string flex-btns_restyle'>\
+                                <a class='flexTable-btn_delete groups-btn-edit-restyle ccec__m_btn-style' href=''\
+                                    data-toggle='modal' data-target='#deleteModalm"+count_stud+"'><span>Видалити</span>\
+                                </a>\
+                            </div>\
+                            <div class='bootstrap-restylingStudent modal fade' id='deleteModalm"+count_stud+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
+                                <div class='modal-dialog  modal-dialog_restyle'>\
+                                    <div class='modal-content'>\
+                                        <div class='deleteMenu-wrapper'>\
+                                            <div class='deleteMenu-topImg'>\
+                                                <img src='/img/graduation-cap.png' alt='icon'>\
+                                            </div>\
+                                            <div class='deleteMenu-text'>\
+                                                Ви дійсно бажаєте видалити <br> студента "+response.data.full_name+" зі списку?\
+                                            </div>\
+                                            <div class='deleteMenu-btn'>\
+                                                <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_stud+")' href=''>\
+                                                    <span>Видалити</span>\
+                                                </a>\
+                                            </div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    ");
+
                     /* Добавляем текущего студента в аррей */
                     students_array.push(curr_stud);
-                    count_t++;
+                    // count_t++;
+                    $('input[name="student_name"]').val('');
                 }
             })
             .catch(function(error) {
@@ -346,13 +396,14 @@
             });
         });
 
-        function removeStud(curr_stud) {
-            students_array.splice( $.inArray(curr_stud,students_array) ,1 );
-            let div_name = "#name" + curr_stud;
-            // console.log(div_name);
+        function removeStud(count_stud) {
+            students_array.splice( $.inArray(count_stud,students_array) ,1 );
+            // let div_name = "#name"+curr_stud;
+            // let div_mobi = "#mobi"+curr_stud;
             setTimeout(function(){
-                $( div_name ).remove();
-                count_t--;
+                $("div[id='name"+count_stud+"']").remove();
+                $("div[id='mobi"+count_stud+"']").remove();
+                // count_t--;
             }, 500);
             // console.log(students_array);
             // console.log("RemoveStud " + curr_stud);

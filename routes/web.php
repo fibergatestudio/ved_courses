@@ -79,7 +79,7 @@ use Illuminate\Support\Facades\Auth;
         // Добавить группу
         Route::get('groups/add_group', 'GroupsController@add_group')->name('add_group')->middleware('auth','role:admin,teacher');
             // Автокомплит студентов
-            Route::get('/autocomplete/fetch', 'GroupsController@fetch')->name('autocomplete.fetch')->middleware('auth','role:admin,teacher');
+            Route::post('/autocomplete/fetch', 'GroupsController@fetch')->name('autocomplete.fetch')->middleware('auth','role:admin,teacher');
             // проверка наличия студента в БД
             Route::post('/autocomplete/fetchСheck', 'GroupsController@fetchCheck')->name('autocomplete.fetch.check')->middleware('auth','role:admin,teacher');
             // Применить добавление группы
