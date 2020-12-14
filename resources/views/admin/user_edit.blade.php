@@ -17,9 +17,19 @@
                 </div>
             @endif
             <div class="groups-edit__group uge__row">
-                <p class="groups-edit__group-name uge_row_text-style">Логін </p>
+                <p class="groups-edit__group-name uge_row_text-style">Логін (Ім'я)</p>
                 <input class='eg-input uge__input_style' type="text" name="name" value="{{ $user->name }}" id="getLogin"
                     placeholder="Логін">
+            </div>
+            <div class="groups-edit__group uge__row">
+                <p class="groups-edit__group-name uge_row_text-style">Прізвище </p>
+                <input class='eg-input uge__input_style' type="text" name="surname" value="{{ $user->surname }}" id="getSurname"
+                    placeholder="Прізвище">
+            </div>
+            <div class="groups-edit__group uge__row">
+                <p class="groups-edit__group-name uge_row_text-style">По батькові</p>
+                <input class='eg-input uge__input_style' type="text" name="patronymic" value="{{ $user->patronymic }}" id="getPatronymic"
+                    placeholder="По батькові">
             </div>
             <div class="groups-edit__group uge__row">
                 <p class="groups-edit__group-name uge_row_text-style">Email</span></p>

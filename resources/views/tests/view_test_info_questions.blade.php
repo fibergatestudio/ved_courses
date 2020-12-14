@@ -173,6 +173,11 @@
 
     
     <section class="courseControl">
+        @if(session()->has('message_success'))
+            <div class="alert alert-success">
+                {{ session()->get('message_success') }}
+            </div>
+        @endif
         <div class="courseControl-separator direction-separator">
         </div>
         <div class="courseControl-container sticky-container container">

@@ -1714,7 +1714,7 @@ element.style {
 .teachers-item_photo {
     width: 265px;
     height: 265px;
-    background-image: url(../img/teacher.jpg);
+    background-image: url(../img/teacher.png);
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover
@@ -4296,7 +4296,7 @@ element.style {
 .courseEdit-item_photo {
     width: 194px;
     height: 194px;
-    background-image: url(../img/teacher.jpg);
+    background-image: url(../img/teacher.png);
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
