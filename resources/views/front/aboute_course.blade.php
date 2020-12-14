@@ -11,7 +11,7 @@
 @section('content')
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>{{ $course->name }}</span></div>
+        <div class="direction-separator_badge"><span>{{ Str::limit($course->name, 20) }}</span></div>
     </div>
     <div class="container">
         <!--<a class="breadcrumbs" href="#">Головна сторінка / Курс назва</a> -->
