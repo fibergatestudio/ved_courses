@@ -8,7 +8,7 @@
 <script src="https://raw.githack.com/SortableJS/Sortable/master/Sortable.js"></script>
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>{{ Str::limit($lesson->course_name, 20) ?? 'Без назви' }}</span></div>
+        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
     </div>
     <div class="container">
         <!--<a class="breadcrumbs" href="#">Головна сторінка / Курс / Заняття 01</a>-->
@@ -50,7 +50,7 @@
 
     </div>
     </section>
-    @if(isset($testInfo->id)) 
+    @if(isset($testInfo->id))
     <?php $n_answers = 1; ?>
     <section class="test_a">
         <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
