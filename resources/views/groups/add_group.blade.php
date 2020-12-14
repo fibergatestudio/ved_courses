@@ -98,6 +98,7 @@
 
         $('#student').keyup(function(){
             let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
+            $(this).val(query);
             if(query != ''){
                 axios.post("{{ route('autocomplete.fetch') }}", {
                     ipt_str: query,
