@@ -1290,7 +1290,8 @@ element.style {
 .direction-inner_top {
     overflow: hidden;
     max-width: 358px;
-    max-height: 234px;
+    /*max-height: 234px;*/
+    height: 234px;
     position: relative
 }
 

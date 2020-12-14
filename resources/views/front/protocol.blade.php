@@ -7,7 +7,8 @@
 @section('content')
 <section class="direction">
     <!-- protocol modal window start -->
-    <form class="protocol" method="POST" id="protocolForm">
+    <form id="protocolForm" class="protocol" method="POST" action="{{ route('protocol.store') }}" enctype="multipart/form-data">
+        @csrf
         <h3 class="protocol__title">ПРОТОКОЛ ОГЛЯДУ</h3>
         <div class="protocol__section">
             <div class="protocol__purple-separator"></div>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Middleware\Role;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -276,3 +277,7 @@ use Illuminate\Support\Facades\Auth;
         // Drag and drop test
         Route::get('/tests_controll/view_sort/{test_id}', 'TestsController@view_sort')->name('view_sort')->middleware('auth','role:admin,teacher');
 
+
+//Протоколы
+    // Управление протоколами
+    Route::resource('protocol', 'ProtocolController')->middleware('auth');

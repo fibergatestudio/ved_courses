@@ -32,6 +32,7 @@
     </div>
     <div class="container">
         <div class="direction-wrapper">
+            <!--
             <div class="direction-inner">
                 <div class="direction-inner_top">
                     <img class="direction-inner_img" src="{{ asset('img/direction_1.jpg') }}" alt="img">
@@ -91,7 +92,7 @@
                         since the 1500s, when an unknown printer
                     </div>
                 </div>
-            </div>-
+            </div>-->
             <!-- Тест вывода курсов -->
             @foreach($courses as $course)
                 @if($course->visibility == "all")
