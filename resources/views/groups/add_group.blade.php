@@ -97,7 +97,7 @@
         var col_id = 1;
 
         $('#student').keyup(function(){
-            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ');
+            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
             if(query != ''){
                 axios.post("{{ route('autocomplete.fetch') }}", {
                     ipt_str: query,
@@ -117,22 +117,6 @@
                 });
             }
         });
-        // $('#student').keyup(function(){
-        //     var query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, '');
-        //     if(query != ''){
-
-        //         var _token = $('input[name="_token"]').val();
-        //         $.ajax({
-        //             url:"{{ route('autocomplete.fetch') }}" + "/?students=" + students_array,
-        //             method:"GET",
-        //             data:{query:query, _token:_token},
-        //             success:function(data){
-        //                 $('#studentList').fadeIn();
-        //                 $('#studentList').html(data);
-        //             }
-        //         });
-        //     }
-        // });
 
         $('#studentList').on('click', 'li', function(e){
             e.preventDefault();
@@ -142,7 +126,7 @@
 
         $('#addstudent').click(function() {
             /* Берем имя текущего студента и очищаем от лишних пробелов*/
-            var curr_stud = $('#student').val().replace(/\s+/g, ' ').trim();
+            var curr_stud = $('#student').val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
 
             /* Проверка на существующего студента в базе */
             axios.post("{{ route('autocomplete.fetch.check') }}", {
@@ -187,6 +171,8 @@
                     /* Добавляем текущего студента в аррей */
                     count_t++;
                     students_array.push(curr_stud);
+
+                    $('#student').val('');
 
                     /*Проверка столбца для ввода*/
                     if(col_id == 1){
