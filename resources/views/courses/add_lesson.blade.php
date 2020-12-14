@@ -458,31 +458,35 @@
             var video_counter = $('#videos_counter').val();
 
             // Перебираем поля каждого видео
-            for(i = 0; i <= video_counter; i++){
-                // Имена инпутов для проверки
-                var number = i+1;
-                var v_name = '#video_name' + i;
-                var v_lenght = '#video_length' + i;
-                var v_link = '#video_link' + i;
+            if(video_counter > 0){
+                for(i = 0; i <= video_counter; i++){
+                    // Имена инпутов для проверки
+                    var number = i+1;
+                    var v_name = '#video_name' + i;
+                    var v_lenght = '#video_length' + i;
+                    var v_link = '#video_link' + i;
 
-                // Получаем инфу 
-                var name = $.trim( $(v_name).val() );
-                var length = $.trim( $(v_lenght).val() );
-                var link = $.trim( $(v_link).val() );
+                    // Получаем инфу 
+                    var name = $.trim( $(v_name).val() );
+                    var length = $.trim( $(v_lenght).val() );
+                    var link = $.trim( $(v_link).val() );
 
-                // Check if empty of not
-                if (name  === '') {
-                    alert('Название видео '+ number +' пустое.');
-                    return false;
-                } else if (length  === '') {
-                    alert('Длинна видео '+ number +' пустое.');
-                    return false;
-                } else if (link  === '') {
-                    alert('Ссылка видео '+ number +' пустая.');
-                    return false;
-                } else if(i == video_counter){
-                    document.getElementById('add_lesson_form').submit();
+                    // Check if empty of not
+                    if (name  === '') {
+                        alert('Название видео '+ number +' пустое.');
+                        return false;
+                    } else if (length  === '') {
+                        alert('Длинна видео '+ number +' пустое.');
+                        return false;
+                    } else if (link  === '') {
+                        alert('Ссылка видео '+ number +' пустая.');
+                        return false;
+                    } else if(i == video_counter){
+                        document.getElementById('add_lesson_form').submit();
+                    }
                 }
+            } else {
+                document.getElementById('add_lesson_form').submit();
             }
             //});
         }

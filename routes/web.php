@@ -35,6 +35,9 @@ use Illuminate\Support\Facades\Auth;
     // Отправка курса
     Route::post('/course/{course_id}/lesson/{lesson_id}/send_test/{test_id}', 'HomePageController@send_test')->name('send_test');
 
+    // Просмотр курса
+    Route::get('/view_result/{test_id}/user/{user_id}', 'HomePageController@view_test_result')->name('view_test_result');
+
 // Авторизация
     Auth::routes();
     // Логаут

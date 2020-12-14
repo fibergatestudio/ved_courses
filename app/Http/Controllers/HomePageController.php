@@ -344,6 +344,11 @@ class HomePageController extends Controller
         //return back();
     }
 
+    public function view_test_result(){
+
+        return view('front.test_result');
+    }
+
     public function guest()
     {
         return view('front.guest');
