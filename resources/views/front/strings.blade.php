@@ -47,8 +47,13 @@
 
         </div>
 
-        <div class="string-text">
 
+        <div class="string-text">
+            @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+            @endif
         {!! $lesson->course_description ?? 'Немає опису' !!}
 
       </div>

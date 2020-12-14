@@ -65,8 +65,8 @@ class HomePageController extends Controller
         //if(!$check_dup){
         $course_view = CourseViews::createViewLog($course);
         //}
-        
-        // end 
+
+        // end
 
         if (is_null($course)) {
             abort(404);
@@ -94,7 +94,7 @@ class HomePageController extends Controller
             return view('front.aboute_course', compact('course', 'course_information'));
             break;
         }
-        
+
     }
 
     public function view_lesson($course_id, $lesson_id = null, $tab = null) {
@@ -163,7 +163,7 @@ class HomePageController extends Controller
                 $testMultiply = DB::table('tests_multiple_choice')->whereIn('id', $testMultiplyIDS)->get();
                 $testTrueFalse = DB::table('tests_true_false')->whereIn('id', $testTrueFalseIDS)->get();
                 $testDragDrop = DB::table('tests_drag_drop')->whereIn('id', $testDragDropIDS)->get();
-  
+
             }
 
             //dd($testDragDrop);
@@ -213,7 +213,7 @@ class HomePageController extends Controller
         //$current_test = DB::table('tests_info')->where('id', $test_id)->first();
         //$finished_count = $current_test->finished_count + 1;
         //dd($all_info);
-        
+
         // Верно \ не верно
             // Получаем айди тестов
             $true_false_ids = $request->true_false_id;
@@ -236,8 +236,8 @@ class HomePageController extends Controller
                     if($current_answers[$key] == $right_answer){
                         // Ответил верно
                         $tf_array['answered_right'] = "Так";
-                    } else { 
-                        // Ответил не верно 
+                    } else {
+                        // Ответил не верно
                         $tf_array['answered_right'] = "Ні";
                     }
                     array_push($true_false_q, $tf_array);
@@ -283,7 +283,7 @@ class HomePageController extends Controller
                 array_push($test_questions_json, $multiply_q);
             }
         // Петераскивание
-            // Получаем айди 
+            // Получаем айди
             $drag_drop_ids = $request->drag_drop_id;
             $drag_drop_q = [];
             if(isset($drag_drop_ids)){
@@ -308,7 +308,7 @@ class HomePageController extends Controller
                     if($right_answer == $current_answers[$key]){
                         // Ответил верно
                         $dd_array['answered_right'] = "Так";
-                    } else { 
+                    } else {
                         // Ответил не верно
                         $dd_array['answered_right'] = "Ні";
                     }
@@ -338,9 +338,9 @@ class HomePageController extends Controller
             'test_questions_json' => json_encode($test_questions_json),
             'total_score' => $t_score
         ]);
-            
 
-        return redirect()->route('view_lesson', ['course_id' => $test_id, 'lesson_id' => $course_id]);
+
+        return redirect()->route('view_lesson', ['course_id' => $test_id, 'lesson_id' => $course_id])->with('success', 'Завдання успішно збережено.');
         //return back();
     }
 
