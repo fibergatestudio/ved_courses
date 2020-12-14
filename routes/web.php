@@ -161,6 +161,8 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/courses_controll/edit_course/{course_id}', 'CoursesController@edit_course')->name('edit_course')->middleware('auth','role:admin');
             // Редактирование курса POST
             Route::post('/courses_controll/edit_course/{course_id}/apply', 'CoursesController@edit_course_apply')->name('edit_course_apply')->middleware('auth','role:admin');
+                // Редактирование курса - Удаление учителя - AJAX
+                Route::post('/courses_controll/edit_course/delete_teacher', 'CoursesController@ajax_remove_teacher')->name('ajax_remove_teacher')->middleware('auth','role:admin,teacher');
 
             // Редактировать "Про Этот Курс"
             Route::get('/courses_controll/edit_course/{course_id}/edit_about', 'CoursesController@edit_about')->name('edit_about')->middleware('auth','role:admin');

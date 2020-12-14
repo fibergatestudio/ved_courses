@@ -46,6 +46,8 @@ class AdminController extends Controller
         //if($user_info_checker->email != $request->email){
             DB::table('users')->where('id', $user_id)->update([
                 'name' => $request->name,
+                'surname' => $request->surname,
+                'patronymic' => $request->patronymic,
                 'email' => $request->email,
             ]);
         //}

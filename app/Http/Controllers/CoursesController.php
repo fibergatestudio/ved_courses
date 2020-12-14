@@ -190,6 +190,18 @@ class CoursesController extends Controller
         return redirect()->back();
     }
 
+    public function ajax_remove_teacher(Request $request){
+
+        $course_id = $request->course_id;
+        $teachers = json_encode($request->teachers);
+
+        DB::table('courses')->where('id', $course_id)->update([
+            'assigned_teacher_id' => $teachers,
+        ]);
+
+        echo 'Teachers updated';
+    }
+
     // edit_about
     public function edit_about($course_id){
 
