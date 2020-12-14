@@ -443,14 +443,18 @@
                     </div>
                     </div>
                     @foreach($assigned_teachers as $teacher)
-                        <div class="courseEdit-teachers teachers-grid_wrapper">
+                    <div class="courseEdit-teachers teachers-grid_wrapper" id="teacher{{ $teacher->id }}">
                         <div class="teachers-grid_item">
                             <div class="courseEdit-item_photo">
                             </div>
                         </div>
                         <div class="teachers-grid_item">
-                            <div class="teachers-item_name">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
-                            <div class="courseEdit-item_position teachers-item_position">Професор наук</div>
+                            <div style="display:flex;">
+                                <div class="teachers-item_name">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
+                                <a class="courseAdditional-docName" href="##" onclick="deleteTeacher({{ $teacher->id }});"></a>
+                            </div>
+                            <div class="courseEdit-item_position teachers-item_position">Професор наук</div> 
+                            
 
                         </div>
                         <div class="teachers-grid_item">
@@ -508,7 +512,8 @@
 
                             </div>
                             <div class="courseEdit-grid_item">
-                                <div class="programs-item_text">{{ strip_tags($lesson->course_description) }}</div>
+                                <?php $clear_descr = str_replace("&nbsp;", '', $lesson->course_description); ?>
+                                <div class="programs-item_text">{{ strip_tags($clear_descr) }}</div>
                             </div>
                             <div class="courseEdit-grid_item">
                                 <div class="programs-item_hours"><a href="##">{{ $lesson->learning_time }} години на завершення</a> </div>
@@ -650,6 +655,50 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+
+        function deleteTeacher(teacher_id){
+            console.log("Текущий айди: " + teacher_id);
+            var removeItem = teacher_id;
+            var teacher_block_id = '#teacher' + teacher_id;
+            $(teacher_block_id).remove();
+
+            var cur_teacher_arr = {!! $course_info->assigned_teacher_id !!};
+            console.log("Текущий аррей: " + cur_teacher_arr);
+           
+
+            var course_id = {!! $course_info->id !!};
+            //var new_teacher_arr = cur_teacher_arr.splice( $.inArray(teacher_id, cur_teacher_arr), 1);
+             
+            cur_teacher_arr = $.grep(cur_teacher_arr, function(value) {
+                return value != removeItem;
+            });
+            console.log("Новый аррей: " + cur_teacher_arr);
+
+            axios.post("{{ route('ajax_remove_teacher') }}", {
+                course_id: course_id,
+                teachers: cur_teacher_arr,
+            })
+            .then(function (response) {
+                console.log(response.data);
+                location.reload();
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+
+           
+        }
+
+        function arrayRemove(arr, value) { 
+    
+            return arr.filter(function(ele){ 
+                return ele != value; 
+            });
+        }
+
+    </script>
 
     <script>
         $(document).ready(function() {

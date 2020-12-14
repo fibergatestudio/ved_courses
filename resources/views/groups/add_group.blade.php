@@ -50,8 +50,7 @@
                                 <input class='eg-input add-style' type="text" id="student" name="student" id="getCourseName"
                                     placeholder="Введіть ім'я студента" autocomplete="off">
                                 <a class="add-student mer-w20" id="addstudent">Додати</a>
-                                <div id="studentList">
-                                </div>
+                                <ul class="dropdown-menu-list" style="display:block" id="studentList"></ul>
                             </div>
                         </div>
                         <div class="groups-edit__students-list mw-100">
@@ -98,23 +97,45 @@
         var col_id = 1;
 
         $('#student').keyup(function(){
-            var query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, '');
+            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ');
             if(query != ''){
-
-                var _token = $('input[name="_token"]').val();
-                $.ajax({
-                    url:"{{ route('autocomplete.fetch') }}" + "/?students=" + students_array,
-                    method:"GET",
-                    data:{query:query, _token:_token},
-                    success:function(data){
-                        $('#studentList').fadeIn();
-                        $('#studentList').html(data);
-                    }
+                axios.post("{{ route('autocomplete.fetch') }}", {
+                    ipt_str: query,
+                    students: students_array,
+                })
+                .then(function (response) {
+                    // console.log(response.data);
+                    $('#studentList').empty().fadeIn();
+                    response.data.forEach(function callback(currentValue, index, array) {
+                        $('#studentList').append("\
+                            <li><a href='#'>"+currentValue.full_name+"</a></li>\
+                        ");
+                    });
+                })
+                .catch(function (error) {
+                    console.log(error);
                 });
             }
         });
+        // $('#student').keyup(function(){
+        //     var query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, '');
+        //     if(query != ''){
 
-        $(document).on('click', 'li', function(){
+        //         var _token = $('input[name="_token"]').val();
+        //         $.ajax({
+        //             url:"{{ route('autocomplete.fetch') }}" + "/?students=" + students_array,
+        //             method:"GET",
+        //             data:{query:query, _token:_token},
+        //             success:function(data){
+        //                 $('#studentList').fadeIn();
+        //                 $('#studentList').html(data);
+        //             }
+        //         });
+        //     }
+        // });
+
+        $('#studentList').on('click', 'li', function(e){
+            e.preventDefault();
             $('#student').val($(this).text());
             $('#studentList').fadeOut();
         });
@@ -123,70 +144,64 @@
             /* Берем имя текущего студента и очищаем от лишних пробелов*/
             var curr_stud = $('#student').val().replace(/\s+/g, ' ').trim();
 
-            // console.log(curr_stud);
-            // console.log(students_array);
-
-            var _token = $('input[name="_token"]').val();
-            $.ajax({
-                url:"{{ route('autocomplete.fetch.check') }}" + "/?student=" + curr_stud,
-                method:"POST",
-                data:{_token:_token},
-                success:function(data){
-                    // console.log(data);
-                    if(data == "Нет студента"){
-                        alert('Студент не найден, пожалуйста выберите студента из выпадающего списка!')
-                    } else {
-                        /* Если студент есть в аррее */
-                        if(jQuery.inArray(curr_stud, students_array) != -1 ){
-                            alert("Студент "+ curr_stud + " Вже доданий!");
-                        } else {
-                            /* Общий */
-                            $('#studentsAdd'+col_id+', #studentsAdd').append("\
-                                <div class='w-100' id='name"+count_t+"'>\
-                                    <div class='groups-edit__student-row mw-100 "+cust_even(count_t)+"'>\
-                                        <p class='student-number student-number-mer'>"+count_t+". &nbsp;</p>\
-                                        <p class='groups-edit__student groups-edit__student-mer'>"+curr_stud+"</p>\
-                                        <a class='delete-student delete-student-mer' href='' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a>\
-                                    </div>\
-                                    <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
-                                        <div class='modal-dialog  modal-dialog_restyle'>\
-                                            <div class='modal-content'>\
-                                                <div class='deleteMenu-wrapper'>\
-                                                    <div class='deleteMenu-topImg'>\
-                                                        <img src='/img/basket.png' alt='icon'>\
-                                                    </div>\
-                                                    <div class='deleteMenu-text'>\
-                                                        Ви дійсно бажаєте видалити <br> студента "+curr_stud+" зі списку?\
-                                                    </div>\
-                                                    <div class='deleteMenu-btn'>\
-                                                        <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_t+")'>\
-                                                            <span>Видалити</span>\
-                                                        </a>\
-                                                    </div>\
-                                                </div>\
+            /* Проверка на существующего студента в базе */
+            axios.post("{{ route('autocomplete.fetch.check') }}", {
+                student: curr_stud,
+            })
+            .then(function(response) {
+                if(jQuery.inArray(response.data.full_name, students_array) != -1 ){
+                    alert("Студент "+response.data.full_name+" вже доданий!");
+                }else{
+                    /* Общий */
+                    $('#studentsAdd'+col_id+', #studentsAdd').append("\
+                        <div class='w-100' id='name"+count_t+"'>\
+                            <div class='groups-edit__student-row mw-100 "+cust_even(count_t)+"'>\
+                                <p class='student-number student-number-mer'>"+count_t+". &nbsp;</p>\
+                                <p class='groups-edit__student groups-edit__student-mer'>"+curr_stud+"</p>\
+                                <a class='delete-student delete-student-mer' href='' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a>\
+                            </div>\
+                            <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
+                                <div class='modal-dialog  modal-dialog_restyle'>\
+                                    <div class='modal-content'>\
+                                        <div class='deleteMenu-wrapper'>\
+                                            <div class='deleteMenu-topImg'>\
+                                                <img src='/img/basket.png' alt='icon'>\
+                                            </div>\
+                                            <div class='deleteMenu-text'>\
+                                                Ви дійсно бажаєте видалити <br> студента "+curr_stud+" зі списку?\
+                                            </div>\
+                                            <div class='deleteMenu-btn'>\
+                                                <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_t+")'>\
+                                                    <span>Видалити</span>\
+                                                </a>\
                                             </div>\
                                         </div>\
                                     </div>\
                                 </div>\
-                            ");
-                            $('#studentsAdd'+col_id).append("\
-                            <input type='hidden' name='student_name[]' value='" + curr_stud +"'>\
-                            ");
-                            /* Добавляем текущего студента в аррей */
-                            count_t++;
-                            students_array.push(curr_stud);
+                            </div>\
+                        </div>\
+                    ");
+                    $('#studentsAdd'+col_id).append("\
+                        <input type='hidden' name='student_name[]' value='" + curr_stud +"'>\
+                    ");
+                    /* Добавляем текущего студента в аррей */
+                    count_t++;
+                    students_array.push(curr_stud);
 
-                            /*Проверка столбца для ввода*/
-                            if(col_id == 1){
-                                col_id = 2;
-                            }else if(col_id == 2){
-                                col_id = 3;
-                            }else if(col_id == 3){
-                                col_id = 1;
-                            }
-                        }
+                    /*Проверка столбца для ввода*/
+                    if(col_id == 1){
+                        col_id = 2;
+                    }else if(col_id == 2){
+                        col_id = 3;
+                    }else if(col_id == 3){
+                        col_id = 1;
                     }
                 }
+            })
+            .catch(function(error) {
+                console.log(error);
+                /*Пока костыль на ошибку*/
+                alert('Студента не знайдено, будь ласка виберіть студента з випадаючого списку!');
             });
         });
 
@@ -201,11 +216,10 @@
         function removeStud(curr_stud) {
             students_array.splice( $.inArray(curr_stud,students_array) ,1 );
             var div_name = "#name" + curr_stud;
-            console.log(div_name);
+            // console.log(div_name);
             setTimeout(function(){ $( div_name ).remove(); count_t--; }, 500);
-
-            console.log(students_array);
-            console.log("RemoveStud " + curr_stud);
+            // console.log(students_array);
+            // console.log("RemoveStud " + curr_stud);
         }
 
         $('#createGroup').click(function(e){

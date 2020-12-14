@@ -219,7 +219,8 @@ class TestsController extends Controller
 
 
         //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
-        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');
     }
 
     public function true_false($test_info_id){
@@ -258,8 +259,7 @@ class TestsController extends Controller
         ]);     
 
         //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
-        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
-        
+        return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');   
     }
 
     public function short_answer($test_info_id){
@@ -353,8 +353,8 @@ class TestsController extends Controller
             'test_answers_id'       => $insrt_id,
         ]);
 
-        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
-        return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        //return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
+        return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');
     }
 
     // Просмотр теста вопросов\ответов 

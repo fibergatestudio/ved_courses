@@ -46,6 +46,8 @@ class AdminController extends Controller
         //if($user_info_checker->email != $request->email){
             DB::table('users')->where('id', $user_id)->update([
                 'name' => $request->name,
+                'surname' => $request->surname,
+                'patronymic' => $request->patronymic,
                 'email' => $request->email,
             ]);
         //}
@@ -86,7 +88,7 @@ class AdminController extends Controller
         DB::table('students')->where('user_id', $user_id)->delete();
         DB::table('teachers')->where('user_id', $user_id)->delete();
 
-        return redirect()->back()->with('message_success', 'Пользователь удален!');
+        return redirect()->back()->with('message_success', 'Користувач був видалений!');
     }
 
 }

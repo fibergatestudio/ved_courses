@@ -124,8 +124,10 @@ class GroupsController extends Controller
 
         if(!empty($request->student_name)) {
             foreach($request->student_name as $student){
+                // dd($student);
                 // Получаем информацию о студенте
                 $stud_info = DB::table('students')->where('full_name', $student)->first();
+                // dd($stud_info);
                 // Заносим данные в аррей
                 array_push($students_array, $stud_info->user_id);
             }
@@ -142,14 +144,13 @@ class GroupsController extends Controller
         }
 
         DB::table('groups')->where('id', $group_id)->update([
-            'name'  => $request->name,
+            'name'  => $request->nameGroup,
             'students_array' => json_encode($students_array),
             'assigned_teacher_id' => $teacher_id,
             'assigned_teacher_name' => $teacher_name,
         ]);
 
-        return back();
-        //return redirect('groups');
+        return redirect()->back()->with('message_success', 'Студент(и) був(ли) доданий(ні)!');
     }
 
     public function delete_group($group_id){
@@ -162,50 +163,99 @@ class GroupsController extends Controller
     // Автокомплит
     public function fetch(Request $request){
 
-        //$arr = [];
-        $test = $request->students;
-        $arr = explode(',', $test);
-        if($test != NULL){ }
+        $ipt_str = $request->ipt_str;
+        $arr = $request->students;
 
-        if($request->get('query'))
-        {
-            $query = $request->get('query');
-            // if($arr != null){
-            //     $data = DB::table('students')
-            //         ->where('full_name', 'LIKE', "%{$query}%")
-            //         ->whereNotIn('full_name', $arr)
-            //         ->get();
-            // } else {
-                $data = DB::table('students')
-                ->where('full_name', 'LIKE', "%{$query}%")
+        if($ipt_str !== ''){
+
+            if(count($arr) >= 1 ){
+
+            $data = DB::table('students')
+                ->where('full_name', 'LIKE', "%{$ipt_str}%")
                 ->whereNotIn('full_name', $arr)
                 ->get();
-            //}
 
+            return response()->json($data);
 
-            $output = '<ul class="dropdown-menu-list" style="display:block; position:relative">';
-            foreach($data as $row) {
-                $output .= '
-                <li><a href="#">'.$row->full_name.'</a></li>
-                ';
+            // $output = '<ul class="dropdown-menu-list" style="display:block; position:relative">';
+            // foreach($data as $row) {
+            //     $output .= '<li><a href="#">'.$row->full_name.'</a></li>';
+            // }
+            // $output .= '</ul>';
+            }else{
+                $data = DB::table('students')
+                ->where('full_name', 'LIKE', "%{$ipt_str}%")
+                ->get();
+
+            return response()->json($data);
             }
-            $output .= '</ul>';
-            echo $output;
         }
     }
 
     public function fetchCheck(Request $request){
 
-        $input_stud = $request->student;
+        if($request != NULL){
+            $input_stud = $request->student;
 
-        $data = DB::table('students')
-        ->where('full_name', $input_stud)
-        ->first();
-        if($data){
-            return "Есть студента";
-        } else {
-            return "Нет студента";
+            $stud_data = DB::table('students')->where('full_name', $input_stud)->first();
+
+            //добавление мыла
+            $stud_user = DB::table('users')->where('id', $stud_data->user_id)->first();
+            if($stud_user){
+                $stud_data->student_email = $stud_user->email;
+                /*Дубляж на всякий полного имени студента из таблицы пользователей УБРАТЬ как не будет бага с перезаписью!!!!*/
+                $stud_data->full_name = $stud_user->surname . " " . $stud_user->name . " " . $stud_user->patronymic;
+            }
+            //добавление ФИО учителя
+            $assigned_teacher = DB::table('users')->where('id', $stud_data->assigned_teacher_id)->first();
+
+            if($assigned_teacher){
+                $stud_data->teacher_fio = $assigned_teacher->surname . " " . $assigned_teacher->name . " " . $assigned_teacher->patronymic;
+            }else{
+                $stud_data->teacher_fio = "-";
+            }
+
+            if($stud_data != NULL){
+                return response()->json($stud_data);
+            }else{
+                return false;
+            }
+        }else{
+            return false;
         }
-
     }
+
+    public function changeGroupName(Request $request){
+
+        if($request != NULL){
+            $group_id = $request->groupId;
+            $new_name = $request->nameGroup;
+            //записую старое название группы
+            $old_name = DB::table('groups')->where('id', $group_id)->first()->name;
+
+            if($old_name != $new_name){
+                //обновляю название группы если имена разные
+                DB::table('groups')->where('id', $group_id)->update([
+                    'name'  => $new_name,
+                ]);
+
+                return 'Назву групи "'.$old_name.'" було змінено на "'.$new_name.'"!';
+            }else{
+                return 'Назви груп однакові!';
+            }
+        }else{
+            return 'Немаэ данних!';
+        }
+    }
+
+    public function discardGroupNameChanges(Request $request){
+        if($request != NULL){
+            $group_id = $request->groupId;
+            $old_name = DB::table('groups')->where('id', $group_id)->first()->name;
+            return $old_name;
+        }else{
+            return 'Немаэ данних!';
+        }
+    }
+
 }

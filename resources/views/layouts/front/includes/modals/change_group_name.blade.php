@@ -10,9 +10,9 @@
                     Ви точно бажаєте змінити назву <br> групи?
                 </div>
                 <div class="deleteMenu-btn">
-                    <a class="flexTable-btn_edit groups-btn-edit-restyle" href="{{ isset($modalPath) ? $modalPath : '' }}"
+                    <a class="flexTable-btn_edit groups-btn-edit-restyle" href=""
                         id="changeGroupName"><span>Змінити</span></a>
-                    <a class="flexTable-btn_delete" href="##"
+                    <a class="flexTable-btn_delete" href=""
                         id="discardGroupNameChanges"><span>Скасувати</span></a>
                 </div>
             </div>
