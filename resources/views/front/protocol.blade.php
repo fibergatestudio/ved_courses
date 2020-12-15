@@ -2468,7 +2468,7 @@
     <!-- protocol modal window end -->
     <div class="content-wrapper">
        <div class="direction-separator">
-        <div class="direction-separator_badge"><span>{{ Str::limit($lesson->course_name, 20) ?? 'Без назви' }}</span></div>
+        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
     </div>
     <div class="container">
 
@@ -2507,7 +2507,11 @@
         </div>
 
       <!--<div class="protocole_book programs-item_book">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's </div>-->
-
+      @if (session('success'))
+      <div class="alert alert-success" role="alert">
+          {{ session('success') }}
+      </div>
+      @endif
       <div class="protocole-text string-text">
         {!! $lesson->course_protocol_descr !!}
       </div>

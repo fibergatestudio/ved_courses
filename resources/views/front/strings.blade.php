@@ -7,7 +7,7 @@
 @section('content')
 <section class="direction">
     <div class="direction-separator">
-        <div class="direction-separator_badge"><span>{{ Str::limit($lesson->course_name, 20) ?? 'Без назви' }}</span></div>
+        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
     </div>
     <div class="container">
 
@@ -47,8 +47,13 @@
 
         </div>
 
-        <div class="string-text">
 
+        <div class="string-text">
+            @if (session('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
+            @endif
         {!! $lesson->course_description ?? 'Немає опису' !!}
 
       </div>
