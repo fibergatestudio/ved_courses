@@ -590,6 +590,18 @@ class CoursesController extends Controller
         //return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
 
+    
+    public function delete_lesson($course_id, $lesson_id){
+
+        //dd($course_id, $lesson_id);
+
+        DB::table('courses_program')->where([
+            'id' => $lesson_id,
+            'course_id' => $course_id,
+        ])->delete();
+
+        return back();
+    }
     // // Просмотр курса
     // public function course_view($course_id){
 

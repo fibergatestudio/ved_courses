@@ -189,6 +189,9 @@ use Illuminate\Support\Facades\Auth;
 
                 // Добавить тест к занятию
                 Route::get('/courses_controll/edit_course/{course_id}/lesson/{lesson_id}/add_lesson_edit_redirect', 'CoursesController@add_lesson_edit_redirect')->name('add_lesson_edit_redirect')->middleware('auth','role:admin');
+            
+            // Удалить занятие 
+            Route::get('/courses_controll/edit_course/{course_id}/edit_lesson/{lesson_id}/delete', 'CoursesController@delete_lesson')->name('delete_lesson')->middleware('auth','role:admin');
 
             /// Добавить Вопрос
             Route::get('/courses_controll/edit_course/{course_id}/add_question', 'CoursesController@add_question')->name('add_question')->middleware('auth','role:admin');

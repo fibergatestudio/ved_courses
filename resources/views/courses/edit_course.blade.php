@@ -496,6 +496,8 @@
                 <div class="courseEdit-block">
                     <div class="courseEdit-top">
                         Програма курсу
+                        <a href="{{ route('delete_lesson', ['course_id' => $course_info->id, 'lesson_id' => $lesson->id ]) }}" style="margin-left: 8px;" class="courseAdditional-docName"></a>
+
                     </div>
                         <div class="courseEdit-grid_wrapper">
                             <div class="courseEdit-grid_item">
