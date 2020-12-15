@@ -2037,11 +2037,11 @@
                                                 id="p-add-photo1" name="p-add-photo1">
                                             Назва файлу
                                         </label>
-                                        <button class="add-student add-student_restyle p-btn-upload"
+                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
                                             id="p-add-photo1-btn">Завантажити</button>
                                     </div>
                                     <div class="delete-photo-block">
-                                        <button class="input-descr protocol__ai-center">x</button>
+                                        <button type="button" class="input-descr protocol__ai-center">x</button>
                                         <p class="input-descr protocol__ai-center">Довга назва фото</p>
                                     </div>
                                 </div>
@@ -2091,11 +2091,11 @@
                                                 id="p-add-photo2" name="p-add-photo2">
                                             Назва файлу
                                         </label>
-                                        <button class="add-student add-student_restyle p-btn-upload"
+                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
                                             id="p-add-photo2-btn">Завантажити</button>
                                     </div>
                                     <div class="delete-photo-block">
-                                        <button class="input-descr protocol__ai-center">x</button>
+                                        <button type="button" class="input-descr protocol__ai-center">x</button>
                                         <p class="input-descr protocol__ai-center">Довга назва фото</p>
                                     </div>
                                 </div>
@@ -2143,11 +2143,11 @@
                                                 id="p-add-photo3" name="p-add-photo3">
                                             Назва файлу
                                         </label>
-                                        <button class="add-student add-student_restyle p-btn-upload"
+                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
                                             id="p-add-photo3-btn">Завантажити</button>
                                     </div>
                                     <div class="delete-photo-block">
-                                        <button class="input-descr protocol__ai-center">x</button>
+                                        <button type="button" class="input-descr protocol__ai-center">x</button>
                                         <p class="input-descr protocol__ai-center">Довга назва фото</p>
                                     </div>
                                 </div>
@@ -2197,11 +2197,11 @@
                                                 id="p-add-photo4" name="p-add-photo4">
                                             Назва файлу
                                         </label>
-                                        <button class="add-student add-student_restyle p-btn-upload"
+                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
                                             id="p-add-photo4-btn">Завантажити</button>
                                     </div>
                                     <div class="delete-photo-block">
-                                        <button class="input-descr protocol__ai-center">x</button>
+                                        <button type="button" class="input-descr protocol__ai-center">x</button>
                                         <p class="input-descr protocol__ai-center">Довга назва фото</p>
                                     </div>
                                 </div>
@@ -2251,11 +2251,11 @@
                                                 id="p-add-photo5" name="p-add-photo5">
                                             Назва файлу
                                         </label>
-                                        <button class="add-student add-student_restyle p-btn-upload"
+                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
                                             id="p-add-photo5-btn">Завантажити</button>
                                     </div>
                                     <div class="delete-photo-block">
-                                        <button class="input-descr protocol__ai-center">x</button>
+                                        <button type="button" class="input-descr protocol__ai-center">x</button>
                                         <p class="input-descr protocol__ai-center">Довга назва фото</p>
                                     </div>
                                 </div>
@@ -2305,11 +2305,11 @@
                                                 id="p-add-photo6" name="p-add-photo6">
                                             Назва файлу
                                         </label>
-                                        <button class="add-student add-student_restyle p-btn-upload"
+                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
                                             id="p-add-photo6-btn">Завантажити</button>
                                     </div>
                                     <div class="delete-photo-block">
-                                        <button class="input-descr protocol__ai-center">x</button>
+                                        <button type="button" class="input-descr protocol__ai-center">x</button>
                                         <p class="input-descr protocol__ai-center">Довга назва фото</p>
                                     </div>
                                 </div>
@@ -2359,11 +2359,11 @@
                                                 id="p-add-photo7" name="p-add-photo7">
                                             Назва файлу
                                         </label>
-                                        <button class="add-student add-student_restyle p-btn-upload"
+                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
                                             id="p-add-photo7-btn">Завантажити</button>
                                     </div>
                                     <div class="delete-photo-block">
-                                        <button class="input-descr protocol__ai-center">x</button>
+                                        <button type="button" class="input-descr protocol__ai-center">x</button>
                                         <p class="input-descr protocol__ai-center">Довга назва фото</p>
                                     </div>
                                 </div>
@@ -2413,11 +2413,11 @@
                                                 id="p-add-photo8" name="p-add-photo8">
                                             Назва файлу
                                         </label>
-                                        <button class="add-student add-student_restyle p-btn-upload"
+                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
                                             id="p-add-photo8-btn">Завантажити</button>
                                     </div>
                                     <div class="delete-photo-block">
-                                        <button class="input-descr protocol__ai-center">x</button>
+                                        <button type="button" class="input-descr protocol__ai-center">x</button>
                                         <p class="input-descr protocol__ai-center">Довга назва фото</p>
                                     </div>
                                 </div>
