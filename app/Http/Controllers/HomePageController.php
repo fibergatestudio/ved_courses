@@ -344,9 +344,15 @@ class HomePageController extends Controller
         //return back();
     }
 
-    public function view_test_result(){
+    public function view_test_result($course_id, $test_id, $user_id){
 
-        return view('front.test_result');
+        $f_test_info = DB::table('finished_tests_info')->where([
+            'user_id' => $user_id,
+            'test_id' => $test_id,
+            'course_id' => $course_id,
+        ])->first();
+
+        return view('front.test_result', compact('f_test_info'));
     }
 
     public function guest()

@@ -30,22 +30,37 @@
         @csrf
         <div class="container">
         <div class="test_a-title test_a-title_doc">Назва тесту</div>
-                <!-- Да\Нет -->
-            
-                    <div class="test_a-title_bottom">Еще инфа</div>
-                    <div class="test_a separator"></div>
-                            <div class="test_a-question">Вопрос</div>
+            <div class="test_a-title_bottom">Еще инфа</div>
+            <div class="test_a separator"></div>
+                    <?php $arr_questions_answers = json_decode($f_test_info->test_questions_json); ?>
+
+                    @foreach($arr_questions_answers as $qa)
+                        @if($qa[0]->question_type == 'Правильно/неправильно')
+                        <div class="test_a-question">Вопрос {{ $qa[0]->question_id }} {{ $qa[0]->question_type }}</div>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">
-
-                                            <div class="answer-radio">
-                                                <input class="answer-radio_input" type="checkbox" id=""
-                                                    value="" name="">
-                                                <label class="answer-radio_label" for=""></label>
-                                            </div>
+                                    Відповів вірно? - {{ $qa[0]->answered_right }}
                                 </div>
                             </div>
-
+                        @endif
+                        @if($qa[0]->question_type == 'Множинний вибір')
+                        <div class="test_a-question">Вопрос {{ $qa[0]->question_id }} {{ $qa[0]->question_type }}</div>
+                            <div class="test_a-answer">
+                                <div class="answer-wrapper">
+                                    Оцінка: {{ $qa[0]->answer_grade }} 
+                                </div>
+                            </div>
+                        @endif
+                        @if($qa[0]->question_type == 'Перетягування в тексті')
+                        <div class="test_a-question">Вопрос {{ $qa[0]->question_id }} {{ $qa[0]->question_type }}</div>
+                            <div class="test_a-answer">
+                                <div class="answer-wrapper">
+                                    Відповів вірно? - {{ $qa[0]->answered_right }}
+                                </div>
+                            </div>
+                        @endif
+                    @endforeach
+                    
              <!-- <a class="answer-btn btn-watch--more" href="##" id="test_send"><span>Надіслати тест </span></a -->
         </div>
         </form>
