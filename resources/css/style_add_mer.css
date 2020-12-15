@@ -115,5 +115,9 @@
     .mer-studlist{
         display: none;
     }
+
 }
 
+.mer-sel-wth{
+    max-width: 297px !important;
+}

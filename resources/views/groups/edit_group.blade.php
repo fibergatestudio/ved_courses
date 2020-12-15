@@ -117,24 +117,6 @@
                                     <input type="hidden" name="student_name[]" value="@if(isset($student->full_name)){{ $student->full_name }}@else''@endif">
                                 </div>
                             @endforeach
-
-                            <div class="groups-edit__group uge__row ge__select-block_style">
-                                <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
-                                <div class="select uge__select_block ge__select_style">
-                                    <select name="teacher_id"
-                                        class="select-teacher select-teacher_sce_restyle uge__select_style"
-                                        id="selectTeacher">
-                                        <option>Нет</option>
-                                        @foreach($teachers as $teacher)
-                                            @if($group_info->assigned_teacher_name == $teacher->name)
-                                                <option value="{{ $teacher->id }}" selected>{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
-                                            @else
-                                                <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
-                                            @endif
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -182,23 +164,23 @@
                             </div>
                         </div>
                     @endforeach
+                </div>
 
-                    <div class="groups-edit__group uge__row ge__select-block_style">
-                        <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
-                        <div class="select uge__select_block ge__select_style">
-                            <select name="teacher_id"
-                                class="select-teacher select-teacher_sce_restyle uge__select_style"
-                                id="selectTeacher">
-                                <option>Нет</option>
-                                @foreach($teachers as $teacher)
-                                    @if($group_info->assigned_teacher_name == $teacher->name)
-                                        <option value="{{ $teacher->id }}" selected>{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
-                                    @else
-                                        <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
-                                    @endif
-                                @endforeach
-                            </select>
-                        </div>
+                <div class="groups-edit__group uge__row ge__select-block_style ge mer-sel-wth">
+                    <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
+                    <div class="select uge__select_block ge__select_style">
+                        <select name="teacher_id"
+                            class="select-teacher select-teacher_sce_restyle uge__select_style"
+                            id="selectTeacher">
+                            <option>Нет</option>
+                            @foreach($teachers as $teacher)
+                                @if($group_info->assigned_teacher_name == $teacher->name)
+                                    <option value="{{ $teacher->id }}" selected>{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
+                                @else
+                                    <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
+                                @endif
+                            @endforeach
+                        </select>
                     </div>
                 </div>
 
