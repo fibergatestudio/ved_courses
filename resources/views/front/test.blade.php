@@ -59,11 +59,11 @@
         <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
                 <!-- Да\Нет -->
                 @if(isset($testInfo))
-                    @if($testTrueFalse != "")
+                    @if(count($testTrueFalse) >= 1)
                     <div class="test_a-title_bottom">Оберіть одну відповь.</div>
                     <div class="test_a separator"></div>
                         @foreach($testTrueFalse as $trueFalse)
-                            <div class="test_a-question">{{ $n_answers }}. {{ $trueFalse->question_name }} {{ strip_tags($trueFalse->question_text) }} </div>
+                            <div class="test_a-question">{{ $n_answers }}. {{ strip_tags($trueFalse->question_text) }} </div>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">
                                     <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
@@ -81,11 +81,11 @@
                         @endforeach
                     @endif
                     <!-- Множественный выбор -->
-                    @if($testMultiply != "")
+                    @if(count($testMultiply) >= 1)
                     <div class="test_a-title_bottom">Оберіть одну, або декілька відповідей на задані питання.</div>
                     <div class="test_a separator"></div>
                         @foreach($testMultiply as $multiply)
-                            <div class="test_a-question">{{ $n_answers }}. {{ $multiply->question_name }} {{ strip_tags($multiply->question_text) }} </div>
+                            <div class="test_a-question">{{ $n_answers }}. {{ strip_tags($multiply->question_text) }} </div>
                             <?php $answers_json = json_decode($multiply->answers_json); ?>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">

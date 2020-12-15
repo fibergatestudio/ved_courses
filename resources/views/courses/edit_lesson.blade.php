@@ -424,7 +424,7 @@
                             Коротка інструкція щодо створення тестування, або рекомендації Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                         </div>
 
-                        <a class="courseAdditional-btn courseAdditional-btn_bottom" href="{{ route('add_lesson_redirect', ['course_id' => $course_info->id ]) }}">
+                        <a class="courseAdditional-btn courseAdditional-btn_bottom" href="{{ route('add_lesson_edit_redirect', ['course_id' => $course_info->id, 'lesson_id' => $lesson_info->id ]) }}">
                             <span>Створити новий тест</span>
                         </a>
 

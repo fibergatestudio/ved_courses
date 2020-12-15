@@ -548,6 +548,17 @@ class CoursesController extends Controller
         // Редиректим с айдишником
         return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
     }
+    
+    public function add_lesson_edit_redirect($course_id, $lesson_id, Request $request){
+
+        //dd($lesson_id);
+        $this->edit_lesson_apply($course_id, $lesson_id, $request);
+        //$courses_program_id = session()->get('courses_program_id');
+        $courses_program_id = $lesson_id;
+        //dd($courses_program_id);
+
+        return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
+    }
 
     // add_question
     public function add_question($course_id){
