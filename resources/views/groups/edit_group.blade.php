@@ -237,7 +237,8 @@
         });
 
         $('#student').keyup(function(){
-            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ');
+            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
+            $(this).val(query);
             if(query != ''){
                 axios.post("{{ route('autocomplete.fetch') }}", {
                     ipt_str: query,
@@ -266,7 +267,7 @@
 
         $('#addstudent').click(function() {
             /* Берем имя текущего студента */
-            let curr_stud = $('#student').val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ');
+            let curr_stud = $('#student').val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
 
             /* Проверка на существующего студента в базе */
             axios.post("{{ route('autocomplete.fetch.check') }}", {
