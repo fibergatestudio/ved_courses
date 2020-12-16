@@ -374,8 +374,7 @@
                                     <div class="newTest-timeInstruction-wrapper">
                                     <select class="newTest-timeInstruction-select" name="when_time_is_up">
                                         <option value="1" selected>Відповіді повинні бути відправлені до завершення часу, інакше вони не зарахуються</option>
-                                        <option value="2" >Опция 2</option>
-                                        <option value="3">Опция 3</option>
+                                        <option value="2" >Без обмеження в часі</option>
                                     </select>
                                     <div class="newTest-timeInstruction_arrowBlock"></div>
                                     </div>

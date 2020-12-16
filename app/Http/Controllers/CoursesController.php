@@ -73,11 +73,12 @@ class CoursesController extends Controller
         //dd($courses_question_answers);
 
         $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
+        //dd($course_lessons);
         //$videos_arr = [];
         foreach($course_lessons as $lesson){
 
             //dd(json_decode($lesson->video_name));
-            if($lesson->video_name == "null"){
+            if($lesson->video_name == null){
                 $lesson->video_count = 0;
             } else {
                 $lesson->video_count = count(json_decode($lesson->video_name));
@@ -142,6 +143,14 @@ class CoursesController extends Controller
 
 
         return redirect()->back();
+    }
+
+    public function delete_photo($course_id){
+        //dd($course_id);
+        DB::table('courses')->where('id',$course_id)->update([
+            'course_image_path' => null,
+        ]);
+        return back();
     }
 
     public function edit_course_apply($course_id, Request $request){
@@ -373,7 +382,17 @@ class CoursesController extends Controller
             'model3d_link' => $request->model3d_link,
         ]);
 
-        return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
+        // Проверяем есть ли запрос на создание теста
+        $redirect_to_test = $request->redirect_to_test;
+        //dd($redirect_to_test);
+        if(isset($redirect_to_test)){
+            // Редиректим на создание теста
+            return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
+        } else { 
+            // Редиректим на список курсов
+            return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
+        }
+        //return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
     }
 
     // edit lesson
@@ -532,10 +551,17 @@ class CoursesController extends Controller
             'model3d_link' => $request->model3d_link,
         ]);
 
-        //dd($courses_program_id);
-
-
-        return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
+        // Проверяем есть ли запрос на создание теста
+        $redirect_to_test = $request->redirect_to_test;
+        //dd($redirect_to_test);
+        if(isset($redirect_to_test)){
+            // Редиректим на создание теста
+            return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $lesson_id ]);
+        } else { 
+            // Редиректим на список курсов
+            return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
+        }
+        
     }
 
     // add_ lesson
@@ -549,16 +575,15 @@ class CoursesController extends Controller
         return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
     }
     
-    public function add_lesson_edit_redirect($course_id, $lesson_id, Request $request){
+    // public function add_lesson_edit_redirect($course_id, $lesson_id){
 
-        //dd($lesson_id);
-        $this->edit_lesson_apply($course_id, $lesson_id, $request);
-        //$courses_program_id = session()->get('courses_program_id');
-        $courses_program_id = $lesson_id;
-        //dd($courses_program_id);
+    //     //dd($course_id, $lesson_id, $request->all());
+    //     //$courses_program_id = session()->get('courses_program_id');
+    //     $courses_program_id = $lesson_id;
+    //     //dd($courses_program_id);
 
-        return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
-    }
+    //     return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
+    // }
 
     // add_question
     public function add_question($course_id){

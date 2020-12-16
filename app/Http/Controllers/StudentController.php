@@ -253,34 +253,39 @@ class StudentController extends Controller
     {
         // Получаем всю инфу с запроса
         $all_info = $request->all();
-        //dd($all_info);
+
         // Файл импорта
         $file = $request->file('import_file');
-        // Формируем из экселя аррей
-        $data = Excel::toArray(new StudentsImport, $file);
+        // Проверка верный ли формат.
+        if($file->getClientOriginalExtension() == "xlsx"){
+            // Формируем из экселя аррей
+            $data = Excel::toArray(new StudentsImport, $file);
 
-        foreach($data as $row){
-            foreach($row as $column_data){
-                //dd($column_data['data_zavantazennya']);
-                // Проверяем на существующую запись
-                $copy_check = DB::table('students_data')->where('ID_FO', $column_data['id_fo'])->first();
+            foreach($data as $row){
+                foreach($row as $column_data){
+                    //dd($column_data['data_zavantazennya']);
+                    // Проверяем на существующую запись
+                    $copy_check = DB::table('students_data')->where('ID_FO', $column_data['id_fo'])->first();
 
-                if($copy_check){
+                    if($copy_check){
 
-                } else {
-                    DB::table('students_data')->insert([
-                        'upload_date' => $column_data['data_zavantazennya'],
-                        'status_from' => $column_data['status_z'],
-                        'ID_FO' => $column_data['id_fo'],
-                        'recipient' => $column_data['zdobuvac'],
-                        'birthday' => $column_data['data_narodzennya'],
-                        'gender' => $column_data['stat'],
-                        'citizenship' => $column_data['gromadyanstvo'],
-                        'specialty' => $column_data['specialnist'],
-                        'reason_for_deduction' => $column_data['pricina_vidraxuvannya'],
-                    ]);
+                    } else {
+                        DB::table('students_data')->insert([
+                            'upload_date' => $column_data['data_zavantazennya'],
+                            'status_from' => $column_data['status_z'],
+                            'ID_FO' => $column_data['id_fo'],
+                            'recipient' => $column_data['zdobuvac'],
+                            'birthday' => $column_data['data_narodzennya'],
+                            'gender' => $column_data['stat'],
+                            'citizenship' => $column_data['gromadyanstvo'],
+                            'specialty' => $column_data['specialnist'],
+                            'reason_for_deduction' => $column_data['pricina_vidraxuvannya'],
+                        ]);
+                    }
                 }
             }
+        } else {
+            return redirect()->back()->with('message_error', 'Неправильний формат файлу! Вірний формат - XLSX');
         }
 
         return redirect()->back()->with('message_success', 'Импорт успешен!');

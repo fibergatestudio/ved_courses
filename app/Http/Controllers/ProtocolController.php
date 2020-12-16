@@ -35,6 +35,7 @@ class ProtocolController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request);
         DB::table('protocols')->insert($request->except('_token'));
         return redirect()->back()->with('success', 'Протокол успішно збережено.');
     }

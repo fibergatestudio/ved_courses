@@ -394,8 +394,7 @@
                         <div class="courseAdditional-topName">
                             Коротка інструкція щодо створення тестування, або рекомендації Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
                         </div>
-
-                        <a class="courseAdditional-btn courseAdditional-btn_bottom" href="{{ route('add_lesson_redirect', ['course_id' => $course_info->id ]) }}">
+                        <a class="courseAdditional-btn courseAdditional-btn_bottom" id="new_test_form" href="">
                             <span>Створити новий тест</span>
                         </a>
 
@@ -411,9 +410,10 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $test_num = 1; ?>
                                 @foreach($course_tests as $test)
                                 <tr>
-                                    <td>{{ $test->id }}</td>
+                                    <td>{{ $test_num }}</td>
                                     <td>{{ $test->name }}</td>
                                     <td>{{ strip_tags($test->description) }}</td>
                                     <td>
@@ -421,6 +421,7 @@
                                         <a href="{{ route('delete_test', ['test_info_id' => $test->id ]) }}" style="background-color: #c64b3f;" class="courseEdit-btn-watch btn-watch--more">Удалить</div></a>
                                     </td>
                                 </tr>
+                                <?php $test_num++; ?>
                                 @endforeach
                             </tbody>
                         </table>
@@ -438,6 +439,17 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    
+    <script>
+        $( "#new_test_form" ).click(function(e) {
+            e.preventDefault();
+            console.log('clicked');
+            $("#add_lesson_form").append("<input type='hidden' name='redirect_to_test' value='true' />");
+            $( "#add_lesson_form" ).submit();
+        });
+    
+    </script>
 
     <script type="text/javascript">
         function show(input) {
