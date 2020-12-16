@@ -79,8 +79,8 @@
                 </div>
                 <div class="groups-edit__group uge__row uge__mb_30">
                     <p class="groups-edit__group-name uge_row_text-style">Номер телефону</p>
-                    <input class='eg-input uge__input_style uge__row uge__mb-0' type="text" name="course-name"
-                        id="getPhoneNumber" placeholder="+XX (XXX) XXX-XX-XX" value=""
+                    <input class='eg-input uge__input_style uge__row uge__mb-0' type="text" name="student_phone_number"
+                        id="getPhoneNumber" placeholder="+XX (XXX) XXX-XX-XX" value="{{ $student_info->student_phone_number }}"
                         pattern="\+38\s?[\(]{0,1}[0-9]{3}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}">
                 </div>
             @endif
@@ -89,7 +89,7 @@
                         id="saveUser">Зберегти </button>
                 <button class="groups-edit__back-to-groups sce__buttons-restyle uge__buttons-style"
                         id="backToUsers"
-                        onClick="event.preventDefault(); window.location.href='{{ redirect()->back()->getTargetUrl() }}'">Назад</button>
+                        onClick="event.preventDefault(); window.location.href='{{ route('users_controll') }}'">Назад</button>
             </div>
         </form>
     </div>

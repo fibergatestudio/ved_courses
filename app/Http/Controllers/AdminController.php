@@ -39,7 +39,7 @@ class AdminController extends Controller
     public function user_edit_apply($user_id, Request $request){
         //Получаем всю информацию с запроса
         $all_info = $request->all();
-        //dd($all_info);
+        // dd($all_info);
 
         $user_info_checker = DB::table('users')->where('id', $user_id)->first();
         //dd($user_info_checker);
@@ -60,6 +60,7 @@ class AdminController extends Controller
                 'course_number' => $request->course_number,
                 'group_number' => $request->group_number,
                 'student_number' => $request->student_number,
+                'student_phone_number' => $request->student_phone_number,
             ]);
         // Если пользователь учитель - обновить
         } else if ($request->role == "teacher"){

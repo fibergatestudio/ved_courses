@@ -166,7 +166,7 @@
                     @endforeach
                 </div>
 
-                <div class="groups-edit__group uge__row ge__select-block_style ge mer-sel-wth">
+                <div class="groups-edit__group uge__row ge__select-block_style mer-sel-wth">
                     <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
                     <div class="select uge__select_block ge__select_style">
                         <select name="teacher_id"
@@ -309,7 +309,7 @@
                         </div>\
                     ");
 
-                    $("div[id^='mobi']:last").after("\
+                    let content = "\
                         <div class='flexMobile-block sc-mobile-block_restyle ccec__m-content' id='mobi"+count_stud+"'>\
                             <div class='flexMobile-string'>\
                                 <div class='flexMobile-string_inner blackFont  sc-mobile-string_restyle ccec__m_mr-15'>№</div>\
@@ -363,8 +363,14 @@
                                     </div>\
                                 </div>\
                             </div>\
-                        </div>\
-                    ");
+                        </div>";
+
+                    if($("div[id^='mobi']:last").attr("id") == 'mobi0'){
+                        $("div[id^='mobi']:last").append(content);
+                    }else{
+                        $("div[id^='mobi']:last").after(content);
+                    }
+
 
                     /* Добавляем текущего студента в аррей */
                     students_array.push(curr_stud);
