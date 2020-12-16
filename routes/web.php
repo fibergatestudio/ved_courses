@@ -16,27 +16,27 @@ use Illuminate\Support\Facades\Auth;
 */
 
 // Главная
-    Route::get('/', 'HomePageController@welcome')->name('main');
+    Route::get('/', 'HomePageController@welcome')->name('main')->middleware('auth','role:admin,teacher,student');
 
 // О проекте
-    Route::get('/about', 'HomePageController@welcome')->name('about');
+    Route::get('/about', 'HomePageController@welcome')->name('about')->middleware('auth','role:admin,teacher,student');
 
 // Симулятор
-    Route::get('/simulator', 'HomePageController@simulator')->name('simulator');
+    Route::get('/simulator', 'HomePageController@simulator')->name('simulator')->middleware('auth','role:admin,teacher,student');
 
 // Окно запроса регистрации/автоизации при просмотре уроков
     Route::get('/guest', 'HomePageController@guest')->name('guest');
 
 // Просмотр курса
-    Route::get('/course/{course_id}/{tab?}', 'HomePageController@view_course')->where(['course_id' => '[0-9]+', 'tab' => 'teachers|program|faq'])->name('view_course');
+    Route::get('/course/{course_id}/{tab?}', 'HomePageController@view_course')->where(['course_id' => '[0-9]+', 'tab' => 'teachers|program|faq'])->name('view_course')->middleware('auth','role:admin,teacher,student');;
     // Просмотр урока курса
-    Route::get('/course/{course_id}/lesson/{lesson_id}/{tab?}', 'HomePageController@view_lesson')->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|model|protocol|test'])->name('view_lesson');
+    Route::get('/course/{course_id}/lesson/{lesson_id}/{tab?}', 'HomePageController@view_lesson')->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|model|protocol|test'])->name('view_lesson')->middleware('auth','role:admin,teacher,student');
 
     // Отправка курса
-    Route::post('/course/{course_id}/lesson/{lesson_id}/send_test/{test_id}', 'HomePageController@send_test')->name('send_test');
+    Route::post('/course/{course_id}/lesson/{lesson_id}/send_test/{test_id}', 'HomePageController@send_test')->name('send_test')->middleware('auth','role:admin,teacher,student');
 
     // Просмотр курса
-    Route::get('/course/{course_id}/test_number/{test_id}/user/{user_id}', 'HomePageController@view_test_result')->name('view_test_result');
+    Route::get('/course/{course_id}/test_number/{test_id}/user/{user_id}', 'HomePageController@view_test_result')->name('view_test_result')->middleware('auth','role:admin,teacher,student');
 
 // Авторизация
     Auth::routes();
@@ -45,16 +45,16 @@ use Illuminate\Support\Facades\Auth;
 
 // Авторизация через соц сети
     //Логин или регистрация
-    Route::get('/login/{provider}/{signup?}', 'Auth\SocialiteController@redirect')->where(['provider' => 'google|facebook', 'signup' => 'signup'])->name('login.social');
+    Route::get('/login/{provider}/{signup?}', 'Auth\SocialiteController@redirect')->where(['provider' => 'google|facebook', 'signup' => 'signup'])->name('login.social')->middleware('auth');
     //Колбэк от соц сети
-    Route::get('/login/{provider}/callback', 'Auth\SocialiteController@callback')->where('provider','google|facebook');
+    Route::get('/login/{provider}/callback', 'Auth\SocialiteController@callback')->where('provider','google|facebook')->middleware('auth');
     // Выбор роли при регистрации через соц сети
-    Route::get('/login/role/{user_id}/{student_id}', 'Auth\SocialiteController@role')->name('login.role');
+    Route::get('/login/role/{user_id}/{student_id}', 'Auth\SocialiteController@role')->name('login.role')->middleware('auth');
     // Задание роли
-    Route::post('/login/role/{user_id}/{student_id}/set', 'Auth\SocialiteController@setRole')->name('login.setrole');
+    Route::post('/login/role/{user_id}/{student_id}/set', 'Auth\SocialiteController@setRole')->name('login.setrole')->middleware('auth');
 
 // Админка
-    Route::get('/home', 'HomeController@index')->name('home')->middleware('auth', 'role:admin,teacher');
+    Route::get('/home', 'HomeController@index')->name('home')->middleware('auth','role:admin,teacher,student');
 
 // Teacher profile
     Route::get('/teacher_courses', 'TeacherController@teacherCourses')->name('teacher.courses')->middleware('auth','role:admin,teacher');
@@ -165,6 +165,8 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/courses_controll/edit_course/{course_id}', 'CoursesController@edit_course')->name('edit_course')->middleware('auth','role:admin');
             // Редактирование курса POST
             Route::post('/courses_controll/edit_course/{course_id}/apply', 'CoursesController@edit_course_apply')->name('edit_course_apply')->middleware('auth','role:admin');
+                // Удаление фото
+                Route::get('/courses_controll/edit_course/{course_id}/delete_photo', 'CoursesController@delete_photo')->name('delete_photo')->middleware('auth','role:admin');
                 // Редактирование курса - Удаление учителя - AJAX
                 Route::post('/courses_controll/edit_course/delete_teacher', 'CoursesController@ajax_remove_teacher')->name('ajax_remove_teacher')->middleware('auth','role:admin,teacher');
 
@@ -188,7 +190,7 @@ use Illuminate\Support\Facades\Auth;
                 Route::post('/courses_controll/edit_course/{course_id}/edit_lesson/{lesson_id}/edit_apply', 'CoursesController@edit_lesson_apply')->name('edit_lesson_apply')->middleware('auth','role:admin');
 
                 // Добавить тест к занятию
-                Route::get('/courses_controll/edit_course/{course_id}/lesson/{lesson_id}/add_lesson_edit_redirect', 'CoursesController@add_lesson_edit_redirect')->name('add_lesson_edit_redirect')->middleware('auth','role:admin');
+                // Route::get('/courses_controll/edit_course/{course_id}/lesson/{lesson_id}/add_lesson_edit_redirect', 'CoursesController@add_lesson_edit_redirect')->name('add_lesson_edit_redirect')->middleware('auth','role:admin');
             
             // Удалить занятие 
             Route::get('/courses_controll/edit_course/{course_id}/edit_lesson/{lesson_id}/delete', 'CoursesController@delete_lesson')->name('delete_lesson')->middleware('auth','role:admin');

@@ -368,7 +368,7 @@
                                 </div>
 
                                 <div class="courseAdd-info-wrapper">
-                                    <a class="courseAdditional-docName docName-restyling"  href="##">
+                                    <a class="courseAdditional-docName docName-restyling" href="{{ route('delete_photo', ['course_id' => $course_info->id ] )}}">
                                         {{ $course_info->course_image_path }}
                                     </a>
                                 </div>
