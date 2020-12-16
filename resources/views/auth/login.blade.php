@@ -15,7 +15,7 @@
                             aria-controls="home" aria-selected="true">Увійти</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('register') }}" role="tab" aria-controls="profile"
+                        <a class="nav-link" href="{{-- route('register') --}}" role="tab" aria-controls="profile"
                             aria-selected="false">Зареєструватися</a>
                     </li>
                 </ul>

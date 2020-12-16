@@ -16,30 +16,30 @@ use Illuminate\Support\Facades\Auth;
 */
 
 // Главная
-    Route::get('/', 'HomePageController@welcome')->name('main');
+    Route::get('/', 'HomePageController@welcome')->name('main')->middleware('auth');//Убрать auth
 
 // О проекте
-    Route::get('/about', 'HomePageController@welcome')->name('about');
+    Route::get('/about', 'HomePageController@welcome')->name('about')->middleware('auth');//Убрать auth
 
 // Симулятор
-    Route::get('/simulator', 'HomePageController@simulator')->name('simulator');
+    Route::get('/simulator', 'HomePageController@simulator')->name('simulator')->middleware('auth');//Убрать auth
 
 // Окно запроса регистрации/автоизации при просмотре уроков
     Route::get('/guest', 'HomePageController@guest')->name('guest');
 
 // Просмотр курса
-    Route::get('/course/{course_id}/{tab?}', 'HomePageController@view_course')->where(['course_id' => '[0-9]+', 'tab' => 'teachers|program|faq'])->name('view_course');
+    Route::get('/course/{course_id}/{tab?}', 'HomePageController@view_course')->where(['course_id' => '[0-9]+', 'tab' => 'teachers|program|faq'])->name('view_course')->middleware('auth');//Убрать auth;
     // Просмотр урока курса
-    Route::get('/course/{course_id}/lesson/{lesson_id}/{tab?}', 'HomePageController@view_lesson')->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|model|protocol|test'])->name('view_lesson');
+    Route::get('/course/{course_id}/lesson/{lesson_id}/{tab?}', 'HomePageController@view_lesson')->where(['course_id' => '[0-9]+', 'lesson_id' => '[0-9]+', 'tab' => 'video|model|protocol|test'])->name('view_lesson')->middleware('auth');//Убрать auth;
 
     // Отправка курса
-    Route::post('/course/{course_id}/lesson/{lesson_id}/send_test/{test_id}', 'HomePageController@send_test')->name('send_test');
+    Route::post('/course/{course_id}/lesson/{lesson_id}/send_test/{test_id}', 'HomePageController@send_test')->name('send_test')->middleware('auth');//Убрать auth;
 
     // Просмотр курса
-    Route::get('/course/{course_id}/test_number/{test_id}/user/{user_id}', 'HomePageController@view_test_result')->name('view_test_result');
+    Route::get('/course/{course_id}/test_number/{test_id}/user/{user_id}', 'HomePageController@view_test_result')->name('view_test_result')->middleware('auth');//Убрать auth;
 
 // Авторизация
-    Auth::routes();
+    Auth::routes(['register' => false]);
     // Логаут
     Route::get('/logout', 'Auth\LoginController@logout')->middleware('auth');
 
@@ -189,8 +189,8 @@ use Illuminate\Support\Facades\Auth;
 
                 // Добавить тест к занятию
                 Route::get('/courses_controll/edit_course/{course_id}/lesson/{lesson_id}/add_lesson_edit_redirect', 'CoursesController@add_lesson_edit_redirect')->name('add_lesson_edit_redirect')->middleware('auth','role:admin');
-            
-            // Удалить занятие 
+
+            // Удалить занятие
             Route::get('/courses_controll/edit_course/{course_id}/edit_lesson/{lesson_id}/delete', 'CoursesController@delete_lesson')->name('delete_lesson')->middleware('auth','role:admin');
 
             /// Добавить Вопрос
