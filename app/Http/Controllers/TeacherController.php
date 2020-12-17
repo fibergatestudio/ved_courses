@@ -64,9 +64,9 @@ class TeacherController extends Controller
                 return redirect()->back()->with('message_error', 'Неприпустимий тип файлу. Припустимо завантажувати тільки зображення: *.gif, *.png, *.jpg');
             }
             $filesize = filesize($request->photo);
-            if ($filesize > 1000000)
+            if ($filesize > 5000000)
             {
-                return redirect()->back()->with('message_error', 'Перевищен максимальний розмір файлу в 1 Мб');
+                return redirect()->back()->with('message_error', 'Перевищен максимальний розмір файлу в 5 Мб');
             }
             $user = User::where('id', $user_id)->first();
             $user->addMediaFromRequest('photo')->toMediaCollection('photos');

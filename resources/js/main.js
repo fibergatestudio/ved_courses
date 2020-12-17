@@ -269,5 +269,3 @@ toggleBlocks.forEach(block => {
 
 
 // protocol page end
-
-autosize($('textarea'));

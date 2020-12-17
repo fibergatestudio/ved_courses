@@ -183,7 +183,7 @@ class HomePageController extends Controller
                 break;
         case 'protocol':
             if ($lesson->show_protocol) {
-                return view('front.protocol', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
+                return view('front.protocol', compact('course', 'lesson', 'user', 'lessonNumber', 'prevLesson', 'nextLesson'));
             }
             else {
                 return redirect()->route('view_lesson', ['course_id' => $course_id, 'lesson_id' => $lesson_id]);
@@ -193,7 +193,7 @@ class HomePageController extends Controller
             if(isset($testInfo)){
             return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson', 'testInfo', 'testDragDrop', 'testMultiply', 'testTrueFalse'));
             } else {
-                return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson',));
+                return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
             }
             break;
         default:

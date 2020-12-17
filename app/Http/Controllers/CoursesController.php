@@ -78,7 +78,7 @@ class CoursesController extends Controller
         foreach($course_lessons as $lesson){
 
             //dd(json_decode($lesson->video_name));
-            if($lesson->video_name == null){
+            if($lesson->video_name == null || $lesson->video_name == "null" ){
                 $lesson->video_count = 0;
             } else {
                 $lesson->video_count = count(json_decode($lesson->video_name));
@@ -98,13 +98,22 @@ class CoursesController extends Controller
             // dd($video_arr);
 
         }
-
+ 
 
         $teacher_arr = json_decode($course_info->assigned_teacher_id);
         //dd($teacher_arr);
         if($teacher_arr){
             $assigned_teachers =  DB::table('users')->whereIn('id', $teacher_arr)->get();
             $teachers = DB::table('users')->where('role', 'teacher')->whereNotIn('id', $teacher_arr)->get();
+
+            foreach($assigned_teachers as $teacher){
+                $t_descr = DB::table('teachers')->where('user_id', $teacher->id)->first();
+                if(isset($t_descr->descr)){
+                    $teacher->descr = $t_descr->descr;
+                } else {
+                    $teacher->descr = "";
+                }
+            }
         } else {
             $assigned_teachers = [];
             $teachers = DB::table('users')->where('role', 'teacher')->get();

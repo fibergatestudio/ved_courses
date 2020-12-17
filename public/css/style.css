@@ -1281,6 +1281,7 @@ element.style {
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
     margin-bottom: 50px;
     max-width: 30%;
+    min-width: 30%;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -4700,7 +4701,8 @@ element.style {
 
 .courseAdditional-docName {
     position: relative;
-    padding-left: 20px;
+    /* padding-left: 20px; */
+    padding-right: 50px;
     font-family: SegoeUIRegular, sans-serif;
     font-weight: 400;
     font-size: 16px;
@@ -12679,7 +12681,6 @@ textarea{ overflow: -moz-scrollbars-none; }
 	resize: none;
 	padding: 5px;
 	text-align: justify;
-
 }
 .protocol__ai-f-start{
 	-webkit-box-align: start;
@@ -12987,3 +12988,8 @@ button.input-descr{
 
 
 /* protocol form block end*/
+
+
+a.flexTable-btn_edit.sc__student-success-btn,.ss__course-title-wrapper a.ss__hide-btn-style{
+    cursor: pointer;
+}

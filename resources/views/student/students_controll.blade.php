@@ -105,7 +105,7 @@
                                 @endif
                             </div>
                             <div class="sc-string_inner">
-                                <a class="flexTable-btn_edit sc__student-success-btn" id="stSuccess">Успішність </a>
+                                <a class="flexTable-btn_edit sc__student-success-btn" id="stSuccess" href="{{ route('students_success',['student_id' => $student->user_id]) }}">Успішність </a>
                                 <a class="flexTable-btn_edit groups-edit__back-to-groups sc__student-edit"
                                     href="{{ route('students_controll_edit',['student_id' => $student->user_id]) }}">
                                     <span>Редагувати</span>
