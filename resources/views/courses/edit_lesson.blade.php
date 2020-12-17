@@ -348,7 +348,6 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-flexbox_text">
-                                        Короткі зауваження щодо додавання відеофайлу або посилань з інших джерел.
                                         Формат файлу: mp4, Максимальний розмір: 300mb
                                         </div>
                                     </div>
@@ -372,7 +371,7 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-flexbox_text">
-                                            Рекомендації щодо додавання посилань та вибору ресурсів.
+                                            URL повенен бути типу: https://www.youtube.com/
                                         </div>
                                     </div>
 
@@ -421,7 +420,7 @@
                     <div class="courseAdd-wrapper">
 
                         <div class="courseAdditional-topName">
-                            Коротка інструкція щодо створення тестування, або рекомендації Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            Цей блок надає можливість розробляти тести, які можуть містити питання різних типів. Дозволяється одна, або декілька спроб тесту, встановлюється обмеження часу. Кожна спроба оцінюється автоматично
                         </div>
 
                         <a class="courseAdditional-btn courseAdditional-btn_bottom" id="new_test_form" href=""> 
@@ -433,9 +432,9 @@
                         <table class="table table-bordered data-table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Имя</th>
-                                    <th>Описание</th>
+                                    <th>Номер тесту</th>
+                                    <th>Назва тесту</th>
+                                    <th>Опис</th>
                                     <th></th>
                                 </tr>
                             </thead>

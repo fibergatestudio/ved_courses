@@ -357,13 +357,13 @@
                                     <input class="newTest-dedline-input_left" type="number" name="time_limit" placeholder="0">
                                     <input class="newTest-dedline-input_right" type="text" placeholder="хвилин(а)">
                                 </div>
-                                <div class="newTest-dedline-inner">
+                                <!-- <div class="newTest-dedline-inner">
                                     <a href="##" class="newTest-saveBtn">
                                         <span>
                                             Зберегти
                                         </span>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="newTest-timeInstruction">

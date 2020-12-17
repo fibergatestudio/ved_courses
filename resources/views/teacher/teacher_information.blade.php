@@ -51,7 +51,7 @@
                         <div class="photo-photo"></div>
                         <div class="photo-text">
                             <p>Файли з розширенням JPG, GIF або PNG. </p>
-                            <p>Максимальний розмір - 1 Мб. </p>
+                            <p>Максимальний розмір - 5 Мб. </p>
                             <a class="photo-btn" href="javascript: void();">
                                 <span>Відправити фото</span>
                                 <input class="photo-btn_input" type="file" name="photo" onchange="document.getElementById('form-stud').submit();">

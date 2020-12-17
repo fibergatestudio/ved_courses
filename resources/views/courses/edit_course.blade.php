@@ -375,7 +375,7 @@
 
                             </div>
                             <div class="courseAdd-grid_item">
-                                Короткі зауваження щодо додавання фото курсу.
+                                Файли з розширенням JPG, JPEG, або PNG. Максимальний розмір - 5 Мб
                             </div>
 
                         </div>
@@ -459,7 +459,7 @@
                         </div>
                         <div class="teachers-grid_item">
                             <div class="courseEdit-item_text teachers-item_text">
-                                Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer  Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's standard dummy text ever since
+                                {{ $teacher->descr }}
                             </div>
                         </div>
                     </div>
