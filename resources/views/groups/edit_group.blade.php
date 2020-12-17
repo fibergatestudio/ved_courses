@@ -194,7 +194,9 @@
             </form>
         </div>
     </section>
+@endsection
 
+@section('js')
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     {{-- <script type="text/javascript" src="assets/js/slick.min.js"></script> --}}
@@ -219,7 +221,7 @@
         });
 
         $('#student').keyup(function(){
-            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
+            let query = $(this).val();//.replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
             $(this).val(query);
             if(query != ''){
                 axios.post("{{ route('autocomplete.fetch') }}", {
@@ -249,7 +251,7 @@
 
         $('#addstudent').click(function() {
             /* Берем имя текущего студента */
-            let curr_stud = $('#student').val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
+            let curr_stud = $('#student').val();//.replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
 
             /* Проверка на существующего студента в базе */
             axios.post("{{ route('autocomplete.fetch.check') }}", {
@@ -424,12 +426,6 @@
             $('.modal-backdrop').hide();
         });
     </script>
-
-@endsection
-
-@section('scripts')
-
-
 @endsection
 
 

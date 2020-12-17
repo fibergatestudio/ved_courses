@@ -89,9 +89,79 @@
                         id="saveUser">Зберегти </button>
                 <button class="groups-edit__back-to-groups sce__buttons-restyle uge__buttons-style"
                         id="backToUsers"
-                        onClick="event.preventDefault(); window.location.href='{{ route('users_controll') }}'">Назад</button>
+                        onClick="event.preventDefault(); window.location.href='{{ url()->previous() }}'">Назад</button>
             </div>
         </form>
     </div>
 </section>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            /*Беру фамилию студента*/
+            let surname = $("input[name='surname']").val();
+            /*Беру имя студента*/
+            let name = $("input[name='name']").val();
+            /*Беру отчество студента*/
+            let patronymic = $("input[name='patronymic']").val();
+            /*Беру полное имя студента*/
+            let full_name = $("input[name='full_name']").val();
+            /*ФИО*/
+            let fio = surname + " " +name + " " + patronymic;
+
+            if (fio !== full_name){
+                $("input[name='full_name']").val(fio);
+            }
+        });
+
+        $('#getSurname').on('keyup', function() {
+            let str =  $(this).val();
+            /*Получаю значение полного имени*/
+            let full_name = $("input[name='full_name']").val();
+            let arr = full_name.split(" ");
+            arr[0] = str;
+            $("input[name='full_name']").val(arr.join(" "));
+
+        });
+
+        $('#getLogin').on('keyup', function() {
+            let str =  $(this).val();
+            /*Получаю значение полного имени*/
+            let full_name = $("input[name='full_name']").val();
+            let arr = full_name.split(" ");
+            arr[1] = str;
+            $("input[name='full_name']").val(arr.join(" "));
+
+        });
+
+        $('#getPatronymic').on('keyup', function() {
+            let str =  $(this).val();
+            /*Получаю значение полного имени*/
+            let full_name = $("input[name='full_name']").val();
+            let arr = full_name.split(" ");
+            arr[2] = str;
+            $("input[name='full_name']").val(arr.join(" "));
+
+        });
+
+        $('#getNames').on('keyup', function() {
+            let str =  $(this).val();
+            let arr = str.split(" ");
+            switch (arr.length) {
+                case 3:
+                    $("input[name='surname']").val(arr[0]);
+                    $("input[name='name']").val(arr[1]);
+                    $("input[name='patronymic']").val(arr[2]);
+                    break;
+                case 2:
+                    $("input[name='surname']").val(arr[0]);
+                    $("input[name='name']").val(arr[1]);
+                    break;
+                default:
+                    alert('Введіть коректно ПІБ!');
+                    break;
+            }
+        });
+    </script>
 @endsection

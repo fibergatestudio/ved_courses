@@ -97,7 +97,7 @@
         var col_id = 1;
 
         $('#student').keyup(function(){
-            let query = $(this).val().replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
+            let query = $(this).val();//.replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
             $(this).val(query);
             if(query != ''){
                 axios.post("{{ route('autocomplete.fetch') }}", {
@@ -127,7 +127,7 @@
 
         $('#addstudent').click(function() {
             /* Берем имя текущего студента и очищаем от лишних пробелов*/
-            var curr_stud = $('#student').val().replace(/[A-Za-z]|\s+/g, ' ').trim();
+            var curr_stud = $('#student').val();//.replace(/[A-Za-z]|\s+/g, ' ').trim();
 
             /* Проверка на существующего студента в базе */
             axios.post("{{ route('autocomplete.fetch.check') }}", {

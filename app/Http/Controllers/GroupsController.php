@@ -18,7 +18,7 @@ class GroupsController extends Controller
         } else {
             $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
         }
-        
+
 
         foreach($groups as $group){
             $ids = json_decode($group->students_array);
@@ -176,25 +176,18 @@ class GroupsController extends Controller
         if($ipt_str !== ''){
 
             if(count($arr) >= 1 ){
+                $data = DB::table('students')
+                    ->where('full_name', 'LIKE', "%{$ipt_str}%")
+                    ->whereNotIn('full_name', $arr)
+                    ->get();
 
-            $data = DB::table('students')
-                ->where('full_name', 'LIKE', "%{$ipt_str}%")
-                ->whereNotIn('full_name', $arr)
-                ->get();
-
-            return response()->json($data);
-
-            // $output = '<ul class="dropdown-menu-list" style="display:block; position:relative">';
-            // foreach($data as $row) {
-            //     $output .= '<li><a href="#">'.$row->full_name.'</a></li>';
-            // }
-            // $output .= '</ul>';
+                return response()->json($data);
             }else{
                 $data = DB::table('students')
                 ->where('full_name', 'LIKE', "%{$ipt_str}%")
                 ->get();
 
-            return response()->json($data);
+                return response()->json($data);
             }
         }
     }
@@ -203,7 +196,6 @@ class GroupsController extends Controller
 
         if($request != NULL){
             $input_stud = $request->student;
-            var_dump($input_stud);
             $stud_data = DB::table('students')->where('full_name', $input_stud)->first();
 
             //добавление мыла

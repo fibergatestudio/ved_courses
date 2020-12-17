@@ -52,10 +52,10 @@ class CourseSeeder extends Seeder
 
             DB::table('students')->insert([
                 'user_id' => $new_stud_id,
-                'full_name' => 'Имя Фамилия Отчество' . $z,
+                'full_name' => $s_sur.' '.$s_name.' '.$s_pat,
             ]);
         }
-        
+
 
         // Сид Users
         $teacher_id = DB::table('users')->insertGetId([

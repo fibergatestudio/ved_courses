@@ -175,7 +175,7 @@ class StudentController extends Controller
         if($user_id == 1){
             $students = DB::table('students')->get();
         } else {
-            // Если не админ 
+            // Если не админ
             // Получаем айдишники доступных студентов
             $s_ids = [];
             $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
@@ -220,22 +220,43 @@ class StudentController extends Controller
         return view('student.students_controll_edit', compact('student', 'teachers') );
     }
 
-    public function students_controll_apply($student_id, Request $request){ 
+    public function students_controll_apply($student_id, Request $request){
 
         $all_info = $request->all();
-        //dd($all_info);
+        // dd($student_id);
+        if($request != NULL){
+            $full_name = $request->full_name;
 
-        DB::table('students')->where('user_id', $student_id)->update([
-            'full_name' => $request->full_name,
-            'university_name' => $request->university_name,
-            'course_number' => $request->course_number,
-            'group_number' => $request->group_number,
-            'student_number' => $request->student_number,
-            'student_phone_number' => $request->student_phone_number,
-            'assigned_teacher_id' => $request->assigned_teacher_id,
-        ]);
+            DB::table('students')->where('user_id', $student_id)->update([
+                'full_name' => $full_name,
+                'university_name' => $request->university_name,
+                'course_number' => $request->course_number,
+                'group_number' => $request->group_number,
+                'student_number' => $request->student_number,
+                'student_phone_number' => $request->student_phone_number,
+                'assigned_teacher_id' => $request->assigned_teacher_id,
+            ]);
 
-        return redirect('students_controll')->with('message_success', 'Информация о студенте изменена!');
+            $arr = explode(' ', $full_name);
+            switch (count($arr)) {
+                case '3':
+                    DB::table('users')->where('id', $student_id)->update([
+                        'surname' => $arr[0],
+                        'name' => $arr[1],
+                        'patronymic' => $arr[2],
+                    ]);
+                    break;
+                case '2':
+                    DB::table('users')->where('id', $student_id)->update([
+                        'surname' => $arr[0],
+                        'name' => $arr[1],
+                    ]);
+                    break;
+                default:
+                    break;
+            }
+            return redirect('students_controll')->with('message_success', 'Информация о студенте изменена!');
+        }
     }
 
     public function assigned_students(){
@@ -319,7 +340,7 @@ class StudentController extends Controller
 
         $course_name = '';
         $group_name = '';
-        
+
         return view('student.students_success', compact('student') );
     }
 

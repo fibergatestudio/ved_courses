@@ -54,8 +54,14 @@ class AdminController extends Controller
 
         // Если пользователь студент - обновить
         if($request->role == "student"){
+            //проверка на несоотвествие полного имени
+            $full_name = $request->full_name;
+            $fio = $request->surname.' '.$request->name.' '.$request->patronymic;
+            if($request->full_name !== $fio){
+                $full_name = $fio;
+            }
             DB::table('students')->where('user_id', $user_id)->update([
-                'full_name' => $request->full_name,
+                'full_name' => $full_name,
                 'university_name' => $request->university_name,
                 'course_number' => $request->course_number,
                 'group_number' => $request->group_number,
