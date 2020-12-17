@@ -35,8 +35,18 @@ class ProtocolController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request);
-        DB::table('protocols')->insert($request->except('_token'));
+        $protocol = $request->except('_token');
+        $courseId = $protocol['course_id'];
+        $lessonId = $protocol['lesson_id'];
+        $userId = $protocol['user_id'];
+        for ($i=1; $i <= 8 ; $i++) {
+            if($request->hasFile('p-add-photo'.$i) && ($request->file('p-add-photo'.$i)->isValid())) {
+                $savedFile = "/storage/".$request->file('p-add-photo'.$i)->storePublicly('images', 'public');
+                $protocol['p-add-photo'.$i] = $savedFile;
+            }
+        }
+        
+        DB::table('protocols')->updateOrInsert(['course_id' => $courseId, 'lesson_id' => $lessonId, 'user_id' => $userId], $protocol);
         return redirect()->back()->with('success', 'Протокол успішно збережено.');
     }
 

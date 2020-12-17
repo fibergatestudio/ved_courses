@@ -668,7 +668,7 @@ class TestsController extends Controller
         DB::table('tests_questions')->where('test_id', $test_info_id)->delete();
         //
 
-        return redirect('tests_controll')->with('message_success', 'Тест удален!');
+        return back()->with('message_success', 'Тест удален!');
     }
 
 }

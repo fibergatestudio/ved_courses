@@ -15,6 +15,9 @@ class CreateProtocolsTable extends Migration
     {
         Schema::create('protocols', function (Blueprint $table) {
             $table->id();
+            $table->string('course_id');
+            $table->string('lesson_id');
+            $table->string('user_id');
             $table->longText('city')->nullable();
             $table->date('date')->nullable();
             $table->char('hour-start', 2)->nullable();
@@ -139,6 +142,7 @@ class CreateProtocolsTable extends Migration
             $table->longText('investigator-photo-block6')->nullable();
             $table->longText('investigator-photo-block7')->nullable();
             $table->longText('investigator-photo-block8')->nullable();
+            $table->string('raiting')->nullable();
             $table->timestamps();
         });
     }

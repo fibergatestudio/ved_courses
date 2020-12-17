@@ -13,7 +13,12 @@ class GroupsController extends Controller
 
         $user_id = Auth::user()->id;
 
-        $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
+        if($user_id == 1){
+            $groups = DB::table('groups')->get();
+        } else {
+            $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
+        }
+        
 
         foreach($groups as $group){
             $ids = json_decode($group->students_array);
@@ -42,7 +47,7 @@ class GroupsController extends Controller
 
         $all_info = $request->all();
 
-        // dd($all_info);
+        //dd($all_info);
         // Создаем аррей студентов
         $students_array = array();
 

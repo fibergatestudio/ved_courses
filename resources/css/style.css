@@ -1281,6 +1281,7 @@ element.style {
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
     margin-bottom: 50px;
     max-width: 30%;
+    min-width: 30%;
     margin-left: 10px;
     margin-right: 10px;
 }
