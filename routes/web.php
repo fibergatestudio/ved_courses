@@ -146,6 +146,8 @@ use Illuminate\Support\Facades\Auth;
         Route::get('/import_students', 'StudentController@import_students')->name('import_students')->middleware('auth','role:admin,teacher');
         // Загрузить POST Запрос
         Route::post('/import_students/apply', 'StudentController@import_students_apply')->name('import_students_apply')->middleware('auth','role:admin');
+        // Успеваемость студента
+        Route::get('/students_success/{student_id}', 'StudentController@students_success')->name('students_success')->middleware('auth','role:admin,teacher');
 
     // Присвоеные студенты.
     Route::get('/assigned_students', 'StudentController@assigned_students')->name('assigned_students')->middleware('auth','role:teacher');

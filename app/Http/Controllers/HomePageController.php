@@ -193,7 +193,7 @@ class HomePageController extends Controller
             if(isset($testInfo)){
             return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson', 'testInfo', 'testDragDrop', 'testMultiply', 'testTrueFalse'));
             } else {
-                return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson',));
+                return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
             }
             break;
         default:

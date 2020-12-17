@@ -291,4 +291,14 @@ class StudentController extends Controller
         return redirect()->back()->with('message_success', 'Импорт успешен!');
     }
 
+
+    public function students_success($student_id){
+
+        $student = DB::table('students')->where('user_id', $student_id)->first();
+        $email = DB::table('users')->where('id', $student_id)->first()->email;
+        $student->email = $email;
+        
+        return view('student.students_success', compact('student') );
+    }
+
 }
