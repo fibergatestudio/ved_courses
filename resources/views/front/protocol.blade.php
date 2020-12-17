@@ -842,15 +842,13 @@
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time weather-select">
                                             <select name="approach-select" class="select-field inspection-select">
-                                                <option value="Дорога">Дорога</option>
-                                                <option value="Прибудинковий майданчик">Прибудинковий майданчик
-                                                </option>
-                                                <option value="Місце під'їзду автомобіля - (заасфальтований, ґрунтовий
-                                    бетонний, тротуарна плитка (бруківка), кам’яний, пісочний
-                                    засаджений газоном, інше)">Місце під'їзду автомобіля - (заасфальтований,
-                                                    ґрунтовий
-                                                    бетонний, тротуарна плитка (бруківка), кам’яний, пісочний
-                                                    засаджений газоном, інше)</option>
+                                                <option value="Асфальтовані">Асфальтовані</option>
+                                                <option value="Грунтові">Грунтові</option>
+                                                <option value="Тротуарна плитка (бруківка)">Тротуарна плитка (бруківка)</option>
+                                                <option value="Кам’яні">Кам’яні</option>
+                                                <option value="Пісочні">Пісочні</option>
+                                                <option value="Засаджені газоном">Засаджені газоном</option>
+                                                <option value="Не застосовується">Не застосовується</option>
                                             </select>
                                         </div>
                                     </div>
@@ -868,6 +866,7 @@
                                         <div class="select-time streets-sheme">
                                             <select name="ways-schemes-select"
                                                 class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Хрестоподібний">Хрестоподібний
                                                 </option>
                                                 <option value="Т-подібний">Т-подібний
@@ -896,6 +895,7 @@
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time weather-select">
                                             <select name="roads-select" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Ясно">Проїжджа частина
                                                 </option>
                                                 <option value="Земляне полотно">Земляне полотно
@@ -927,6 +927,7 @@
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time streets-and-elems">
                                             <select name="streets-select" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Проїжджа частина (дорожнє покриття)">Проїжджа частина
                                                     (дорожнє
                                                     покриття)
@@ -952,6 +953,7 @@
                                         <div class="select-time streets-and-elems">
                                             <select name="streets-elems-select"
                                                 class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Ширина вулиці">Ширина вулиці
                                                 </option>
                                                 <option value="Ширина тротуару">Ширина тротуару
@@ -993,15 +995,16 @@
                                     <div class="weather-time-block living-house justify_end">
                                         <div class="select-time living-house">
                                             <select name="house-select" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Дім-дача (з мансардою)">Дім-дача (з мансардою)
 
                                                 </option>
                                                 <option
-                                                    value="Цегляний житловий будинок багатоповерховий панельний (секційний) житловий будинок">
-                                                    Цегляний житловий будинок багатоповерховий панельний (секційний)
-                                                    житловий
-                                                    будинок
-
+                                                    value="Цегляний житловий будинок">
+                                                    Цегляний житловий будинок </option>
+                                                <option
+                                                    value="Багатоповерховий панельний (секційний) житловий будинок">
+                                                    Багатоповерховий панельний (секційний) житловий будинок
                                                 </option>
                                                 <option value="Панельний (односекційний) житловий будинок">Панельний
                                                     (односекційний) житловий будинок
@@ -1027,6 +1030,7 @@
                                 <p class="block-header-descr">Об'єкти торгівлі і публічного харчування </p>
                                 <div class="select-time  catering">
                                     <select name="catering" class="select-field inspection-select">
+                                        <option value="Не застосовується">Не застосовується</option>
                                         <option value="Торгівельний центр, супермаркет, магазин">Торгівельний центр,
                                             супермаркет, магазин
 
@@ -1066,6 +1070,7 @@
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time doorhandle">
                                             <select name="stairs-elevators" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Зовнішні сталеві пожежні сходи">Зовнішні сталеві
                                                     пожежні сходи
 
@@ -1109,6 +1114,7 @@
                                     <div class="weather-time-block doors justify_end">
                                         <div class="select-time doors">
                                             <select name="doors" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Вхідні тамбура">Вхідні тамбура
                                                 </option>
                                                 <option value="Квартири">Квартири</option>
@@ -1147,6 +1153,7 @@
                                     <div class="weather-time-block doorhandle justify_end">
                                         <div class="select-time doorhandle">
                                             <select name="doorhandle" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Ручка-скоба на планці">Ручка-скоба на планці
                                                 </option>
                                                 <option value="Обертова Г-подібна ручка">Обертова Г-подібна ручка
@@ -1170,6 +1177,7 @@
                                     <div class="weather-time-block door-device justify_end">
                                         <div class="select-time door-device">
                                             <select name="door-device" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Перекидний врізаний шпінгалет">Перекидний врізаний
                                                     шпінгалет
 
@@ -1232,6 +1240,7 @@
                                     <div class="weather-time-block doors justify_end">
                                         <div class="select-time doors">
                                             <select name="mortise-lock" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Врізний циліндровий замок">Врізний циліндровий замок
                                                 </option>
                                                 <option value="Меблевий сувальдний замок">Меблевий сувальдний замок
@@ -1525,6 +1534,7 @@
                                     <div class="weather-time-block balcony justify_end">
                                         <div class="select-time balcony">
                                             <select name="balcony" class="select-field inspection-select">
+                                                <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Віконні - двостулкова">Віконні - двостулкова
                                                 </option>
                                                 <option value="Одностулкова">Одностулкова</option>
@@ -2022,7 +2032,7 @@
                         </div>
                         <!-- photoblock -->
                         <div class="protocol__purple-separator protocol__mt-30"></div>
-                        <div class="protocol__section-title protocol__title_restyle toggle-content">ФОТОТАБЛИЦЯ до
+                        <div class="protocol__section-title protocol__title_restyle toggle-content">ФОТОТАБЛИЦЯ</br> до
                             протоколу
                             огляду місця події
                             <div class="protocol__title_dropdown-white"></div>
@@ -2540,5 +2550,7 @@
 @endsection
 
 @section('js')
-    <script src="{{ asset('js/autosize.js') }}"></script>
+<script>
+    autosize($('.input-textarea'));
+</script>
 @endsection
