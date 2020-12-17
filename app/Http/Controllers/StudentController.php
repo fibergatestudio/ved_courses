@@ -168,7 +168,26 @@ class StudentController extends Controller
     // Управление студентами
     public function students_controll(){
 
-        $students = DB::table('students')->get();
+        // Получаем айди текущего юзера
+        $user_id = Auth::user()->id;
+
+        // Если Админ - берем и показываем всех студентов
+        if($user_id == 1){
+            $students = DB::table('students')->get();
+        } else {
+            // Если не админ 
+            // Получаем айдишники доступных студентов
+            $s_ids = [];
+            $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
+            foreach($groups as $group){
+                // Перебираем все группы и если есть совпадения берем аррей студентов и передаем в общий
+                $g_arr = json_decode($group->students_array);
+                array_push($s_ids, $g_arr[0]);
+            }
+            // Берем айдишник доступные ему
+            $students = DB::table('students')->whereIn('user_id', $s_ids)->get();
+        }
+        //$students = DB::table('students')->get();
 
         foreach($students as $student){
             //dd($student);
