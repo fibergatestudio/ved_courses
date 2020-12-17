@@ -527,14 +527,15 @@
                                 </div>
                                 <div class="courseEdit-hidden">
                                     <div class="courseEdit-underline"></div>
-                                    <table class="hidden-menu">
+                                    {{ $lesson->course_description }}
+                                    <!-- <table class="hidden-menu">
                                         <tbody >
                                         <tr class="hidden-menu_string">
                                             <td class="courseEdit-hidden_column hidden-menu_column">{{ $lesson->learning_time }} хв.</td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ $lesson->course_description }}</a></td>
                                         </tr>
-                                    </tbody>
+                                    </tbody> -->
                                 </table>
                                 </div>
 
@@ -543,15 +544,20 @@
                                 </div>
                                 <div class="courseEdit-hidden">
                                     <div class="courseEdit-underline"></div>
-                                    <table class="hidden-menu">
+                                    @if($lesson->show_protocol == 1)
+                                        Є протокол
+                                    @else
+                                        Нема протоколу
+                                    @endif
+                                    <!-- <table class="hidden-menu">
                                         <tbody >
                                         <tr class="hidden-menu_string">
                                             <td class="courseEdit-hidden_column hidden-menu_column">{{ $lesson->learning_protocol_time }} хв.</td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ $lesson->course_protocol_descr }}</a></td>
                                         </tr>
-                                    </tbody>
-                                </table>
+                                        </tbody>
+                                    </table> -->
                                 </div>
 
                                 <div class="courseEdit-item_video courseEdit-item_button">
@@ -560,36 +566,16 @@
                                 <div class="courseEdit-hidden">
                                     <div class="courseEdit-underline"></div>
                                     <div class="courseEdit_video">{{ $lesson->video_count }} відео</div>
+
                                     <table class="hidden-menu">
                                         <tbody>
-
-                                        <tr class="hidden-menu_string">
+                                        <!-- <tr class="hidden-menu_string">
                                             <td class="courseEdit-hidden_column hidden-menu_column">3 хв.</td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
                                             <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                        </tr>
-                                        <tr class="hidden-menu_string">
-                                            <td class="courseEdit-hidden_column hidden-menu_column">8 хв.</td>
-                                            <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                                            <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                        </tr>
-                                        <tr class="hidden-menu_string">
-                                            <td class="courseEdit-hidden_column hidden-menu_column">4 хв.</td>
-                                            <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                                            <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                        </tr>
-                                        <tr class="hidden-menu_string">
-                                            <td class="courseEdit-hidden_column hidden-menu_column">3 хв.</td>
-                                            <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                                            <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                        </tr>
-                                        <tr class="hidden-menu_string">
-                                            <td class="courseEdit-hidden_column hidden-menu_column">3 хв.</td>
-                                            <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                                            <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                        </tr> -->
+                                        </tbody>
+                                    </table>
                                 </div>
 
                                 <div class="courseEdit-item_test courseEdit-item_button">
