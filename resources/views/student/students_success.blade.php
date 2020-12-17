@@ -22,7 +22,7 @@
             <h1 class="ss__main-title">Профіль студента</h1>
 
             @php
-            echo '<pre>'.print_r($student,true).'</pre>';
+            //echo '<pre>'.print_r($student,true).'</pre>';
             @endphp
             <div class="direction ss">
                 <div class="container ss__container-resize">
@@ -33,7 +33,7 @@
                             <p class="student-state">Студент</p>
                             <p class="students-group-name">Назва курсу та групи</p>
                             <p class="students-email">{{ $student->email }}</p>
-                            <p class="students-phone">{{ $student->student_phone_number }}</p>
+                            <p class="students-phone">{{ ($student->student_phone_number)?$student->student_phone_number:'Не надано' }}</p>
                         </div>
                     </div>
                     <div class="ss__parent-section">

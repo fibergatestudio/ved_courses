@@ -316,6 +316,9 @@ class StudentController extends Controller
         $student = DB::table('students')->where('user_id', $student_id)->first();
         $email = DB::table('users')->where('id', $student_id)->first()->email;
         $student->email = $email;
+
+        $course_name = '';
+        $group_name = '';
         
         return view('student.students_success', compact('student') );
     }
