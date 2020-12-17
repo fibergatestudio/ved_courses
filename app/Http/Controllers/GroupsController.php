@@ -11,7 +11,14 @@ class GroupsController extends Controller
 {
     public function index(){
 
-        $groups = DB::table('groups')->get();
+        $user_id = Auth::user()->id;
+
+        if($user_id == 1){
+            $groups = DB::table('groups')->get();
+        } else {
+            $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
+        }
+        
 
         foreach($groups as $group){
             $ids = json_decode($group->students_array);
@@ -40,7 +47,7 @@ class GroupsController extends Controller
 
         $all_info = $request->all();
 
-        // dd($all_info);
+        //dd($all_info);
         // Создаем аррей студентов
         $students_array = array();
 
@@ -196,7 +203,7 @@ class GroupsController extends Controller
 
         if($request != NULL){
             $input_stud = $request->student;
-
+            var_dump($input_stud);
             $stud_data = DB::table('students')->where('full_name', $input_stud)->first();
 
             //добавление мыла
