@@ -9,27 +9,53 @@ class CourseSeeder extends Seeder
      *
      * @return void
      */
+
     public function run()
     {
-        // Тест Пользователи
-        DB::table('users')->insertGetId([
-            'surname' => '',
-            'name' => 'Student',
-            'patronymic' => '',
-            'email' => 'student@mail.com',
-            'password' => Hash::make('qwerty'),
-            'role' => 'student',
-            'status' => 'confirmed',
-        ]);
-        DB::table('users')->insertGetId([
-            'surname' => '',
-            'name' => 'Teacher',
-            'patronymic' => '',
-            'email' => 'teacher@mail.com',
-            'password' => Hash::make('qwerty'),
-            'role' => 'teacher',
-            'status' => 'confirmed',
-        ]);
+        $t_count = 5;
+        $s_count = 12;
+
+        for($i = 0; $i < $t_count; $i++){
+
+            $t_sur = 'Surname' . $i;
+            $t_name = 'Teacher' . $i;
+            $t_pat = 'Patronymic' . $i;
+            $t_mail = 'teacher' . $i . '@mail.com';
+
+            DB::table('users')->insertGetId([
+                'surname' => $t_sur,
+                'name' => $t_name,
+                'patronymic' => $t_pat,
+                'email' => $t_mail,
+                'password' => Hash::make('qwerty'),
+                'role' => 'teacher',
+                'status' => 'confirmed',
+            ]);
+        }
+        for($z = 0; $z < $s_count; $z++){
+
+            $s_sur = 'Surname' . $z;
+            $s_name = 'Student' . $z;
+            $s_pat = 'Patronymic' . $z;
+            $s_mail = 'student' . $z . '@mail.com';
+
+            // Тест Пользователи
+            $new_stud_id = DB::table('users')->insertGetId([
+                'surname' => $s_sur,
+                'name' => $s_name,
+                'patronymic' => $s_pat,
+                'email' => $s_mail,
+                'password' => Hash::make('qwerty'),
+                'role' => 'student',
+                'status' => 'confirmed',
+            ]);
+
+            DB::table('students')->insert([
+                'user_id' => $new_stud_id,
+                'full_name' => 'Имя Фамилия Отчество' . $z,
+            ]);
+        }
+        
 
         // Сид Users
         $teacher_id = DB::table('users')->insertGetId([
