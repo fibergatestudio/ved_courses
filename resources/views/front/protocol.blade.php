@@ -9,6 +9,9 @@
     <!-- protocol modal window start -->
     <form id="protocolForm" class="protocol" method="POST" action="{{ route('protocol.store') }}" enctype="multipart/form-data">
         @csrf
+        <input type="hidden" name="course_id" value="{{ $course->id }}">
+        <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
+        <input type="hidden" name="user_id" value="{{ $user->id }}">
         <h3 class="protocol__title">ПРОТОКОЛ ОГЛЯДУ</h3>
         <div class="protocol__section">
             <div class="protocol__purple-separator"></div>
@@ -2452,9 +2455,12 @@
                         <div class="protocol__content">
                             <div class="protocol__row protocol__mt-35">
                                 <div class="protocol-btns-block">
+                                    @isset($user)
                                     <button type="submit" class="groups-edit__create-group sce__buttons-restyle"
                                         id="sendProtocol">Зберегти
                                     </button>
+                                    @endisset
+
                                     <button type="reset" class="groups-edit__back-to-groups sce__buttons-restyle"
                                         id="backToContent">Назад
 
