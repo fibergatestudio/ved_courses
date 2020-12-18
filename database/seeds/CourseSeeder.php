@@ -34,7 +34,7 @@ class CourseSeeder extends Seeder
 
             DB::table('teachers')->insert([
                 'user_id' => $new_teach_id,
-                'full_name' => $s_sur.' '.$s_name.' '.$s_pat,
+                'full_name' => $t_sur.' '.$t_name.' '.$t_pat,
                 'status' => 'confirmed',
             ]);
         }
