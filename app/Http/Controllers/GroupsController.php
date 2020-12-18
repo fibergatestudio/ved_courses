@@ -191,15 +191,15 @@ class GroupsController extends Controller
             if(count($arr) >= 1 ){
                 $data = DB::table('students')
                     ->where('full_name', 'LIKE', "%{$ipt_str}%")
+                    ->whereNotIn('user_id', $grp_stund_arr)
                     ->whereNotIn('full_name', $arr)
-                    ->whereNotIn('id',$grp_stund_arr)
                     ->get();
 
                 return response()->json($data);
             }else{
                 $data = DB::table('students')
                 ->where('full_name', 'LIKE', "%{$ipt_str}%")
-                ->whereNotIn('id',$grp_stund_arr)
+                ->whereNotIn('user_id',$grp_stund_arr)
                 ->get();
 
                 return response()->json($data);
