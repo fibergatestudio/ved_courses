@@ -22,7 +22,7 @@ class CourseSeeder extends Seeder
             $t_pat = 'Patronymic' . $i;
             $t_mail = 'teacher' . $i . '@mail.com';
 
-            DB::table('users')->insertGetId([
+            $new_teach_id = DB::table('users')->insertGetId([
                 'surname' => $t_sur,
                 'name' => $t_name,
                 'patronymic' => $t_pat,
@@ -31,11 +31,32 @@ class CourseSeeder extends Seeder
                 'role' => 'teacher',
                 'status' => 'confirmed',
             ]);
+
+            DB::table('teachers')->insert([
+                'user_id' => $new_teach_id,
+                'full_name' => $s_sur.' '.$s_name.' '.$s_pat,
+                'status' => 'confirmed',
+            ]);
         }
         for($z = 0; $z < $s_count; $z++){
 
             $s_sur = 'Surname' . $z;
-            $s_name = 'Student' . $z;
+
+            if($z == 0){
+                $s_name = 'Александр';
+            } else if($z == 1){
+                $s_name = 'Аркадий';
+            }else if($z == 2){
+                $s_name = 'Борис';
+            }else if($z == 3){
+                $s_name = 'Виталий';
+            }else if($z == 4){
+                $s_name = 'Денис';
+            } else {
+                $s_name = 'Student' . $z;
+            }
+            //$s_name = 'Student' . $z;
+
             $s_pat = 'Patronymic' . $z;
             $s_mail = 'student' . $z . '@mail.com';
 

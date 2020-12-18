@@ -173,18 +173,33 @@ class GroupsController extends Controller
         $ipt_str = $request->ipt_str;
         $arr = $request->students;
 
+        // Делаем аррей студентов которые уже в группах
+        $grp_stund_arr = [];
+        $grp_stud_db = DB::table('groups')->get();
+            foreach($grp_stud_db as $grp_stud){
+                $st_arr = json_decode($grp_stud->students_array);
+                foreach($st_arr as $arr_val){
+                    array_push($grp_stund_arr, $arr_val);
+                }
+                //array_push($grp_stund_arr, $st_arr);
+            }
+        $grp_stund_arr = array_unique($grp_stund_arr);
+        // var_dump($arr);
+        // var_dump($grp_stund_arr);
         if($ipt_str !== ''){
 
             if(count($arr) >= 1 ){
                 $data = DB::table('students')
                     ->where('full_name', 'LIKE', "%{$ipt_str}%")
                     ->whereNotIn('full_name', $arr)
+                    ->whereNotIn('id',$grp_stund_arr)
                     ->get();
 
                 return response()->json($data);
             }else{
                 $data = DB::table('students')
                 ->where('full_name', 'LIKE', "%{$ipt_str}%")
+                ->whereNotIn('id',$grp_stund_arr)
                 ->get();
 
                 return response()->json($data);
