@@ -31,7 +31,7 @@
                         <div class="ss__data-block">
                             <p class="student-name">{{ $student->full_name }}</p>
                             <p class="student-state">Студент</p>
-                            <p class="students-group-name">Назва курсу та групи</p>
+                            <p class="students-group-name">{{ ($student->course_number)?$student->course_number:'Назва курсу та групи' }}</p>
                             <p class="students-email">{{ $student->email }}</p>
                             <p class="students-phone">{{ ($student->student_phone_number)?$student->student_phone_number:'Не надано' }}</p>
                         </div>
