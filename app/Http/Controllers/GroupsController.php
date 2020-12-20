@@ -47,77 +47,96 @@ class GroupsController extends Controller
 
         $all_info = $request->all();
 
-        //dd($all_info);
+        // dd($all_info);
+
         // Создаем аррей студентов
         $students_array = array();
-
-
-        foreach($request->student_name as $student){
-            // Получаем информацию о студенте
-            $stud_info = DB::table('students')->where('full_name', $student)->first();
-            // Заносим данные в аррей
-            if(isset($stud_info)){
-                array_push($students_array, $stud_info->user_id);
-            } else {
-                return redirect()->back()->with('message_error', 'Студента не существует!');
-            }
-
-        }
-
 
         // Получаем информацию о учителе
         $teacher = DB::table('users')->where('id', $request->teacher_id)->first();
 
         if(isset($teacher)){
             $teacher_id = $teacher->id;
-            $teacher_name = $teacher->name;
+            $teacher_name =$teacher->surname." ".$teacher->name." ".$teacher->patronymic;
+
+            if(isset($request->student_name)){
+                foreach($request->student_name as $student){
+                    // Получаем информацию о студенте
+                    $stud_info = DB::table('students')->where('full_name', $student)->first();
+                    //Заносим данные о учителе в таблицу студентов
+
+                    // Заносим данные в аррей
+                    if(isset($stud_info)){
+                        DB::table('students')->where('id', $stud_info->id)->update([
+                            'assigned_teacher_id' => $teacher_id,
+                        ]);
+                        array_push($students_array, $stud_info->user_id);
+                    } else {
+                        return redirect()->back()->with('message_error', 'Студента не існує!')->withInput();
+                    }
+                }
+
+                // Создаем новую группу
+                $new_group = new Groups();
+
+                if(isset($request->group_name)){
+                    $new_group->name = $request->group_name;
+                } else {
+                    return redirect()->back()->with('message_error', 'Додайте назву групи!')->withInput();
+                }
+
+                $new_group->students_array = json_encode($students_array);
+                $new_group->assigned_teacher_id = $teacher_id;
+                $new_group->assigned_teacher_name = $teacher_name;
+                $new_group->save();
+
+                return redirect('groups');
+            } else {
+                return redirect()->back()->with('message_error', 'Додайте студентів!')->withInput();
+            }
+
         } else {
-            $teacher_id = '';
-            $teacher_name = '';
+            return redirect()->back()->with('message_error', 'Додайте викладача!')->withInput();
         }
-
-        // Создаем новую группу
-        $new_group = new Groups();
-        $new_group->name = $request->name;
-        $new_group->students_array = json_encode($students_array);
-        $new_group->assigned_teacher_id = $teacher_id;
-        $new_group->assigned_teacher_name = $teacher_name;
-        $new_group->save();
-
-        return redirect('groups');
     }
 
     public function edit_group($group_id){
 
         $group_info = DB::table('groups')->where('id', $group_id)->first();
-        // dd($group_info);
 
-        $students_ids = json_decode($group_info->students_array);
-        // dd($students_ids);
-        $students_array = array();
-        foreach($students_ids as $student_id){
-            $student = DB::table('students')->where('user_id', $student_id)->first();
-            // Имейл студента
-            $stud_email = DB::table('users')->where('id', $student_id)->first();
-            $student->email = $stud_email->email;
+        if (isset($group_info)){
+            $students_ids = json_decode($group_info->students_array);
+            $students_array = array();
 
-            $assigned_teacher = DB::table('users')->where('id', $student->assigned_teacher_id)->first();
-            if($assigned_teacher){
-                $student->teacher_fio = $assigned_teacher->surname . " " . $assigned_teacher->name . " " . $assigned_teacher->patronymic;
+            foreach($students_ids as $student_id){
+                $student = DB::table('students')->where('user_id', $student_id)->first();
+                // Имейл студента
+                $stud_email = DB::table('users')->where('id', $student_id)->first();
+                $student->email = $stud_email->email;
+                $assigned_teacher = DB::table('users')->where('id', $student->assigned_teacher_id)->first();
+
+                if($assigned_teacher){
+                    $student->teacher_fio = $assigned_teacher->surname . " " . $assigned_teacher->name . " " . $assigned_teacher->patronymic;
+                }
+
+                $student_user = DB::table('users')->where('id', $student_id)->first();
+
+                if($student_user){
+                    $student->student_email = $student_user->email;
+                    // /*Дубляж на всякий полного имени студента из таблицы пользователей*/
+                    // $student->full_name = $student_user->surname . " " . $student_user->name . " " . $student_user->patronymic;
+                }
+                array_push($students_array, $student);
             }
-            $student_user = DB::table('users')->where('id', $student_id)->first();
-            if($student_user){
-                $student->student_email = $student_user->email;
-                /*Дубляж на всякий полного имени студента из таблицы пользователей*/
-                $student->full_name = $student_user->surname . " " . $student_user->name . " " . $student_user->patronymic;
-            }
-            array_push($students_array, $student);
+
+            $teachers = DB::table('users')->where('role', 'teacher')->get();
+            // dd($students_array, $group_info, $teachers);
+
+            return view('groups.edit_group', compact('group_info', 'teachers', 'students_array'));
+        } else {
+            return redirect('groups_controll')->with('message_error', 'Групи не існує!');
         }
 
-        $teachers = DB::table('users')->where('role', 'teacher')->get();
-        // dd($students_array, $group_info, $teachers);
-
-        return view('groups.edit_group', compact('group_info', 'teachers', 'students_array'));
     }
 
     public function apply_edit_group($group_id, Request $request){
@@ -126,28 +145,35 @@ class GroupsController extends Controller
 
         // dd($post_info);
 
+        if (isset($request->teacher_id)){
+            // Получаем информацию о учителе
+            $teacher = DB::table('users')->where('id', $request->teacher_id)->first();
+
+            if(isset($teacher)){
+                $teacher_id = $teacher->id;
+                $teacher_name =$teacher->surname." ".$teacher->name." ".$teacher->patronymic;
+            } else {
+                return redirect()->back()->with('message_error', 'Додайте викладача!');
+            }
+        }
         // Создаем аррей студентов
         $students_array = array();
 
-        if(!empty($request->student_name)) {
+        if(isset($request->student_name)) {
             foreach($request->student_name as $student){
-                // dd($student);
                 // Получаем информацию о студенте
                 $stud_info = DB::table('students')->where('full_name', $student)->first();
-                // dd($stud_info);
-                // Заносим данные в аррей
-                array_push($students_array, $stud_info->user_id);
-            }
-        }
-        // Получаем информацию о учителе
-        $teacher = DB::table('users')->where('id', $request->teacher_id)->first();
 
-        if(isset($teacher)){
-            $teacher_id = $teacher->id;
-            $teacher_name = $teacher->name;
-        } else {
-            $teacher_id = '';
-            $teacher_name = '';
+                if(isset($stud_info)){
+                    DB::table('students')->where('id', $stud_info->id)->update([
+                        'assigned_teacher_id' => $teacher_id,
+                    ]);
+                    // Заносим данные в аррей
+                    array_push($students_array, $stud_info->user_id);
+                } else {
+                    return redirect()->back()->with('message_error', 'Студента не існує!');
+                }
+            }
         }
 
         DB::table('groups')->where('id', $group_id)->update([
@@ -157,7 +183,7 @@ class GroupsController extends Controller
             'assigned_teacher_name' => $teacher_name,
         ]);
 
-        return redirect()->back()->with('message_success', 'Студент(и) був(ли) доданий(ні)!');
+        return redirect()->back()->with('message_success', 'Дані були успішно змінені!');
     }
 
     public function delete_group($group_id){
@@ -169,23 +195,23 @@ class GroupsController extends Controller
 
     // Автокомплит
     public function fetch(Request $request){
-
+        //содержимое строки запроса
         $ipt_str = $request->ipt_str;
+        //массив добавленных студентов
         $arr = $request->students;
 
         // Делаем аррей студентов которые уже в группах
         $grp_stund_arr = [];
         $grp_stud_db = DB::table('groups')->get();
-            foreach($grp_stud_db as $grp_stud){
-                $st_arr = json_decode($grp_stud->students_array);
-                foreach($st_arr as $arr_val){
-                    array_push($grp_stund_arr, $arr_val);
-                }
-                //array_push($grp_stund_arr, $st_arr);
+
+        foreach($grp_stud_db as $grp_stud){
+            $st_arr = json_decode($grp_stud->students_array);
+            foreach($st_arr as $arr_val){
+                array_push($grp_stund_arr, $arr_val);
             }
+        }
         $grp_stund_arr = array_unique($grp_stund_arr);
-        // var_dump($arr);
-        // var_dump($grp_stund_arr);
+
         if($ipt_str !== ''){
 
             if(count($arr) >= 1 ){

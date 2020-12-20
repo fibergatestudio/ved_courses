@@ -13,6 +13,11 @@
                     <h1 class="groups-head__title">Управління Групами </h1>
                     <a href="{{ route('add_group') }}" class="groups-head__add-group-btn">Додати групу</a>
                 </div>
+                @if(session()->has('message_error'))
+                    <div class="alert alert-danger groups-edit__group-name uge_row_text-style uge__row">
+                        {{ session()->get('message_error') }}
+                    </div>
+                @endif
                 <div class="groups-body">
                     <div class="groups-title">
                         <div class="groups-title__elem groups-title__elem_style">№</div>

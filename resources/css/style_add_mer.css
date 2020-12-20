@@ -125,5 +125,8 @@
         padding-right: 0px;
         max-width: 297px !important;
     }
-
 }
+input[type="text"]::placeholder{
+    color: #878787;
+}
+

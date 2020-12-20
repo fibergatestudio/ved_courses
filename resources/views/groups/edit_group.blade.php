@@ -46,6 +46,11 @@
                                 {{ session()->get('message_success') }}
                             </div>
                         @endif
+                        @if(session()->has('message_error'))
+                            <div class="alert alert-danger groups-edit__group-name uge_row_text-style uge__row">
+                                {{ session()->get('message_error') }}
+                            </div>
+                        @endif
                         <div class="groups-edit__teacher-block ge__teacher-course">
                             <p class="groups-edit__current-teacher eg-text-style ge__mb-20">
                                 <span class="ccec-header_style">Поточний викладач:&nbsp;</span>
@@ -174,7 +179,7 @@
                             id="selectTeacher">
                             <option>Нет</option>
                             @foreach($teachers as $teacher)
-                                @if($group_info->assigned_teacher_name == $teacher->name)
+                                @if($group_info->assigned_teacher_id == $teacher->id)
                                     <option value="{{ $teacher->id }}" selected>{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
                                 @else
                                     <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
@@ -197,14 +202,6 @@
 @endsection
 
 @section('js')
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
-    {{-- <script type="text/javascript" src="assets/js/slick.min.js"></script> --}}
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
-        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
-        crossorigin="anonymous"></script>
-    {{-- <script src="assets/js/main.js"></script> --}}
-
     <script>
         var students_array = new Array();
         // var count_t = 1;
@@ -216,8 +213,6 @@
                     students_array.push($(this).val());
                     return $(this).val();
                 }).get();
-            // count_t = students_array.length;
-            // count_t++;
         });
 
         $('#student').keyup(function(){
@@ -252,6 +247,8 @@
         $('#addstudent').click(function() {
             /* Берем имя текущего студента */
             let curr_stud = $('#student').val();//.replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
+            let teacher_id = "{{ $group_info->assigned_teacher_id }}";
+            let teacher_name = "{{ $group_info->assigned_teacher_name }}";
 
             /* Проверка на существующего студента в базе */
             axios.post("{{ route('autocomplete.fetch.check') }}", {
@@ -261,14 +258,16 @@
                 if(jQuery.inArray(response.data.full_name, students_array) != -1 ){
                     alert("Студент "+response.data.full_name+" вже доданий!");
                 }else{
-
                     /*Перебор обьекта на значения null*/
                     $.each(response.data, function( key, value ) {
                         if(value == null || value == undefined){
                             response.data[key] = '-';
                         }
                     });
-                    console.log(response.data);
+
+                    //присваиваем id и ФИО учителя студенту
+                    response.data.assigned_teacher_id = teacher_id;
+                    response.data.teacher_fio = teacher_name;
 
                     /*Ищу последнюю строку со студентом и получаю порядковый*/
                     let count_stud = $("div[id^='name']:last").attr("id").replace("name", "");
@@ -376,7 +375,6 @@
 
                     /* Добавляем текущего студента в аррей */
                     students_array.push(curr_stud);
-                    // count_t++;
                     $('input[name="student_name"]').val('');
                 }
             })
@@ -389,15 +387,11 @@
 
         function removeStud(count_stud) {
             students_array.splice( $.inArray(count_stud,students_array) ,1 );
-            // let div_name = "#name"+curr_stud;
-            // let div_mobi = "#mobi"+curr_stud;
+            // alert($("div[id='name"+count_stud+"']").val());
             setTimeout(function(){
                 $("div[id='name"+count_stud+"']").remove();
                 $("div[id='mobi"+count_stud+"']").remove();
-                // count_t--;
             }, 500);
-            // console.log(students_array);
-            // console.log("RemoveStud " + curr_stud);
             /*Не убирался серый фон от модала, с этим костылем работает*/
             $('.modal-backdrop').hide();
         }
