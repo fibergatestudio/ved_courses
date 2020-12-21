@@ -340,8 +340,40 @@ class StudentController extends Controller
         $student = DB::table('students')->where('user_id', $student_id)->first();
         $email = DB::table('users')->where('id', $student_id)->first()->email;
         $student->email = $email;
+        
+        $course_id = null;
+        $course_lessons = (object)[];
+        $lesson_count = null;
+        $course_info = DB::table('courses')->where('name', $student->course_number)->first();
+        if (is_object($course_info)) {
+            $course_id = $course_info->id;
+        }
 
-        return view('student.students_success', compact('student') );
+        if ($course_id) {
+            $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
+            $lesson_count = $course_lessons->count();
+        }
+
+        foreach($course_lessons as $lesson){
+            if($lesson->video_name == null || $lesson->video_name == "null" ){
+                $lesson->video_count = 0;
+            } else {
+                $lesson->video_count = count(json_decode($lesson->video_name));
+            }
+        }
+
+        $students = DB::table('students')->get();
+        $next_student = $student_id;
+
+        for ($i=0; $i < $students->count(); $i++) { 
+            if ($students[$i]->user_id === $student_id) {
+                if ($i + 1 < $students->count()) {
+                    $next_student = $students[$i+1]->user_id;
+                }
+            }
+        }
+        
+        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count'));
     }
 
 }
