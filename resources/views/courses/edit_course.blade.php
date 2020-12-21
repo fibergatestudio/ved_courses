@@ -136,7 +136,11 @@
                         @foreach($assigned_teachers as $teacher)
                             <div class="courseEdit-teachers teachers-grid_wrapper" id="teacher{{ $teacher->id }}">
                                 <div class="teachers-grid_item">
-                                    <div class="courseEdit-item_photo"></div>
+                                    @if (App\User::find($teacher->id)->getMedia('photos')->last())
+                                    <div class="courseEdit-item_photo" style="background-image: url({{ asset(App\User::find($teacher->id)->getMedia('photos')->last()->getUrl('thumb_big')) }}) !important;"> </div>
+                                    @else
+                                    <div class="courseEdit-item_photo"> </div>
+                                    @endif
                                 </div>
                                 <div class="teachers-grid_item">
                                     <div style="display:flex;">

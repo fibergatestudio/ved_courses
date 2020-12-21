@@ -472,13 +472,21 @@
     <script type="text/javascript">
         function show(input) {
             var fileName = input.files[0].name;
-            var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);            
+            if(input.files[0].size >= 300000000){
+                alert("Файл перевищує 300мб!");
+            } else {
+                var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName); 
+            }
+                       
         }
 
         function showFile(input){
             var fileName = input.files[0].name;
-            var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
-            console.log(test);
+            if(input.files[0].size >= 300000000){
+                alert("Файл перевищує 300мб!");
+            } else {
+                var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
+            }
         }
     </script>
 

@@ -668,6 +668,11 @@ class TestsController extends Controller
         DB::table('tests_questions')->where('test_id', $test_info_id)->delete();
         //
 
+        // Обновляем урок курса там где был тест
+        DB::table('courses_program')->where('test_id', $test_info_id)->update([
+            'test_id' => null,
+        ]);
+
         return back()->with('message_success', 'Тест удален!');
     }
 
