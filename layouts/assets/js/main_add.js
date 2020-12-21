@@ -133,4 +133,26 @@ toggleBlocks.forEach(block => {
 
 // protocol page end
 
+
+//photo upload btn emulation and uploaded file name update start
+const photoButtons = document.querySelectorAll('.add-student.add-student_restyle.p-btn-upload');
+const nearestLable = document.querySelectorAll('.custom-upload-form.p-custom-upload-form');
+const inputElement = document.querySelectorAll(".eg-input.add-style.base-upload");
+
+photoButtons.forEach(btn => {
+    btn.addEventListener('click', function () {
+        this.previousElementSibling.click();
+    })
+})
+
+for (let i = 0; i < inputElement.length; i++) {
+    inputElement[i].addEventListener("change", function () {
+        inputElement[i].parentNode.innerText = inputElement[i].files[0].name;
+    });
+}
+
+//photo upload btn emulation and uploaded file name update end
+
+
+
 autosize($('textarea'));
