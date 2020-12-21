@@ -10259,7 +10259,6 @@ border: 0 !important;
 	font-size: 14px;
 	font-family: SegoeUI, sans-serif;
 	font-weight: 400;
-    height: 50px;
 }
 .uge__select_style{
 	margin-bottom: 0;
@@ -11809,7 +11808,15 @@ p.program_wwl-protocol{
 input[type="text"]::placeholder{
     color: #878787;
 }
-
+.curs-btn{
+    padding-top: 25px;
+    margin-bottom: 35px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.curs-tit{
+    margin-right: 5px;
+}
 
 /* protocol form block start*/
 .scroll-wrapper{
