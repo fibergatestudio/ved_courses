@@ -27,8 +27,20 @@
             <div class="sce__course-number">
                 <div class="groups-edit__group groups-edit__group_sce-restyle sce_width-55">
                     <p class="groups-edit__group-name eg-text-style">Назва курсу</p>
-                    <input class='eg-input' type="text" name="course_number" id="getCourseName"
-                        placeholder="Повна назва курсу студента"  value="{{ $student->course_number }}">
+                    <select class='eg-input uge__input_style' name="course_number">
+                        <option value="">Повна назва курсу студента</option>
+                        @if($courses)
+                            @foreach($courses as $course)
+                                @if($course->name === $student->course_number)
+                                <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
+                                @else
+                                <option value="{{ $course->name }}">{{ $course->name }}</option>
+                                @endif
+                            @endforeach
+                        @endif
+                    </select> 
+                    <!-- <input class='eg-input' type="text" name="course_number" id="getCourseName"
+                        placeholder="Повна назва курсу студента"  value="{{ $student->course_number }}"> -->
                 </div>
                 <div class="groups-edit__group groups-edit__group_sce-restyle sce_width-40">
                     <p class="groups-edit__group-name eg-text-style">Номер групи</p>

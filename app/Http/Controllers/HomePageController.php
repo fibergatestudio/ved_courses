@@ -36,7 +36,16 @@ class HomePageController extends Controller
 
     public function student_courses()
     {
-        return view('front.student_courses');
+        $user_id = Auth::user()->id;
+        $student = DB::table('students')->where('user_id', $user_id)->first();
+        $course = DB::table('courses')->where('name', $student->course_number)->first();
+
+        return view('front.student_courses', compact('course', 'user_id'));
+    }
+
+    public function success_for_student()
+    {
+        return view('front.success_for_student');
     }
 
     public function student_courses_ended()

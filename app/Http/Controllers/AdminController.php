@@ -33,7 +33,9 @@ class AdminController extends Controller
             $student_info = '';
         }
 
-        return view('admin.user_edit', compact('user', 'student_info'));
+        $courses = DB::table('courses')->get();
+
+        return view('admin.user_edit', compact('user', 'student_info', 'courses'));
     }
     // Редактирование пользователя применить
     public function user_edit_apply($user_id, Request $request){
