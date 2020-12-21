@@ -6,6 +6,11 @@
         {{ session()->get('message_success') }}
     </div>
 @endif
+@if(session()->has('message_error'))
+    <div class="alert alert-danger">
+        {{ session()->get('message_error') }}
+    </div>
+@endif
 <section class="courseControl">
     <div class="courseControl-separator direction-separator">
     </div>
@@ -24,10 +29,10 @@
             <p class="sc-header__desc .order-1">Додати базу студентів</p>
             <div class="groups-edit__group groups-edit__group_restyle  order-3 margin-0">
                 <div class="groups-edit__student-add-form base-upload-block">
-                    <form action="{{ route('import_students_apply') }}" method="POST" enctype="multipart/form-data">
+                    <form action="{{ route('import_students_apply') }}" method="POST" id="students_upload_form" enctype="multipart/form-data">
                         @csrf
                         <label class="custom-upload-form" for="baseUpload">
-                            <input class='eg-input add-style base-upload' type="file" id="baseUpload" name="import_file" required>
+                            <input class='eg-input add-style base-upload' type="file" id="baseUpload" name="import_file">
                             <p id="upld_file_name">Назва файлу.xlsx</p>
                         </label>
                         <button type="submit" class="add-student add-student_restyle" id="egAddStudent">Додати</button>
@@ -100,7 +105,7 @@
                                 @endif
                             </div>
                             <div class="sc-string_inner">
-                                <a class="flexTable-btn_edit sc__student-success-btn" id="stSuccess">Успішність </a>
+                                <a class="flexTable-btn_edit sc__student-success-btn" id="stSuccess" href="{{ route('students_success',['student_id' => $student->user_id]) }}">Успішність </a>
                                 <a class="flexTable-btn_edit groups-edit__back-to-groups sc__student-edit"
                                     href="{{ route('students_controll_edit',['student_id' => $student->user_id]) }}">
                                     <span>Редагувати</span>
@@ -339,6 +344,14 @@
 </div> --}}
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
+
+        $( "#students_upload_form" ).submit(function( event ) {
+            if( document.getElementById("baseUpload").files.length == 0 ){
+                alert( "Додайте файл импорту!" );
+                event.preventDefault();
+            }
+            //event.preventDefault();
+        });
 
         $(document).ready(function() {
             $('input[type="file"]').change(function(e) {

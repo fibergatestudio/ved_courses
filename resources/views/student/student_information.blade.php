@@ -51,7 +51,7 @@
                         <div class="photo-photo"></div>
                         <div class="photo-text">
                             <p>Файли з розширенням JPG, GIF або PNG. </p>
-                            <p>Максимальний розмір - 1 Мб. </p>
+                            <p>Максимальний розмір - 5 Мб. </p>
                             <a class="photo-btn" href="javascript: void();">
                                 <span>Відправити фото</span>
                                 <input class="photo-btn_input" type="file" name="photo" onchange="document.getElementById('form-stud').submit();">
@@ -110,10 +110,22 @@
                 <div class="studentSettings-bottom_text" id="university_name_text">{{ $student_full_info->university_name }}</div>
                 </div>
 
-                <div class="grid-top_name">Номер курсу</div>
+                <div class="grid-top_name">Назва курсу</div>
                 <div class="studentSettings-bottom_wrapper">
-                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="course_number" value="{{ $student_full_info->course_number }}" required onkeyup="document.getElementById('course_number_text').innerHTML=this.value;">
-                <div class="studentSettings-bottom_text" id="course_number_text">{{ $student_full_info->course_number }}</div>
+                    <select class='studentSettings-bottom-input studentSettings-input' name="course_number">
+                        <option value=""></option>
+                        @if($courses)
+                            @foreach($courses as $course)
+                                @if($course->name === $student_full_info->course_number)
+                                <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
+                                @else
+                                <option value="{{ $course->name }}">{{ $course->name }}</option>
+                                @endif
+                            @endforeach
+                        @endif
+                    </select>
+                <!-- <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="course_number" value="{{ $student_full_info->course_number }}" required onkeyup="document.getElementById('course_number_text').innerHTML=this.value;">
+                <div class="studentSettings-bottom_text" id="course_number_text">{{ $student_full_info->course_number }}</div> -->
                 </div>
 
                 <div class="grid-top_name">Номер групи</div>

@@ -1227,7 +1227,8 @@ element.style {
 
 .direction-separator_badge {
     position: absolute;
-    width: 500px;
+    min-width: 500px;
+    max-width: 90%;
     height: 80px;
     top: 7px;
     left: 50%;
@@ -1248,6 +1249,14 @@ element.style {
     font-size: 31px;
     line-height: 1.3125em;
     text-align: center;
+    white-space: nowrap;
+}
+
+.direction-separator_badge>span {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding: 0 5px;
 }
 
 .direction-separator_badge,
@@ -1272,6 +1281,7 @@ element.style {
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
     margin-bottom: 50px;
     max-width: 30%;
+    min-width: 30%;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -1290,7 +1300,8 @@ element.style {
 .direction-inner_top {
     overflow: hidden;
     max-width: 358px;
-    max-height: 234px;
+    /*max-height: 234px;*/
+    height: 234px;
     position: relative
 }
 
@@ -1713,7 +1724,7 @@ element.style {
 .teachers-item_photo {
     width: 265px;
     height: 265px;
-    background-image: url(../img/teacher.jpg);
+    background-image: url(../img/teacher.png);
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover
@@ -4295,7 +4306,7 @@ element.style {
 .courseEdit-item_photo {
     width: 194px;
     height: 194px;
-    background-image: url(../img/teacher.jpg);
+    background-image: url(../img/teacher.png);
     background-position: 50%;
     background-repeat: no-repeat;
     background-size: cover;
@@ -6731,7 +6742,8 @@ element.style {
     }
 
     .direction-separator_badge {
-        width: 235px;
+        max-width: 90%;
+        min-width: 235px;
         height: 42px;
         font-size: 15px
     }

@@ -50,7 +50,7 @@
                         </li>
                     @endif
                     @if( Auth::user()->role == "admin")
-                        @if(Request::is('courses_controll*'))
+                        @if(Request::is('courses_controll*') || Request::is('tests_controll*'))
                             <li class="sidebar_title-inner bg-curent-menu">
                                 <div class="sidebar_title-imgBox">
                                     <a href="{{ route('courses_controll') }}">

@@ -33,70 +33,36 @@
         </div>
 
         <div class="direction-wrapper">
+            @if ($course)
+            @if (Auth::check())
             <div class="direction-inner">
                 <div class="direction-inner_top">
-                    <img class="direction-inner_img" src="{{ asset('img/direction_1.jpg') }}" alt="img">
-                    <a class="image-btn" href="##">
+                    @if($course->course_image_path != "")
+                    <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{url('/images/' . $course->course_image_path)}}" height="233" width="357" alt="img">
+                    @else
+                    <img class="direction-inner_img" style="width: 357px; height: 233px;" src="{{ asset('img/direction_3.jpg') }}" alt="img">
+                    @endif
+                    <a class="image-btn" href="{{ route('view_course', $course->id) }}">
                         <span>До курсу</span>
                         <!--<div class="image-btn_arrow"></div>-->
                     </a>
                 </div>
                 <div class="direction-inner_bottom">
                     <div class="direction-inner_bottom--title">
-                        <h4>Вивчення <br> іноземних мов</h4>
+                        <h4> {{ $course->name }}</h4>
                     </div>
                     <div class="direction-inner_bottom--text">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                        unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the
-                        1500s, when an unknown printerLorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer
+                        {{ $course->description }}
                     </div>
                     <div class="more-btn-block">
-                        <a class="btn-watch active w2__btn_restyle" href="##"><span class="btn-watch_inner">Успiшнiсть</span></a>
+                        <a class="btn-watch active w2__btn_restyle" href="{{ route('success_for_student',['student_id' => $user_id ]) }}"><span class="btn-watch_inner">Успiшнiсть</span></a>
                     </div>
                 </div>
             </div>
-            <div class="direction-inner">
-                <div class="direction-inner_top">
-                    <img class="direction-inner_img" src="{{ asset('img/direction_2.jpg') }}" alt="img">
-                    <a class="image-btn" href="{{ route('simulator') }}">
-                        <span>До курсу</span>
-                        <!--<div class="image-btn_arrow"></div>-->
-                    </a>
-                </div>
-                <div class="direction-inner_bottom">
-                    <div class="direction-inner_bottom--title">
-                        <h4>Симулятор слідчих <br> дій</h4>
-                    </div>
-                    <div class="direction-inner_bottom--text">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                        unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the
-                        1500s, when an unknown printerLorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer
-                    </div>
-                </div>
-            </div>
-            <div class="direction-inner">
-                <div class="direction-inner_top">
-                    <img class="direction-inner_img" src="{{ asset('img/direction_3.jpg') }}" alt="img">
-                    <a class="image-btn" href="##">
-                        <span>До курсу</span>
-                        <!--<div class="image-btn_arrow"></div>-->
-                    </a>
-                </div>
-                <div class="direction-inner_bottom">
-                    <div class="direction-inner_bottom--title">
-                        <h4>Назва розділу підрозділу</h4>
-                    </div>
-                    <div class="direction-inner_bottom--text">
-                        Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an
-                        unknown printer Lorem Ipsum has been the industry's standard dummy text ever since the
-                        1500s, when an unknown printerLorem Ipsum has been the industry's standard dummy text ever
-                        since the 1500s, when an unknown printer
-                    </div>
-                </div>
-            </div>
+            @endif
+            @endif
         </div>
+
     </div>
 </section>
 <!--Popular section-->

@@ -357,13 +357,13 @@
                                     <input class="newTest-dedline-input_left" type="number" name="time_limit" placeholder="0">
                                     <input class="newTest-dedline-input_right" type="text" placeholder="хвилин(а)">
                                 </div>
-                                <div class="newTest-dedline-inner">
+                                <!-- <div class="newTest-dedline-inner">
                                     <a href="##" class="newTest-saveBtn">
                                         <span>
                                             Зберегти
                                         </span>
                                     </a>
-                                </div>
+                                </div> -->
                             </div>
 
                             <div class="newTest-timeInstruction">
@@ -374,8 +374,7 @@
                                     <div class="newTest-timeInstruction-wrapper">
                                     <select class="newTest-timeInstruction-select" name="when_time_is_up">
                                         <option value="1" selected>Відповіді повинні бути відправлені до завершення часу, інакше вони не зарахуються</option>
-                                        <option value="2" >Опция 2</option>
-                                        <option value="3">Опция 3</option>
+                                        <option value="2" >Без обмеження в часі</option>
                                     </select>
                                     <div class="newTest-timeInstruction_arrowBlock"></div>
                                     </div>

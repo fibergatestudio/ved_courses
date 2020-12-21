@@ -26,8 +26,9 @@ class StudentController extends Controller
 
         $student_info = DB::table('users')->where('id', $student_id)->first();
         $student_full_info = DB::table('students')->where('user_id', $student_id)->first();
+        $courses = DB::table('courses')->get();
 
-        return view('student.student_information', compact('student_info', 'student_full_info'));
+        return view('student.student_information', compact('student_info', 'student_full_info', 'courses'));
     }
 
     public function student_information_apply(Request $request){
@@ -42,9 +43,9 @@ class StudentController extends Controller
                 return redirect()->back()->with('message_error', 'Неприпустимий тип файлу. Припустимо завантажувати тільки зображення: *.gif, *.png, *.jpg');
             }
             $filesize = filesize($request->photo);
-            if ($filesize > 1000000)
+            if ($filesize > 5000000)
             {
-                return redirect()->back()->with('message_error', 'Перевищен максимальний розмір файлу в 1 Мб');
+                return redirect()->back()->with('message_error', 'Перевищен максимальний розмір файлу в 5 Мб');
             }
             $user = User::where('id', $user_id)->first();
             $user->addMediaFromRequest('photo')->toMediaCollection('photos');
@@ -168,7 +169,26 @@ class StudentController extends Controller
     // Управление студентами
     public function students_controll(){
 
-        $students = DB::table('students')->get();
+        // Получаем айди текущего юзера
+        $user_id = Auth::user()->id;
+
+        // Если Админ - берем и показываем всех студентов
+        if($user_id == 1){
+            $students = DB::table('students')->get();
+        } else {
+            // Если не админ
+            // Получаем айдишники доступных студентов
+            $s_ids = [];
+            $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
+            foreach($groups as $group){
+                // Перебираем все группы и если есть совпадения берем аррей студентов и передаем в общий
+                $g_arr = json_decode($group->students_array);
+                array_push($s_ids, $g_arr[0]);
+            }
+            // Берем айдишник доступные ему
+            $students = DB::table('students')->whereIn('user_id', $s_ids)->get();
+        }
+        //$students = DB::table('students')->get();
 
         foreach($students as $student){
             //dd($student);
@@ -198,25 +218,48 @@ class StudentController extends Controller
 
         $teachers = DB::table('users')->where('role', 'teacher')->get();
 
-        return view('student.students_controll_edit', compact('student', 'teachers') );
+        $courses = DB::table('courses')->get();
+
+        return view('student.students_controll_edit', compact('student', 'teachers', 'courses') );
     }
 
-    public function students_controll_apply($student_id, Request $request){ 
+    public function students_controll_apply($student_id, Request $request){
 
         $all_info = $request->all();
-        //dd($all_info);
+        // dd($student_id);
+        if($request != NULL){
+            $full_name = $request->full_name;
 
-        DB::table('students')->where('user_id', $student_id)->update([
-            'full_name' => $request->full_name,
-            'university_name' => $request->university_name,
-            'course_number' => $request->course_number,
-            'group_number' => $request->group_number,
-            'student_number' => $request->student_number,
-            'student_phone_number' => $request->student_phone_number,
-            'assigned_teacher_id' => $request->assigned_teacher_id,
-        ]);
+            DB::table('students')->where('user_id', $student_id)->update([
+                'full_name' => $full_name,
+                'university_name' => $request->university_name,
+                'course_number' => $request->course_number,
+                'group_number' => $request->group_number,
+                'student_number' => $request->student_number,
+                'student_phone_number' => $request->student_phone_number,
+                'assigned_teacher_id' => $request->assigned_teacher_id,
+            ]);
 
-        return redirect('students_controll')->with('message_success', 'Информация о студенте изменена!');
+            $arr = explode(' ', $full_name);
+            switch (count($arr)) {
+                case '3':
+                    DB::table('users')->where('id', $student_id)->update([
+                        'surname' => $arr[0],
+                        'name' => $arr[1],
+                        'patronymic' => $arr[2],
+                    ]);
+                    break;
+                case '2':
+                    DB::table('users')->where('id', $student_id)->update([
+                        'surname' => $arr[0],
+                        'name' => $arr[1],
+                    ]);
+                    break;
+                default:
+                    break;
+            }
+            return redirect('students_controll')->with('message_success', 'Информация о студенте изменена!');
+        }
     }
 
     public function assigned_students(){
@@ -253,37 +296,84 @@ class StudentController extends Controller
     {
         // Получаем всю инфу с запроса
         $all_info = $request->all();
-        //dd($all_info);
+
         // Файл импорта
         $file = $request->file('import_file');
-        // Формируем из экселя аррей
-        $data = Excel::toArray(new StudentsImport, $file);
+        // Проверка верный ли формат.
+        if($file->getClientOriginalExtension() == "xlsx"){
+            // Формируем из экселя аррей
+            $data = Excel::toArray(new StudentsImport, $file);
 
-        foreach($data as $row){
-            foreach($row as $column_data){
-                //dd($column_data['data_zavantazennya']);
-                // Проверяем на существующую запись
-                $copy_check = DB::table('students_data')->where('ID_FO', $column_data['id_fo'])->first();
+            foreach($data as $row){
+                foreach($row as $column_data){
+                    //dd($column_data['data_zavantazennya']);
+                    // Проверяем на существующую запись
+                    $copy_check = DB::table('students_data')->where('ID_FO', $column_data['id_fo'])->first();
 
-                if($copy_check){
+                    if($copy_check){
 
-                } else {
-                    DB::table('students_data')->insert([
-                        'upload_date' => $column_data['data_zavantazennya'],
-                        'status_from' => $column_data['status_z'],
-                        'ID_FO' => $column_data['id_fo'],
-                        'recipient' => $column_data['zdobuvac'],
-                        'birthday' => $column_data['data_narodzennya'],
-                        'gender' => $column_data['stat'],
-                        'citizenship' => $column_data['gromadyanstvo'],
-                        'specialty' => $column_data['specialnist'],
-                        'reason_for_deduction' => $column_data['pricina_vidraxuvannya'],
-                    ]);
+                    } else {
+                        DB::table('students_data')->insert([
+                            'upload_date' => $column_data['data_zavantazennya'],
+                            'status_from' => $column_data['status_z'],
+                            'ID_FO' => $column_data['id_fo'],
+                            'recipient' => $column_data['zdobuvac'],
+                            'birthday' => $column_data['data_narodzennya'],
+                            'gender' => $column_data['stat'],
+                            'citizenship' => $column_data['gromadyanstvo'],
+                            'specialty' => $column_data['specialnist'],
+                            'reason_for_deduction' => $column_data['pricina_vidraxuvannya'],
+                        ]);
+                    }
                 }
             }
+        } else {
+            return redirect()->back()->with('message_error', 'Неправильний формат файлу! Вірний формат - XLSX');
         }
 
         return redirect()->back()->with('message_success', 'Импорт успешен!');
+    }
+
+
+    public function students_success($student_id){
+
+        $student = DB::table('students')->where('user_id', $student_id)->first();
+        $email = DB::table('users')->where('id', $student_id)->first()->email;
+        $student->email = $email;
+        
+        $course_id = null;
+        $course_lessons = (object)[];
+        $lesson_count = null;
+        $course_info = DB::table('courses')->where('name', $student->course_number)->first();
+        if (is_object($course_info)) {
+            $course_id = $course_info->id;
+        }
+
+        if ($course_id) {
+            $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
+            $lesson_count = $course_lessons->count();
+        }
+
+        foreach($course_lessons as $lesson){
+            if($lesson->video_name == null || $lesson->video_name == "null" ){
+                $lesson->video_count = 0;
+            } else {
+                $lesson->video_count = count(json_decode($lesson->video_name));
+            }
+        }
+
+        $students = DB::table('students')->get();
+        $next_student = $student_id;
+
+        for ($i=0; $i < $students->count(); $i++) { 
+            if ($students[$i]->user_id === $student_id) {
+                if ($i + 1 < $students->count()) {
+                    $next_student = $students[$i+1]->user_id;
+                }
+            }
+        }
+        
+        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count'));
     }
 
 }

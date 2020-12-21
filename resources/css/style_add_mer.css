@@ -104,6 +104,11 @@
         justify-content: start;
         align-items: start;
     }
+    .mer-sel-wth{
+        padding-left: 15px;
+        padding-right: 12px;
+        max-width: 100% !important;
+    }
 }
 @media (max-width:768px){
     .mer-studlist-m{
@@ -115,5 +120,13 @@
     .mer-studlist{
         display: none;
     }
+    .mer-sel-wth{
+        padding-left: 0px;
+        padding-right: 0px;
+        max-width: 297px !important;
+    }
+}
+input[type="text"]::placeholder{
+    color: #878787;
 }
 

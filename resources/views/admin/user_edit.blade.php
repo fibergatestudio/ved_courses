@@ -17,9 +17,19 @@
                 </div>
             @endif
             <div class="groups-edit__group uge__row">
-                <p class="groups-edit__group-name uge_row_text-style">Логін </p>
+                <p class="groups-edit__group-name uge_row_text-style">Логін (Ім'я)</p>
                 <input class='eg-input uge__input_style' type="text" name="name" value="{{ $user->name }}" id="getLogin"
                     placeholder="Логін">
+            </div>
+            <div class="groups-edit__group uge__row">
+                <p class="groups-edit__group-name uge_row_text-style">Прізвище </p>
+                <input class='eg-input uge__input_style' type="text" name="surname" value="{{ $user->surname }}" id="getSurname"
+                    placeholder="Прізвище">
+            </div>
+            <div class="groups-edit__group uge__row">
+                <p class="groups-edit__group-name uge_row_text-style">По батькові</p>
+                <input class='eg-input uge__input_style' type="text" name="patronymic" value="{{ $user->patronymic }}" id="getPatronymic"
+                    placeholder="По батькові">
             </div>
             <div class="groups-edit__group uge__row">
                 <p class="groups-edit__group-name uge_row_text-style">Email</span></p>
@@ -53,8 +63,20 @@
                 <div class="sce__course-number">
                     <div class="groups-edit__group uge__row sce_width-55">
                         <p class="groups-edit__group-name uge_row_text-style">Назва курсу</p>
-                        <input class='eg-input uge__input_style' type="text" name="course_number" value="{{ $student_info->course_number }}" id="getCourseName"
-                            placeholder="Повна назва курсу студента">
+                        <select class='eg-input uge__input_style' name="course_number">
+                            <option value="">Повна назва курсу студента</option>
+                            @if($courses)
+                                @foreach($courses as $course)
+                                    @if($course->name === $student_info->course_number)
+                                    <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
+                                    @else
+                                    <option value="{{ $course->name }}">{{ $course->name }}</option>
+                                    @endif
+                                @endforeach
+                            @endif
+                        </select>
+                        <!-- <input class='eg-input uge__input_style' type="text" name="course_number" value="{{ $student_info->course_number }}" id="getCourseName"
+                            placeholder="Повна назва курсу студента"> -->
                     </div>
                     <div class="groups-edit__group uge__row sce_width-40">
                         <p class="groups-edit__group-name uge_row_text-style">Номер групи</p>
@@ -69,8 +91,8 @@
                 </div>
                 <div class="groups-edit__group uge__row uge__mb_30">
                     <p class="groups-edit__group-name uge_row_text-style">Номер телефону</p>
-                    <input class='eg-input uge__input_style uge__row uge__mb-0' type="text" name="course-name"
-                        id="getPhoneNumber" placeholder="+XX (XXX) XXX-XX-XX" value=""
+                    <input class='eg-input uge__input_style uge__row uge__mb-0' type="text" name="student_phone_number"
+                        id="getPhoneNumber" placeholder="+XX (XXX) XXX-XX-XX" value="{{ $student_info->student_phone_number }}"
                         pattern="\+38\s?[\(]{0,1}[0-9]{3}[\)]{0,1}\s?\d{3}[-]{0,1}\d{2}[-]{0,1}\d{2}">
                 </div>
             @endif
@@ -79,9 +101,79 @@
                         id="saveUser">Зберегти </button>
                 <button class="groups-edit__back-to-groups sce__buttons-restyle uge__buttons-style"
                         id="backToUsers"
-                        onClick="event.preventDefault(); window.location.href='{{ redirect()->back()->getTargetUrl() }}'">Назад</button>
+                        onClick="event.preventDefault(); window.location.href='{{ url()->previous() }}'">Назад</button>
             </div>
         </form>
     </div>
 </section>
+@endsection
+
+@section('js')
+    <script>
+        $(document).ready(function(){
+            /*Беру фамилию студента*/
+            let surname = $("input[name='surname']").val();
+            /*Беру имя студента*/
+            let name = $("input[name='name']").val();
+            /*Беру отчество студента*/
+            let patronymic = $("input[name='patronymic']").val();
+            /*Беру полное имя студента*/
+            let full_name = $("input[name='full_name']").val();
+            /*ФИО*/
+            let fio = surname + " " +name + " " + patronymic;
+
+            if (fio !== full_name){
+                $("input[name='full_name']").val(fio);
+            }
+        });
+
+        $('#getSurname').on('keyup', function() {
+            let str =  $(this).val();
+            /*Получаю значение полного имени*/
+            let full_name = $("input[name='full_name']").val();
+            let arr = full_name.split(" ");
+            arr[0] = str;
+            $("input[name='full_name']").val(arr.join(" "));
+
+        });
+
+        $('#getLogin').on('keyup', function() {
+            let str =  $(this).val();
+            /*Получаю значение полного имени*/
+            let full_name = $("input[name='full_name']").val();
+            let arr = full_name.split(" ");
+            arr[1] = str;
+            $("input[name='full_name']").val(arr.join(" "));
+
+        });
+
+        $('#getPatronymic').on('keyup', function() {
+            let str =  $(this).val();
+            /*Получаю значение полного имени*/
+            let full_name = $("input[name='full_name']").val();
+            let arr = full_name.split(" ");
+            arr[2] = str;
+            $("input[name='full_name']").val(arr.join(" "));
+
+        });
+
+        $('#getNames').on('keyup', function() {
+            let str =  $(this).val();
+            let arr = str.split(" ");
+            switch (arr.length) {
+                case 3:
+                    $("input[name='surname']").val(arr[0]);
+                    $("input[name='name']").val(arr[1]);
+                    $("input[name='patronymic']").val(arr[2]);
+                    break;
+                case 2:
+                    $("input[name='surname']").val(arr[0]);
+                    $("input[name='name']").val(arr[1]);
+                    break;
+                default:
+                    alert('Введіть коректно ПІБ!');
+                    break;
+            }
+        });
+    </script>
 @endsection

@@ -284,7 +284,7 @@
                                         Назва відео @{{ index + 1}}
                                     </div>
                                     <div class="courseAdditional-topInput-right">
-                                        <input class="courseAdditional--input" type="text" :name="'video_name' + index">
+                                        <input class="courseAdditional--input" type="text" :id="'video_name' + index" :name="'video_name' + index" value="">
                                     </div>
                                 </div>
 
@@ -295,7 +295,7 @@
                                         </div>
                                     </div>
                                     <div class="courseAdditional-bottom_right">
-                                        <input class="courseAdditional--input" type="text" :name="'video_length' + index">
+                                        <input class="courseAdditional--input" type="text" :id="'video_length' + index" :name="'video_length' + index">
                                     </div>
                                 </div>
 
@@ -319,7 +319,6 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-flexbox_text">
-                                        Короткі зауваження щодо додавання відеофайлу або посилань з інших джерел.
                                         Формат файлу: mp4, Максимальний розмір: 300mb
                                         </div>
                                     </div>
@@ -336,14 +335,14 @@
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-input-wrapper">
-                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" >
-                                            <input class="courseAdditional-input_button" type="text" :name="'video_link' + index">
+                                            <input class="courseAdditional-input_input" type="text" placeholder="Посилання" :id="'video_link' + index" :name="'video_link' + index" required>
+                                            <input class="courseAdditional-input_button" type="text" >
                                             <!-- <a class="courseAdditional-input_FakeButton" href="##">Додати</a> -->
                                         </div>
                                     </div>
                                     <div class="courseAdditional-flexbox_item">
                                         <div class="courseAdditional-flexbox_text">
-                                            Рекомендації щодо додавання посилань та вибору ресурсів.
+                                            URL повенен бути типу: https://www.youtube.com/
                                         </div>
                                     </div>
 
@@ -392,10 +391,9 @@
                     <div class="courseAdd-wrapper">
 
                         <div class="courseAdditional-topName">
-                            Коротка інструкція щодо створення тестування, або рекомендації Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
+                            Цей блок надає можливість розробляти тести, які можуть містити питання різних типів. Дозволяється одна, або декілька спроб тесту, встановлюється обмеження часу. Кожна спроба оцінюється автоматично 
                         </div>
-
-                        <a class="courseAdditional-btn courseAdditional-btn_bottom" href="{{ route('add_lesson_redirect', ['course_id' => $course_info->id ]) }}">
+                        <a class="courseAdditional-btn courseAdditional-btn_bottom" id="new_test_form" href="">
                             <span>Створити новий тест</span>
                         </a>
 
@@ -404,16 +402,17 @@
                         <table class="table table-bordered data-table">
                             <thead>
                                 <tr>
-                                    <th>#</th>
-                                    <th>Имя</th>
-                                    <th>Описание</th>
+                                    <th>Номер тесту</th>
+                                    <th>Назва</th>
+                                    <th>Опис</th>
                                     <th></th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php $test_num = 1; ?>
                                 @foreach($course_tests as $test)
                                 <tr>
-                                    <td>{{ $test->id }}</td>
+                                    <td>{{ $test_num }}</td>
                                     <td>{{ $test->name }}</td>
                                     <td>{{ strip_tags($test->description) }}</td>
                                     <td>
@@ -421,6 +420,7 @@
                                         <a href="{{ route('delete_test', ['test_info_id' => $test->id ]) }}" style="background-color: #c64b3f;" class="courseEdit-btn-watch btn-watch--more">Удалить</div></a>
                                     </td>
                                 </tr>
+                                <?php $test_num++; ?>
                                 @endforeach
                             </tbody>
                         </table>
@@ -428,7 +428,7 @@
                 </div>
 
                 <div class="courseEdit-btn-watch_wrapper">
-                    <a class="courseAdditional-btn-save" onclick="document.getElementById('add_lesson_form').submit();" href="##"><span>Зберегти заняття</span></a>
+                    <a class="courseAdditional-btn-save" onclick="submitForm()" href="##"><span>Зберегти заняття</span></a>
                 </div>
             </form>
 
@@ -439,17 +439,74 @@
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
+    
+    <script>
+        $( "#new_test_form" ).click(function(e) {
+            e.preventDefault();
+            console.log('clicked');
+            $("#add_lesson_form").append("<input type='hidden' name='redirect_to_test' value='true' />");
+            $( "#add_lesson_form" ).submit();
+        });
+    
+    </script>
+
     <script type="text/javascript">
         function show(input) {
             var fileName = input.files[0].name;
-            var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);            
+            if(input.files[0].size >= 300000000){
+                alert("Файл перевищує 300мб!");
+            } else {
+                var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
+            }            
         }
 
         function showFile(input){
             var fileName = input.files[0].name;
-            var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
-            console.log(test);
+            if(input.files[0].size >= 300000000){
+                alert("Файл перевищує 300мб!");
+            } else {
+                var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
+            }    
             /* alert(fileName); */
+        }
+
+        function submitForm(){
+
+            // Получаем кол-во видео
+            var video_counter = $('#videos_counter').val();
+
+            // Перебираем поля каждого видео
+            if(video_counter > 0){
+                for(i = 0; i <= video_counter; i++){
+                    // Имена инпутов для проверки
+                    var number = i+1;
+                    var v_name = '#video_name' + i;
+                    var v_lenght = '#video_length' + i;
+                    var v_link = '#video_link' + i;
+
+                    // Получаем инфу 
+                    var name = $.trim( $(v_name).val() );
+                    var length = $.trim( $(v_lenght).val() );
+                    var link = $.trim( $(v_link).val() );
+
+                    // Check if empty of not
+                    if (name  === '') {
+                        alert('Название видео '+ number +' пустое.');
+                        return false;
+                    } else if (length  === '') {
+                        alert('Длинна видео '+ number +' пустое.');
+                        return false;
+                    } else if (link  === '') {
+                        alert('Ссылка видео '+ number +' пустая.');
+                        return false;
+                    } else if(i == video_counter){
+                        document.getElementById('add_lesson_form').submit();
+                    }
+                }
+            } else {
+                document.getElementById('add_lesson_form').submit();
+            }
+            //});
         }
 
     </script>

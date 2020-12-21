@@ -35,7 +35,7 @@
             <div class="string-menu_inner">
                 <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'model']) }}"><span>3D модель</span></a>
             </div>
-            @if (isset($lesson->show_protocol))
+            @if (isset($lesson->show_protocol) && $lesson->show_protocol == 1)
                 <div class="string-menu_inner">
                     <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
                 </div>
@@ -51,19 +51,19 @@
     </div>
     </section>
     @if(isset($testInfo->id))
+    <?php $n_answers = 1; ?>
     <section class="test_a">
         <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
         @csrf
         <div class="container">
-            <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
-            <div class="test_a-title_bottom">Оберіть одну, або декілька відповідей на задані питання.</div>
-            <div class="test_a separator"></div>
-            
+        <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
                 <!-- Да\Нет -->
                 @if(isset($testInfo))
-                    @if($testTrueFalse != "")
+                    @if(count($testTrueFalse) >= 1)
+                    <div class="test_a-title_bottom">Оберіть одну відповь.</div>
+                    <div class="test_a separator"></div>
                         @foreach($testTrueFalse as $trueFalse)
-                            <div class="test_a-question">{{ $trueFalse->id }}. {{ $trueFalse->question_name }} {{ strip_tags($trueFalse->question_text) }} </div>            
+                            <div class="test_a-question">{{ $n_answers }}. {{ strip_tags($trueFalse->question_text) }} </div>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">
                                     <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
@@ -77,21 +77,23 @@
                                     </div>
                                 </div>
                             </div>
-
+                        <?php $n_answers++; ?>
                         @endforeach
                     @endif
                     <!-- Множественный выбор -->
-                    @if($testMultiply != "")
+                    @if(count($testMultiply) >= 1)
+                    <div class="test_a-title_bottom">Оберіть одну, або декілька відповідей на задані питання.</div>
+                    <div class="test_a separator"></div>
                         @foreach($testMultiply as $multiply)
-                            <div class="test_a-question">{{ $multiply->id }}. {{ $multiply->question_name }} {{ strip_tags($multiply->question_text) }} </div>
-                            <?php $answers_json = json_decode($multiply->answers_json); ?>                
+                            <div class="test_a-question">{{ $n_answers }}. {{ strip_tags($multiply->question_text) }} </div>
+                            <?php $answers_json = json_decode($multiply->answers_json); ?>
                             <div class="test_a-answer">
                                 <div class="answer-wrapper">
                                     <input type="hidden" name="multiply_id[]" value="{{ $multiply->id }}">
                                     <?php $answer_number = 0; ?>
                                     @foreach($answers_json as $answer)
                                             <div class="answer-radio">
-                                                <input class="answer-radio_input" type="checkbox" id="{{ $answer->answer }}{{ $answer_number }}" 
+                                                <input class="answer-radio_input" type="checkbox" id="{{ $answer->answer }}{{ $answer_number }}"
                                                     value="{{ $answer->answer }}" name="question_{{ $multiply->id }}[]">
                                                 <label class="answer-radio_label" for="{{ $answer->answer }}{{ $answer_number }}"><?php echo str_replace("\xc2\xa0",' ',$answer->answer); ?></label>
                                             </div>
@@ -100,11 +102,11 @@
                                 </div>
                             </div>
 
-
+                            <?php $n_answers++; ?>
                         @endforeach
                     @endif
                     <!-- Претаскивание -->
-                        <div class="test_b-title_wrapper">
+                        <!-- <div class="test_b-title_wrapper">
                             <div class="test_b-title_left">
                                 Перетягуй відповіді в блоки зліва
                             </div>
@@ -113,16 +115,26 @@
                             </div>
                         </div>
                         <div class="test_b separator"></div>
-                        <div class="test_b-grid_wrapper">
+                        <div class="test_b-grid_wrapper"> -->
+                            @if(count($testDragDrop) >= 1)
+                            <div class="test_b-title_wrapper">
+                                <div class="test_b-title_left">
+                                    Перетягуй відповіді в блоки зліва
+                                </div>
+                                <div class="test_b-title_right">
+                                    <!-- Ви маєте право на 3 помилки. <span class="test_b-darkText">Залишилась <span>1 </span> помилка.</span> -->
+                                </div>
+                            </div>
+                            <div class="test_b separator"></div>
+                            <div class="test_b-grid_wrapper">
 
-                            @if($testDragDrop != "")
                                 @foreach($testDragDrop as $dragDrop)
-                                    <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>   
+                                    <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
                                     <div class="test_b-grid_inner">
                                         <div class="test_b-grid_question">
                                             <input type="hidden" name="drag_drop_id[]" value="{{ $dragDrop->id }}">
                                             <input type="hidden" id="true_answer{{ $dragDrop->id }}" name="answer_dragdrop[]" value="">
-                                            
+
                                             <div class="test_b-questionBlock questionBlock-small"><span id="answer{{ $dragDrop->id }}">{{ $dragDrop->id }}</span></div> {{ strip_tags($dragDrop->question_text) }}
                                         </div>
                                     </div>
@@ -138,7 +150,7 @@
                                         </div>
                                     </div>
                                     <script>
-                                    
+
                                         var id = {{ json_encode($dragDrop->id) }};
                                         var answer = 'answer' + id;
                                         var answers = 'answers' + id;
@@ -151,7 +163,7 @@
                                             pull: function (to, from) {
                                                 if(to.el.children.length = 0){
                                                     return;
-                                                } 
+                                                }
                                             }
                                         },
                                         animation: 100
@@ -170,11 +182,11 @@
                                                     var true_answer = '#true_answer' + to_id;
 
                                                     console.log(to.el);
-                                                    
+
                                                     /* var answer_id = '#answer' + id;
                                                     var test = $(answer_id).find("input").val(); */
 
-                                                    setTimeout(function(){  
+                                                    setTimeout(function(){
 
                                                         var passed_answer = answer_el.getElementsByClassName('answer_id').item(0).value;
                                                         console.log(passed_answer);
@@ -182,7 +194,7 @@
                                                         $(true_answer).val(passed_answer);
 
                                                      }, 100);
-                                                    
+
 
                                                     return to.el.children.length < 1;
                                                 }
@@ -200,19 +212,27 @@
                                     /* testresponse.push(answer);*/
 
                                     </script>
+                                    <?php $n_answers++; ?>
                                 @endforeach
+                                </div>
                             @endif
-                            
-                        </div>
+
+                        <!-- </div> -->
                     @endif
 
              <a class="answer-btn btn-watch--more" href="##" id="test_send"><span>Надіслати тест </span></a>
-
+                @else
+                <div class="container">
+                    <div class="string-text">
+                        Завдання відсутні
+                    </div>
+                </div>
+                    @endif
 
         </div>
         </form>
     </section>
-    @endif
+
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>
 

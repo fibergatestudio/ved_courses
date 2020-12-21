@@ -4,10 +4,10 @@
         <div class="modal-content">
             <div class="deleteMenu-wrapper">
                 <div class="deleteMenu-topImg">
-                    <img src="{{ isset($imgPath) ? $imgPath : asset('img/basket.png') }}" alt="icon">
+                    <img src="{{ asset('img/basket.png') }}" alt="icon">
                 </div>
                 <div class="deleteMenu-text">
-                    Ви точно бажаєте видалити <br> {{ isset($target) ? $target : '' }} користувача?
+                    Ви точно бажаєте видалити <br> користувача {{ isset($target) ? $target : '' }}?
                 </div>
                 <div class="deleteMenu-btn">
                     <a class="flexTable-btn_delete" href="{{ isset($modalPath) ? $modalPath : '' }}"><span>Видалити</span></a>
