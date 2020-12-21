@@ -75,7 +75,7 @@
                                                 23.00
                                             </div>
                                             <div class="editing-textarea_edit--right">
-                                                <a href="##">
+                                                <a href="{{ route('edit_test_question', ['test_info_id' => $test_info_id, 'test_question_id' => $test->id ]) }}">
                                                     <img src="/img/pencil-edit-icon.png" alt="icon">
                                                 </a>
                                             </div>

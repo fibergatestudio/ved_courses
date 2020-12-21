@@ -121,6 +121,7 @@ class CoursesController extends Controller
         //dd($assigned_teachers);
         $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
 
+        //dd($course_info);
         return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers', 'course_information') );
     }
 

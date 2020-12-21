@@ -336,8 +336,10 @@
         var teacher_block_id = '#teacher' + teacher_id;
         $(teacher_block_id).remove();
 
+        @if(isset($course_info->assigned_teacher_id))
         var cur_teacher_arr = {!! $course_info->assigned_teacher_id !!};
         console.log("Текущий аррей: " + cur_teacher_arr);
+        @endif
 
 
         var course_id = {!! $course_info->id !!};

@@ -258,6 +258,16 @@ use Illuminate\Support\Facades\Auth;
 
         // Просмотра теста и вопросов\ответов
         Route::get('/tests_controll/new_test_info/{test_info_id}/view', 'TestsController@view_test_info_questions')->name('view_test_info_questions')->middleware('auth','role:admin,teacher');
+
+            // Редактировать Вопрос
+                Route::get('/tests_controll/new_test_info/{test_info_id}/view/{test_question_id}/edit', 'TestsController@edit_test_question')->name('edit_test_question')->middleware('auth','role:admin,teacher');
+
+            // Редактировать Вопрос POST
+                Route::post('/tests_controll/new_test_info/{test_info_id}/view/{test_question_id}/edit_apply', 'TestsController@edit_test_question_apply')->name('edit_test_question_apply')->middleware('auth','role:admin,teacher');
+
+            // Удалить Вопрос
+                Route::get('/tests_controll/new_test_info/{test_info_id}/view/{test_question_id}/edit_delete', 'TestsController@edit_test_question_delete')->name('edit_test_question_delete')->middleware('auth','role:admin,teacher');
+
             // Обновить
             Route::post('/tests_controll/new_test_info/{test_info_id}/update_info', 'TestsController@update_test_info_questions')->name('update_test_info_questions')->middleware('auth','role:admin,teacher');
 

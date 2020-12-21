@@ -676,4 +676,82 @@ class TestsController extends Controller
         return back()->with('message_success', 'Тест удален!');
     }
 
+    public function edit_test_question($test_info_id, $test_question_id){
+
+        //dd($test_info_id, $test_question_id);
+
+        $test_t = DB::table('tests_questions')->where([
+            'id' => $test_question_id,
+            'test_id' => $test_info_id
+        ])->first();
+
+        if($test_t->question_type == "Множинний вибір"){
+            $t_question_info = DB::table('tests_multiple_choice')->where('id', $test_t->test_answers_id)->first();
+
+            return view('tests.edit_multiple_choice', compact('test_info_id', 'test_question_id','t_question_info'));
+        } else if($test_t->question_type == "Правильно/неправильно"){
+            $t_question_info = DB::table('tests_true_false')->where('id', $test_t->test_answers_id)->first();
+
+            return view('tests.edit_true_false', compact('test_info_id', 'test_question_id','t_question_info'));
+        } else if($test_t->question_type == "Перетягування в тексті"){
+            $t_question_info = DB::table('tests_drag_drop')->where('id', $test_t->test_answers_id)->first();
+
+            return view('tests.edit_drag_drop', compact('test_info_id', 'test_question_id','t_question_info'));
+        }
+    }
+
+    // Применение редактирование вопроса теста
+    public function edit_test_question_apply($test_info_id, $test_question_id, Request $request){
+
+        //dd($request->all());
+        $all_info = $request->all();
+        //dd($all_info);
+        $test_t = DB::table('tests_questions')->where([
+            'id' => $test_question_id,
+            'test_id' => $test_info_id
+        ])->first();
+
+        if($test_t->question_type == "Множинний вибір"){
+            DB::table('tests_multiple_choice')->where('id', $test_t->test_answers_id)->update([]);
+        }else if($test_t->question_type == "Правильно/неправильно"){
+            DB::table('tests_true_false')->where('id', $test_t->test_answers_id)->update([
+                'question_name' => $request->question_name,
+                'question_text' => $request->question_text,
+                'default_score' => $request->default_score,
+                'test_comment' => $request->test_comment,
+                'right_answer' => $request->right_answer,
+                'right_answer_comment' => $request->right_answer_comment,
+                'wrong_answer_comment' => $request->wrong_answer_comment,
+            ]);
+        }else if($test_t->question_type == "Перетягування в тексті"){
+            DB::table('tests_drag_drop')->where('id', $test_t->test_answers_id)->update([]);
+        }
+
+        return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно змінено');
+    }
+
+    // Удаление вопроса теста
+    public function edit_test_question_delete($test_info_id, $test_question_id){
+
+        $test_t = DB::table('tests_questions')->where([
+            'id' => $test_question_id,
+            'test_id' => $test_info_id
+        ])->first();
+
+        if($test_t->question_type == "Множинний вибір"){
+            DB::table('tests_multiple_choice')->where('id', $test_t->test_answers_id)->delete();
+        }else if($test_t->question_type == "Правильно/неправильно"){
+            DB::table('tests_true_false')->where('id', $test_t->test_answers_id)->delete();
+        }else if($test_t->question_type == "Перетягування в тексті"){
+            DB::table('tests_drag_drop')->where('id', $test_t->test_answers_id)->delete();
+        }
+
+        DB::table('tests_questions')->where([
+            'id' => $test_question_id,
+            'test_id' => $test_info_id
+        ])->delete();
+
+        return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно видалено');
+    }
+
 }
