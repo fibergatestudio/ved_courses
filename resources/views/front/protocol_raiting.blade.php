@@ -7,12 +7,12 @@
 @section('content')
 <section class="direction">
     <!-- protocol modal window start -->
-    <form id="protocolForm" class="protocol" method="POST" action="{{ route('protocol.store') }}" enctype="multipart/form-data">
+    <form id="protocolForm" class="protocol d-block" method="POST" action="{{ route('protocol.store') }}" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="course_id" value="{{ $course->id }}">
-        <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
-        <input type="hidden" name="user_id" value="{{ $user->id }}">
-        <h3 class="protocol__title">ПРОТОКОЛ ОГЛЯДУ</h3>
+        <input type="hidden" name="course_id" value="{{ $protocol->course_id }}">
+        <input type="hidden" name="lesson_id" value="{{ $protocol->lesson_id }}">
+        <input type="hidden" name="user_id" value="{{ $protocol->user_id }}">
+        <h3 class="protocol__title mt-1">ПРОТОКОЛ ОГЛЯДУ</h3>
         <div class="protocol__section">
             <div class="protocol__purple-separator"></div>
             <div class="protocol__section-title">місця події</div>
@@ -20,11 +20,11 @@
                 <div class="protocol__row protocol__mt-50">
                     <div class="descr-input-block city">
                         <label for="city" class="input-descr">Місто (сел.) </label>
-                        <textarea class="input-textarea" name='city' id="city"></textarea>
+                        <textarea class="input-textarea" id="city" disabled>{{ $protocol->city }}</textarea>
                     </div>
                     <div class="descr-input-block date">
                         <label for="date" class="input-descr">Дата </label>
-                        <input class="protocol__input" type="date" name='date' id="date">
+                        <input class="protocol__input" type="text" id="date" disabled value="{{ $protocol->date }}">
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-45">
@@ -34,38 +34,15 @@
                             <div class="hours">
                                 <p class="descr-above">Години</p>
                                 <div class="select-time">
-                                    <select name="hour_start" class="select-field inspection-select">
-                                        <option value="00">00</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
+                                    <select name="hour-start" class="select-field inspection-select" disabled>
+                                        <option>{{ $protocol->hour_start }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="minutes">
                                 <p class="descr-above">Хвилини</p>
                                 <div class="select-time">
-                                    <select name="minute_start" class="select-field inspection-select">
+                                    <select name="minute-start" class="select-field inspection-select">
                                         <option value="00">00</option>
                                         <option value="01">01</option>
                                         <option value="02">02</option>
@@ -137,7 +114,7 @@
                             <div class="hours">
                                 <p class="descr-above">Години</p>
                                 <div class="select-time">
-                                    <select name="hour_end" class="select-field inspection-select">
+                                    <select name="hour-end" class="select-field inspection-select">
                                         <option value="00">00</option>
                                         <option value="01">01</option>
                                         <option value="02">02</option>
@@ -168,7 +145,7 @@
                             <div class="minutes">
                                 <p class="descr-above">Хвилини</p>
                                 <div class="select-time">
-                                    <select name="minute_end" class="select-field inspection-select">
+                                    <select name="minute-end" class="select-field inspection-select">
                                         <option value="00">00</option>
                                         <option value="01">01</option>
                                         <option value="02">02</option>
@@ -261,7 +238,7 @@
                             </div>
                         </div>
 
-                        <textarea class="input-textarea" name='cop_initials' id="cop-initials"></textarea>
+                        <textarea class="input-textarea" name='cop-initials' id="cop-initials"></textarea>
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-25">
@@ -283,7 +260,7 @@
                             </div>
                         </div>
 
-                        <textarea class="input-textarea" name='basis_of' id="basis-of"></textarea>
+                        <textarea class="input-textarea" name='basis-of' id="basis-of"></textarea>
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-45">
@@ -323,7 +300,7 @@
                         </div>
 
 
-                        <textarea class="input-textarea" name='witnessed_one' id="witnessed-one"></textarea>
+                        <textarea class="input-textarea" name='witnessed-one' id="witnessed-one"></textarea>
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-25">
@@ -332,7 +309,7 @@
                             <div class="p-count">2.</div>
                             <label for="witnessed-two" class="input-descr">Понятий</label>
                         </div>
-                        <textarea class="input-textarea" name='witnessed_two' id="witnessed-two"></textarea>
+                        <textarea class="input-textarea" name='witnessed-two' id="witnessed-two"></textarea>
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-20">
@@ -603,7 +580,7 @@
                                                 особистий підпис)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='other_participant_one'
+                                    <textarea class="input-textarea" name='other-participant-one'
                                         id="other-participant-one"></textarea>
                                 </div>
                             </div>
@@ -618,7 +595,7 @@
                                                 особистий підпис)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='other_participant_two'
+                                    <textarea class="input-textarea" name='other-participant-two'
                                         id="other-participant-two"></textarea>
                                 </div>
                             </div>
@@ -658,7 +635,7 @@
                                 </p>
                             </div>
                             <div class="protocol__row protocol__mt-40">
-                                <input class="protocol__input" type="text" name='users_signs' id="users-signs"
+                                <input class="protocol__input" type="text" name='users-signs' id="users-signs"
                                     placeholder="(підписи осіб, які беруть участь у проведенні огляду)">
                             </div>
                         </div>
@@ -680,7 +657,7 @@
                                             параметри)</p>
                                     </div>
                                 </div>
-                                <textarea class="input-textarea" name='tech_devices' id="tech-devices"></textarea>
+                                <textarea class="input-textarea" name='tech-devices' id="tech-devices"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -688,7 +665,7 @@
                                         інформації,
                                         на які здійснюється запис: </label>
                                 </div>
-                                <textarea class="input-textarea" name='recording_devs'
+                                <textarea class="input-textarea" name='recording-devs'
                                     id="recording-devs"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-40">
@@ -755,7 +732,7 @@
                                     </div>
                                 </div>
 
-                                <textarea class="input-textarea" name='review_conducted'
+                                <textarea class="input-textarea" name='review-conducted'
                                     id="review-conducted"></textarea>
                             </div>
                             <div class="protocol__row protocol__mt-30">
@@ -784,7 +761,7 @@
                                     <p class="input-descr">Пора доби</p>
                                     <div class="weather-time-block">
                                         <div class="select-time daytime-select">
-                                            <select name="day_time" class="select-field inspection-select">
+                                            <select name="day-time" class="select-field inspection-select">
                                                 <option value="Світла">Світла
                                                 </option>
                                                 <option value="Темна">Темна
@@ -841,7 +818,7 @@
                                     <p class="input-descr">Підходи</p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time weather-select">
-                                            <select name="approach_select" class="select-field inspection-select">
+                                            <select name="approach-select" class="select-field inspection-select">
                                                 <option value="Асфальтовані">Асфальтовані</option>
                                                 <option value="Грунтові">Грунтові</option>
                                                 <option value="Тротуарна плитка (бруківка)">Тротуарна плитка (бруківка)</option>
@@ -864,7 +841,7 @@
                                     <p class="input-descr">Схеми перехресть і площ </p>
                                     <div class="weather-time-block justify_end streets-sheme">
                                         <div class="select-time streets-sheme">
-                                            <select name="ways_schemes_select"
+                                            <select name="ways-schemes-select"
                                                 class="select-field inspection-select">
                                                 <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Хрестоподібний">Хрестоподібний
@@ -885,7 +862,7 @@
 
                                 <div class="descr-input-block other">
                                     <label for="ways-schemes" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='ways_schemes'
+                                    <textarea class="input-textarea" name='ways-schemes'
                                         id="ways-schemes"></textarea>
                                 </div>
                             </div>
@@ -894,7 +871,7 @@
                                     <p class="input-descr">Дорога</p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time weather-select">
-                                            <select name="roads_select" class="select-field inspection-select">
+                                            <select name="roads-select" class="select-field inspection-select">
                                                 <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Ясно">Проїжджа частина
                                                 </option>
@@ -926,7 +903,7 @@
                                     <p class="input-descr">Профіль вулиці </p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time streets-and-elems">
-                                            <select name="streets_select" class="select-field inspection-select">
+                                            <select name="streets-select" class="select-field inspection-select">
                                                 <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Проїжджа частина (дорожнє покриття)">Проїжджа частина
                                                     (дорожнє
@@ -951,7 +928,7 @@
                                     <p class="input-descr">Елементи вулиці </p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time streets-and-elems">
-                                            <select name="streets_elems_select"
+                                            <select name="streets-elems-select"
                                                 class="select-field inspection-select">
                                                 <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Ширина вулиці">Ширина вулиці
@@ -976,7 +953,7 @@
 
                                 <div class="descr-input-block other">
                                     <label for="streets-elems" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='streets_elems'
+                                    <textarea class="input-textarea" name='streets-elems'
                                         id="streets-elems"></textarea>
                                 </div>
 
@@ -987,14 +964,14 @@
                                         (спостереження)
                                         на місцях огляду та прилеглій території </label>
                                 </div>
-                                <textarea class="input-textarea" name='cameras_devs' id="cameras-devs"></textarea>
+                                <textarea class="input-textarea" name='cameras-devs' id="cameras-devs"></textarea>
                             </div>
                             <div class="protocol__row protocol__mt-50">
                                 <div class="inspection inspect-w-t protocol_mr-10">
                                     <p class="input-descr">Житловий будинок </p>
                                     <div class="weather-time-block living-house justify_end">
                                         <div class="select-time living-house">
-                                            <select name="house_select" class="select-field inspection-select">
+                                            <select name="house-select" class="select-field inspection-select">
                                                 <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Дім-дача (з мансардою)">Дім-дача (з мансардою)
 
@@ -1050,7 +1027,7 @@
                             <div class="protocol__row protocol__mt-50">
                                 <div class="descr-input-block other">
                                     <label for="floor-others" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='floor_others'
+                                    <textarea class="input-textarea" name='floor-others'
                                         id="floor-others"></textarea>
                                 </div>
                                 <div class="descr-input-block other">
@@ -1069,7 +1046,7 @@
                                     <p class="input-descr">Сходи і ліфт </p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time doorhandle">
-                                            <select name="stairs_elevators" class="select-field inspection-select">
+                                            <select name="stairs-elevators" class="select-field inspection-select">
                                                 <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Зовнішні сталеві пожежні сходи">Зовнішні сталеві
                                                     пожежні сходи
@@ -1099,7 +1076,7 @@
 
                                 <div class="descr-input-block other_mw-515">
                                     <label for="elevators-stairs" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" type="text" name='elevators_stairs'
+                                    <textarea class="input-textarea" type="text" name='elevators-stairs'
                                         id="elevators-stairs"></textarea>
                                 </div>
 
@@ -1144,7 +1121,7 @@
 
                                 <div class="descr-input-block other other_mw-505">
                                     <label for="door-other" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='door_other' id="door-other"></textarea>
+                                    <textarea class="input-textarea" name='door-other' id="door-other"></textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-25">
@@ -1167,7 +1144,7 @@
 
                                 <div class="descr-input-block other other_mw-505">
                                     <label for="doorhandle-other" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='doorhandle_other'
+                                    <textarea class="input-textarea" name='doorhandle-other'
                                         id="doorhandle-other"></textarea>
                                 </div>
                             </div>
@@ -1176,7 +1153,7 @@
                                     <p class="input-descr">Дверні прилади </p>
                                     <div class="weather-time-block door-device justify_end">
                                         <div class="select-time door-device">
-                                            <select name="door_device" class="select-field inspection-select">
+                                            <select name="door-device" class="select-field inspection-select">
                                                 <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Перекидний врізаний шпінгалет">Перекидний врізаний
                                                     шпінгалет
@@ -1239,7 +1216,7 @@
                                     <p class="input-descr">Врізний</p>
                                     <div class="weather-time-block doors justify_end">
                                         <div class="select-time doors">
-                                            <select name="mortise_lock" class="select-field inspection-select">
+                                            <select name="mortise-lock" class="select-field inspection-select">
                                                 <option value="Не застосовується">Не застосовується</option>
                                                 <option value="Врізний циліндровий замок">Врізний циліндровий замок
                                                 </option>
@@ -1318,7 +1295,7 @@
                                                 слідоутворення)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='lock_other' id="lock-other"></textarea>
+                                    <textarea class="input-textarea" name='lock-other' id="lock-other"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1343,7 +1320,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mw-800 protocol_mnh-115"
-                                        id="rooms-count-size" name="rooms_count_size_texta"></textarea>
+                                        id="rooms-count-size" name="rooms-count-size-texta"></textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-30">
@@ -1363,7 +1340,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mw-800" id="rooms-corridor"
-                                        name="rooms_corridor_texta"></textarea>
+                                        name="rooms-corridor-texta"></textarea>
                                 </div>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
@@ -1372,7 +1349,7 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea" name='break_or_not1'
+                                <textarea class="input-textarea" name='break-or-not1'
                                     id="break-or-not1"> </textarea>
                             </div>
                         </div>
@@ -1396,7 +1373,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mw-800 protocol_mnh-115" id="bathroom"
-                                        name="bathroom_texta"></textarea>
+                                        name="bathroom-texta"></textarea>
                                 </div>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
@@ -1405,7 +1382,7 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea" name='break_or_not2'
+                                <textarea class="input-textarea" name='break-or-not2'
                                     id="break-or-not2"> </textarea>
                             </div>
                         </div>
@@ -1429,7 +1406,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mw-800 protocol_mnh-115" id="kitchen"
-                                        name="kitchen_texta"></textarea>
+                                        name="kitchen-texta"></textarea>
                                 </div>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
@@ -1438,7 +1415,7 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea" name='break_or_not7'
+                                <textarea class="input-textarea" name='break-or-not7'
                                     id="break-or-not7"> </textarea>
                             </div>
                         </div>
@@ -1449,7 +1426,7 @@
                         <div class="protocol__content protocol__colored-content">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea protocol_mnh-115" id="rooms-descr1"
-                                    name="rooms_descr1"></textarea>
+                                    name="rooms-descr1"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -1457,7 +1434,7 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea protocol__mb-45" name='break_or_not3'
+                                <textarea class="input-textarea protocol__mb-45" name='break-or-not3'
                                     id="break-or-not3"> </textarea>
                             </div>
                         </div>
@@ -1469,7 +1446,7 @@
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea protocol_mnh-115" id="rooms-descr2"
-                                    name="rooms_descr2"></textarea>
+                                    name="rooms-descr2"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -1477,7 +1454,7 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea protocol__mb-45" name='break_or_not4'
+                                <textarea class="input-textarea protocol__mb-45" name='break-or-not4'
                                     id="break-or-not4"> </textarea>
                             </div>
                         </div>
@@ -1489,7 +1466,7 @@
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea protocol_mnh-115" id="rooms-descr3"
-                                    name="rooms_descr3"></textarea>
+                                    name="rooms-descr3"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -1497,7 +1474,7 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea protocol__mb-45" name='break_or_not5'
+                                <textarea class="input-textarea protocol__mb-45" name='break-or-not5'
                                     id="break-or-not5"> </textarea>
                             </div>
                         </div>
@@ -1509,7 +1486,7 @@
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea protocol_mnh-115" id="rooms-descr4"
-                                    name="rooms_descr4"></textarea>
+                                    name="rooms-descr4"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -1517,7 +1494,7 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea" name='break_or_not6'
+                                <textarea class="input-textarea" name='break-or-not6'
                                     id="break-or-not6"> </textarea>
                             </div>
                         </div>
@@ -1589,7 +1566,7 @@
                                         </div>
                                     </div>
 
-                                    <textarea class="input-textarea" name='traces_damage'
+                                    <textarea class="input-textarea" name='traces-damage'
                                         id="traces-damage"></textarea>
                                 </div>
                             </div>
@@ -1610,13 +1587,13 @@
                         <div class="protocol__content">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea" id="determed-and-removed"
-                                    name="rooms_other_texta"></textarea>
+                                    name="rooms-other-texta"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <label for="object-traces" class="input-descr">Об’єкти, предмети (фрагменти, речі,
                                     фунт,
                                     документи, цінності, грошові кошти та інше)</label>
-                                <textarea class="input-textarea" name='object_traces' id="object-traces"></textarea>
+                                <textarea class="input-textarea" name='object-traces' id="object-traces"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1647,7 +1624,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='finger_traces' id="finger-traces"></textarea>
+                                <textarea class="input-textarea" name='finger-traces' id="finger-traces"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1678,7 +1655,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='shoes_traces' id="shoes-traces"></textarea>
+                                <textarea class="input-textarea" name='shoes-traces' id="shoes-traces"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1705,7 +1682,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='vehicle_traces'
+                                <textarea class="input-textarea" name='vehicle-traces'
                                     id="vehicle-traces"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
@@ -1735,7 +1712,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='break_traces' id="break-traces"></textarea>
+                                <textarea class="input-textarea" name='break-traces' id="break-traces"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1758,7 +1735,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <textarea class="input-textarea" name='blood_traces' id="blood-traces"></textarea>
+                                <textarea class="input-textarea" name='blood-traces' id="blood-traces"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1776,7 +1753,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='micro_traces' id="micro-traces"></textarea>
+                                <textarea class="input-textarea" name='micro-traces' id="micro-traces"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1799,7 +1776,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='bio_traces' id="bio-traces"></textarea>
+                                <textarea class="input-textarea" name='bio-traces' id="bio-traces"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1815,7 +1792,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <textarea class="input-textarea" name='other_traces' id="other-traces"></textarea>
+                                <textarea class="input-textarea" name='other-traces' id="other-traces"></textarea>
                             </div>
                         </div>
                         <div class="protocol__purple-separator protocol__mt-30"></div>
@@ -1828,14 +1805,14 @@
                                     схема
                                     сліду знаряддя зламу; спеціально виготовлені предмети, зліпки об’єктів, інше)
                                 </label>
-                                <textarea class="input-textarea" name='p_add_plan' id="p-add-plan"></textarea>
+                                <textarea class="input-textarea" name='p-add-plan' id="p-add-plan"></textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <label for="p-add-plan-info" class="input-descr">(носії комп’ютерної інформації,
                                     пояснення
                                     спеціалістів та інші матеріали, які пояснюють зміст протоколу)
                                 </label>
-                                <textarea class="input-textarea" name='p_add_plan_info'
+                                <textarea class="input-textarea" name='p-add-plan-info'
                                     id="p-add-plan-info"></textarea>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -1853,7 +1830,7 @@
                                         </div>
                                     </div>
 
-                                    <textarea class="input-textarea" name='p_signed' id="p-signed"></textarea>
+                                    <textarea class="input-textarea" name='p-signed' id="p-signed"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -1873,7 +1850,7 @@
                                     <div class="participant-second-block">
                                         <label for="participant1-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant1_sign'
+                                        <textarea class="input-textarea sign-input" name='participant1-sign'
                                             id="participant1-sign"></textarea>
                                     </div>
                                 </div>
@@ -1891,7 +1868,7 @@
                                     <div class="participant-second-block">
                                         <label for="participant2-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant2_sign'
+                                        <textarea class="input-textarea sign-input" name='participant2-sign'
                                             id="participant2-sign"></textarea>
                                     </div>
                                 </div>
@@ -1909,7 +1886,7 @@
                                     <div class="participant-second-block">
                                         <label for="participant3-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant3_sign'
+                                        <textarea class="input-textarea sign-input" name='participant3-sign'
                                             id="participant3-sign"></textarea>
                                     </div>
                                 </div>
@@ -1927,7 +1904,7 @@
                                     <div class="participant-second-block">
                                         <label for="participant4-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant4_sign'
+                                        <textarea class="input-textarea sign-input" name='participant4-sign'
                                             id="participant4-sign"></textarea>
                                     </div>
                                 </div>
@@ -1945,7 +1922,7 @@
                                     <div class="participant-second-block">
                                         <label for="participant5-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant5_sign'
+                                        <textarea class="input-textarea sign-input" name='participant5-sign'
                                             id="participant5-sign"></textarea>
                                     </div>
                                 </div>
@@ -1963,7 +1940,7 @@
                                     <div class="participant-second-block">
                                         <label for="participant6-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant6_sign'
+                                        <textarea class="input-textarea sign-input" name='participant6-sign'
                                             id="participant6-sign"></textarea>
                                     </div>
                                 </div>
@@ -1985,7 +1962,7 @@
                                     <div class="participant-second-block">
                                         <label for="witness1-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='witness1_sign'
+                                        <textarea class="input-textarea sign-input" name='witness1-sign'
                                             id="witness1-sign"></textarea>
                                     </div>
                                 </div>
@@ -2003,7 +1980,7 @@
                                     <div class="participant-second-block">
                                         <label for="witness2-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='witness2_sign'
+                                        <textarea class="input-textarea sign-input" name='witness2-sign'
                                             id="witness2-sign"></textarea>
                                     </div>
                                 </div>
@@ -2025,7 +2002,7 @@
                                         </div>
                                     </div>
 
-                                    <textarea class="input-textarea" name='survey_conducted'
+                                    <textarea class="input-textarea" name='survey-conducted'
                                         id="survey-conducted"></textarea>
                                 </div>
                             </div>
@@ -2047,7 +2024,7 @@
                                     <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
                                         <label class="custom-upload-form p-custom-upload-form" for="p-add-photo1">
                                             <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo1" name="p_add_photo1">
+                                                id="p-add-photo1" name="p-add-photo1">
                                             Назва файлу
                                         </label>
                                         <button type="button" class="add-student add-student_restyle p-btn-upload"
@@ -2064,7 +2041,7 @@
                                 <div class="descr-input-block">
                                     <label for="photo-descr1" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr1'
+                                    <textarea class="input-textarea p-photo-input" name='photo-descr1'
                                         id="photo-descr1"></textarea>
                                 </div>
                             </div>
@@ -2082,7 +2059,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block1' id="investigator-photo-block1"></textarea>
+                                        name='investigator-photo-block1' id="investigator-photo-block1"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2101,7 +2078,7 @@
                                     <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
                                         <label class="custom-upload-form p-custom-upload-form" for="p-add-photo2">
                                             <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo2" name="p_add_photo2">
+                                                id="p-add-photo2" name="p-add-photo2">
                                             Назва файлу
                                         </label>
                                         <button type="button" class="add-student add-student_restyle p-btn-upload"
@@ -2117,7 +2094,7 @@
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="2" class="input-descr p-photo-descr">Опис фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr2'
+                                    <textarea class="input-textarea p-photo-input" name='photo-descr2'
                                         id="photo-descr2"></textarea>
                                 </div>
                             </div>
@@ -2135,7 +2112,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block2' id="investigator-photo-block2"></textarea>
+                                        name='investigator-photo-block2' id="investigator-photo-block2"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2153,7 +2130,7 @@
                                     <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
                                         <label class="custom-upload-form p-custom-upload-form" for="p-add-photo3">
                                             <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo3" name="p_add_photo3">
+                                                id="p-add-photo3" name="p-add-photo3">
                                             Назва файлу
                                         </label>
                                         <button type="button" class="add-student add-student_restyle p-btn-upload"
@@ -2170,7 +2147,7 @@
                                 <div class="descr-input-block">
                                     <label for="photo-descr3" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr3'
+                                    <textarea class="input-textarea p-photo-input" name='photo-descr3'
                                         id="photo-descr3"></textarea>
                                 </div>
                             </div>
@@ -2188,7 +2165,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block3' id="investigator-photo-block3"></textarea>
+                                        name='investigator-photo-block3' id="investigator-photo-block3"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2207,7 +2184,7 @@
                                     <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
                                         <label class="custom-upload-form p-custom-upload-form" for="p-add-photo4">
                                             <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo4" name="p_add_photo4">
+                                                id="p-add-photo4" name="p-add-photo4">
                                             Назва файлу
                                         </label>
                                         <button type="button" class="add-student add-student_restyle p-btn-upload"
@@ -2224,7 +2201,7 @@
                                 <div class="descr-input-block">
                                     <label for="photo-descr4" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr4'
+                                    <textarea class="input-textarea p-photo-input" name='photo-descr4'
                                         id="photo-descr4"></textarea>
                                 </div>
                             </div>
@@ -2242,7 +2219,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block4' id="investigator-photo-block4"></textarea>
+                                        name='investigator-photo-block4' id="investigator-photo-block4"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2261,7 +2238,7 @@
                                     <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
                                         <label class="custom-upload-form p-custom-upload-form" for="p-add-photo5">
                                             <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo5" name="p_add_photo5">
+                                                id="p-add-photo5" name="p-add-photo5">
                                             Назва файлу
                                         </label>
                                         <button type="button" class="add-student add-student_restyle p-btn-upload"
@@ -2278,7 +2255,7 @@
                                 <div class="descr-input-block">
                                     <label for="photo-descr5" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr5'
+                                    <textarea class="input-textarea p-photo-input" name='photo-descr5'
                                         id="photo-descr5"></textarea>
                                 </div>
                             </div>
@@ -2296,7 +2273,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block5' id="investigator-photo-block5"></textarea>
+                                        name='investigator-photo-block5' id="investigator-photo-block5"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2315,7 +2292,7 @@
                                     <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
                                         <label class="custom-upload-form p-custom-upload-form" for="p-add-photo6">
                                             <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo6" name="p_add_photo6">
+                                                id="p-add-photo6" name="p-add-photo6">
                                             Назва файлу
                                         </label>
                                         <button type="button" class="add-student add-student_restyle p-btn-upload"
@@ -2332,7 +2309,7 @@
                                 <div class="descr-input-block">
                                     <label for="photo-descr6" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr6'
+                                    <textarea class="input-textarea p-photo-input" name='photo-descr6'
                                         id="photo-descr6"></textarea>
                                 </div>
                             </div>
@@ -2350,7 +2327,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block6' id="investigator-photo-block6"></textarea>
+                                        name='investigator-photo-block6' id="investigator-photo-block6"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2369,7 +2346,7 @@
                                     <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
                                         <label class="custom-upload-form p-custom-upload-form" for="p-add-photo7">
                                             <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo7" name="p_add_photo7">
+                                                id="p-add-photo7" name="p-add-photo7">
                                             Назва файлу
                                         </label>
                                         <button type="button" class="add-student add-student_restyle p-btn-upload"
@@ -2386,7 +2363,7 @@
                                 <div class="descr-input-block">
                                     <label for="photo-descr7" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr7'
+                                    <textarea class="input-textarea p-photo-input" name='photo-descr7'
                                         id="photo-descr7"></textarea>
                                 </div>
                             </div>
@@ -2404,7 +2381,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block7' id="investigator-photo-block7"></textarea>
+                                        name='investigator-photo-block7' id="investigator-photo-block7"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -2423,7 +2400,7 @@
                                     <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
                                         <label class="custom-upload-form p-custom-upload-form" for="p-add-photo8">
                                             <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo8" name="p_add_photo8">
+                                                id="p-add-photo8" name="p-add-photo8">
                                             Назва файлу
                                         </label>
                                         <button type="button" class="add-student add-student_restyle p-btn-upload"
@@ -2440,7 +2417,7 @@
                                 <div class="descr-input-block">
                                     <label for="photo-descr8" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr8'
+                                    <textarea class="input-textarea p-photo-input" name='photo-descr8'
                                         id="photo-descr8"></textarea>
                                 </div>
                             </div>
@@ -2458,18 +2435,18 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block8' id="investigator-photo-block8"></textarea>
+                                        name='investigator-photo-block8' id="investigator-photo-block8"></textarea>
                                 </div>
                             </div>
                         </div>
                         <div class="protocol__content">
                             <div class="protocol__row protocol__mt-35">
                                 <div class="protocol-btns-block">
-                                    @isset($user)
+
                                     <button type="submit" class="groups-edit__create-group sce__buttons-restyle"
                                         id="sendProtocol">Зберегти
                                     </button>
-                                    @endisset
+
 
                                     <button type="reset" class="groups-edit__back-to-groups sce__buttons-restyle"
                                         id="backToContent">Назад
@@ -2481,67 +2458,8 @@
 
                     </div>
     </form>
-    <!-- protocol modal window end -->
-    <div class="content-wrapper">
-       <div class="direction-separator">
-        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
-    </div>
-    <div class="container">
 
-        <ul class="breadcrumbs_list">
-            <li class="breadcrumbs_item">
-                <a href="{{ route('main') }}" class="breadcrumbs_link">Головна</a>
-            </li>
-            <li class="breadcrumbs_item">
-                <a href="{{ route('view_course', $course->id) }}" class="breadcrumbs_link">{{ $course->name }}</a>
-            </li>
-            <li class="breadcrumbs_item">
-                <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}" class="breadcrumbs_link breadcrumbs_active">{{ $lesson->course_name ?? 'Без назви' }}</a>
-            </li>
 
-        </ul>
-
-        <div class="string-menu_wrapper">
-            <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id]) }}"><span>Як це працює</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'video']) }}"><span>Відеолекція</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'model']) }}"><span>3D модель</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn  active" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'test']) }}"><span>Завдання</span></a>
-            </div>
-
-            @include('layouts.front.includes.nextprevlesson')
-
-        </div>
-
-      <!--<div class="protocole_book programs-item_book">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's </div>-->
-      @if (session('success'))
-      <div class="alert alert-success" role="alert">
-          {{ session('success') }}
-      </div>
-      @endif
-      <div class="protocole-text string-text">
-        {!! $lesson->course_protocol_descr !!}
-      </div>
-      <a class="protocole-btn btn-watch--more" href="#" id="modalWindowOpen"><span>відкрити файл</span></a>
-      {{--@forelse (collect(json_decode($lesson->add_document)) as $document)
-            <a class="protocole-btn btn-watch--more" href="{{ asset('docs/'.$document) }}"><span>Протокол № {{ $loop->iteration }}</span></a>
-      @empty
-      <div class="string-text">
-        Протоколи відсутні
-      </div>
-      @endforelse--}}
-
-    </div>
-    </div>
 
     <div class="scroll-wrapper">
         <div class="to-top-button">></div>
@@ -2550,24 +2468,5 @@
 @endsection
 
 @section('js')
-<script>
-    autosize($('.input-textarea'));
 
-    //photo upload btn emulation and uploaded file name update start
-    const photoButtons = document.querySelectorAll('.add-student.add-student_restyle.p-btn-upload');
-    const nearestLable = document.querySelectorAll('.custom-upload-form.p-custom-upload-form');
-    const inputElement = document.querySelectorAll(".eg-input.add-style.base-upload");
-
-    photoButtons.forEach(btn => {
-        btn.addEventListener('click', function () {
-            this.previousElementSibling.click();
-        })
-    })
-
-    for (let i = 0; i < inputElement.length; i++) {
-        inputElement[i].addEventListener("change", function () {
-            //inputElement[i].parentNode.innerText = inputElement[i].files[0].name;
-        });
-    }
-</script>
 @endsection

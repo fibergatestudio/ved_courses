@@ -306,4 +306,5 @@ use Illuminate\Support\Facades\Auth;
 
 //Протоколы
     // Управление протоколами
-    Route::resource('protocol', 'ProtocolController')->middleware('auth');
+    Route::post('protocol', 'ProtocolController@store')->name('protocol.store')->middleware('auth');
+    Route::get('protocol/course/{course_id}/lesson/{lesson_id}/user/{user_id}', 'ProtocolController@show')->name('protocol.show')->middleware('auth');
