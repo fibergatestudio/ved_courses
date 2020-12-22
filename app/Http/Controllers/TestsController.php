@@ -712,7 +712,38 @@ class TestsController extends Controller
         ])->first();
 
         if($test_t->question_type == "Множинний вибір"){
-            DB::table('tests_multiple_choice')->where('id', $test_t->test_answers_id)->update([]);
+
+            $a_counter = $request->answer_counter;
+            $answers_arr = [];
+            for($i = 0; $i <= $a_counter; $i++){
+                //$c = "course_learn" . $i;
+                $answr = "answer" . $i;
+                $answer_grade = "answer_grade" . $i;
+                $answer_comment = "answer_comment" . $i;
+
+                $arr_answer = [
+                    'answer' => strip_tags( $request->$answr ),
+                    'answer_grade' => $request->$answer_grade,
+                    'answer_comment' => strip_tags( $request->$answer_comment),
+                ];
+                if(strip_tags( $request->$answr ) != ""){
+                    array_push($answers_arr, $arr_answer);
+                }
+            }
+            //dd($answers_arr);
+            // Формирование Инфы для джсона
+            // Енкод инфы
+            $answers_json = json_encode($answers_arr);
+            
+            DB::table('tests_multiple_choice')->where('id', $test_t->test_answers_id)->update([
+                'question_name'         => $request->question_name,
+                'question_text'         => $request->question_text,
+                'default_score'         => $request->default_score,
+                'test_comment'          => $request->test_comment,
+                'answers_type'          => $request->answers_type,
+                'number_answers'        => $request->number_answers,
+                'answers_json'          => $answers_json,
+            ]);
         }else if($test_t->question_type == "Правильно/неправильно"){
             DB::table('tests_true_false')->where('id', $test_t->test_answers_id)->update([
                 'question_name' => $request->question_name,
@@ -724,7 +755,39 @@ class TestsController extends Controller
                 'wrong_answer_comment' => $request->wrong_answer_comment,
             ]);
         }else if($test_t->question_type == "Перетягування в тексті"){
-            DB::table('tests_drag_drop')->where('id', $test_t->test_answers_id)->update([]);
+            $answers_counter = $request->answers_counter;
+            //dd($answers_counter);
+            //dd($answers_counter);
+            $answers_arr = [];
+            $arr_answ = [];
+            for($i = 0; $i <= $answers_counter; $i++){
+                $answer = "answer" . $i;
+    
+                $answer_text =  $request->$answer;
+                if($answer_text != null){
+                    array_push($arr_answ, $answer_text);
+                }
+                
+            }
+    
+            $r_answer_arr = [
+                'right_answer' => $request->right_answer,
+            ];
+            $answers_arr['answers'] = $arr_answ;
+            $answers_arr['right_answer'] = $request->right_answer;
+            //dd($answers_arr);
+    
+            // Енкод инфы
+            //dd($answers_arr);
+            $answers_json = json_encode($answers_arr);
+
+            DB::table('tests_drag_drop')->where('id', $test_t->test_answers_id)->update([                
+                'question_name'         => $request->question_name,
+                'question_text'         => $request->question_text,
+                'default_score'         => $request->default_score,
+                'test_comment'          => $request->test_comment,
+                'answers_json'          => $answers_json,
+            ]);
         }
 
         return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно змінено');

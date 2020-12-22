@@ -46,7 +46,7 @@
 
                     <div class="editing-block">
                         <div class="editing-wrapper">
-
+                            <?php $q_count = 1; ?>
                             @foreach($test_question_answers as $test)
 
                                 {{-- <td>{{ $test->id }}</td>
@@ -54,7 +54,7 @@
 
                                 <div class="editing-textarea_wrapper">
                                     <div class="editing-textarea_inner">
-                                        <div class="editing-textarea_num">{{ $test->id }}</div>
+                                        <div class="editing-textarea_num">{{ $q_count }}</div>
                                         <div class="editing-textarea_icon">
                                             @if($test->question_type == "Множественный выбор")
                                                 <img src="/img/choice-1.png" alt="icon">
@@ -82,7 +82,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                            <?php $q_count++; ?>
                             @endforeach
 
                             {{-- href="{{ route('question_type',['test_info_id'=>$test_info_id]) }}"  --}}
