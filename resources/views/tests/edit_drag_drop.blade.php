@@ -138,7 +138,7 @@
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
-                <form action="" id="drag_drop_form" method="POST" >
+                <form action="{{ route('edit_test_question_apply', ['test_info_id' => $test_info_id, 'test_question_id' => $test_question_id ]) }}" id="drag_drop_form" method="POST" >
                     @csrf
                     <div class="multipleChoice-top-title">
                         <h3 class="multipleChoice-title">(Ред) Перетягування в тексті</h3>
@@ -209,20 +209,24 @@
                             <div class="question-dragDrop-string_top">
                                 Варіант відповіді [[1]]
                             </div>
-                            <input type="hidden" id="counter" name="answers_counter" value="0">
+                            <?php $answer_arr = json_decode($t_question_info->answers_json);  ?>
+                            <input type="hidden" id="answers_counter" name="answers_counter" value="{{ count($answer_arr->answers) }}">
                             <div id="app1">
                                 <div v-for="(id,index) in ids" >
+                                <div v-if="index === 0">
 
+                                </div>
+                                <div v-else>
                                     <div class="question-dragDrop-string">
                                         <div class="question-dragDrop-string_left">
-                                            Відповідь  @{{ index + 1}}
+                                            Відповідь  @{{ index }}
                                         </div>
                                         <div class="question-dragDrop-string_right">
-                                            <input class="courseAdditional--input question-dragDrop--input" type="text" :name="'answer'+index"
+                                            <input class="courseAdditional--input question-dragDrop--input" type="text" :id="'answer'+index" :name="'answer'+index"
                                                 placeholder="Розгорнутий варіант відповіді">
                                         </div>
                                     </div>
-
+                                </div>
                                 </div>
                             </div>
                             
@@ -255,7 +259,7 @@
                                     <div class="newTest-quest-wrapper">
                                         <select class="newTest-quest-select" id="right_answer" name="right_answer"> 
                                             <option default>Выберите верный ответ</option>
-                                            <option value="1">Відповідь 1</option>                               
+                                            <!-- <option value="1">Відповідь 1</option>                                -->
                                         </select>
                                         <div class="newTest-quest_arrowBlock"></div>
                                     </div>
@@ -293,6 +297,27 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script>
+        $( document ).ready(function() {
+            var q_count = $('#answers_counter').val();
+            console.log(q_count);
+            var i;
+
+            const answerArr = [];
+            const commentArr = [];
+
+            @foreach($answer_arr->answers as $answ)
+                answerArr.push('{!! $answ !!}');
+            @endforeach
+
+            console.log(answerArr);
+            for (i = 0; i < q_count; i++) {
+                app1.addNewEntryWithText(answerArr[i]);
+            }
+
+        });
+    </script>
+
+    <script>
 
         //var global_index = 0;
         var currentCounter = 1;
@@ -311,14 +336,31 @@
                 addNewEntry: function(){
                     currentCounter = currentCounter + 1;
                     this.ids.push({id: currentCounter});
-                    document.getElementById("counter").value = currentCounter;
+                    document.getElementById("answers_counter").value = currentCounter - 1;
 
+                    var t_currentcounter = currentCounter - 1;
                     //var right_answer_id = '#right_answer' + index;
+                    $('#right_answer')
+                        .append($("<option></option>")
+                                    .attr("value",  t_currentcounter)
+                                    .text("Відповідь "+ t_currentcounter ) ); 
+                },
+                addNewEntryWithText(answer){
+                    var answer_id = '#answer' + currentCounter;
+
+                    setTimeout(function(){ 
+                        $(answer_id).val(answer);
+
+                    }, 100);
                     $('#right_answer')
                         .append($("<option></option>")
                                     .attr("value",  currentCounter)
                                     .text("Відповідь "+ currentCounter ) ); 
-                },
+
+                    currentCounter = currentCounter + 1;
+                    this.ids.push({id: currentCounter});
+                    $('#answer_counter').val(currentCounter);
+                }
             }
         });
     
