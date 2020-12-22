@@ -127,7 +127,7 @@
                             </div>
                             <div class="test_b separator"></div>
                             <div class="test_b-grid_wrapper">
-
+                                <?php $dd_counter = 1; ?>
                                 @foreach($testDragDrop as $dragDrop)
                                     <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
                                     <div class="test_b-grid_inner">
@@ -135,17 +135,22 @@
                                             <input type="hidden" name="drag_drop_id[]" value="{{ $dragDrop->id }}">
                                             <input type="hidden" id="true_answer{{ $dragDrop->id }}" name="answer_dragdrop[]" value="">
 
-                                            <div class="test_b-questionBlock questionBlock-small"><span id="answer{{ $dragDrop->id }}">{{ $dragDrop->id }}</span></div> {{ strip_tags($dragDrop->question_text) }}
+                                            <div class="test_b-questionBlock questionBlock-small" style="width:auto;">
+                                                <span id="answer{{ $dragDrop->id }}">{{ $dd_counter }}</span>
+                                            </div> 
+                                            {{ strip_tags(str_replace("&nbsp;", '', $dragDrop->question_text)) }}
                                         </div>
                                     </div>
                                     <div class="test_b-grid_inner">
                                         <div id="answers{{ $dragDrop->id }}" class="test_b-grid_answer">
-                                            <div class="answer-circle"><span>{{ $dragDrop->id }}</span></div>
+                                            <div class="answer-circle"><span>{{ $dd_counter }}</span></div>
                                             @foreach($dd_answers_json->answers as $answer)
-                                                <div class="answer-block">
-                                                    <input type="hidden" class="answer_id" value="<?php echo $answer; ?>">
-                                                    <span>{{ $answer }}</span>
-                                                </div>
+                                                    
+                                                    <span class="answer-block" style="line-height: 1.6;">
+                                                        <input type="hidden" class="answer_id" value="<?php echo $answer; ?>">
+                                                        {{ $answer }}
+                                                    </span>
+                                                
                                             @endforeach
                                         </div>
                                     </div>
@@ -180,20 +185,22 @@
                                                 if(from_id == to_id){
 
                                                     var true_answer = '#true_answer' + to_id;
-
+                                                    console.log(true_answer);
                                                     console.log(to.el);
+                                                    
 
                                                     /* var answer_id = '#answer' + id;
                                                     var test = $(answer_id).find("input").val(); */
 
                                                     setTimeout(function(){
+                                                        var new_passed_el = to.el.getElementsByClassName('answer_id').item(0).value;
+                                                        console.log(new_passed_el);
+                                                        //var passed_answer = answer_el.getElementsByClassName('answer_id').item(0).value;
+                                                        //console.log(passed_answer);
 
-                                                        var passed_answer = answer_el.getElementsByClassName('answer_id').item(0).value;
-                                                        console.log(passed_answer);
+                                                        $(true_answer).val(new_passed_el);
 
-                                                        $(true_answer).val(passed_answer);
-
-                                                     }, 100);
+                                                     }, 300);
 
 
                                                     return to.el.children.length < 1;
@@ -212,6 +219,7 @@
                                     /* testresponse.push(answer);*/
 
                                     </script>
+                                    <?php $dd_counter++; ?>
                                     <?php $n_answers++; ?>
                                 @endforeach
                                 </div>

@@ -215,7 +215,7 @@ class HomePageController extends Controller
 
         // Получаем всю POST инфу
         $all_info = $request->all();
-        //dd($test_id, $course_id, $lesson_id);
+        //dd($all_info);
         // Аррей всех ответов
         $test_questions_json = [];
         // Берем текущий тест
@@ -295,6 +295,7 @@ class HomePageController extends Controller
             // Получаем айди
             $drag_drop_ids = $request->drag_drop_id;
             $drag_drop_q = [];
+            //dd($drag_drop_ids);
             if(isset($drag_drop_ids)){
                 // Перебираем и берем данные о них с базы
                 foreach($drag_drop_ids as $key=>$drag_drop_id){
@@ -311,6 +312,10 @@ class HomePageController extends Controller
                     // Берем айди верного ответа
                     $right_answer_id = $answers_json->right_answer;
                     // Берем верный овтвет
+                    //dd($answers_json->answers[$right_answer_id]);
+                    if($right_answer_id == "Выберите верный ответ"){
+                        $right_answer_id = 0;
+                    }
                     $right_answer = $answers_json->answers[$right_answer_id];
                     $dd_array['right_answer'] = $right_answer;
                     // Проверяем верно ли ответил

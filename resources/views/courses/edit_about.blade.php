@@ -251,7 +251,7 @@
                                         </div> -->
                                     </div>
                                     <div v-else>
-                                    <div class="courseAdd-inner courseAdd-inner_margbottom">
+                                        <div class="courseAdd-inner courseAdd-inner_margbottom">
                                             <div class="courseAdd-inner_left">
                                                 <div class="courseAdd_left--name">
                                                     Пункт @{{ index }}<sup>*</sup>

@@ -137,7 +137,7 @@
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
-                <form action="" id="test_form" method="POST" >
+                <form action="{{ route('edit_test_question_apply', ['test_info_id' => $test_info_id, 'test_question_id' => $test_question_id ]) }}" id="test_form" method="POST" >
                     @csrf
                     <div class="multipleChoice-top-title">
                     <h3 class="multipleChoice-title">(Ред) Множинний вибір</h3>
@@ -235,50 +235,54 @@
                         <div class="multipleChoice-top active">
                             Варіанти відповідей
                         </div>
-
-                        <input type="hidden" id="counter" name="answer_counter" value="">
+                        <input type="hidden" id="answer_counter" name="answer_counter" value="{{ count(json_decode($t_question_info->answers_json)) }}">
                         <div id="app1">
                             <div v-for="(id,index) in ids" >
-                                <div class="newTest-wrapper show">
-                                                                                
-                                    <div class="multipleChoice-inner multipleChoice-inner_align">
-                                        <div class="multipleChoice-inner_left">
-                                            <div class="multipleChoice_left--name">
-                                                Варіант відповіді @{{ index + 1}}
-                                            </div>
-                                        </div>
-                                        <div class="multipleChoice-inner_right">
-                                                <textarea class="tinyMCE-area" :id="'answer'+index" :name="'answer'+index"></textarea>
-                                        </div>
-                                    </div> 
-                                    
-                                    <div class="multipleChoice-string"> 
-                                        <div class="multipleChoice-string_left--bottom"> 
-                                            Оцінка
-                                        </div>
-                                        <div class="multipleChoice-string_right"> 
-                                            <div class="newTest-quest-wrapper">
-                                                <select class="newTest-quest-select" :name="'answer_grade'+index"> 
-                                                    <option value="1" selected>Не вибрано</option> 
-                                                    <option value="2">Опция 2</option>
-                                                    <option value="2">Опция 3</option>                                  
-                                                </select>
-                                                <div class="newTest-quest_arrowBlock"></div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                <div v-if="index === 0">
 
-                                    <div class="multipleChoice-inner multipleChoice-inner_align">
-                                        <div class="multipleChoice-inner_left">
-                                            <div class="multipleChoice_left--name">
-                                                Коментар
+                                </div>
+                                <div v-else>
+                                    <div class="newTest-wrapper show">
+                                                                                    
+                                        <div class="multipleChoice-inner multipleChoice-inner_align">
+                                            <div class="multipleChoice-inner_left">
+                                                <div class="multipleChoice_left--name">
+                                                    Варіант відповіді @{{ index }}
+                                                </div>
+                                            </div>
+                                            <div class="multipleChoice-inner_right">
+                                                    <textarea class="tinyMCE-area" :id="'answer'+index" :name="'answer'+index"></textarea>
+                                            </div>
+                                        </div> 
+                                        
+                                        <div class="multipleChoice-string"> 
+                                            <div class="multipleChoice-string_left--bottom"> 
+                                                Оцінка
+                                            </div>
+                                            <div class="multipleChoice-string_right"> 
+                                                <div class="newTest-quest-wrapper">
+                                                    <select class="newTest-quest-select" :name="'answer_grade'+index"> 
+                                                        <option value="1" selected>Не вибрано</option> 
+                                                        <option value="2">Опция 2</option>
+                                                        <option value="2">Опция 3</option>                                  
+                                                    </select>
+                                                    <div class="newTest-quest_arrowBlock"></div>
+                                                </div>
                                             </div>
                                         </div>
-                                        <div class="multipleChoice-inner_right">
-                                                <textarea class="tinyMCE-area" :id="'answer_comment'+index" :name="'answer_comment'+index"></textarea>
-                                        </div>
-                                    </div>
 
+                                        <div class="multipleChoice-inner multipleChoice-inner_align">
+                                            <div class="multipleChoice-inner_left">
+                                                <div class="multipleChoice_left--name">
+                                                    Коментар
+                                                </div>
+                                            </div>
+                                            <div class="multipleChoice-inner_right">
+                                                    <textarea class="tinyMCE-area" :id="'answer_comment'+index" :name="'answer_comment'+index"></textarea>
+                                            </div>
+                                        </div>
+
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -302,6 +306,24 @@
             </form>
     </section>  
 
+    <?php
+
+    $answer_arr = [];
+    $grade_arr = [];
+    $comment_arr = [];
+
+        if(isset($t_question_info)){
+            if(is_countable (json_decode($t_question_info->answers_json) )){
+                $decoded_arr = json_decode($t_question_info->answers_json);
+                foreach($decoded_arr as $dec){
+                    $answer_arr[] = $dec->answer;
+                    $grade_arr[] = $dec->answer_grade;
+                    $comment_arr[] = $dec->answer_comment;
+                }
+            }
+        }
+    ?>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
@@ -324,6 +346,33 @@
                 'alignright alignjustify | bullist numlist | ' + 
                 'insertfile link image media pageembed template ' ,
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+    </script>
+
+    <script>
+        $( document ).ready(function() {
+            var q_count = $('#answer_counter').val();
+            var i;
+
+            const answerArr = [];
+            const gradeArr = [];
+            const commentArr = [];
+
+            @foreach($answer_arr as $answ)
+                answerArr.push('{!! $answ !!}');
+            @endforeach
+            @foreach($grade_arr as $grade)
+                gradeArr.push('{!! $grade !!}');
+            @endforeach
+            @foreach($comment_arr as $comment)
+                commentArr.push('{!! $comment !!}');
+            @endforeach
+
+            console.log(answerArr);
+            for (i = 0; i < q_count; i++) {
+                app1.addNewEntryWithText(answerArr[i], gradeArr[i], commentArr[i]);
+            }
+
         });
     </script>
 
@@ -378,6 +427,59 @@
 
                     
                 },
+                addNewEntryWithText(answer, grade, comment){
+                    currentCounter = currentCounter + 1;
+                    var answer_id = '#answer' + currentCounter;
+                    var answer_comment = '#answer_comment' + currentCounter;
+
+                    setTimeout(function(){ 
+                        //$(answer_id).val(answer);
+
+                        tinymce.init({  selector: answer_id,
+                        menubar: false,
+                        placeholder: "memes",
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar:
+                            'bold italic backcolor | alignleft aligncenter ' +
+                            'alignright alignjustify | bullist numlist | ' +
+                            'insertfile link image media pageembed template ' ,
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                        setup: function (editor) {
+                            editor.on('init', function () {
+                                editor.setContent(answer);
+                                tinymce.triggerSave();
+                            })
+                        }, });
+
+                        tinymce.init({  selector: answer_comment,
+                        menubar: false,
+                        placeholder: "memes",
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar:
+                            'bold italic backcolor | alignleft aligncenter ' +
+                            'alignright alignjustify | bullist numlist | ' +
+                            'insertfile link image media pageembed template ' ,
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }',
+                        setup: function (editor) {
+                            editor.on('init', function () {
+                                editor.setContent(comment);
+                                tinymce.triggerSave();
+                            })
+                        }, });
+
+                    }, 100);
+
+                    this.ids.push({id: currentCounter});
+                    $('#answer_counter').val(currentCounter);
+                }
             }
         });
     </script>
