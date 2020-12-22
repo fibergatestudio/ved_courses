@@ -32,9 +32,6 @@
                                 <div class="flexTable-string_inner">{{ $course->id }}.</div>
                                 <div class="flexTable-string_inner">{{ $course->name }}</div>
                                 <div class="flexTable-string_inner">{{ $course->description }}</div>
-                                {{-- <?php //$clear_descr = str_replace("&nbsp;", '', $course->description); ?>
-                                {{ strip_tags( $clear_descr) }}
-                                </div> --}}
                                 <div class="flexTable-string_inner">{{ $course->views }}</div>
                                 <div class="flexTable-string_inner">{{ $course->finished_count }}</div>
                                 <div class="flexTable-string_inner">{{ $course->creator_id }} {{ $course->creator_name }}</div>

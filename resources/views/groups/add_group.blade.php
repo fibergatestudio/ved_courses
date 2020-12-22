@@ -72,7 +72,7 @@
                                     <option>Немає</option>
                                     @foreach($teachers_list as $teacher)
                                         <option value="{{ $teacher->id }}"
-                                            {{ (old("teacher_id") == $teacher->id) ? "selected":"" }}
+                                            {{-- {{ (old("teacher_id") == $teacher->id) ? "selected":"" }} --}}
                                             >{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
                                     @endforeach
                                 </select>

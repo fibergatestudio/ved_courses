@@ -108,7 +108,7 @@
                                     <div class="ccec__string-inner-mer col text-center">@if(isset($student->student_phone_number)){{ $student->student_phone_number }}@else-@endif</div>
                                     <div class="ccec__string-inner-mer col w-wrap text-center">@if(isset($student->student_email)){{ $student->student_email }}@else-@endif</div>
                                     <div class="ccec__string-inner-mer col text-center">@if(isset($student->student_number)){{ $student->student_number }}@else-@endif</div>
-                                    <div class="ccec__string-inner-mer col text-center">@if(isset($student->teacher_fio)) {{ $student->teacher_fio }} @else-@endif</div>
+                                    <div class="ccec__string-inner-mer col text-center" id="teach{{ $loop->iteration }}">@if(isset($student->teacher_fio)) {{ $student->teacher_fio }} @else-@endif</div>
                                     <div class="ccec__string-inner-mer col text-center">
                                         <a class="flexTable-btn_delete ccec__delete-btn" href="##" data-toggle="modal"
                                             data-target="#deleteModal{{ $loop->iteration }}"><span>Видалити</span>
@@ -155,7 +155,7 @@
                             </div>
                             <div class="flexMobile-string blackFont ug__mb-0">ПІБ викладача</div>
                             <div class="flexMobile-string grayFont sc-margin-b-15">
-                                <div class="text-limiter">@if(isset($student->teacher_fio)){{ $student->teacher_fio }}@else-@endif</div>
+                                <div class="text-limiter" id="mteach{{ $loop->iteration }}">@if(isset($student->teacher_fio)){{ $student->teacher_fio }}@else-@endif</div>
                             </div>
                             <div class="flexMobile-string flex-btns_restyle">
                                 <a class="flexTable-btn_delete groups-btn-edit-restyle ccec__m_btn-style" href="##"
@@ -213,6 +213,9 @@
                     students_array.push($(this).val());
                     return $(this).val();
                 }).get();
+            //костыль при перегрузке сбрасывает select в соответствие учителю
+            let cur_teach = "{{ $group_info->assigned_teacher_id }}";
+            $('#selectTeacher option[value='+cur_teach+']').prop('selected', true);
         });
 
         $('#student').keyup(function(){
@@ -247,8 +250,8 @@
         $('#addstudent').click(function() {
             /* Берем имя текущего студента */
             let curr_stud = $('#student').val();//.replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
-            let teacher_id = "{{ $group_info->assigned_teacher_id }}";
-            let teacher_name = "{{ $group_info->assigned_teacher_name }}";
+            let teacher_id = $('#selectTeacher option:selected').val();//"{{ $group_info->assigned_teacher_id }}";
+            let teacher_name = $('#selectTeacher option:selected').text();//"{{ $group_info->assigned_teacher_name }}";
 
             /* Проверка на существующего студента в базе */
             axios.post("{{ route('autocomplete.fetch.check') }}", {
@@ -281,7 +284,7 @@
                             <div class='ccec__string-inner-mer col text-center'>"+response.data.student_phone_number+"</div>\
                             <div class='ccec__string-inner-mer col w-wrap text-center'>"+response.data.student_email+"</div>\
                             <div class='ccec__string-inner-mer col text-center'>"+response.data.student_number+"</div>\
-                            <div class='ccec__string-inner-mer col text-center'>"+response.data.teacher_fio+"</div>\
+                            <div class='ccec__string-inner-mer col text-center' id='teach"+count_stud+"'>"+response.data.teacher_fio+"</div>\
                             <div class='ccec__string-inner-mer col text-center'>\
                                 <a class='flexTable-btn_delete ccec__delete-btn' href='##' data-toggle='modal'\
                                     data-target='#deleteModal"+count_stud+"'><span>Видалити</span>\
@@ -338,7 +341,7 @@
                             </div>\
                             <div class='flexMobile-string blackFont ug__mb-0'>ПІБ викладача</div>\
                             <div class='flexMobile-string grayFont sc-margin-b-15'>\
-                                <div class='text-limiter'>"+response.data.teacher_fio+"</div>\
+                                <div class='text-limiter' id='mteach"+count_stud+"'>"+response.data.teacher_fio+"</div>\
                             </div>\
                             <div class='flexMobile-string flex-btns_restyle'>\
                                 <a class='flexTable-btn_delete groups-btn-edit-restyle ccec__m_btn-style' href=''\
@@ -372,7 +375,6 @@
                         $("div[id^='mobi']:last").after(content);
                     }
 
-
                     /* Добавляем текущего студента в аррей */
                     students_array.push(curr_stud);
                     $('input[name="student_name"]').val('');
@@ -387,7 +389,7 @@
 
         function removeStud(count_stud) {
             students_array.splice( $.inArray(count_stud,students_array) ,1 );
-            // alert($("div[id='name"+count_stud+"']").val());
+            alert($("div[id='name"+count_stud+"']").val());
             setTimeout(function(){
                 $("div[id='name"+count_stud+"']").remove();
                 $("div[id='mobi"+count_stud+"']").remove();
@@ -418,6 +420,12 @@
             $("#changeGroupNameM").modal('hide');
             /*Не убирался серый фон от модала, с этим костылем работает*/
             $('.modal-backdrop').hide();
+        });
+
+        $('#selectTeacher').change(function() {
+            let teacher = $('#selectTeacher option:selected').text();
+            $("div[id^='teach']").html(teacher);
+            $("div[id^='mteach']").html(teacher);
         });
     </script>
 @endsection

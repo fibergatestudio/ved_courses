@@ -11817,6 +11817,9 @@ input[type="text"]::placeholder{
 .curs-tit{
     margin-right: 5px;
 }
+.curs-del-btn{
+    margin-left: 5px;
+}
 
 /* protocol form block start*/
 .scroll-wrapper{

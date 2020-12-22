@@ -14,44 +14,35 @@
                     <h3 class="courseEdit-title courseControl-title">Редагування курсу</h3>
 
                     <div class="courseEdit-block">
-                        <div class="courseEdit-top">
-                            Назва та опис курсу
-                        </div>
+                        <div class="courseEdit-top">Назва та опис курсу</div>
                         <div class="courseAdd-wrapper">
                             <div class="courseAdd-inner courseAdd-inner_margbottom">
                                 <div class="courseAdd-inner_left">
-                                    <div class="courseAdd_left--name">
-                                        Назва<sup>*</sup>
-                                    </div>
+                                    <div class="courseAdd_left--name">Назва<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdd-inner_right">
-                                    <input class="course-faq--input courseAdditional--input" name="name" value="{{ $course_info->name }}" type="text">
+                                    <input class="course-faq--input courseAdditional--input"
+                                        name="name" value="{{ $course_info->name }}" type="text">
                                 </div>
                             </div>
 
                             <div class="courseAdd-inner courseAdd-inner_margbottom">
                                 <div class="courseAdd-inner_left">
-                                    <div class="courseAdd_left--name">
-                                        Опис<sup>*</sup>
-                                    </div>
+                                    <div class="courseAdd_left--name">Опис<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdd-inner_right">
-                                        <textarea class="tinyMCE-area" name="description" value="">{{ $course_info->description }}</textarea>
+                                        <textarea class="tinyMCE-area" name="description"
+                                            value="">{{ $course_info->description }}</textarea>
                                 </div>
                             </div>
-
                         </div>
                     </div>
 
                     <div class="courseEdit-block">
-                        <div class="courseEdit-top">
-                            Фото курсу
-                        </div>
+                        <div class="courseEdit-top">Фото курсу</div>
                         <div class="courseAdd-wrapper">
                             <div class="courseAdd-grid">
-                                <div class="courseAdd-grid_item">
-                                    Додати фото
-                                </div>
+                                <div class="courseAdd-grid_item">Додати фото</div>
                                 <div class="courseAdd-grid_item">
 
                                     <div class="courseAdditional-input-wrapper">
@@ -67,18 +58,13 @@
                                     </div>
 
                                 </div>
-                                <div class="courseAdd-grid_item">
-                                    Файли з розширенням JPG, JPEG, або PNG. Максимальний розмір - 5 Мб
-                                </div>
-
+                                <div class="courseAdd-grid_item">Файли з розширенням JPG, JPEG, або PNG. Максимальний розмір - 5 Мб</div>
                             </div>
                         </div>
                     </div>
 
                     <div class="courseEdit-block">
-                        <div class="courseEdit-top">
-                            Про курс
-                        </div>
+                        <div class="courseEdit-top">Про курс</div>
                         <div class="courseEdit-about">
                             <h5 class="courseEdit-about_title">Про цей курс</h5>
 
@@ -144,10 +130,10 @@
                                 </div>
                                 <div class="teachers-grid_item">
                                     <div style="display:flex;">
-                                        <div class="teachers-item_name">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
-                                        <a class="courseAdditional-docName" href="##" onclick="deleteTeacher({{ $teacher->id }});"></a>
+                                        <div class="teachers-item_name col">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
+                                        <a class="courseAdditional-docName curs-del-btn" href="##" onclick="deleteTeacher({{ $teacher->id }});"></a>
                                     </div>
-                                    <div class="courseEdit-item_position teachers-item_position">Професор наук</div>
+                                    <div class="courseEdit-item_position teachers-item_position col">Професор наук</div>
                                 </div>
                                 <div class="teachers-grid_item">
                                     <div class="courseEdit-item_text teachers-item_text">
@@ -159,14 +145,10 @@
                     </div>
 
                     <div class="courseEdit-block">
-                        <div class="courseEdit-top">
-                            Доступ до курсу
-                        </div>
+                        <div class="courseEdit-top">Доступ до курсу</div>
                         <div class="courseAdd-wrapper">
                             <div class="newTest-mark-string courseAdd-access_restyling courseEdit-btn-margin">
-                                <div class="newTest-mark-inner_left">
-                                    Доступ до курсу мають
-                                </div>
+                                <div class="newTest-mark-inner_left">Доступ до курсу мають</div>
                                 <div class="newTest-mark-inner_right">
                                     <div class="newTest-mark-wrapper">
                                         <select class="newTest-mark-select" name="visibility">

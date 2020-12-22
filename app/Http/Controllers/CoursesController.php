@@ -24,7 +24,9 @@ class CoursesController extends Controller
             } else {
                 $course->views = 0;
             }
-            //$course->views = $course_views;
+            //для превью обрезаем тэги
+            $clear_descr = str_replace("&nbsp;", '', $course->description);
+            $course->description =  strip_tags($clear_descr);
         }
         // dd($courses);
 
@@ -56,7 +58,7 @@ class CoursesController extends Controller
 
         DB::table('courses')->insert([
             'name' => $request->name,
-            'description' => strip_tags($request->description),
+            'description' => $request->description,
             'course_image_path' => $filename,
             'creator_id' => Auth::user()->id,
             'visibility' => 'all',
