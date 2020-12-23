@@ -324,11 +324,14 @@ class HomePageController extends Controller
                     // Аррей с вопросами - разбираем
                     $answers_json = json_decode($drag_drop_db->answers_json);
                     // Берем айди верного ответа
+                    //dd($answers_json);
                     $right_answer_id = $answers_json->right_answer;
                     // Берем верный овтвет
                     //dd($answers_json->answers[$right_answer_id]);
                     if($right_answer_id == "Выберите верный ответ"){
                         $right_answer_id = 0;
+                    } else {
+                        $right_answer_id = $right_answer_id -1;
                     }
                     $right_answer = $answers_json->answers[$right_answer_id];
                     $dd_array['right_answer'] = $right_answer;
