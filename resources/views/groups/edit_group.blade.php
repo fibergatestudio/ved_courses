@@ -460,6 +460,7 @@
             for (let key in coursesObj) {
                 if(key === course){
                     let temp = coursesObj[key].toString();
+                    temp = temp.split(',');
                     if (temp.indexOf(teacher) === -1) {
                         alert("У цього викладача немає такого курсу !");
                         return false;
