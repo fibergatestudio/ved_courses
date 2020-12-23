@@ -84,7 +84,7 @@
         $(document).ready(function() {
             $('input[type="file"]').change(function(e) {
                 var geekss = e.target.files[0].name;
-                //alert(geekss);
+                alert("Фото "+ geekss + " успішно додано!");
                 $("#img_upload_name").text(geekss);
 
             });

@@ -50,196 +50,205 @@
 
     </div>
     </section>
-    @if(isset($testInfo->id))
-    <?php $n_answers = 1; ?>
-    <section class="test_a">
-        <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
-        @csrf
-        <div class="container">
-        <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
-                <!-- Да\Нет -->
-                @if(isset($testInfo))
-                    @if(count($testTrueFalse) >= 1)
-                    <div class="test_a-title_bottom">Оберіть одну відповь.</div>
-                    <div class="test_a separator"></div>
-                        @foreach($testTrueFalse as $trueFalse)
-                            <div class="test_a-question">{{ $n_answers }}. {{ strip_tags($trueFalse->question_text) }} </div>
-                            <div class="test_a-answer">
-                                <div class="answer-wrapper">
-                                    <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
-                                    <div class="answer-radio">
-                                            <input type="radio" class="answer-radio_input" id="answer_true" name="answer_truefalse[]" value="1">
-                                            <label class="answer-radio_label" for="answer_true">Верно</label>
-                                    </div>
-                                    <div class="answer-radio">
-                                            <input type="radio" class="answer-radio_input" id="answer_false" name="answer_truefalse[]" value="0">
-                                            <label class="answer-radio_label" for="answer_false">Не верно</label>
+    @if( $testInfo->test_access == true)
+        @if(isset($testInfo->id))
+        <?php $n_answers = 1; ?>
+        <section class="test_a">
+            <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
+            @csrf
+            <div class="container">
+            <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
+                    <!-- Да\Нет -->
+                    @if(isset($testInfo))
+                        @if(count($testTrueFalse) >= 1)
+                        <div class="test_a-title_bottom">Оберіть одну відповь.</div>
+                        <div class="test_a separator"></div>
+                            @foreach($testTrueFalse as $trueFalse)
+                                <div class="test_a-question">{{ $n_answers }}. {{ strip_tags($trueFalse->question_text) }} </div>
+                                <div class="test_a-answer">
+                                    <div class="answer-wrapper">
+                                        <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
+                                        <div class="answer-radio">
+                                                <input type="radio" class="answer-radio_input" id="answer_true" name="answer_truefalse[]" value="1">
+                                                <label class="answer-radio_label" for="answer_true">Верно</label>
+                                        </div>
+                                        <div class="answer-radio">
+                                                <input type="radio" class="answer-radio_input" id="answer_false" name="answer_truefalse[]" value="0">
+                                                <label class="answer-radio_label" for="answer_false">Не верно</label>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        <?php $n_answers++; ?>
-                        @endforeach
-                    @endif
-                    <!-- Множественный выбор -->
-                    @if(count($testMultiply) >= 1)
-                    <div class="test_a-title_bottom">Оберіть одну, або декілька відповідей на задані питання.</div>
-                    <div class="test_a separator"></div>
-                        @foreach($testMultiply as $multiply)
-                            <div class="test_a-question">{{ $n_answers }}. {{ strip_tags($multiply->question_text) }} </div>
-                            <?php $answers_json = json_decode($multiply->answers_json); ?>
-                            <div class="test_a-answer">
-                                <div class="answer-wrapper">
-                                    <input type="hidden" name="multiply_id[]" value="{{ $multiply->id }}">
-                                    <?php $answer_number = 0; ?>
-                                    @foreach($answers_json as $answer)
-                                            <div class="answer-radio">
-                                                <input class="answer-radio_input" type="checkbox" id="{{ $answer->answer }}{{ $answer_number }}"
-                                                    value="{{ $answer->answer }}" name="question_{{ $multiply->id }}[]">
-                                                <label class="answer-radio_label" for="{{ $answer->answer }}{{ $answer_number }}"><?php echo str_replace("\xc2\xa0",' ',$answer->answer); ?></label>
-                                            </div>
-                                            <?php $answer_number++; ?>
-                                    @endforeach
-                                </div>
-                            </div>
-
                             <?php $n_answers++; ?>
-                        @endforeach
-                    @endif
-                    <!-- Претаскивание -->
-                        <!-- <div class="test_b-title_wrapper">
-                            <div class="test_b-title_left">
-                                Перетягуй відповіді в блоки зліва
-                            </div>
-                            <div class="test_b-title_right">
-                                Ви маєте право на 3 помилки. <span class="test_b-darkText">Залишилась <span>1 </span> помилка.</span>
-                            </div>
-                        </div>
-                        <div class="test_b separator"></div>
-                        <div class="test_b-grid_wrapper"> -->
-                            @if(count($testDragDrop) >= 1)
-                            <div class="test_b-title_wrapper">
+                            @endforeach
+                        @endif
+                        <!-- Множественный выбор -->
+                        @if(count($testMultiply) >= 1)
+                        <div class="test_a-title_bottom">Оберіть одну, або декілька відповідей на задані питання.</div>
+                        <div class="test_a separator"></div>
+                            @foreach($testMultiply as $multiply)
+                                <div class="test_a-question">{{ $n_answers }}. {{ strip_tags($multiply->question_text) }} </div>
+                                <?php $answers_json = json_decode($multiply->answers_json); ?>
+                                <div class="test_a-answer">
+                                    <div class="answer-wrapper">
+                                        <input type="hidden" name="multiply_id[]" value="{{ $multiply->id }}">
+                                        <?php $answer_number = 0; ?>
+                                        @foreach($answers_json as $answer)
+                                                <div class="answer-radio">
+                                                    <input class="answer-radio_input" type="checkbox" id="{{ $answer->answer }}{{ $answer_number }}"
+                                                        value="{{ $answer->answer }}" name="question_{{ $multiply->id }}[]">
+                                                    <label class="answer-radio_label" for="{{ $answer->answer }}{{ $answer_number }}"><?php echo str_replace("\xc2\xa0",' ',$answer->answer); ?></label>
+                                                </div>
+                                                <?php $answer_number++; ?>
+                                        @endforeach
+                                    </div>
+                                </div>
+
+                                <?php $n_answers++; ?>
+                            @endforeach
+                        @endif
+                        <!-- Претаскивание -->
+                            <!-- <div class="test_b-title_wrapper">
                                 <div class="test_b-title_left">
                                     Перетягуй відповіді в блоки зліва
                                 </div>
                                 <div class="test_b-title_right">
-                                    <!-- Ви маєте право на 3 помилки. <span class="test_b-darkText">Залишилась <span>1 </span> помилка.</span> -->
+                                    Ви маєте право на 3 помилки. <span class="test_b-darkText">Залишилась <span>1 </span> помилка.</span>
                                 </div>
                             </div>
                             <div class="test_b separator"></div>
-                            <div class="test_b-grid_wrapper">
-                                <?php $dd_counter = 1; ?>
-                                @foreach($testDragDrop as $dragDrop)
-                                    <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
-                                    <div class="test_b-grid_inner">
-                                        <div class="test_b-grid_question">
-                                            <input type="hidden" name="drag_drop_id[]" value="{{ $dragDrop->id }}">
-                                            <input type="hidden" id="true_answer{{ $dragDrop->id }}" name="answer_dragdrop[]" value="">
+                            <div class="test_b-grid_wrapper"> -->
+                                @if(count($testDragDrop) >= 1)
+                                <div class="test_b-title_wrapper">
+                                    <div class="test_b-title_left">
+                                        Перетягуй відповіді в блоки зліва
+                                    </div>
+                                    <div class="test_b-title_right">
+                                        <!-- Ви маєте право на 3 помилки. <span class="test_b-darkText">Залишилась <span>1 </span> помилка.</span> -->
+                                    </div>
+                                </div>
+                                <div class="test_b separator"></div>
+                                <div class="test_b-grid_wrapper">
+                                    <?php $dd_counter = 1; ?>
+                                    @foreach($testDragDrop as $dragDrop)
+                                        <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
+                                        <div class="test_b-grid_inner">
+                                            <div class="test_b-grid_question">
+                                                <input type="hidden" name="drag_drop_id[]" value="{{ $dragDrop->id }}">
+                                                <input type="hidden" id="true_answer{{ $dragDrop->id }}" name="answer_dragdrop[]" value="">
 
-                                            <div class="test_b-questionBlock questionBlock-small" style="width:auto;">
-                                                <span id="answer{{ $dragDrop->id }}">{{ $dd_counter }}</span>
-                                            </div> 
-                                            {{ strip_tags(str_replace("&nbsp;", '', $dragDrop->question_text)) }}
+                                                <div class="test_b-questionBlock questionBlock-small" style="width:auto;">
+                                                    <span id="answer{{ $dragDrop->id }}">{{ $dd_counter }}</span>
+                                                </div> 
+                                                {{ strip_tags(str_replace("&nbsp;", '', $dragDrop->question_text)) }}
+                                            </div>
                                         </div>
-                                    </div>
-                                    <div class="test_b-grid_inner">
-                                        <div id="answers{{ $dragDrop->id }}" class="test_b-grid_answer">
-                                            <div class="answer-circle"><span>{{ $dd_counter }}</span></div>
-                                            @foreach($dd_answers_json->answers as $answer)
+                                        <div class="test_b-grid_inner">
+                                            <div id="answers{{ $dragDrop->id }}" class="test_b-grid_answer" style="display: grid;">
+                                                <div class="answer-circle"><span>{{ $dd_counter }}</span></div>
+                                                @foreach($dd_answers_json->answers as $answer)
+                                                        
+                                                        <span class="answer-block" style="line-height: 1.6;">
+                                                            <input type="hidden" class="answer_id" value="<?php echo $answer; ?>">
+                                                            {{ $answer }}
+                                                        </span>
                                                     
-                                                    <span class="answer-block" style="line-height: 1.6;">
-                                                        <input type="hidden" class="answer_id" value="<?php echo $answer; ?>">
-                                                        {{ $answer }}
-                                                    </span>
-                                                
-                                            @endforeach
+                                                @endforeach
+                                            </div>
                                         </div>
-                                    </div>
-                                    <script>
+                                        <script>
+
+                                            var id = {{ json_encode($dragDrop->id) }};
+                                            var answer = 'answer' + id;
+                                            var answers = 'answers' + id;
+
+                                            var answers_el = document.getElementById(answers);
+                                            var sortable = Sortable.create(answers_el, {
+                                            group: {
+                                                name: answers,
+                                                put: answer,
+                                                pull: function (to, from) {
+                                                    if(to.el.children.length = 0){
+                                                        return;
+                                                    }
+                                                }
+                                            },
+                                            animation: 100
+                                            });
+
+                                            var answer_el = document.getElementById(answer);
+                                            console.log(answer_el);
+                                            Sortable.create(answer_el, {
+                                            group: {
+                                                name: answer,
+                                                put: function(to, from){
+                                                    var from_id = from.el.id.replace(/\D+/g, '');
+                                                    var to_id = to.el.id.replace(/\D+/g, '');
+                                                    if(from_id == to_id){
+
+                                                        var true_answer = '#true_answer' + to_id;
+                                                        console.log(true_answer);
+                                                        console.log(to.el);
+                                                        
+
+                                                        /* var answer_id = '#answer' + id;
+                                                        var test = $(answer_id).find("input").val(); */
+
+                                                        setTimeout(function(){
+                                                            var new_passed_el = to.el.getElementsByClassName('answer_id').item(0).value;
+                                                            console.log(new_passed_el);
+                                                            //var passed_answer = answer_el.getElementsByClassName('answer_id').item(0).value;
+                                                            //console.log(passed_answer);
+
+                                                            $(true_answer).val(new_passed_el);
+
+                                                        }, 300);
+
+
+                                                        return to.el.children.length < 1;
+                                                    }
+                                                }
+                                            },
+                                            animation: 100
+                                            });
+
+                                        </script>
+
+                                        <script>
 
                                         var id = {{ json_encode($dragDrop->id) }};
                                         var answer = 'answer' + id;
-                                        var answers = 'answers' + id;
+                                        /* testresponse.push(answer);*/
 
-                                        var answers_el = document.getElementById(answers);
-                                        var sortable = Sortable.create(answers_el, {
-                                        group: {
-                                            name: answers,
-                                            put: answer,
-                                            pull: function (to, from) {
-                                                if(to.el.children.length = 0){
-                                                    return;
-                                                }
-                                            }
-                                        },
-                                        animation: 100
-                                        });
+                                        </script>
+                                        <?php $dd_counter++; ?>
+                                        <?php $n_answers++; ?>
+                                    @endforeach
+                                    </div>
+                                @endif
 
-                                        var answer_el = document.getElementById(answer);
-                                        console.log(answer_el);
-                                        Sortable.create(answer_el, {
-                                        group: {
-                                            name: answer,
-                                            put: function(to, from){
-                                                var from_id = from.el.id.replace(/\D+/g, '');
-                                                var to_id = to.el.id.replace(/\D+/g, '');
-                                                if(from_id == to_id){
+                            <!-- </div> -->
+                        @endif
 
-                                                    var true_answer = '#true_answer' + to_id;
-                                                    console.log(true_answer);
-                                                    console.log(to.el);
-                                                    
-
-                                                    /* var answer_id = '#answer' + id;
-                                                    var test = $(answer_id).find("input").val(); */
-
-                                                    setTimeout(function(){
-                                                        var new_passed_el = to.el.getElementsByClassName('answer_id').item(0).value;
-                                                        console.log(new_passed_el);
-                                                        //var passed_answer = answer_el.getElementsByClassName('answer_id').item(0).value;
-                                                        //console.log(passed_answer);
-
-                                                        $(true_answer).val(new_passed_el);
-
-                                                     }, 300);
-
-
-                                                    return to.el.children.length < 1;
-                                                }
-                                            }
-                                        },
-                                        animation: 100
-                                        });
-
-                                    </script>
-
-                                    <script>
-
-                                    var id = {{ json_encode($dragDrop->id) }};
-                                    var answer = 'answer' + id;
-                                    /* testresponse.push(answer);*/
-
-                                    </script>
-                                    <?php $dd_counter++; ?>
-                                    <?php $n_answers++; ?>
-                                @endforeach
-                                </div>
-                            @endif
-
-                        <!-- </div> -->
-                    @endif
-
-             <a class="answer-btn btn-watch--more" href="##" id="test_send"><span>Надіслати тест </span></a>
-                @else
+                <a class="answer-btn btn-watch--more" href="##" id="test_send"><span>Надіслати тест </span></a>
+        @else
                 <div class="container">
                     <div class="string-text">
                         Завдання відсутні
                     </div>
                 </div>
-                    @endif
+        @endif
+    @else
+            <div class="container">
+                <div class="string-text">
+                    Завдання недоступні
+                </div>
+            </div>
+    @endif
 
         </div>
         </form>
     </section>
+
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script>

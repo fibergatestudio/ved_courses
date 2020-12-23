@@ -158,27 +158,41 @@ class HomePageController extends Controller
                         //dd($testMultiply);
                     } else { $testMultiplyOne = ""; }
                     if($testQuest->question_type == "Правильно/неправильно"){
-                        //$testTrueFalseOne = DB::table('tests_true_false')->where('id', $testQuest->test_answers_id)->get();
                         array_push($testTrueFalseIDS, $testQuest->test_answers_id);
                         //dd($testTrueFalse);
                     } else { $testTrueFalseOne = ""; }
                     if($testQuest->question_type == "Перетягування в тексті"){
-                        //$testDragDropOne = DB::table('tests_drag_drop')->where('id', $testQuest->test_answers_id)->get();//
                         array_push($testDragDropIDS, $testQuest->test_answers_id);
                         //dd($testDragDrop);
                     } else { $testDragDropOne = ""; }
 
+                }
+                //dd($testInfo->operating_mode);
+                if($testInfo->operating_mode != '0'){
+
+                    $group_students = DB::table('groups')->where('id', $testInfo->operating_mode)->first();
+
+                    $access_list = json_decode($group_students->students_array);
+
+                    $user_id = Auth::user()->id;
+
+                    if(Auth::user()->role == "admin" || Auth::user()->role == "teacher"){
+                        $testInfo->test_access = true;
+                    } else if( Auth::user()->role == "student" && in_array($user_id, $access_list) ) {
+                        $testInfo->test_access = true;
+                    } else {
+                        $testInfo->test_access = false;
+                    }
+                    //dd($testInfo->test_access);
+
+                } else {
+                    $testInfo->allowed_students = json_encode([]);
                 }
                 $testMultiply = DB::table('tests_multiple_choice')->whereIn('id', $testMultiplyIDS)->get();
                 $testTrueFalse = DB::table('tests_true_false')->whereIn('id', $testTrueFalseIDS)->get();
                 $testDragDrop = DB::table('tests_drag_drop')->whereIn('id', $testDragDropIDS)->get();
 
             }
-
-            //dd($testDragDrop);
-            //dd($testMultiply);
-            //dd($testQuestions);
-        //dd($testInfo);
 
         switch ($tab) {
         case 'strings':

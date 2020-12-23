@@ -593,7 +593,7 @@
                             <div class="newTest-quest-inner_right">
                                 <div class="newTest-quest-wrapper">
                                     <select class="newTest-quest-select" name="operating_mode" >
-                                        <option value="1" selected="">Доступні групи</option>
+                                        <option value="0" selected="">Доступні групи</option>
                                         @foreach($groups as $group)
                                             <option value="{{ $group->id }}">{{ $group->name }}</option>
                                         @endforeach
