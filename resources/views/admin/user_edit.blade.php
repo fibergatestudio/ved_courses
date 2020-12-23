@@ -63,25 +63,13 @@
                 <div class="sce__course-number">
                     <div class="groups-edit__group uge__row sce_width-55">
                         <p class="groups-edit__group-name uge_row_text-style">Назва курсу</p>
-                        <select class='eg-input uge__input_style' name="course_number">
-                            <option value="">Повна назва курсу студента</option>
-                            @if($courses)
-                                @foreach($courses as $course)
-                                    @if($course->name === $student_info->course_number)
-                                    <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
-                                    @else
-                                    <option value="{{ $course->name }}">{{ $course->name }}</option>
-                                    @endif
-                                @endforeach
-                            @endif
-                        </select>
-                        <!-- <input class='eg-input uge__input_style' type="text" name="course_number" value="{{ $student_info->course_number }}" id="getCourseName"
-                            placeholder="Повна назва курсу студента"> -->
+                        <input class='eg-input uge__input_style' type="text" value="{{ $student_info->course_number }}" id="getCourseName" placeholder="Повна назва курсу студента" disabled>
+                        <input type="hidden" name="course_number" value="{{ $student_info->course_number }}">
                     </div>
                     <div class="groups-edit__group uge__row sce_width-40">
                         <p class="groups-edit__group-name uge_row_text-style">Номер групи</p>
-                        <input class='eg-input uge__input_style' type="text" name="group_number" value="{{ $student_info->group_number }}" id="getGroupName"
-                                placeholder="2">
+                        <input class='eg-input uge__input_style' type="text" value="{{ $student_info->group_number }}" id="getGroupName" disabled>
+                        <input type="hidden" name="group_number" value="{{ $student_info->group_number }}">
                     </div>
                 </div>
                 <div class="groups-edit__group uge__row uge__mb_30">

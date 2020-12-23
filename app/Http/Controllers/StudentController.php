@@ -175,20 +175,10 @@ class StudentController extends Controller
         // Если Админ - берем и показываем всех студентов
         if($user_id == 1){
             $students = DB::table('students')->get();
-        } else {
-            // Если не админ
-            // Получаем айдишники доступных студентов
-            $s_ids = [];
-            $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
-            foreach($groups as $group){
-                // Перебираем все группы и если есть совпадения берем аррей студентов и передаем в общий
-                $g_arr = json_decode($group->students_array);
-                array_push($s_ids, $g_arr[0]);
-            }
+        } else {           
             // Берем айдишник доступные ему
-            $students = DB::table('students')->whereIn('user_id', $s_ids)->get();
+            $students = DB::table('students')->where('assigned_teacher_id', $user_id)->get();
         }
-        //$students = DB::table('students')->get();
 
         foreach($students as $student){
             //dd($student);
@@ -197,7 +187,6 @@ class StudentController extends Controller
                 $teacher_info = DB::table('users')->where('id',$teacher_id)->first();
                 $student->assigned_teacher_id = $teacher_info->name;
             }
-
         }
 
         return view('student.students_controll', compact('students'));
@@ -349,11 +338,13 @@ class StudentController extends Controller
             $course_id = $course_info->id;
         }
 
+        // Программа курса
         if ($course_id) {
             $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
             $lesson_count = $course_lessons->count();
         }
 
+        // Видео для курса
         foreach($course_lessons as $lesson){
             if($lesson->video_name == null || $lesson->video_name == "null" ){
                 $lesson->video_count = 0;
@@ -362,8 +353,15 @@ class StudentController extends Controller
             }
         }
 
+        // Определяем следующего студента для кнопки
+        $role = Auth::user()->role;
+        $user_id = Auth::user()->id;
         $students = DB::table('students')->get();
         $next_student = $student_id;
+        
+        if ($role === 'teacher') {
+            $students = DB::table('students')->where('assigned_teacher_id', $user_id)->get();
+        }       
 
         for ($i=0; $i < $students->count(); $i++) { 
             if ($students[$i]->user_id === $student_id) {

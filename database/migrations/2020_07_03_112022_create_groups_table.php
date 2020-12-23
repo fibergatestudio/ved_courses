@@ -19,6 +19,7 @@ class CreateGroupsTable extends Migration
             $table->string('students_array')->nullable();
             $table->string('assigned_teacher_id')->nullable();
             $table->string('assigned_teacher_name')->nullable();
+            $table->string('course_number')->nullable();
             $table->timestamps();
         });
     }

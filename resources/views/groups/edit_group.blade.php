@@ -36,7 +36,7 @@
 
             @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
 
-            <form action="{{ route('apply_edit_group',['group_id' => $group_info->id]) }}" method="POST">
+            <form onsubmit="formEditGroup(this);return false;" action="{{ route('apply_edit_group',['group_id' => $group_info->id]) }}" method="POST">
             @csrf
                 <div class="ge">
                     <h3 class="ccec__main-title">Редагування групи</h3>
@@ -58,7 +58,19 @@
                             </p>
                             <p class="groups-edit__current-teacher eg-text-style">
                                 <span class="ccec-header_style">Назва курсу :&nbsp;</span>
-                                <span class="ccec-header_style" id="courseNamer"></span>
+                                <select class='eg-input uge__input_style' name="course_number" style="height: 50px">
+                                    <option value="">Повна назва курсу студента</option>
+                                    @if($courses)
+                                    @foreach($courses as $course)
+                                    @if($course->name === $group_info->course_number)
+                                    <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
+                                    @else
+                                    <option value="{{ $course->name }}">{{ $course->name }}</option>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </select>
+                                <!-- <span class="ccec-header_style" id="courseNamer"></span> -->
                             </p>
                         </div>
                         <div class="groups-edit__group ccec__add-student-block_style inputs-row">
@@ -173,7 +185,11 @@
 
                 <div class="groups-edit__group uge__row ge__select-block_style mer-sel-wth">
                     <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
-                    <div class="select uge__select_block ge__select_style">
+                    @if($auth_teacher->role === 'teacher')
+                    <input type="text" class="eg-input" value="{{ $auth_teacher->surname}} {{ $auth_teacher->name }} {{ $auth_teacher->patronymic }}" disabled>
+                    <input type="hidden" name="teacher_id" value="{{ $auth_teacher->id }}">
+                    @else
+                    <div class="select uge__select_block ge__select_style">                       
                         <select name="teacher_id"
                             class="select-teacher select-teacher_sce_restyle uge__select_style"
                             id="selectTeacher">
@@ -185,8 +201,9 @@
                                     <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
                                 @endif
                             @endforeach
-                        </select>
+                        </select>                        
                     </div>
+                    @endif
                 </div>
 
                 <div class="groups-edit__buttons-block ccec__back-save-btns">
@@ -199,9 +216,13 @@
             </form>
         </div>
     </section>
+    <script type="text/javascript">
+        var coursesObj = '<?=json_encode($course_for_js)?>';
+    </script>
 @endsection
 
 @section('js')
+
     <script>
         var students_array = new Array();
         // var count_t = 1;
@@ -427,6 +448,27 @@
             $("div[id^='teach']").html(teacher);
             $("div[id^='mteach']").html(teacher);
         });
+    </script>
+
+    <script type="text/javascript">
+        
+        coursesObj = JSON.parse(coursesObj);
+
+        function formEditGroup(form) {
+            const course = $('[name="course_number"]').val();
+            const teacher = $('[name="teacher_id"]').val();
+            for (let key in coursesObj) {
+                if(key === course){
+                    let temp = coursesObj[key].toString();
+                    if (temp.indexOf(teacher) === -1) {
+                        alert("У цього викладача немає такого курсу !");
+                        return false;
+                    }                 
+                }               
+            }
+            form.submit();
+        }
+
     </script>
 @endsection
 

@@ -26,26 +26,15 @@
             </div>
             <div class="sce__course-number">
                 <div class="groups-edit__group groups-edit__group_sce-restyle sce_width-55">
-                    <p class="groups-edit__group-name eg-text-style">Назва курсу</p>
-                    <select class='eg-input uge__input_style' name="course_number">
-                        <option value="">Повна назва курсу студента</option>
-                        @if($courses)
-                            @foreach($courses as $course)
-                                @if($course->name === $student->course_number)
-                                <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
-                                @else
-                                <option value="{{ $course->name }}">{{ $course->name }}</option>
-                                @endif
-                            @endforeach
-                        @endif
-                    </select> 
-                    <!-- <input class='eg-input' type="text" name="course_number" id="getCourseName"
-                        placeholder="Повна назва курсу студента"  value="{{ $student->course_number }}"> -->
+                    <p class="groups-edit__group-name eg-text-style">Назва курсу</p>                     
+                    <input class='eg-input' type="text" id="getCourseName"
+                        placeholder="Повна назва курсу студента"  value="{{ $student->course_number }}" disabled>
+                    <input type="hidden" name="course_number" value="{{ $student->course_number }}">    
                 </div>
                 <div class="groups-edit__group groups-edit__group_sce-restyle sce_width-40">
                     <p class="groups-edit__group-name eg-text-style">Номер групи</p>
-                    <input class='eg-input sce-b-margin_restyle' type="text" name="group_number" id="getGroupName"
-                        placeholder="2" value="{{ $student->group_number }}">
+                    <input class='eg-input sce-b-margin_restyle' type="text" id="getGroupName" value="{{ $student->group_number }}" disabled>
+                    <input type="hidden" name="group_number" value="{{ $student->group_number }}">
                 </div>
             </div>
             <div class="groups-edit__group groups-edit__group_sce-restyle">
