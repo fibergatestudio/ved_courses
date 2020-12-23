@@ -142,6 +142,8 @@ use Illuminate\Support\Facades\Auth;
     Route::get('/students_controll', 'StudentController@students_controll')->name('students_controll')->middleware('auth','role:admin,teacher');
         // Редактирование студента
         Route::get('/students_controll/{student_id}', 'StudentController@students_controll_edit')->name('students_controll_edit')->middleware('auth','role:admin,teacher');
+        // Удаление студента
+        Route::get('/students_controll/{student_id}/delete', 'StudentController@students_controll_delete')->name('students_controll_delete')->middleware('auth','role:admin,teacher');
         // Применитть редактироавние
         Route::post('/students_controll/{student_id}/apply', 'StudentController@students_controll_apply')->name('students_controll_apply')->middleware('auth','role:admin,teacher');
         // Загрузить студентов - страница АДМИН

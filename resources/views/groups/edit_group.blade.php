@@ -388,8 +388,8 @@
         });
 
         function removeStud(count_stud) {
+            event.preventDefault();
             students_array.splice( $.inArray(count_stud,students_array) ,1 );
-            alert($("div[id='name"+count_stud+"']").val());
             setTimeout(function(){
                 $("div[id='name"+count_stud+"']").remove();
                 $("div[id='mobi"+count_stud+"']").remove();
