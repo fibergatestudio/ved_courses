@@ -125,7 +125,7 @@ class CourseSeeder extends Seeder
             'getting_result' => '1',
             'extended_feedback' => '{"grade_100":{"grade":"100","review":null},"grade_custom":[],"grade_0":{"grade":"0","review":null}}',
             'availability' => '1',
-            'operating_mode' => '1',
+            'operating_mode' => '0',
         ]);
             // Сид tests_questions
             $test_q_1 = DB::table('tests_multiple_choice')->insertGetId([
