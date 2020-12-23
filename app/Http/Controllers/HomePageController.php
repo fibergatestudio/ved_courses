@@ -186,7 +186,7 @@ class HomePageController extends Controller
                     //dd($testInfo->test_access);
 
                 } else {
-                    $testInfo->allowed_students = json_encode([]);
+                    $testInfo->test_access = true;
                 }
                 $testMultiply = DB::table('tests_multiple_choice')->whereIn('id', $testMultiplyIDS)->get();
                 $testTrueFalse = DB::table('tests_true_false')->whereIn('id', $testTrueFalseIDS)->get();
