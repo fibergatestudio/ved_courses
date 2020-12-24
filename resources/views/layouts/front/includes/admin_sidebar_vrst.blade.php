@@ -12,13 +12,9 @@
             <!-- changeling block mobile-btn (start) -->
             <div class="sidebar-top_mobile-btn ug__mobile-top-block">
                 <div class="sidebar-top_mobile-img">
-                    <img src="@if(isset($headTitle)) {{ asset($imgPath) }} @endif" alt="icon">
+                    <img src="{{ asset($imgPath ?? '') }}" alt="icon">
                 </div>
-                <div class="sidebar-top_mobile-name ug__top-name">
-                @if(isset($headTitle))
-                    {{ $headTitle }}
-                @endif
-                </div>
+                <div class="sidebar-top_mobile-name ug__top-name">{{ $headTitle ?? '' }}</div>
             </div>
             <!-- changeling block mobile-btn (end) -->
 
@@ -35,7 +31,7 @@
                                     <img class="sidebar_title-image" src="{{ asset('img/teacher-mobileMenu-1.png') }}" alt="icon">
                                 </a>
                             </div>
-                            <a class="sidebar_title-link" style="color: #fff" href="{{ isset($curentPath) ? $curentPath : '' }}">{{ __('Головна') }}</a>
+                            <a class="sidebar_title-link" style="color: #fff" href="{{ $curentPath ?? '' }}">{{ __('Головна') }}</a>
                         </li>
                     @else
                         <li class="sidebar_title-inner">
@@ -46,7 +42,7 @@
                                     <img class="sidebar_title-image" src="{{ asset('img/teacher-menu-1.png') }}" alt="icon">
                                 </a>
                             </div>
-                            <a class="sidebar_title-link" href="{{ isset($curentPath) ? $curentPath : '' }}">{{ __('Головна') }}</a>
+                            <a class="sidebar_title-link" href="{{ $curentPath ?? '' }}">{{ __('Головна') }}</a>
                         </li>
                     @endif
                     @if( Auth::user()->role == "admin")

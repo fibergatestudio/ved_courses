@@ -1,4 +1,4 @@
-<div class="bootstrap-restylingStudent modal fade" id="{{ isset($modalId) ? $modalId : '' }}{{ isset($secondId) ? $secondId : '' }}" tabindex="-1" role="dialog"
+<div class="bootstrap-restylingStudent modal fade" id="{{ $modalId ?? '' }}{{ $secondId ?? '' }}" tabindex="-1" role="dialog"
     aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-dialog_restyle">
         <div class="modal-content">
@@ -7,10 +7,12 @@
                     <img src="{{ asset('img/basket.png') }}" alt="icon">
                 </div>
                 <div class="deleteMenu-text">
-                    Ви точно бажаєте видалити <br> користувача {{ isset($target) ? $target : '' }}?
+                    Ви точно бажаєте видалити <br> користувача {{ $target ?? '' }}?
                 </div>
                 <div class="deleteMenu-btn">
-                    <a class="flexTable-btn_delete" href="{{ isset($modalPath) ? $modalPath : '' }}"><span>Видалити</span></a>
+                    <a class="flexTable-btn_delete" href="{{ $modalPath ?? '' }}">
+                        <span>Видалити</span>
+                    </a>
                 </div>
             </div>
         </div>
