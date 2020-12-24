@@ -177,7 +177,7 @@ class TestsController extends Controller
             //$c = "course_learn" . $i;
             $answr = "answer" . $i;
             $answer_grade = "answer_grade" . $i;
-            $answer_comment = "answer_comment" . $i;
+            $answer_comment = "answer_comment" . $i; 
             //dd($c);
             $arr_answer = [
                 'answer' => strip_tags( $request->$answr ),

@@ -203,8 +203,10 @@ class StudentController extends Controller
                 $student->assigned_teacher_id = $teacher_info->surname.' '.$teacher_info->name.' '.$teacher_info->patronymic;
             }
         }
+        // Загруженные студенты
+        $upld_students = DB::table('students_data')->get();
         // dd($students);
-        return view('student.students_controll', compact('students'));
+        return view('student.students_controll', compact('students', 'upld_students'));
     }
 
     // Удаление студента

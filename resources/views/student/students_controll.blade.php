@@ -38,7 +38,25 @@
                     Файли з розширенням xlsx або xlsx. <br> Максимальний розмір - 5 Мб.
                 </p>
             </div>
-
+            <p><a href="##" data-toggle="modal" data-target="#showUploadedStud">Текущие загруженные студенты</a></p>
+                        <div class="bootstrap-restylingStudent modal fade" id="showUploadedStud" tabindex="-1" role="dialog"
+                            aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog  modal-dialog_restyle">
+                                <div class="modal-content">
+                                    <div class="deleteMenu-wrapper">
+                                        <div class="deleteMenu-text">
+                                            <h3 class="modal-students-title">Текущие студенты</h3>
+                                                <?php $cr_st_num = 1; ?>
+                                                @foreach($upld_students as $student)
+                                                <div class="groups__elem student-data"><span>{{$cr_st_num}}. &nbsp;</span> {{ $student->status_from }} {{ $student->recipient }} {{ $student->birthday }}</div>
+                                                <?php $cr_st_num++; ?>
+                                                @endforeach
+                                        </div>
+                                    </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
             <div class="flexTable-wrapper">
                 <div class="flexTable-scrollContainer">
                     <div class="sc-scrollInner">

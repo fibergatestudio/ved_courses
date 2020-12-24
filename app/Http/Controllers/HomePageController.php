@@ -335,32 +335,48 @@ class HomePageController extends Controller
                 $multi_array = [];
                 // Строка с базы
                 $multiply_db = DB::table('tests_multiple_choice')->where('id', $multiply_id)->first();
-                //dd($multiply_db);
+                // Макс оценка за тест
+                $max_multi_grade = $multiply_db->default_score;
+                // Текущая оценка за тест
+                $curr_multi_grade = 0;
+                //
                 $multi_array['question_id'] = $multiply_id;
                 $multi_array['question_type'] = "Множинний вибір";
                 $multi_array['question_text'] = $multiply_db->question_text;
 
                 // Текущий выбранный ответ
                 $request_name = 'question_' . $multiply_id;
-                //dd($request_name);
+                // Получаем текущие ответы на тест
                 $current_answers = $request->$request_name;
-                //dd($current_answers);
+                // Декодим ответы
                 $answers_json = json_decode($multiply_db->answers_json);
+                //dd($answers_json);
+                //$m_q_num = count($answers_json);
+                foreach($answers_json as $answer_info){
 
-                $m_q_num = count($answers_json);
-                foreach($answers_json as $answer){
-                    //dd($answer);
-                    if($answer->answer){
-                        $multi_array['answer_grade'] = $answer->answer_grade;
-                        $test_questions_json['final_score'] = $test_questions_json['final_score'] + ($grade_per_quest / 2);
+
+                    if($current_answers != null && in_array($answer_info->answer, $current_answers)){
+                        $curr_multi_grade = $curr_multi_grade + $this->get_percentage($max_multi_grade, $answer_info->answer_grade);
+                    } 
+                    if($answer_info->answer_grade == 0 && in_array($answer_info->answer, $current_answers)){
+                        //dd("Wrong answer");
+                        $curr_multi_grade = 0;
+                    }
+
+                    if($answer_info->answer){
+                        $multi_array['answer_grade'] = $answer_info->answer_grade;
+                        //$test_questions_json['final_score'] = $test_questions_json['final_score'] + ($grade_per_quest / 2);
                     } else {
                         $multi_array['answer_grade'] = 0;
                     }
                 }
+                //dd($curr_multi_grade);
                 array_push($multiply_q, $multi_array);
+                $test_questions_json['final_score'] = $test_questions_json['final_score'] + $curr_multi_grade;
             }
             array_push($test_questions_json, $multiply_q);
         }
+        //dd($test_questions_json['final_score']);
         // Петераскивание
         if(isset($drag_drop_ids)){
             // Перебираем и берем данные о них с базы
@@ -427,7 +443,7 @@ class HomePageController extends Controller
         // 
         //dd($test_id, $course_id);
         //$test_questions_json['final_score'] = 
-
+        //dd($test_questions_json);
         //dd($q_num);
 
         $encoded_results = json_encode($test_questions_json);
@@ -479,5 +495,14 @@ class HomePageController extends Controller
     public function test_c()
     {
         return view('front.test_c');
+    }
+
+    public function get_percentage($total, $number)
+    {
+      if ( $total > 0 ) {
+       return round($number * ($total / 100),2);
+      } else {
+        return 0;
+      }
     }
 }

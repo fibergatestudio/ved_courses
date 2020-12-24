@@ -263,8 +263,11 @@
                                                 <div class="newTest-quest-wrapper">
                                                     <select class="newTest-quest-select" :name="'answer_grade'+index"> 
                                                         <option value="1" selected>Не вибрано</option> 
-                                                        <option value="2">Опция 2</option>
-                                                        <option value="2">Опция 3</option>                                  
+                                                        <option value="0">0%</option>
+                                                        <option value="20">20%</option>
+                                                        <option value="25">25%</option>
+                                                        <option value="50">50%</option>
+                                                        <option value="100">100%</option>                                  
                                                     </select>
                                                     <div class="newTest-quest_arrowBlock"></div>
                                                 </div>
