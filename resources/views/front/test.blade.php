@@ -50,8 +50,8 @@
 
     </div>
     </section>
-    @if( $testInfo->test_access == true)
-        @if(isset($testInfo->id))
+    @if(isset($testInfo->id))
+        @if( $testInfo->test_access == true)
         <?php $n_answers = 1; ?>
 
         <section class="test_a">
@@ -241,16 +241,16 @@
         @else
                 <div class="container">
                     <div class="string-text">
-                        Завдання відсутні
+                        Завдання недоступні
                     </div>
                 </div>
         @endif
     @else
-            <div class="container">
-                <div class="string-text">
-                    Завдання недоступні
-                </div>
+        <div class="container">
+            <div class="string-text">
+                Завдання відсутні
             </div>
+        </div>
     @endif
 
         </div>
