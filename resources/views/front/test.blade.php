@@ -58,6 +58,7 @@
             <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
             @csrf
             <div class="container">
+            {{ $testInfo->expired_tries }}322
             @if(isset($testInfo))
                 @if($testInfo->expired_tries == true)
                     <div class="alert alert-danger">

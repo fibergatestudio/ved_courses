@@ -195,7 +195,7 @@ class HomePageController extends Controller
                 // Макс попыток
                 $max_tries = 3;
                 // Получаем кол-во пройденых раз
-                $current_tries = DB::table('tests_log')->where(['user_id' => $user->id, 'test_id' => $test_id->id])->get();
+                $current_tries = DB::table('tests_log')->where(['user_id' => $user->id, 'test_id' => $course_id])->get();
                 $current_tries_count = count($current_tries);
                 // Кол-во оставшихся попытк
                 if($current_tries_count >= $max_tries){
@@ -275,7 +275,7 @@ class HomePageController extends Controller
         // }
         // Кол-во оставшихся попытк
         if($current_tries_count >= $max_tries){
-            $test_questions_json['tries_left'] = 0;
+            $test_questions_json['tries_left'] = 0; 
         } else {
             // if( $current_tries_count == 0){
             //     $current_tries_count = 1;
