@@ -289,12 +289,13 @@
                         @endforeach
 
                         <div class="courseEdit-btn_wrapper">
-                            <a href="{{ route('add_question', ['course_id' => $course_info->id ]) }}" style="max-width:310px;" class="courseEdit-btn courseEdit-btn-add courseEdit-btn-margin">
-                                <span>Додати запитання</span>
-                            </a>
                             @if(count($courses_question_answers) != 0)
                             <a href="{{ route('edit_question', ['course_id' => $course_info->id ]) }}" style="max-width:310px;" class="courseEdit-btn courseEdit-btn-add courseEdit-btn-margin">
                                 <span>Ред. запитання</span>
+                            </a>
+                            @else
+                            <a href="{{ route('add_question', ['course_id' => $course_info->id ]) }}" style="max-width:310px;" class="courseEdit-btn courseEdit-btn-add courseEdit-btn-margin">
+                                <span>Додати запитання</span>
                             </a>
                             @endif
                         </div>
