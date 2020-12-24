@@ -413,7 +413,7 @@ class HomePageController extends Controller
         ]);
 
         // Записывает к курсу + пройденных раз.
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
+        $course_info = DB::table('courses')->where('id', $test_id)->first();
         $finised_c = $course_info->finished_count;
         if($finised_c){
             $f_count = $finised_c + 1;
