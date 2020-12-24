@@ -83,7 +83,7 @@
     <script>
         $(document).ready(function() {
             $('input[type="file"]').change(function(e) {
-                var geekss = e.target.files[0].name;
+                var geekss = e.target.files[0].name; 
                 //var filetype = e.target.files[0];
                 var fileExtension = ['jpeg', 'jpg', 'png'];
                 if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {

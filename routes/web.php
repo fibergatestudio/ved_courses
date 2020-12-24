@@ -205,9 +205,13 @@ use Illuminate\Support\Facades\Auth;
             Route::get('/courses_controll/edit_course/{course_id}/add_question', 'CoursesController@add_question')->name('add_question')->middleware('auth','role:admin');
                 // Добавить Вопрос POST
                 Route::post('/courses_controll/edit_course/{course_id}/add_question/apply', 'CoursesController@add_question_apply')->name('add_question_apply')->middleware('auth','role:admin');
+            // Редактировать вопрос
+            Route::get('/courses_controll/edit_course/{course_id}/edit_question', 'CoursesController@edit_question')->name('edit_question')->middleware('auth','role:admin');
+                // Редактировать вопрос POST
+                Route::post('/courses_controll/edit_course/{course_id}/edit_question/apply', 'CoursesController@edit_question_apply')->name('edit_question_apply')->middleware('auth','role:admin');
 
-                // Удалить препода с курса
-                Route::get('/courses_controll/edit_course/{course_id}/delete_teacher/{teacher_id}', 'CoursesController@delete_teacher_course')->name('delete_teacher')->middleware('auth','role:admin');
+            // Удалить препода с курса
+            Route::get('/courses_controll/edit_course/{course_id}/delete_teacher/{teacher_id}', 'CoursesController@delete_teacher_course')->name('delete_teacher')->middleware('auth','role:admin');
         // Удаление курса
         Route::get('/courses_controll/{course_id}/delete', 'CoursesController@delete_course')->name('delete_course')->middleware('auth','role:admin');
 

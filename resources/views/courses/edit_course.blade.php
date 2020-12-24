@@ -292,6 +292,11 @@
                             <a href="{{ route('add_question', ['course_id' => $course_info->id ]) }}" style="max-width:310px;" class="courseEdit-btn courseEdit-btn-add courseEdit-btn-margin">
                                 <span>Додати запитання</span>
                             </a>
+                            @if(count($courses_question_answers) != 0)
+                            <a href="{{ route('edit_question', ['course_id' => $course_info->id ]) }}" style="max-width:310px;" class="courseEdit-btn courseEdit-btn-add courseEdit-btn-margin">
+                                <span>Ред. запитання</span>
+                            </a>
+                            @endif
                         </div>
                     </div>
                     <div class="courseEdit-btn-watch_wrapper">
@@ -357,8 +362,14 @@
     $(document).ready(function() {
         $('input[type="file"]').change(function(e) {
             var geekss = e.target.files[0].name;
-            alert("Фото "+ geekss + " успішно додано!");
-            $("#img_upload_name").val(geekss);
+
+            var fileExtension = ['jpeg', 'jpg', 'png'];
+            if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
+            } else {
+                alert("Фото "+ geekss + " успішно додано!");
+                $("#img_upload_name").text(geekss);
+            }
 
         });
     });

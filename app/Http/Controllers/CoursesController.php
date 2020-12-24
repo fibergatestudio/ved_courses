@@ -622,9 +622,58 @@ class CoursesController extends Controller
             ]);
         }
         // Возвращаем назад
-        return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ');
+        return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ'); 
         //return redirect()->back();
         //return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
+    }
+
+    public function edit_question($course_id){
+
+        $course_info = DB::table('courses')->where('id', $course_id)->first();
+
+        $faq_info = DB::table('courses_faq')->where('course_id', $course_id)->get();
+
+        return view('courses.edit_question', compact('course_info', 'faq_info'));
+    }
+
+    public function edit_question_apply($course_id, Request $request){
+
+        // Получаем кол-во вопросов
+        $q_counter = $request->questions_counter;
+        // Для каждого вопроса
+        //dd($q_counter);
+        for($i = 0; $i <= $q_counter; $i++){
+            // Формируем название полей реквеста
+            $c_course_question = 'course_question' . $i;
+            $c_course_answer = 'course_answer' . $i;
+            $c_course_id = 'qa_id' . $i;
+            // И добавляем их в базу.
+            //dd($request->all());
+            if($request->$c_course_question != null && $request->$c_course_answer != null){
+
+                $check_current = DB::table('courses_faq')->where('id', $request->$c_course_id)->first();
+
+                if($check_current){
+                    DB::table('courses_faq')->where('id',$check_current->id)->update([
+                        'course_id' => $course_id,
+                        'course_question' => $request->$c_course_question,
+                        'course_answer' => $request->$c_course_answer,
+                    ]); 
+                } else {
+                    DB::table('courses_faq')->insert([
+                        'course_id' => $course_id,
+                        'course_question' => $request->$c_course_question,
+                        'course_answer' => $request->$c_course_answer,
+                    ]); 
+                }
+
+                 
+
+            }
+            
+        }
+        // Возвращаем назад
+        return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ'); 
     }
 
 
