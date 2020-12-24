@@ -452,9 +452,6 @@
             },
             methods: {
                 addNewEntry: function(){
-                    if(currentCounter >= 4){
-                        alert("Не можна додати більше 5 варіантів!");
-                    } else {
                         currentCounter = currentCounter + 1;
                         var id_p = '#answer_comment' + (currentCounter);
                         var id_t = '#answer' + (currentCounter);
@@ -490,7 +487,6 @@
 
                         this.ids.push({id: currentCounter});
                         document.getElementById("answer_counter").value = currentCounter;
-                    }
                     
                 },
             }
