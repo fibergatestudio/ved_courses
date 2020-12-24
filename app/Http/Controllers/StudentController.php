@@ -96,7 +96,7 @@ class StudentController extends Controller
                 //'patronymic' => $request->patronymic,
             ]);
 
-        // Если студент не совпал - обновляем инфуормацию. (Все еще будет нуждаться в подтверждении)
+        // Если студент не совпал - обновляем информацию. (Все еще будет нуждаться в подтверждении)
         } else {
 
             DB::table('students')->where('user_id', $user_id)->update([
@@ -175,7 +175,22 @@ class StudentController extends Controller
         // Если Админ - берем и показываем всех студентов
         if($user_id == 1){
             $students = DB::table('students')->get();
-        } else {           
+        } else {
+            // Если не админ
+            // Получаем айдишники доступных студентов
+            $s_ids = [];
+            $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
+
+            foreach($groups as $group){
+
+                // Перебираем все группы и если есть совпадения берем аррей студентов и передаем в общий
+                $g_arr = json_decode($group->students_array);
+
+                foreach($g_arr as $id){
+                    array_push($s_ids, $id);
+                }
+            }
+
             // Берем айдишник доступные ему
             $students = DB::table('students')->where('assigned_teacher_id', $user_id)->get();
         }
@@ -185,11 +200,33 @@ class StudentController extends Controller
             $teacher_id = $student->assigned_teacher_id;
             if($teacher_id != null){
                 $teacher_info = DB::table('users')->where('id',$teacher_id)->first();
-                $student->assigned_teacher_id = $teacher_info->name;
+                $student->assigned_teacher_id = $teacher_info->surname.' '.$teacher_info->name.' '.$teacher_info->patronymic;
             }
         }
-
+        // dd($students);
         return view('student.students_controll', compact('students'));
+    }
+
+    // Удаление студента
+    public function students_controll_delete($student_id){
+        dd('work in progress!!!');
+
+        if(isset($student_id)){
+            //проверка на существование пользователя
+            $user = DB::table('users')->where('id', $student_id)->first();
+
+            if(isset($user)){
+                //обнуление связи с преподавателем
+                $student = DB::table('students')->where('user_id', $student_id)->first();
+                $student->assigned_teacher_id = null;
+                // dd($student_id);
+                //удаление из группы
+                $group = DB::table('groups')->where('students_array', 'like', $student_id)->get();
+                dd($group);
+                return redirect()->back()->with('message_success', 'Студент був видалений!');
+            }
+        }
+        return redirect()->back()->with('message_error', 'Студент не існує!');
     }
 
     public function student_tests(){
@@ -329,7 +366,7 @@ class StudentController extends Controller
         $student = DB::table('students')->where('user_id', $student_id)->first();
         $email = DB::table('users')->where('id', $student_id)->first()->email;
         $student->email = $email;
-        
+
         $course_id = null;
         $course_lessons = (object)[];
         $lesson_count = null;
@@ -358,19 +395,19 @@ class StudentController extends Controller
         $user_id = Auth::user()->id;
         $students = DB::table('students')->get();
         $next_student = $student_id;
-        
+
         if ($role === 'teacher') {
             $students = DB::table('students')->where('assigned_teacher_id', $user_id)->get();
-        }       
+        }
 
-        for ($i=0; $i < $students->count(); $i++) { 
+        for ($i=0; $i < $students->count(); $i++) {
             if ($students[$i]->user_id === $student_id) {
                 if ($i + 1 < $students->count()) {
                     $next_student = $students[$i+1]->user_id;
                 }
             }
         }
-        
+
         return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count'));
     }
 
