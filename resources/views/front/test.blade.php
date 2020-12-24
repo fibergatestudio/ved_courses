@@ -53,10 +53,18 @@
     @if( $testInfo->test_access == true)
         @if(isset($testInfo->id))
         <?php $n_answers = 1; ?>
+
         <section class="test_a">
             <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
             @csrf
             <div class="container">
+            @if(isset($testInfo))
+                @if($testInfo->expired_tries == true)
+                    <div class="alert alert-danger">
+                        <b>Увага!</b> Тест не буде зарахований, ви витратили <b>максимальну</b> кількість спроб!
+                    </div>
+                @endif
+            @endif
             <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
                     <!-- Да\Нет -->
                     @if(isset($testInfo))

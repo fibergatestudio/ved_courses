@@ -21,7 +21,7 @@
                                     <div class="courseAdd_left--name">Назва<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdd-inner_right">
-                                    <input class="course-faq--input courseAdditional--input"  name="name" type="text" required>
+                                    <input class="course-faq--input courseAdditional--input" id="course_name" name="name" type="text" required>
                                 </div>
                             </div>
 
@@ -64,7 +64,7 @@
                     </div>
 
                     <div class="courseEdit-btn-watch_wrapper">
-                        <a class="courseEdit-btn-watch btn-watch--more" id="submit_button" href="##"><span>Зберегти курс</span></a>
+                        <a class="courseEdit-btn-watch btn-watch--more" onclick="submitForm()" href="##"><span>Зберегти курс</span></a>
                     </div>
                 </form>
             </div>
@@ -84,11 +84,31 @@
         $(document).ready(function() {
             $('input[type="file"]').change(function(e) {
                 var geekss = e.target.files[0].name;
-                alert("Фото "+ geekss + " успішно додано!");
-                $("#img_upload_name").text(geekss);
-
+                //var filetype = e.target.files[0];
+                var fileExtension = ['jpeg', 'jpg', 'png'];
+                if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                    alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
+                } else {
+                    alert("Фото "+ geekss + " успішно додано!");
+                    $("#img_upload_name").text(geekss);
+                }
             });
         });
+
+        function submitForm(){
+
+            // Получаем инфу
+            var name = $.trim( $('#course_name').val() );
+
+            // Check if empty of not
+            if (name  === '') {
+                alert('Название курса пустое!');
+                return false;
+            } else {
+                document.getElementById('create_course').submit();
+            }
+        }
+
     </script>
     <script>
         $( "#submit_button" ).click(function() {

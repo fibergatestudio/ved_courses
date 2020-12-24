@@ -314,7 +314,6 @@
 
             // Получаем кол-во видео
             var video_counter = $('#videos_counter').val();
-
             // Перебираем поля каждого видео
             if(video_counter > 0){
                 for(i = 0; i <= video_counter; i++){
@@ -342,6 +341,30 @@
                     } else if(i == video_counter){
                         document.getElementById('add_lesson_form').submit();
                     }
+                }
+            } else if(video_counter == 0){
+                console.log(video_counter);
+                var v_name = '#video_name' + video_counter;
+                var v_lenght = '#video_length' + video_counter;
+                var v_link = '#video_link' + video_counter;
+
+                // Получаем инфу
+                var name = $.trim( $(v_name).val() );
+                var length = $.trim( $(v_lenght).val() );
+                var link = $.trim( $(v_link).val() );
+
+                // Check if empty of not
+                if (name  === '') {
+                    alert('Название видео 1 пустое.');
+                    return false;
+                } else if (length  === '') {
+                    alert('Длинна видео 1 пустое.');
+                    return false;
+                } else if (link  === '') {
+                    alert('Ссылка видео 1 пустая.');
+                    return false;
+                } else {
+                    document.getElementById('add_lesson_form').submit();
                 }
             } else {
                 document.getElementById('add_lesson_form').submit();

@@ -16,7 +16,7 @@ class CreateCourseViewsTable extends Migration
         Schema::create('course_views', function (Blueprint $table) {
             $table->id();
             $table->string('course_id');
-            $table->string('course_name');
+            $table->string('course_name')->nullable();
             $table->string('url');
             $table->string('session_id');
             $table->string('user_id');

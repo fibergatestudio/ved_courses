@@ -209,7 +209,7 @@ class StudentController extends Controller
 
     // Удаление студента
     public function students_controll_delete($student_id){
-        dd('work in progress!!!');
+        //dd('work in progress!!!');
 
         if(isset($student_id)){
             //проверка на существование пользователя
@@ -221,8 +221,31 @@ class StudentController extends Controller
                 $student->assigned_teacher_id = null;
                 // dd($student_id);
                 //удаление из группы
-                $group = DB::table('groups')->where('students_array', 'like', $student_id)->get();
-                dd($group);
+                // Получаем все группы
+                $groups = DB::table('groups')->get();
+                // Перебираем каждую группу
+                foreach($groups as $grp){
+                    // Берем аррей студентов
+                    $s_arr = json_decode($grp->students_array);
+                    // Создаем новый пустой аррей студентов
+                    $new_array = [];
+                    // Перебираем всех текущих студентов группы
+                    foreach($s_arr as $st){
+                        // Если студент не совпадает с удаляемым - то пушим его в новый аррей
+                        if($st != $student_id){
+                            array_push($new_array, $st);
+                        }
+                    }
+                    // Обновляем группу
+                    DB::table('groups')->where('id', $grp->id)->update([ 'students_array' => json_encode($new_array) ]);
+                }
+                // Удаляем студента с user
+                DB::table('users')->where('id', $student_id)->delete();
+                // Удаляем доп инфу студента.
+                DB::table('students')->where('user_id', $student_id)->delete();
+                //dd($groups, $student_id);
+
+
                 return redirect()->back()->with('message_success', 'Студент був видалений!');
             }
         }
