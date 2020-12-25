@@ -12875,13 +12875,14 @@ button.input-descr{
 	margin: 0 auto;
 	margin-bottom: 35px;
 }
-.protocol-btns-block button{
+.protocol-btns-block button, .protocol-btns-block a{
 	width: 100%;
 	max-width: 370px;
 	margin-right: 0;
 	font-family: 'Open Sans', sans-serif;
 	padding: 12px;
-	line-height: 1;
+    line-height: 1;
+    text-align: center;
 }
 .to-top-button{
 	position: fixed;

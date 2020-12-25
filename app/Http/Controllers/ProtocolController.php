@@ -36,8 +36,9 @@ class ProtocolController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($course_id, $lesson_id, $user_id)
+    public function show($course_id, $lesson_id, $user_id, Request $request)
     {
+        $referer = $request->headers->get('referer');
         $protocol = DB::table('protocols')->where([
             'course_id' => $course_id,
             'lesson_id' => $lesson_id,
@@ -46,6 +47,6 @@ class ProtocolController extends Controller
         if (is_null($protocol)) {
             abort(404);
         }
-        return view('front.protocol_raiting', compact('protocol'));
+        return view('front.protocol_raiting', compact('protocol', 'referer'));
     }
 }

@@ -1880,7 +1880,7 @@
                                     </button>
 
 
-                                <button class="groups-edit__back-to-groups sce__buttons-restyle">Назад</button>
+                                    <a class="groups-edit__back-to-groups sce__buttons-restyle" href="{{ url($referer)}}">Назад</a>
                                 </div>
                             </div>
                         </div>

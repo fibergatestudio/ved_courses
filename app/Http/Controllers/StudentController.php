@@ -436,6 +436,22 @@ class StudentController extends Controller
             }
         }
 
+        $course_protocols = [];
+        //Протоколы для курса
+        foreach($course_lessons as $lesson){
+            $current_protocol = DB::table('protocols')->where([
+                                                            ['course_id', '=', $course_id],
+                                                            ['lesson_id', '=', $lesson->id],
+                                                            ['user_id', '=', auth()->user()->id],
+                                                        ])->first();
+            if($lesson->show_protocol) {
+                array_push($course_protocols, $current_protocol);
+            }
+            else {
+                array_push($course_protocols, null);
+            }
+        }
+
         // Определяем следующего студента для кнопки
         $role = Auth::user()->role;
         $user_id = Auth::user()->id;
@@ -454,7 +470,7 @@ class StudentController extends Controller
             }
         }
 
-        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count'));
+        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count', 'course_protocols'));
     }
 
 }
