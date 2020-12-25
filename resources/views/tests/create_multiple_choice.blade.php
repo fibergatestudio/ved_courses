@@ -366,12 +366,19 @@
                                             Оцінка
                                         </div>
                                         <div class="multipleChoice-string_right"> 
+                                            <!-- <div class="newTest-quest-wrapper">
+                                                <select class="newTest-quest-select" :id="'answer_plusminus'+index" :name="'answer_plusminus'+index"> 
+                                                    <option value="+">+</option>
+                                                    <option value="-">-</option>
+                                                </select>
+                                            </div> -->
                                             <div class="newTest-quest-wrapper">
                                                 <select class="newTest-quest-select" :id="'answer_grade'+index" :name="'answer_grade'+index"> 
                                                     <option value="1" selected>Не вибрано</option> 
                                                     <option value="0">0%</option>
                                                     <option value="20">20%</option>
                                                     <option value="25">25%</option>
+                                                    <option value="33">33%</option>
                                                     <option value="50">50%</option>
                                                     <option value="100">100%</option>                                  
                                                 </select>

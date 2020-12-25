@@ -350,13 +350,13 @@ class HomePageController extends Controller
                 $current_answers = $request->$request_name;
                 // Декодим ответы
                 $answers_json = json_decode($multiply_db->answers_json);
-                //dd($answers_json);
+                //dd($answers_json, $current_answers);
                 //$m_q_num = count($answers_json);
                 foreach($answers_json as $answer_info){
 
 
                     if($current_answers != null && in_array($answer_info->answer, $current_answers)){
-                        $curr_multi_grade = $curr_multi_grade + $this->get_percentage($max_multi_grade, $answer_info->answer_grade);
+                        $curr_multi_grade = $curr_multi_grade + round($this->get_percentage($max_multi_grade, $answer_info->answer_grade), 0);
                     } 
                     if($answer_info->answer_grade == 0 && in_array($answer_info->answer, $current_answers)){
                         //dd("Wrong answer");
@@ -376,7 +376,7 @@ class HomePageController extends Controller
             }
             array_push($test_questions_json, $multiply_q);
         }
-        //dd($test_questions_json['final_score']);
+        //dd($test_questions_json);
         // Петераскивание
         if(isset($drag_drop_ids)){
             // Перебираем и берем данные о них с базы

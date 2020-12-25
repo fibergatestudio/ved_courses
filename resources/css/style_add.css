@@ -829,8 +829,8 @@ border: 0 !important;
 	line-height: 1.2em;
 	display: -webkit-box;
 	overflow: hidden;
-	-o-text-overflow: ellipsis;
-	text-overflow: ellipsis;
+	/* -o-text-overflow: ellipsis;
+	text-overflow: ellipsis; */
 	font-size: 1em;
 	-webkit-box-orient: vertical;
 	-webkit-line-clamp: 6;
