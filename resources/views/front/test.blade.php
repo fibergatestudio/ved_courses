@@ -142,9 +142,10 @@
                                     </div>
                                 </div>
                                 <div class="test_b separator"></div>
-                                <div class="test_b-grid_wrapper">
+                                
                                     <?php $dd_counter = 1; ?>
                                     @foreach($testDragDrop as $dragDrop)
+                                    <div class="test_b-grid_wrapper">
                                         <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
                                         <?php //var_dump($dd_answers_json); 
                                         
@@ -319,8 +320,8 @@
                                         </script>
                                         <?php $dd_counter++; ?>
                                         <?php $n_answers++; ?>
-                                    @endforeach
                                     </div>
+                                    @endforeach
                                 @endif
 
                             <!-- </div> -->
