@@ -3640,7 +3640,8 @@ element.style {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    padding: .3em 2em;
+    /* padding: .3em 2em; */
+    padding: .3em 0em;
     border: 1px solid #8dc63f;
     border-radius: 8px;
     width: 100%;

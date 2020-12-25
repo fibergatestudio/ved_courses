@@ -286,6 +286,7 @@ class HomePageController extends Controller
 
         // Получаем всю POST инфу
         $all_info = $request->all();
+        //dd($all_info);
         $user_id = Auth::user()->id;
 
         // Аррей всех ответов
@@ -399,15 +400,23 @@ class HomePageController extends Controller
                 //$m_q_num = count($answers_json);
                 foreach($answers_json as $answer_info){
 
-
+                    // Проверяем если ответ не пустой и если ответ есть в арррее
                     if($current_answers != null && in_array($answer_info->answer, $current_answers)){
-                        $curr_multi_grade = $curr_multi_grade + round($this->get_percentage($max_multi_grade, $answer_info->answer_grade), 0);
-                    } 
-                    if($answer_info->answer_grade == 0 && in_array($answer_info->answer, $current_answers)){
-                        //dd("Wrong answer");
-                        $curr_multi_grade = 0;
-                    }
+                        // Если оценка +вая - то добавляем 
+                        if($answer_info->answer_plusminus == "+"){
+                            $curr_multi_grade = $curr_multi_grade + round($this->get_percentage($max_multi_grade, $answer_info->answer_grade), 1);
+                        // Если оценка -вая - то отнимаем
+                        } else if($answer_info->answer_plusminus == "-") {
+                            $curr_multi_grade = $curr_multi_grade - round($this->get_percentage($max_multi_grade, $answer_info->answer_grade), 1);
+                        }
+                        //$curr_multi_grade = $curr_multi_grade + round($this->get_percentage($max_multi_grade, $answer_info->answer_grade), 0);
 
+                    } 
+                    // if($answer_info->answer_grade == 0 && in_array($answer_info->answer, $current_answers)){
+                    //     //dd("Wrong answer");
+                    //     $curr_multi_grade = 0;
+                    // }
+                    // Если оценка не указана - ставим 0
                     if($answer_info->answer){
                         $multi_array['answer_grade'] = $answer_info->answer_grade;
                         //$test_questions_json['final_score'] = $test_questions_json['final_score'] + ($grade_per_quest / 2);
@@ -415,8 +424,12 @@ class HomePageController extends Controller
                         $multi_array['answer_grade'] = 0;
                     }
                 }
-                //dd($curr_multi_grade);
                 array_push($multiply_q, $multi_array);
+                // Если значени оценки - минусовое - ставим 0
+                if ($curr_multi_grade < 0) {
+                    $curr_multi_grade = 0;
+                }
+                // Передаем оценки в общий счетчик
                 $test_questions_json['final_score'] = $test_questions_json['final_score'] + $curr_multi_grade;
             }
             array_push($test_questions_json, $multiply_q);
@@ -432,37 +445,59 @@ class HomePageController extends Controller
                 $dd_array['question_id'] = $drag_drop_id;
                 $dd_array['question_type'] = "Перетягування в тексті";
                 $dd_array['question_text'] = $drag_drop_db->question_text;
+                $dd_array['score'] = 0;
                 // Текущий выбранный ответ
-                $current_answers = $request->answer_dragdrop;
-                $dd_array['selected_answer'] = $current_answers[$key];
+                $answer_drag_drop = 'answer_dragdrop' . $drag_drop_id;
+                $current_answers = $request->$answer_drag_drop;
+                //dd($current_answers);
+                $dd_array['selected_answers'] = $current_answers;
+                $test_answers_count = 'test_answers_count' . $drag_drop_id;
+                //dd($test_answers_count);
+                $dd_array['answers_count'] = $request->$test_answers_count;
+                //dd($dd_array);
                 // Аррей с вопросами - разбираем
                 $answers_json = json_decode($drag_drop_db->answers_json);
                 // Берем айди верного ответа
                 //dd($answers_json);
-                $right_answer_id = $answers_json->right_answer;
+                //dd($current_answers, $answers_json);
+                $all_answers_names = $answers_json->answers; //$right_answer_id = $answers_json->right_answer; // answer_dragdrop
+                //dd($right_answers_names, $current_answers);
                 // Берем верный овтвет
                 //dd($answers_json->answers[$right_answer_id]);
-                if($right_answer_id == "Выберите верный ответ"){
-                    $right_answer_id = 0;
-                } else {
-                    $right_answer_id = $right_answer_id -1;
+                // if($right_answer_id == "Выберите верный ответ"){
+                //     $right_answer_id = 0;
+                // } else {
+                //     $right_answer_id = $right_answer_id -1;
+                // }
+                // $right_answer = $answers_json->answers[$right_answer_id];
+                //dd($grade_per_quest);
+                $dd_array['all_answers_names'] = $all_answers_names;
+                $dd_array['right_answers'] = array_slice($dd_array['all_answers_names'], 0, $dd_array['answers_count']);
+                $right_count = 0;
+                for($i = 0; $i < $dd_array['answers_count']; $i++){
+                    if($dd_array['selected_answers'][$i] == $dd_array['right_answers'][$i]){
+                        $right_count++;
+                        //$dd_array['q_count'] = $right_count;
+                        $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
+                        $dd_array['score'] = $dd_array['score'] + $grade_per_quest;
+                    }
                 }
-                $right_answer = $answers_json->answers[$right_answer_id];
-                $dd_array['right_answer'] = $right_answer;
+                //dd($dd_array);
                 // Проверяем верно ли ответил
-                if($right_answer == $current_answers[$key]){
-                    // Ответил верно
-                    $dd_array['answered_right'] = "Так";
-                    $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
-                } else {
-                    // Ответил не верно
-                    $dd_array['answered_right'] = "Ні";
-                }
+                // if($right_answer == $current_answers[$key]){
+                //     // Ответил верно
+                //     $dd_array['answered_right'] = "Так";
+                //     $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
+                // } else {
+                //     // Ответил не верно
+                //     $dd_array['answered_right'] = "Ні";
+                // }
+                //dd($test_questions_json);
                 array_push($drag_drop_q, $dd_array);
             }
             array_push($test_questions_json, $drag_drop_q);
         }
-
+        //dd($test_questions_json);
         //Общее кол-во баллов
         $t_score = 100;
 

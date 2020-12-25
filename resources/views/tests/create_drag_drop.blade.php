@@ -309,7 +309,7 @@
                         </div>
                         <div class="newTest-wrapper show">
                             <div class="question-dragDrop-string_top">
-                                Варіант відповіді [[1]]
+                                Варіанти відповідей 
                             </div>
                             <input type="hidden" id="counter" name="answers_counter" value="0">
                             <div id="app1">
@@ -317,7 +317,7 @@
 
                                     <div class="question-dragDrop-string">
                                         <div class="question-dragDrop-string_left">
-                                            Відповідь  @{{ index + 1}}
+                                            Відповідь  [[@{{ index + 1}}]]
                                         </div>
                                         <div class="question-dragDrop-string_right">
                                             <input class="courseAdditional--input question-dragDrop--input" type="text" :name="'answer'+index"
@@ -327,45 +327,21 @@
 
                                 </div>
                             </div>
-                            
+                                                 
                             <!-- <div class="question-dragDrop-string">
-                                <div class="question-dragDrop-string_left">
-                                    Відповідь 2
-                                </div>
-                                <div class="question-dragDrop-string_right">
-                                    <input class="courseAdditional--input question-dragDrop--input" type="text"
-                                        placeholder="Розгорнутий варіант відповіді">
-                                </div>
-                            </div>
-
-                            <div class="question-dragDrop-string">
-                                <div class="question-dragDrop-string_left">
-                                    Відповідь 3
-                                </div>
-                                <div class="question-dragDrop-string_right">
-                                    <input class="courseAdditional--input question-dragDrop--input" type="text"
-                                        placeholder="Розгорнутий варіант відповіді">
-                                </div>
-                            </div> -->
-
-                            
-                            <div class="question-dragDrop-string">
                                 <div class="question-dragDrop-string_left">
                                     Вірна відповідь
                                 </div>
                                 <div class="question-dragDrop-string_right">
                                     <div class="newTest-quest-wrapper">
                                         <select class="newTest-quest-select" id="right_answer" name="right_answer"> 
-                                            <option default>Выберите верный ответ</option>
-                                            <option value="1">Відповідь 1</option>                               
+                                            <option default>Выберите верный ответ</option>                      
                                         </select>
                                         <div class="newTest-quest_arrowBlock"></div>
                                     </div>
 
                                 </div>
-                            </div>
-
-
+                            </div> -->
 
                         </div>
                     </div>
@@ -416,10 +392,10 @@
                     document.getElementById("counter").value = currentCounter;
 
                     //var right_answer_id = '#right_answer' + index;
-                    $('#right_answer')
-                        .append($("<option></option>")
-                                    .attr("value",  currentCounter)
-                                    .text("Відповідь "+ currentCounter ) ); 
+                    //$('#right_answer')
+                        //.append($("<option></option>")
+                                    //.attr("value",  currentCounter)
+                                    //.text("Відповідь "+ currentCounter ) ); 
                 },
             }
         });

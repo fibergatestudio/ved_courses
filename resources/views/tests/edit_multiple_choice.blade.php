@@ -259,8 +259,15 @@
                                             <div class="multipleChoice-string_left--bottom"> 
                                                 Оцінка
                                             </div>
-                                            <div class="multipleChoice-string_right"> 
-                                                <div class="newTest-quest-wrapper">
+                                            <div class="multipleChoice-string_right" style="display:flex;"> 
+                                                <div class="newTest-quest-wrapper" style="width: 30%;">
+                                                    <select class="newTest-quest-select" :id="'answer_plusminus'+index" :name="'answer_plusminus'+index"> 
+                                                        <option value="+">+</option>
+                                                        <option value="-">-</option>
+                                                    </select>
+                                                    <div class="newTest-quest_arrowBlock"></div>
+                                                </div>
+                                                <div class="newTest-quest-wrapper" style="width: 70%;">
                                                     <select class="newTest-quest-select" :name="'answer_grade'+index"> 
                                                         <option value="1" selected>Не вибрано</option> 
                                                         <option value="0">0%</option>
