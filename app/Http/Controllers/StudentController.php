@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 use DB;
 
@@ -354,16 +355,17 @@ class StudentController extends Controller
         if($file->getClientOriginalExtension() == "xlsx"){
             // Формируем из экселя аррей
             $data = Excel::toArray(new StudentsImport, $file);
-
+            //dd($data);
             foreach($data as $row){
                 foreach($row as $column_data){
                     //dd($column_data['data_zavantazennya']);
                     // Проверяем на существующую запись
                     $copy_check = DB::table('students_data')->where('ID_FO', $column_data['id_fo'])->first();
-
+                    //dd($column_data);
                     if($copy_check){
 
                     } else {
+                        // Добавляем данные в students_data
                         DB::table('students_data')->insert([
                             'upload_date' => $column_data['data_zavantazennya'],
                             'status_from' => $column_data['status_z'],
@@ -375,6 +377,25 @@ class StudentController extends Controller
                             'specialty' => $column_data['specialnist'],
                             'reason_for_deduction' => $column_data['pricina_vidraxuvannya'],
                         ]);
+
+                        $fio_expld = explode(" ", $column_data['zdobuvac']);
+                        // Добавляем в users
+                        $upld_stud_id = DB::table('users')->insertGetId([
+                            'surname' => $fio_expld[0],
+                            'name' => $fio_expld[1],
+                            'patronymic' => $fio_expld[2],
+                            'email' => $column_data['email'],
+                            'password' => Hash::make($column_data['parol']),
+                            'role' => 'student',
+                            'status' => 'confirmed',
+                        ]);
+
+                        // Добавляем в students
+                        DB::table('students')->insert([
+                            'user_id' => $upld_stud_id,
+                            'full_name' => $column_data['zdobuvac'],
+                        ]);
+
                     }
                 }
             }

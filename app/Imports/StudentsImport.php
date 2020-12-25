@@ -19,7 +19,7 @@ class StudentsImport implements ToCollection,WithHeadingRow
     {
         //dd($row);
 
-        return new Students_data([
+        return new Students_data([ 
                 'upload_date' => $row[0],
                 'status_from' => $row[0],
                 'ID_FO' => $row[0],

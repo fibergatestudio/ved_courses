@@ -7,6 +7,7 @@ use App\CourseViews;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use Carbon\Carbon;
 
 class HomePageController extends Controller
 {
@@ -226,6 +227,47 @@ class HomePageController extends Controller
             break;
         case 'test':
             if(isset($testInfo)){
+
+                // Проверяем есть ли уже счетки времени теста
+                $test_time_check = DB::table('test_time')->where([
+                    'user_id' => $user->id,
+                    'test_id' => $testInfo->id,
+                    'course_id' => $course_id,
+                ])->first();
+                
+                // Если есть проверяем не вышло ли время
+                if($test_time_check){
+                    // Текущее время
+                    $current_time =  Carbon::now();
+                    // Время начала
+                    $started_time = $test_time_check->start_time;
+                    // Получаем разницу в часах
+                    $hours_diff = $current_time->diffInHours($started_time);
+
+                    // Если разинца 2 часа или больше
+                    if($hours_diff >= 2){
+                        // Обновляем статус времени
+                        DB::table('test_time')->where(['id' => $test_time_check->id, 'status' => 'active'])->update([
+                            'status' => 'inactive',
+                        ]);
+                        // Перисваеваем значение времени - просрочено
+                        $testInfo->expired_time = true;
+                    } else {
+                        // Перисваеваем значение времени - не просрочено
+                        $testInfo->expired_time = false;
+                    }
+                // Если нет времени теста - создаем
+                } else {
+                    DB::table('test_time')->insert([
+                        'user_id' => $user->id,
+                        'test_id' => $testInfo->id,
+                        'course_id' => $course_id,
+                        'start_time' => Carbon::now(),
+                        'status' => 'active',
+                    ]);
+                }
+                
+
             return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson', 'testInfo', 'testDragDrop', 'testMultiply', 'testTrueFalse'));
             } else {
                 return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));

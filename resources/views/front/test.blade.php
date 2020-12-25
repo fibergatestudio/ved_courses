@@ -58,14 +58,19 @@
             <form action="{{ route('send_test', ['course_id' => $course->id, 'lesson_id' => $lesson->id, 'test_id' => $testInfo->id ]) }}" id="course_test_form" method="POST">
             @csrf
             <div class="container">
-            {{ $testInfo->expired_tries }}
             @if(isset($testInfo))
                 @if($testInfo->expired_tries == true)
                     <div class="alert alert-danger">
                         <b>Увага!</b> Тест не буде зарахований, ви витратили <b>максимальну</b> кількість спроб!
                     </div>
                 @endif
+                @if($testInfo->expired_time == true)
+                    <div class="alert alert-danger">
+                        <b>Увага!</b> Тест не буде зарахований, ви витратили <b>весь дозволенний час</b>!
+                    </div>
+                @endif
             @endif
+            <!-- <a href=""><button class="btn btn-success m-3 text-center">Почати тест</button></a> -->
             <div class="test_a-title test_a-title_doc">@if(isset($testInfo)) {{ $testInfo->name }} @endif</div>
                     <!-- Да\Нет -->
                     @if(isset($testInfo))
