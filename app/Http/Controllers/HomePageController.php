@@ -258,6 +258,9 @@ class HomePageController extends Controller
                     }
                 // Если нет времени теста - создаем
                 } else {
+                    // 
+                    $testInfo->expired_time = false;
+                    // Создаем запись с началом времени теста
                     DB::table('test_time')->insert([
                         'user_id' => $user->id,
                         'test_id' => $testInfo->id,
