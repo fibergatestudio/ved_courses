@@ -176,11 +176,14 @@ class TestsController extends Controller
         for($i = 0; $i <= $a_counter; $i++){
             //$c = "course_learn" . $i;
             $answr = "answer" . $i;
+            $answer_plusminus = "answer_plusminus" . $i;
             $answer_grade = "answer_grade" . $i;
-            $answer_comment = "answer_comment" . $i;
+            $answer_comment = "answer_comment" . $i; 
+            
             //dd($c);
             $arr_answer = [
                 'answer' => strip_tags( $request->$answr ),
+                'answer_plusminus' => $request->$answer_plusminus,
                 'answer_grade' => $request->$answer_grade,
                 'answer_comment' => strip_tags( $request->$answer_comment),
             ];
@@ -325,8 +328,8 @@ class TestsController extends Controller
         $r_answer_arr = [
             'right_answer' => $request->right_answer,
         ];
+        $answers_arr['question'] = $request->question_text;
         $answers_arr['answers'] = $arr_answ;
-        $answers_arr['right_answer'] = $request->right_answer;
         //dd($answers_arr);
 
         
@@ -711,6 +714,7 @@ class TestsController extends Controller
             'test_id' => $test_info_id
         ])->first();
 
+
         if($test_t->question_type == "Множинний вибір"){
 
             $a_counter = $request->answer_counter;
@@ -718,11 +722,14 @@ class TestsController extends Controller
             for($i = 0; $i <= $a_counter; $i++){
                 //$c = "course_learn" . $i;
                 $answr = "answer" . $i;
+                $answer_plusminus = "answer_plusminus" . $i;
                 $answer_grade = "answer_grade" . $i;
                 $answer_comment = "answer_comment" . $i;
+              
 
                 $arr_answer = [
                     'answer' => strip_tags( $request->$answr ),
+                    'answer_plusminus' => $request->$answer_plusminus,
                     'answer_grade' => $request->$answer_grade,
                     'answer_comment' => strip_tags( $request->$answer_comment),
                 ];

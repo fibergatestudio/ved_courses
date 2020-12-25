@@ -97,12 +97,13 @@ class CourseSeeder extends Seeder
         ]);
 
         // Сид Courses
+        $t_arr = ["$teacher_id"];
         $course_id = DB::table('courses')->insertGetId([
             'name' => 'Слідча практика: віртуальний огляд місця події',
             'description' => '<p>Курс допоможе Вам, знаходячись у віртуальному середовищі з повним ефектом присутності, вивчити порядок проведення оглядів місць пригод, виробити практичні навички проведення оглядів та розвинути свої аналітичні здібності в розслідуванні злочинів.</p>',
             'course_image_path' => '1608021912.jpg',
             'creator_id' => 1,
-            'assigned_teacher_id' => "[". $teacher_id . "]",
+            'assigned_teacher_id' => json_encode($t_arr),
             'visibility' => 'all',
         ]);
 
@@ -125,7 +126,7 @@ class CourseSeeder extends Seeder
             'getting_result' => '1',
             'extended_feedback' => '{"grade_100":{"grade":"100","review":null},"grade_custom":[],"grade_0":{"grade":"0","review":null}}',
             'availability' => '1',
-            'operating_mode' => '1',
+            'operating_mode' => '0',
         ]);
             // Сид tests_questions
             $test_q_1 = DB::table('tests_multiple_choice')->insertGetId([

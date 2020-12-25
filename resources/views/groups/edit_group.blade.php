@@ -36,7 +36,7 @@
 
             @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління групами', 'imgPath' => 'img/teacher-mobileMenu-3.png'])
 
-            <form action="{{ route('apply_edit_group',['group_id' => $group_info->id]) }}" method="POST">
+            <form onsubmit="formEditGroup(this);return false;" action="{{ route('apply_edit_group',['group_id' => $group_info->id]) }}" method="POST">
             @csrf
                 <div class="ge">
                     <h3 class="ccec__main-title">Редагування групи</h3>
@@ -58,7 +58,19 @@
                             </p>
                             <p class="groups-edit__current-teacher eg-text-style">
                                 <span class="ccec-header_style">Назва курсу :&nbsp;</span>
-                                <span class="ccec-header_style" id="courseNamer"></span>
+                                <select class='eg-input uge__input_style' name="course_number" style="height: 50px">
+                                    <option value="">Повна назва курсу студента</option>
+                                    @if($courses)
+                                    @foreach($courses as $course)
+                                    @if($course->name === $group_info->course_number)
+                                    <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
+                                    @else
+                                    <option value="{{ $course->name }}">{{ $course->name }}</option>
+                                    @endif
+                                    @endforeach
+                                    @endif
+                                </select>
+                                <!-- <span class="ccec-header_style" id="courseNamer"></span> -->
                             </p>
                         </div>
                         <div class="groups-edit__group ccec__add-student-block_style inputs-row">
@@ -108,7 +120,7 @@
                                     <div class="ccec__string-inner-mer col text-center">@if(isset($student->student_phone_number)){{ $student->student_phone_number }}@else-@endif</div>
                                     <div class="ccec__string-inner-mer col w-wrap text-center">@if(isset($student->student_email)){{ $student->student_email }}@else-@endif</div>
                                     <div class="ccec__string-inner-mer col text-center">@if(isset($student->student_number)){{ $student->student_number }}@else-@endif</div>
-                                    <div class="ccec__string-inner-mer col text-center">@if(isset($student->teacher_fio)) {{ $student->teacher_fio }} @else-@endif</div>
+                                    <div class="ccec__string-inner-mer col text-center" id="teach{{ $loop->iteration }}">@if(isset($student->teacher_fio)) {{ $student->teacher_fio }} @else-@endif</div>
                                     <div class="ccec__string-inner-mer col text-center">
                                         <a class="flexTable-btn_delete ccec__delete-btn" href="##" data-toggle="modal"
                                             data-target="#deleteModal{{ $loop->iteration }}"><span>Видалити</span>
@@ -155,7 +167,7 @@
                             </div>
                             <div class="flexMobile-string blackFont ug__mb-0">ПІБ викладача</div>
                             <div class="flexMobile-string grayFont sc-margin-b-15">
-                                <div class="text-limiter">@if(isset($student->teacher_fio)){{ $student->teacher_fio }}@else-@endif</div>
+                                <div class="text-limiter" id="mteach{{ $loop->iteration }}">@if(isset($student->teacher_fio)){{ $student->teacher_fio }}@else-@endif</div>
                             </div>
                             <div class="flexMobile-string flex-btns_restyle">
                                 <a class="flexTable-btn_delete groups-btn-edit-restyle ccec__m_btn-style" href="##"
@@ -173,7 +185,11 @@
 
                 <div class="groups-edit__group uge__row ge__select-block_style mer-sel-wth">
                     <p class="groups-edit__group-name eg-text-style">Додати викладача</p>
-                    <div class="select uge__select_block ge__select_style">
+                    @if($auth_teacher->role === 'teacher')
+                    <input type="text" class="eg-input" value="{{ $auth_teacher->surname}} {{ $auth_teacher->name }} {{ $auth_teacher->patronymic }}" disabled>
+                    <input type="hidden" name="teacher_id" value="{{ $auth_teacher->id }}">
+                    @else
+                    <div class="select uge__select_block ge__select_style">                       
                         <select name="teacher_id"
                             class="select-teacher select-teacher_sce_restyle uge__select_style"
                             id="selectTeacher">
@@ -185,8 +201,9 @@
                                     <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
                                 @endif
                             @endforeach
-                        </select>
+                        </select>                        
                     </div>
+                    @endif
                 </div>
 
                 <div class="groups-edit__buttons-block ccec__back-save-btns">
@@ -199,9 +216,13 @@
             </form>
         </div>
     </section>
+    <script type="text/javascript">
+        var coursesObj = '<?=json_encode($course_for_js)?>';
+    </script>
 @endsection
 
 @section('js')
+
     <script>
         var students_array = new Array();
         // var count_t = 1;
@@ -213,6 +234,9 @@
                     students_array.push($(this).val());
                     return $(this).val();
                 }).get();
+            //костыль при перегрузке сбрасывает select в соответствие учителю
+            let cur_teach = "{{ $group_info->assigned_teacher_id }}";
+            $('#selectTeacher option[value='+cur_teach+']').prop('selected', true);
         });
 
         $('#student').keyup(function(){
@@ -247,8 +271,8 @@
         $('#addstudent').click(function() {
             /* Берем имя текущего студента */
             let curr_stud = $('#student').val();//.replace(/[A-Za-z]|[0-9]|\s+/g, ' ').trim();
-            let teacher_id = "{{ $group_info->assigned_teacher_id }}";
-            let teacher_name = "{{ $group_info->assigned_teacher_name }}";
+            let teacher_id = $('#selectTeacher option:selected').val();//"{{ $group_info->assigned_teacher_id }}";
+            let teacher_name = $('#selectTeacher option:selected').text();//"{{ $group_info->assigned_teacher_name }}";
 
             /* Проверка на существующего студента в базе */
             axios.post("{{ route('autocomplete.fetch.check') }}", {
@@ -281,7 +305,7 @@
                             <div class='ccec__string-inner-mer col text-center'>"+response.data.student_phone_number+"</div>\
                             <div class='ccec__string-inner-mer col w-wrap text-center'>"+response.data.student_email+"</div>\
                             <div class='ccec__string-inner-mer col text-center'>"+response.data.student_number+"</div>\
-                            <div class='ccec__string-inner-mer col text-center'>"+response.data.teacher_fio+"</div>\
+                            <div class='ccec__string-inner-mer col text-center' id='teach"+count_stud+"'>"+response.data.teacher_fio+"</div>\
                             <div class='ccec__string-inner-mer col text-center'>\
                                 <a class='flexTable-btn_delete ccec__delete-btn' href='##' data-toggle='modal'\
                                     data-target='#deleteModal"+count_stud+"'><span>Видалити</span>\
@@ -338,7 +362,7 @@
                             </div>\
                             <div class='flexMobile-string blackFont ug__mb-0'>ПІБ викладача</div>\
                             <div class='flexMobile-string grayFont sc-margin-b-15'>\
-                                <div class='text-limiter'>"+response.data.teacher_fio+"</div>\
+                                <div class='text-limiter' id='mteach"+count_stud+"'>"+response.data.teacher_fio+"</div>\
                             </div>\
                             <div class='flexMobile-string flex-btns_restyle'>\
                                 <a class='flexTable-btn_delete groups-btn-edit-restyle ccec__m_btn-style' href=''\
@@ -372,7 +396,6 @@
                         $("div[id^='mobi']:last").after(content);
                     }
 
-
                     /* Добавляем текущего студента в аррей */
                     students_array.push(curr_stud);
                     $('input[name="student_name"]').val('');
@@ -386,8 +409,8 @@
         });
 
         function removeStud(count_stud) {
+            event.preventDefault();
             students_array.splice( $.inArray(count_stud,students_array) ,1 );
-            // alert($("div[id='name"+count_stud+"']").val());
             setTimeout(function(){
                 $("div[id='name"+count_stud+"']").remove();
                 $("div[id='mobi"+count_stud+"']").remove();
@@ -419,6 +442,34 @@
             /*Не убирался серый фон от модала, с этим костылем работает*/
             $('.modal-backdrop').hide();
         });
+
+        $('#selectTeacher').change(function() {
+            let teacher = $('#selectTeacher option:selected').text();
+            $("div[id^='teach']").html(teacher);
+            $("div[id^='mteach']").html(teacher);
+        });
+    </script>
+
+    <script type="text/javascript">
+        
+        coursesObj = JSON.parse(coursesObj);
+
+        function formEditGroup(form) {
+            const course = $('[name="course_number"]').val();
+            const teacher = $('[name="teacher_id"]').val();
+            for (let key in coursesObj) {
+                if(key === course){
+                    let temp = coursesObj[key].toString();
+                    temp = temp.split(',');
+                    if (temp.indexOf(teacher) === -1) {
+                        alert("У цього викладача немає такого курсу !");
+                        return false;
+                    }                 
+                }               
+            }
+            form.submit();
+        }
+
     </script>
 @endsection
 

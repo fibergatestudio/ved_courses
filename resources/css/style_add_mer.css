@@ -129,4 +129,18 @@
 input[type="text"]::placeholder{
     color: #878787;
 }
-
+.curs-btn{
+    padding-top: 25px;
+    margin-bottom: 35px;
+    display: inline-block;
+    vertical-align: middle;
+}
+.curs-tit{
+    margin-right: 5px;
+}
+.curs-del-btn{
+    margin-left: 5px;
+}
+.curs-teacher-del-btn{
+    left: -80px;
+}

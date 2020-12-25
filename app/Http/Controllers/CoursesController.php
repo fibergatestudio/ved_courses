@@ -19,14 +19,16 @@ class CoursesController extends Controller
             $course->creator_name = $creator->name;
             // Получаем кол-во просмотров курса
             $course_views = DB::table('course_views')->where('course_name', $course->name)->count();
-            if($course_views){ 
+            if($course_views){
                 $course->views = $course_views;
             } else {
                 $course->views = 0;
             }
-            //$course->views = $course_views;
+            //для превью обрезаем тэги
+            $clear_descr = str_replace("&nbsp;", '', $course->description);
+            $course->description =  strip_tags($clear_descr);
         }
-        //dd($courses);
+        // dd($courses);
 
         return view('courses.index', compact('courses') );
     }
@@ -40,7 +42,7 @@ class CoursesController extends Controller
     public function create_course(Request $request){
 
         $all_info = $request->all();
-        //dd($all_info);
+        // dd($all_info);
         //dd($request->course_image);
         //$img_path = $request->course_image;
 
@@ -98,7 +100,7 @@ class CoursesController extends Controller
             // dd($video_arr);
 
         }
- 
+
 
         $teacher_arr = json_decode($course_info->assigned_teacher_id);
         //dd($teacher_arr);
@@ -297,7 +299,7 @@ class CoursesController extends Controller
         //dd($course_tests);
         //dd($tests);
 
-        $course_tests = []; 
+        $course_tests = [];
 
 
         return view('courses.add_lesson', compact('course_info', 'course_tests'));
@@ -398,7 +400,7 @@ class CoursesController extends Controller
         if(isset($redirect_to_test)){
             // Редиректим на создание теста
             return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
-        } else { 
+        } else {
             // Редиректим на список курсов
             return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
         }
@@ -567,11 +569,11 @@ class CoursesController extends Controller
         if(isset($redirect_to_test)){
             // Редиректим на создание теста
             return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $lesson_id ]);
-        } else { 
+        } else {
             // Редиректим на список курсов
             return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
         }
-        
+
     }
 
     // add_ lesson
@@ -584,7 +586,7 @@ class CoursesController extends Controller
         // Редиректим с айдишником
         return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
     }
-    
+
     // public function add_lesson_edit_redirect($course_id, $lesson_id){
 
     //     //dd($course_id, $lesson_id, $request->all());
@@ -620,12 +622,61 @@ class CoursesController extends Controller
             ]);
         }
         // Возвращаем назад
-        return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ');
+        return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ'); 
         //return redirect()->back();
         //return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
 
-    
+    public function edit_question($course_id){
+
+        $course_info = DB::table('courses')->where('id', $course_id)->first();
+
+        $faq_info = DB::table('courses_faq')->where('course_id', $course_id)->get();
+
+        return view('courses.edit_question', compact('course_info', 'faq_info'));
+    }
+
+    public function edit_question_apply($course_id, Request $request){
+
+        // Получаем кол-во вопросов
+        $q_counter = $request->questions_counter;
+        // Для каждого вопроса
+        //dd($q_counter);
+        for($i = 0; $i <= $q_counter; $i++){
+            // Формируем название полей реквеста
+            $c_course_question = 'course_question' . $i;
+            $c_course_answer = 'course_answer' . $i;
+            $c_course_id = 'qa_id' . $i;
+            // И добавляем их в базу.
+            //dd($request->all());
+            if($request->$c_course_question != null && $request->$c_course_answer != null){
+
+                $check_current = DB::table('courses_faq')->where('id', $request->$c_course_id)->first();
+
+                if($check_current){
+                    DB::table('courses_faq')->where('id',$check_current->id)->update([
+                        'course_id' => $course_id,
+                        'course_question' => $request->$c_course_question,
+                        'course_answer' => $request->$c_course_answer,
+                    ]); 
+                } else {
+                    DB::table('courses_faq')->insert([
+                        'course_id' => $course_id,
+                        'course_question' => $request->$c_course_question,
+                        'course_answer' => $request->$c_course_answer,
+                    ]); 
+                }
+
+                 
+
+            }
+            
+        }
+        // Возвращаем назад
+        return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ'); 
+    }
+
+
     public function delete_lesson($course_id, $lesson_id){
 
         //dd($course_id, $lesson_id);

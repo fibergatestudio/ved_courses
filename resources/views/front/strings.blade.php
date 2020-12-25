@@ -51,8 +51,40 @@
         <div class="string-text">
             @if (session('success'))
             <div class="alert alert-success" role="alert">
-                {{ session('success') }}
+                {{ session('success') }} 
             </div>
+            @endif
+            @if (session('test_results'))
+                <div class="bootstrap-restylingStudent modal fade" id="showResultModal" tabindex="-1" role="dialog"
+                    aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    <div class="modal-dialog  modal-dialog_restyle">
+                        <div class="modal-content">
+                            <div class="deleteMenu-wrapper">
+
+                                <div class="deleteMenu-topImg ge_deleteImg">
+                                    <img src="/img/writing.png" alt="icon">
+                                </div>
+                                <div class="deleteMenu-text">
+                                    Результати тесту.
+                                    <?php $results = json_decode(session('test_results')); ?>
+                                        Ваша оцінка {{ $results->final_score }} балів. У вас є ще {{ $results->tries_left}} спроб.
+                                </div>
+                                <div class="deleteMenu-btn">
+                                    <a class="flexTable-btn_delete" href="##"
+                                        id="discardGroupNameChanges" data-dismiss="modal"><span>Закрити</span></a>
+                                </div>
+                            </div>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+                <script type="text/javascript">
+                    $(window).on('load',function(){
+                        $('#showResultModal').modal('show');
+                    });
+                </script>
             @endif
         {!! $lesson->course_description ?? 'Немає опису' !!}
 

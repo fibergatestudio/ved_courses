@@ -476,16 +476,20 @@
                 alert("Файл перевищує 300мб!");
             } else {
                 var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName); 
+
+                alert("Файл "+ fileName +" успішно додано!");
             }
                        
         }
 
         function showFile(input){
             var fileName = input.files[0].name;
-            if(input.files[0].size >= 300000000){
-                alert("Файл перевищує 300мб!");
+            if(input.files[0].size >= 20000000){
+                alert("Файл перевищує 20мб!");
             } else {
                 var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
+
+                alert("Файл "+ fileName +" успішно додано!");
             }
         }
     </script>

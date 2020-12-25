@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 use DB;
 
@@ -96,7 +97,7 @@ class StudentController extends Controller
                 //'patronymic' => $request->patronymic,
             ]);
 
-        // Если студент не совпал - обновляем инфуормацию. (Все еще будет нуждаться в подтверждении)
+        // Если студент не совпал - обновляем информацию. (Все еще будет нуждаться в подтверждении)
         } else {
 
             DB::table('students')->where('user_id', $user_id)->update([
@@ -180,27 +181,78 @@ class StudentController extends Controller
             // Получаем айдишники доступных студентов
             $s_ids = [];
             $groups = DB::table('groups')->where('assigned_teacher_id', $user_id)->get();
+
             foreach($groups as $group){
+
                 // Перебираем все группы и если есть совпадения берем аррей студентов и передаем в общий
                 $g_arr = json_decode($group->students_array);
-                array_push($s_ids, $g_arr[0]);
+
+                foreach($g_arr as $id){
+                    array_push($s_ids, $id);
+                }
             }
+
             // Берем айдишник доступные ему
-            $students = DB::table('students')->whereIn('user_id', $s_ids)->get();
+            $students = DB::table('students')->where('assigned_teacher_id', $user_id)->get();
         }
-        //$students = DB::table('students')->get();
 
         foreach($students as $student){
             //dd($student);
             $teacher_id = $student->assigned_teacher_id;
             if($teacher_id != null){
                 $teacher_info = DB::table('users')->where('id',$teacher_id)->first();
-                $student->assigned_teacher_id = $teacher_info->name;
+                $student->assigned_teacher_id = $teacher_info->surname.' '.$teacher_info->name.' '.$teacher_info->patronymic;
             }
-
         }
+        // Загруженные студенты
+        $upld_students = DB::table('students_data')->get();
+        // dd($students);
+        return view('student.students_controll', compact('students', 'upld_students'));
+    }
 
-        return view('student.students_controll', compact('students'));
+    // Удаление студента
+    public function students_controll_delete($student_id){
+        //dd('work in progress!!!');
+
+        if(isset($student_id)){
+            //проверка на существование пользователя
+            $user = DB::table('users')->where('id', $student_id)->first();
+
+            if(isset($user)){
+                //обнуление связи с преподавателем
+                $student = DB::table('students')->where('user_id', $student_id)->first();
+                $student->assigned_teacher_id = null;
+                // dd($student_id);
+                //удаление из группы
+                // Получаем все группы
+                $groups = DB::table('groups')->get();
+                // Перебираем каждую группу
+                foreach($groups as $grp){
+                    // Берем аррей студентов
+                    $s_arr = json_decode($grp->students_array);
+                    // Создаем новый пустой аррей студентов
+                    $new_array = [];
+                    // Перебираем всех текущих студентов группы
+                    foreach($s_arr as $st){
+                        // Если студент не совпадает с удаляемым - то пушим его в новый аррей
+                        if($st != $student_id){
+                            array_push($new_array, $st);
+                        }
+                    }
+                    // Обновляем группу
+                    DB::table('groups')->where('id', $grp->id)->update([ 'students_array' => json_encode($new_array) ]);
+                }
+                // Удаляем студента с user
+                DB::table('users')->where('id', $student_id)->delete();
+                // Удаляем доп инфу студента.
+                DB::table('students')->where('user_id', $student_id)->delete();
+                //dd($groups, $student_id);
+
+
+                return redirect()->back()->with('message_success', 'Студент був видалений!');
+            }
+        }
+        return redirect()->back()->with('message_error', 'Студент не існує!');
     }
 
     public function student_tests(){
@@ -303,16 +355,17 @@ class StudentController extends Controller
         if($file->getClientOriginalExtension() == "xlsx"){
             // Формируем из экселя аррей
             $data = Excel::toArray(new StudentsImport, $file);
-
+            //dd($data);
             foreach($data as $row){
                 foreach($row as $column_data){
                     //dd($column_data['data_zavantazennya']);
                     // Проверяем на существующую запись
                     $copy_check = DB::table('students_data')->where('ID_FO', $column_data['id_fo'])->first();
-
+                    //dd($column_data);
                     if($copy_check){
 
                     } else {
+                        // Добавляем данные в students_data
                         DB::table('students_data')->insert([
                             'upload_date' => $column_data['data_zavantazennya'],
                             'status_from' => $column_data['status_z'],
@@ -324,6 +377,25 @@ class StudentController extends Controller
                             'specialty' => $column_data['specialnist'],
                             'reason_for_deduction' => $column_data['pricina_vidraxuvannya'],
                         ]);
+
+                        $fio_expld = explode(" ", $column_data['zdobuvac']);
+                        // Добавляем в users
+                        $upld_stud_id = DB::table('users')->insertGetId([
+                            'surname' => $fio_expld[0],
+                            'name' => $fio_expld[1],
+                            'patronymic' => $fio_expld[2],
+                            'email' => $column_data['email'],
+                            'password' => Hash::make($column_data['parol']),
+                            'role' => 'student',
+                            'status' => 'confirmed',
+                        ]);
+
+                        // Добавляем в students
+                        DB::table('students')->insert([
+                            'user_id' => $upld_stud_id,
+                            'full_name' => $column_data['zdobuvac'],
+                        ]);
+
                     }
                 }
             }
@@ -340,7 +412,7 @@ class StudentController extends Controller
         $student = DB::table('students')->where('user_id', $student_id)->first();
         $email = DB::table('users')->where('id', $student_id)->first()->email;
         $student->email = $email;
-        
+
         $course_id = null;
         $course_lessons = (object)[];
         $lesson_count = null;
@@ -349,11 +421,13 @@ class StudentController extends Controller
             $course_id = $course_info->id;
         }
 
+        // Программа курса
         if ($course_id) {
             $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
             $lesson_count = $course_lessons->count();
         }
 
+        // Видео для курса
         foreach($course_lessons as $lesson){
             if($lesson->video_name == null || $lesson->video_name == "null" ){
                 $lesson->video_count = 0;
@@ -362,17 +436,24 @@ class StudentController extends Controller
             }
         }
 
+        // Определяем следующего студента для кнопки
+        $role = Auth::user()->role;
+        $user_id = Auth::user()->id;
         $students = DB::table('students')->get();
         $next_student = $student_id;
 
-        for ($i=0; $i < $students->count(); $i++) { 
+        if ($role === 'teacher') {
+            $students = DB::table('students')->where('assigned_teacher_id', $user_id)->get();
+        }
+
+        for ($i=0; $i < $students->count(); $i++) {
             if ($students[$i]->user_id === $student_id) {
                 if ($i + 1 < $students->count()) {
                     $next_student = $students[$i+1]->user_id;
                 }
             }
         }
-        
+
         return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count'));
     }
 

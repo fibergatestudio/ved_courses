@@ -38,9 +38,10 @@ class GroupsController extends Controller
 
     public function add_group(){
 
+        $auth_teacher = Auth::user();
         $teachers_list = DB::table('users')->where('role', 'teacher')->get();
 
-        return view('groups.add_group', compact('teachers_list') );
+        return view('groups.add_group', compact('teachers_list', 'auth_teacher') );
     }
 
     public function add_group_apply(Request $request){
@@ -129,10 +130,52 @@ class GroupsController extends Controller
                 array_push($students_array, $student);
             }
 
-            $teachers = DB::table('users')->where('role', 'teacher')->get();
             // dd($students_array, $group_info, $teachers);
 
-            return view('groups.edit_group', compact('group_info', 'teachers', 'students_array'));
+            //Привязка курса к студентам
+            // Собираем доступные курсы
+            $teacher_id = $group_info->assigned_teacher_id;
+            $courses= DB::table('courses')->get();
+            $id_arr = [];
+            foreach ($courses as $value) {
+                $temp_arr = json_decode($value->assigned_teacher_id);
+                if (in_array($teacher_id, $temp_arr)) {
+                    $id_arr[] = $value->id;
+                }
+            }
+            $courses= DB::table('courses')->whereIn('id', $id_arr)->get();
+
+            // Собираем доступных учителей
+            $id_arr = [];
+            foreach ($courses as $value) {
+                $temp_arr = json_decode($value->assigned_teacher_id);
+                $id_arr = array_merge($id_arr, $temp_arr);
+            }
+
+            $teachers = DB::table('users')->whereIn('id', $id_arr)->get();
+            
+            $role = Auth::user()->role;
+            $user_id = Auth::user()->id;
+            $auth_teacher = Auth::user();
+            $course_for_js = [];
+            
+            if ($role === 'teacher') {                
+                $id_arr = [];
+                foreach ($courses as $value) {
+                    $temp_arr = json_decode($value->assigned_teacher_id);
+                    if (in_array($user_id, $temp_arr)) {
+                        $id_arr[] = $value->id;
+                    }
+                }
+                $courses= DB::table('courses')->whereIn('id', $id_arr)->get();
+            }
+            else{
+                foreach ($courses as $value) {
+                    $course_for_js[$value->name] = json_decode($value->assigned_teacher_id);
+                }
+            }
+            
+            return view('groups.edit_group', compact('group_info', 'teachers', 'students_array', 'courses', 'auth_teacher', 'course_for_js'));
         } else {
             return redirect('groups_controll')->with('message_error', 'Групи не існує!');
         }
@@ -176,12 +219,21 @@ class GroupsController extends Controller
             }
         }
 
+        //Привязка курса к студентам
+        for ($i=0; $i < count($students_array); $i++) { 
+            DB::table('students')->where('user_id', $students_array[$i])->update([
+                'course_number'  => $request->course_number,
+                'group_number' => $request->nameGroup
+            ]);
+        }
+
         DB::table('groups')->where('id', $group_id)->update([
             'name'  => $request->nameGroup,
             'students_array' => json_encode($students_array),
             'assigned_teacher_id' => $teacher_id,
             'assigned_teacher_name' => $teacher_name,
-        ]);
+            'course_number'  => $request->course_number
+        ]);        
 
         return redirect()->back()->with('message_success', 'Дані були успішно змінені!');
     }

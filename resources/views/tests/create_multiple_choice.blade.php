@@ -345,7 +345,7 @@
                             Варіанти відповідей
                         </div>
 
-                        <input type="hidden" id="counter" name="answer_counter" value="">
+                        <input type="hidden" id="answer_counter" name="answer_counter" value="">
                         <div id="app1">
                             <div v-for="(id,index) in ids" >
                                 <div class="newTest-wrapper show">
@@ -365,12 +365,23 @@
                                         <div class="multipleChoice-string_left--bottom"> 
                                             Оцінка
                                         </div>
-                                        <div class="multipleChoice-string_right"> 
-                                            <div class="newTest-quest-wrapper">
-                                                <select class="newTest-quest-select" :name="'answer_grade'+index"> 
+                                        <div class="multipleChoice-string_right" style="display:flex;"> 
+                                            <div class="newTest-quest-wrapper" style="width: 30%;">
+                                                <select class="newTest-quest-select" :id="'answer_plusminus'+index" :name="'answer_plusminus'+index"> 
+                                                    <option value="+">+</option>
+                                                    <option value="-">-</option>
+                                                </select>
+                                                <div class="newTest-quest_arrowBlock"></div>
+                                            </div>
+                                            <div class="newTest-quest-wrapper" style="width: 70%;">
+                                                <select class="newTest-quest-select" :id="'answer_grade'+index" :name="'answer_grade'+index"> 
                                                     <option value="1" selected>Не вибрано</option> 
-                                                    <option value="2">Опция 2</option>
-                                                    <option value="2">Опция 3</option>                                  
+                                                    <option value="0">0%</option>
+                                                    <option value="20">20%</option>
+                                                    <option value="25">25%</option>
+                                                    <option value="33">33%</option>
+                                                    <option value="50">50%</option>
+                                                    <option value="100">100%</option>                                  
                                                 </select>
                                                 <div class="newTest-quest_arrowBlock"></div>
                                             </div>
@@ -400,7 +411,7 @@
                         <a class="multipleChoice-btn-left" href="##" onclick="app1.addNewEntry()">
                             <span>Додати відповідь</span>
                         </a>
-                        <button type="submit" class="multipleChoice-btn-center" href="##">
+                        <button type="submit" class="multipleChoice-btn-center" >
                             <span>Зберегти питання</span>
                         </button>
                         <a class="multipleChoice-btn-right" href="{{ URL::previous() }}">
@@ -449,46 +460,80 @@
             },
             methods: {
                 addNewEntry: function(){
-                    currentCounter = currentCounter + 1;
-                    var id_p = '#answer_comment' + (currentCounter);
-                    var id_t = '#answer' + (currentCounter);
+                        currentCounter = currentCounter + 1;
+                        var id_p = '#answer_comment' + (currentCounter);
+                        var id_t = '#answer' + (currentCounter);
 
-                    setTimeout(function(){  tinymce.init({  selector: id_p,
-                    menubar: false,
-                    placeholder: "memes",
-                    plugins: [
-                        'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen',
-                        'insertdatetime media table paste code help wordcount'
-                    ],
-                    toolbar: 
-                        'bold italic backcolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist | ' + 
-                        'insertfile link image media pageembed template ' ,
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                    });  }, 100);
-                    setTimeout(function(){  tinymce.init({  selector: id_t,
-                    menubar: false,
-                    placeholder: "memes",
-                    plugins: [
-                        'advlist autolink lists link image charmap print preview anchor',
-                        'searchreplace visualblocks code fullscreen',
-                        'insertdatetime media table paste code help wordcount'
-                    ],
-                    toolbar: 
-                        'bold italic backcolor | alignleft aligncenter ' +
-                        'alignright alignjustify | bullist numlist | ' + 
-                        'insertfile link image media pageembed template ' ,
-                    content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-                    });  }, 100);
+                        setTimeout(function(){  tinymce.init({  selector: id_p,
+                        menubar: false,
+                        placeholder: "memes",
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar: 
+                            'bold italic backcolor | alignleft aligncenter ' +
+                            'alignright alignjustify | bullist numlist | ' + 
+                            'insertfile link image media pageembed template ' ,
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        });  }, 100);
+                        setTimeout(function(){  tinymce.init({  selector: id_t,
+                        menubar: false,
+                        placeholder: "memes",
+                        plugins: [
+                            'advlist autolink lists link image charmap print preview anchor',
+                            'searchreplace visualblocks code fullscreen',
+                            'insertdatetime media table paste code help wordcount'
+                        ],
+                        toolbar: 
+                            'bold italic backcolor | alignleft aligncenter ' +
+                            'alignright alignjustify | bullist numlist | ' + 
+                            'insertfile link image media pageembed template ' ,
+                        content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+                        });  }, 100);
 
-                    this.ids.push({id: currentCounter});
-                    document.getElementById("counter").value = currentCounter;
-
+                        this.ids.push({id: currentCounter});
+                        document.getElementById("answer_counter").value = currentCounter;
                     
                 },
             }
         });
+    </script>
+
+    
+    <script>
+    
+    // function submitForm(){
+
+    //     // Получаем кол-во видео
+    //     var answer_counter = $('#answer_counter').val();
+    //     console.log(answer_counter);
+    //         // Перебираем поля каждого видео
+    //         if(answer_counter > 0){
+    //             for(i = 0; i <= answer_counter; i++){
+    //                 // Имена инпутов для проверки
+    //                 var number = i+1;
+    //                 var v_lenght = '#answer_grade' + i;
+
+    //                 // Получаем инфу
+    //                 var length = $.trim( $(v_lenght).val() );
+
+    //                 var select_option = $('#answer_grade0 option:selected').text();
+    //                 // Check if empty of not
+    //                 iif (select_option  === 'Не вибрано') {
+    //                     alert('Оцінка '+ number +' пустий.');
+    //                     return false;
+    //                 } else if(i == answer_counter){
+    //                     document.getElementById('test_form').submit();
+    //                 }
+    //             }
+    //         } else {
+    //             document.getElementById('test_form').submit();
+    //         }
+
+    // }
+    
     </script>
 
 

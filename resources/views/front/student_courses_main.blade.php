@@ -52,7 +52,7 @@
                                 <h4> {{ $course->name }}</h4>
                             </div>
                             <div class="direction-inner_bottom--text">
-                                {{ $course->description }}
+                                {!! Str::limit(strip_tags($course->description), 300, '...') !!}
                             </div>
                         </div>
                     </div>

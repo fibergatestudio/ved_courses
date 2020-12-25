@@ -37,9 +37,12 @@
                 <div class="grid-top_item">
                     <div class="grid-top_name">Ім'я користувача<sup>*</sup></div>
                     <div class="grid-top_example">Приклад: Іванов Іван Іванович</div>
-                    <input class="studentSettings-input" type="text" placeholder="Прізвище" name="surname" value="{{ $student_info->surname }}" required disabled>
-                    <input class="studentSettings-input" type="text" placeholder="Ім'я" name="name" value="{{ $student_info->name }}" required disabled>
-                    <input class="studentSettings-input" type="text" placeholder="По батькові" name="patronymic" value="{{ $student_info->patronymic }}" required disabled>
+                    <input class="studentSettings-input" type="text" placeholder="Прізвище" value="{{ $student_info->surname }}" disabled>
+                    <input type="hidden" name="surname" value="{{ $student_info->surname }}">
+                    <input class="studentSettings-input" type="text" placeholder="Ім'я" value="{{ $student_info->name }}" disabled>
+                    <input type="hidden" name="name" value="{{ $student_info->name }}">
+                    <input class="studentSettings-input" type="text" placeholder="По батькові" value="{{ $student_info->patronymic }}" disabled>
+                    <input type="hidden" name="patronymic" value="{{ $student_info->patronymic }}">
                 </div>
                 <div class="grid-top_item">
                     <div class="grid-top_prometheus">Ім’я для ідентифікації на Ved. Ви не зможете змінити ім’я
@@ -112,26 +115,16 @@
 
                 <div class="grid-top_name">Назва курсу</div>
                 <div class="studentSettings-bottom_wrapper">
-                    <select class='studentSettings-bottom-input studentSettings-input' name="course_number">
-                        <option value=""></option>
-                        @if($courses)
-                            @foreach($courses as $course)
-                                @if($course->name === $student_full_info->course_number)
-                                <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
-                                @else
-                                <option value="{{ $course->name }}">{{ $course->name }}</option>
-                                @endif
-                            @endforeach
-                        @endif
-                    </select>
-                <!-- <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="course_number" value="{{ $student_full_info->course_number }}" required onkeyup="document.getElementById('course_number_text').innerHTML=this.value;">
-                <div class="studentSettings-bottom_text" id="course_number_text">{{ $student_full_info->course_number }}</div> -->
+                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" value="{{ $student_full_info->course_number }}" disabled>
+                <input type="hidden" name="course_number" value="{{ $student_full_info->course_number }}">
+                <div class="studentSettings-bottom_text" id="course_number_text">Ви не зможете змінити назву курсу.</div>
                 </div>
 
                 <div class="grid-top_name">Номер групи</div>
                 <div class="studentSettings-bottom_wrapper">
-                <input class="studentSettings-bottom-input studentSettings-input" type="text" placeholder="" name="group_number" value="{{ $student_full_info->group_number }}" required onkeyup="document.getElementById('group_number_text').innerHTML=this.value;">
-                <div class="studentSettings-bottom_text" id="group_number_text">{{ $student_full_info->group_number }}</div>
+                <input class="studentSettings-bottom-input studentSettings-input" type="text" value="{{ $student_full_info->group_number }}" disabled>
+                <input type="hidden" name="group_number" value="{{ $student_full_info->group_number }}">
+                <div class="studentSettings-bottom_text" id="group_number_text">Ви не зможете змінити номер групи.</div>
                 </div>
 
                 <div class="grid-top_name">Номер студентського квитка</div>

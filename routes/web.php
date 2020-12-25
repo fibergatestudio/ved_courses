@@ -142,6 +142,8 @@ use Illuminate\Support\Facades\Auth;
     Route::get('/students_controll', 'StudentController@students_controll')->name('students_controll')->middleware('auth','role:admin,teacher');
         // Редактирование студента
         Route::get('/students_controll/{student_id}', 'StudentController@students_controll_edit')->name('students_controll_edit')->middleware('auth','role:admin,teacher');
+        // Удаление студента
+        Route::get('/students_controll/{student_id}/delete', 'StudentController@students_controll_delete')->name('students_controll_delete')->middleware('auth','role:admin,teacher');
         // Применитть редактироавние
         Route::post('/students_controll/{student_id}/apply', 'StudentController@students_controll_apply')->name('students_controll_apply')->middleware('auth','role:admin,teacher');
         // Загрузить студентов - страница АДМИН
@@ -203,9 +205,13 @@ use Illuminate\Support\Facades\Auth;
             Route::get('/courses_controll/edit_course/{course_id}/add_question', 'CoursesController@add_question')->name('add_question')->middleware('auth','role:admin');
                 // Добавить Вопрос POST
                 Route::post('/courses_controll/edit_course/{course_id}/add_question/apply', 'CoursesController@add_question_apply')->name('add_question_apply')->middleware('auth','role:admin');
+            // Редактировать вопрос
+            Route::get('/courses_controll/edit_course/{course_id}/edit_question', 'CoursesController@edit_question')->name('edit_question')->middleware('auth','role:admin');
+                // Редактировать вопрос POST
+                Route::post('/courses_controll/edit_course/{course_id}/edit_question/apply', 'CoursesController@edit_question_apply')->name('edit_question_apply')->middleware('auth','role:admin');
 
-                // Удалить препода с курса
-                Route::get('/courses_controll/edit_course/{course_id}/delete_teacher/{teacher_id}', 'CoursesController@delete_teacher_course')->name('delete_teacher')->middleware('auth','role:admin');
+            // Удалить препода с курса
+            Route::get('/courses_controll/edit_course/{course_id}/delete_teacher/{teacher_id}', 'CoursesController@delete_teacher_course')->name('delete_teacher')->middleware('auth','role:admin');
         // Удаление курса
         Route::get('/courses_controll/{course_id}/delete', 'CoursesController@delete_course')->name('delete_course')->middleware('auth','role:admin');
 

@@ -1,5 +1,5 @@
-<div class="bootstrap-restylingStudent modal fade" id="{{ isset($modalId) ? $modalId : '' }}{{ isset($secondId) ? $secondId : '' }}" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="bootstrap-restylingStudent modal fade" id="{{ isset($modalId) ? $modalId : '' }}{{ isset($secondId) ? $secondId : '' }}"
+    tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog  modal-dialog_restyle">
         <div class="modal-content">
             <div class="deleteMenu-wrapper">
@@ -10,7 +10,10 @@
                     Ви точно бажаєте видалити <br> студента {{ isset($target) ? $target : '' }}?
                 </div>
                 <div class="deleteMenu-btn">
-                    <a class="flexTable-btn_delete" href="##" onclick="removeStud({{ isset($secondId) ? $secondId : '' }})"><span>Видалити</span></a>
+                    <a class="flexTable-btn_delete" href="{{ isset($modalPath) ? $modalPath : '' }}"
+                        onclick="{{ isset($secondId) ? 'removeStud('.$secondId.')' : '' }}">
+                        <span>Видалити</span>
+                    </a>
                 </div>
             </div>
         </div>
