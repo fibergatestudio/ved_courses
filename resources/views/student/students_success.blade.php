@@ -185,8 +185,7 @@
                                                 </p>
                                                 @else
                                                     <p>Протокол в уроці відсутній</p>
-                                                @endif
-
+                                                @endif 
                                             <p class="is-result hide">Тест
                                                 (<span id="correctAnswers">0</span>/<span
                                                     id="totalAnswers">20</span>)&nbsp;
@@ -197,6 +196,7 @@
                                             </p>
                                         </div>
                                     </div>
+                                    @if($lesson->test_exist == true)
                                     <div class="ss__test direction-change">
                                         <a href="##">Тест</a>
                                         <div class="gray-separator gray-separator_restyle"></div>
@@ -211,18 +211,24 @@
                                                 </p>
                                             </div>
                                         </div>
+                                        
                                         <div class="results ss__results">
-                                            <p class="no-result  hide">Немає балів за виконання у цьому розділі</p>
+                                            @if(empty($lesson->test_results))
+                                            <p class="no-result">Немає балів за виконання у цьому розділі</p>
+                                            @else
                                             <p class="is-result"><span class="ss__test-decoration">Тест</span>
-                                                (<span id="correctAnswers">13.3</span>/<span
-                                                    id="totalAnswers">16</span>)&nbsp;
-                                                <span id="percentComplete">83%</span>
+                                                (<span id="correctAnswers">{{ $lesson->test_results['final_score'] }}</span>/<span
+                                                    id="totalAnswers">{{ $lesson->test_results['max_score'] }}</span>)&nbsp;
+                                                <span id="percentComplete">{{ $lesson->test_results['completion_percent'] }}%</span>
                                                 <br>
                                                 <span class="ss__test-decoration">Бали за завдання </span><span
-                                                    id="testScore">13.3</span>/<span id="testScore">16</span>
+                                                    id="testScore">{{ $lesson->test_results['final_score'] }}</span>/<span id="testScore">{{ $lesson->test_results['max_score'] }}</span>
                                             </p>
+                                            @endif
                                         </div>
+                                       
                                     </div>
+                                    @endif
                                 </div>
                             </div>
 

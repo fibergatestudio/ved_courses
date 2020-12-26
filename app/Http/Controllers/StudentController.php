@@ -434,6 +434,34 @@ class StudentController extends Controller
             } else {
                 $lesson->video_count = count(json_decode($lesson->video_name));
             }
+
+            // Результаты теста по курсу
+            if($lesson->test_id != null){
+                $lesson->test_exist = true;
+                // Берем инфу о законченных тестах
+                $finished_test_info = DB::table('finished_tests_info')->where([
+                    'user_id' => $student_id,
+                    'test_id' => $lesson->test_id,
+                    'course_id' => $course_id,
+                ])->first();
+                // Аррей с инфой о результатах
+                $test_results = [];
+                // Проверяем есть ли результаты
+                if($finished_test_info){
+                    // Если есть - берем нужную информацию и передаем в аррей
+                    $test_results_decode = json_decode($finished_test_info->test_questions_json);
+                    $test_results['max_score'] = $test_results_decode->max_score;
+                    $test_results['final_score'] = $test_results_decode->final_score;
+                    $test_results['completion_percent'] = floor((($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100);//app('App\Http\Controllers\HomePageController')->get_percentage($test_results['final_score'], $test_results['max_score']);
+                    //(($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100%;
+                }
+                // По результатам - передаем инфу в общий аррей урока
+                $lesson->test_results = $test_results;
+                //dd($finished_test_info);
+            } else {
+                $lesson->test_exist = false;
+                $lesson->test_results = [];
+            }
         }
 
         $course_protocols = [];
@@ -451,6 +479,8 @@ class StudentController extends Controller
                 array_push($course_protocols, null);
             }
         }
+
+        
 
         // Определяем следующего студента для кнопки
         $role = Auth::user()->role;

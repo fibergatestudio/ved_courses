@@ -196,8 +196,9 @@ class HomePageController extends Controller
                 // Макс попыток
                 $max_tries = 3;
                 // Получаем кол-во пройденых раз
-                $current_tries = DB::table('tests_log')->where(['user_id' => $user->id, 'test_id' => $course_id])->get();
+                $current_tries = DB::table('tests_log')->where(['user_id' => $user->id, 'test_id' => $test_id->id])->get();
                 $current_tries_count = count($current_tries);
+                //dd( $current_tries_count);
                 // Кол-во оставшихся попытк
                 if($current_tries_count >= $max_tries){
                     $testInfo->expired_tries = true;
@@ -288,7 +289,6 @@ class HomePageController extends Controller
         $all_info = $request->all();
         //dd($all_info);
         $user_id = Auth::user()->id;
-
         // Аррей всех ответов
         $test_questions_json = [];
 
@@ -304,18 +304,21 @@ class HomePageController extends Controller
         $drag_drop_q = [];
         // Получаем инфу о тесте (берем макс оценку)
         $test_info = DB::table('tests_info')->where('id', $test_id)->first();
-        if($test_info->max_score){
-            $test_questions_json['max_score'] = $test_info->max_score;
-            $max_score = $test_info->max_score;
-        } else { $test_questions_json['max_score'] = 0; $max_score = 0;}
+
+        // if($test_info->max_score){
+        //     $test_questions_json['max_score'] = $test_info->max_score;
+        //     $max_score = $test_info->max_score;
+        // } else { $test_questions_json['max_score'] = 0; $max_score = 0;}
+        $test_questions_json['max_score'] = 0;
         // Создаем финальную оценку
         $test_questions_json['final_score'] = 0;
 
         // Макс попыток
         $max_tries = 3;
         // Получаем кол-во пройденых раз
-        $current_tries = DB::table('tests_log')->where(['user_id' => $user_id, 'test_id' => $test_id])->get();
+        $current_tries = DB::table('tests_log')->where(['user_id' => $user_id, 'test_id' => $course_id])->get();
         $current_tries_count = count($current_tries) + 1;
+        //dd($current_tries_count);
         // if($current_tries_count == 0){
         //     $current_tries_count = 1;
         // }
@@ -343,7 +346,7 @@ class HomePageController extends Controller
         }
 
         // Получаем оценку за вопрос.
-        $grade_per_quest = floor($max_score / $q_num);
+        //$grade_per_quest = floor($max_score / $q_num);
         // Верно \ не верно
         // Перебираем и берем данные о них с базы
         if(isset($true_false_ids)){
@@ -354,6 +357,7 @@ class HomePageController extends Controller
                 $tf_array['question_id'] = $true_false_id;
                 $tf_array['question_type'] = "Правильно/неправильно";
                 $tf_array['question_text'] = $true_false_db->question_text;
+                $test_questions_json['max_score'] = $test_questions_json['max_score'] + $true_false_db->default_score;
                 // Текущий ответы
                 $current_answers = $request->answer_truefalse;
                 $tf_array['selected_answer'] = $current_answers[$key];
@@ -389,7 +393,7 @@ class HomePageController extends Controller
                 $multi_array['question_id'] = $multiply_id;
                 $multi_array['question_type'] = "Множинний вибір";
                 $multi_array['question_text'] = $multiply_db->question_text;
-
+                $test_questions_json['max_score'] = $test_questions_json['max_score'] + $multiply_db->default_score;
                 // Текущий выбранный ответ
                 $request_name = 'question_' . $multiply_id;
                 // Получаем текущие ответы на тест
@@ -445,6 +449,10 @@ class HomePageController extends Controller
                 $dd_array['question_id'] = $drag_drop_id;
                 $dd_array['question_type'] = "Перетягування в тексті";
                 $dd_array['question_text'] = $drag_drop_db->question_text;
+                $test_questions_json['max_score'] = $test_questions_json['max_score'] + $drag_drop_db->default_score;
+                if(isset($drag_drop_db->default_score)){
+                    $dd_array['max_score'] = $drag_drop_db->default_score;
+                } else {  $dd_array['max_score'] = 0; }
                 $dd_array['score'] = 0;
                 // Текущий выбранный ответ
                 $answer_drag_drop = 'answer_dragdrop' . $drag_drop_id;
@@ -474,12 +482,13 @@ class HomePageController extends Controller
                 $dd_array['all_answers_names'] = $all_answers_names;
                 $dd_array['right_answers'] = array_slice($dd_array['all_answers_names'], 0, $dd_array['answers_count']);
                 $right_count = 0;
+                $grade_per_dragdrop = $dd_array['max_score'] / $dd_array['answers_count'];
                 for($i = 0; $i < $dd_array['answers_count']; $i++){
                     if($dd_array['selected_answers'][$i] == $dd_array['right_answers'][$i]){
                         $right_count++;
                         //$dd_array['q_count'] = $right_count;
-                        $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
-                        $dd_array['score'] = $dd_array['score'] + $grade_per_quest;
+                        $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop; //$grade_per_quest;
+                        $dd_array['score'] = $dd_array['score'] + $grade_per_dragdrop;
                     }
                 }
                 //dd($dd_array);
@@ -499,12 +508,12 @@ class HomePageController extends Controller
         }
         //dd($test_questions_json);
         //Общее кол-во баллов
-        $t_score = 100;
+        //$t_score = 100;
 
         // Записываем в ЛОГ данные о сданном тесте
         DB::table('tests_log')->insert([
             'user_id' => Auth::user()->id,
-            'test_id' => $test_id,
+            'test_id' => $course_id,
             'completed' => 'true',
         ]);
 
@@ -535,7 +544,7 @@ class HomePageController extends Controller
             'test_id' => $test_id,
             'course_id' => $course_id,
             'test_questions_json' => $encoded_results,
-            'total_score' => $t_score
+            'total_score' => $test_questions_json['final_score'],
         ]);
 
 

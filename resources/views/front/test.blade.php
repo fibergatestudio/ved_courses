@@ -146,31 +146,24 @@
                                     <?php $dd_counter = 1; ?>
                                     @foreach($testDragDrop as $dragDrop)
                                     <div class="test_b-grid_wrapper">
-                                        <?php $dd_answers_json = json_decode($dragDrop->answers_json); ?>
-                                        <?php //var_dump($dd_answers_json); 
-                                        
-                                       //preg_match_all('/\[\[([^\]]+)\]\]/', "meme", $dd_answers_json->question);
-                                        //var_dump($dd_answers_json->question);
+                                        <?php 
+                                        $dd_answers_json = json_decode($dragDrop->answers_json);
+
                                         $text_fields = [];
                                         $fixed_test_fields = [];
                                         preg_match_all('/(.*?)(\[\[.*?\]\]|$)/', strip_tags($dd_answers_json->question), $text_fields);
                                         foreach($text_fields[0] as $text_field){
                                             $text_field = preg_replace('/\[\[([^\]]+)\]\]/', '', $text_field);
                                             array_push($fixed_test_fields, $text_field);
-                                            //dd($text_field);
-                                            
                                         }
                                         //dd($fixed_test_fields);
 
                                         $answer_fields = [];
                                         preg_match_all('/\[\[(.*?)\]\]/', $dd_answers_json->question, $answer_fields);
-                                        //print_r($answer_fields[1]);
-                                        //dd($text_fields[0], $answer_fields[1], $fixed_test_fields);
+
 
                                         $answ_curr_c = 0;
-
                                         ?>
-                                        <?php ?>
                                         
                                         <div class="test_b-grid_inner">
                                             <div class="test_b-grid_question">
@@ -194,8 +187,7 @@
                                                         <?php 
                                                         $answ_curr_c++; 
                                                     } ?>
-                                                <?php //var_dump(count($answer_fields[1]), $answ_curr_c, count($fixed_test_fields)); ?>
-                                                <?php 
+                                                <?php //var_dump(count($answer_fields[1]), $answ_curr_c, count($fixed_test_fields)); 
                                                     if(count($answer_fields[1]) == $answ_curr_c){
                                                         echo $fixed_test_fields[$answ_curr_c++];
                                                     }
