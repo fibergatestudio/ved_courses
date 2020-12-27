@@ -11,7 +11,9 @@
         <a class="menu_title-link" href="{{ route('about')}}">Про ресурс</a>
     </li>
     <li class="menu_title-inner">
-        <a class="menu_title-link" href="{{ URL::to('/') }}/#direction-separator_badge">Тематичні напрями</a>
+        <a class="menu_title-link" href="{{ URL::to('/') }}/#direction-separator_badge"
+            onclick="$('.menu_title-wrapper').hide();"
+            >Тематичні напрями</a>
     </li>
     @guest
         <li class="menu_title-inner">
