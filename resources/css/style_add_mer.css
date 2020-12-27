@@ -141,3 +141,6 @@ input[type="text"]::placeholder{
 .curs-del-btn{
     margin-left: 5px;
 }
+.curs-teacher-del-btn{
+    left: -80px;
+}

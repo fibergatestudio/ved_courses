@@ -38,9 +38,10 @@ class GroupsController extends Controller
 
     public function add_group(){
 
+        $auth_teacher = Auth::user();
         $teachers_list = DB::table('users')->where('role', 'teacher')->get();
 
-        return view('groups.add_group', compact('teachers_list') );
+        return view('groups.add_group', compact('teachers_list', 'auth_teacher') );
     }
 
     public function add_group_apply(Request $request){

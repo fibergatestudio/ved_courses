@@ -7,12 +7,12 @@
 @section('content')
 <section class="direction">
     <!-- protocol modal window start -->
-    <form id="protocolForm" class="protocol" method="POST" action="{{ route('protocol.store') }}" enctype="multipart/form-data">
+    <form id="protocolForm" class="protocol d-block" method="POST" action="{{ route('protocol.store') }}" enctype="multipart/form-data">
         @csrf
-        <input type="hidden" name="course_id" value="{{ $course->id }}">
-        <input type="hidden" name="lesson_id" value="{{ $lesson->id }}">
-        <input type="hidden" name="user_id" value="{{ $user->id }}">
-        <h3 class="protocol__title">ПРОТОКОЛ ОГЛЯДУ</h3>
+        <input type="hidden" name="course_id" value="{{ $protocol->course_id }}">
+        <input type="hidden" name="lesson_id" value="{{ $protocol->lesson_id }}">
+        <input type="hidden" name="user_id" value="{{ $protocol->user_id }}">
+        <h3 class="protocol__title mt-1">ПРОТОКОЛ ОГЛЯДУ</h3>
         <div class="protocol__section">
             <div class="protocol__purple-separator"></div>
             <div class="protocol__section-title">місця події</div>
@@ -20,11 +20,11 @@
                 <div class="protocol__row protocol__mt-50">
                     <div class="descr-input-block city">
                         <label for="city" class="input-descr">Місто (сел.) </label>
-                        <textarea class="input-textarea" name='city' id="city"></textarea>
+                        <textarea class="input-textarea" id="city" disabled>{{ $protocol->city }}</textarea>
                     </div>
                     <div class="descr-input-block date">
                         <label for="date" class="input-descr">Дата </label>
-                        <input class="protocol__input" type="date" name='date' id="date">
+                        <input class="protocol__input" type="text" id="date" disabled value="{{ $protocol->date }}">
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-45">
@@ -34,98 +34,16 @@
                             <div class="hours">
                                 <p class="descr-above">Години</p>
                                 <div class="select-time">
-                                    <select name="hour_start" class="select-field inspection-select">
-                                        <option value="00">00</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
+                                    <select class="select-field inspection-select" disabled>
+                                        <option>{{ $protocol->hour_start }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="minutes">
                                 <p class="descr-above">Хвилини</p>
                                 <div class="select-time">
-                                    <select name="minute_start" class="select-field inspection-select">
-                                        <option value="00">00</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                        <option value="24">24</option>
-                                        <option value="25">25</option>
-                                        <option value="26">26</option>
-                                        <option value="27">27</option>
-                                        <option value="28">28</option>
-                                        <option value="29">29</option>
-                                        <option value="30">30</option>
-                                        <option value="31">31</option>
-                                        <option value="32">32</option>
-                                        <option value="33">33</option>
-                                        <option value="34">34</option>
-                                        <option value="35">35</option>
-                                        <option value="36">36</option>
-                                        <option value="37">37</option>
-                                        <option value="38">38</option>
-                                        <option value="39">39</option>
-                                        <option value="40">40</option>
-                                        <option value="41">41</option>
-                                        <option value="42">42</option>
-                                        <option value="43">43</option>
-                                        <option value="44">44</option>
-                                        <option value="45">45</option>
-                                        <option value="46">46</option>
-                                        <option value="47">47</option>
-                                        <option value="48">48</option>
-                                        <option value="49">49</option>
-                                        <option value="50">50</option>
-                                        <option value="51">51</option>
-                                        <option value="52">52</option>
-                                        <option value="53">53</option>
-                                        <option value="54">54</option>
-                                        <option value="55">55</option>
-                                        <option value="56">56</option>
-                                        <option value="57">57</option>
-                                        <option value="58">58</option>
-                                        <option value="59">59</option>
+                                    <select class="select-field inspection-select" disabled>
+                                        <option>{{ $protocol->minute_start }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -137,98 +55,16 @@
                             <div class="hours">
                                 <p class="descr-above">Години</p>
                                 <div class="select-time">
-                                    <select name="hour_end" class="select-field inspection-select">
-                                        <option value="00">00</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
+                                    <select class="select-field inspection-select" disabled>
+                                        <option>{{ $protocol->hour_end }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="minutes">
                                 <p class="descr-above">Хвилини</p>
                                 <div class="select-time">
-                                    <select name="minute_end" class="select-field inspection-select">
-                                        <option value="00">00</option>
-                                        <option value="01">01</option>
-                                        <option value="02">02</option>
-                                        <option value="03">03</option>
-                                        <option value="04">04</option>
-                                        <option value="05">05</option>
-                                        <option value="06">06</option>
-                                        <option value="07">07</option>
-                                        <option value="08">08</option>
-                                        <option value="09">09</option>
-                                        <option value="10">10</option>
-                                        <option value="11">11</option>
-                                        <option value="12">12</option>
-                                        <option value="13">13</option>
-                                        <option value="14">14</option>
-                                        <option value="15">15</option>
-                                        <option value="16">16</option>
-                                        <option value="17">17</option>
-                                        <option value="18">18</option>
-                                        <option value="19">19</option>
-                                        <option value="20">20</option>
-                                        <option value="21">21</option>
-                                        <option value="22">22</option>
-                                        <option value="23">23</option>
-                                        <option value="24">24</option>
-                                        <option value="25">25</option>
-                                        <option value="26">26</option>
-                                        <option value="27">27</option>
-                                        <option value="28">28</option>
-                                        <option value="29">29</option>
-                                        <option value="30">30</option>
-                                        <option value="31">31</option>
-                                        <option value="32">32</option>
-                                        <option value="33">33</option>
-                                        <option value="34">34</option>
-                                        <option value="35">35</option>
-                                        <option value="36">36</option>
-                                        <option value="37">37</option>
-                                        <option value="38">38</option>
-                                        <option value="39">39</option>
-                                        <option value="40">40</option>
-                                        <option value="41">41</option>
-                                        <option value="42">42</option>
-                                        <option value="43">43</option>
-                                        <option value="44">44</option>
-                                        <option value="45">45</option>
-                                        <option value="46">46</option>
-                                        <option value="47">47</option>
-                                        <option value="48">48</option>
-                                        <option value="49">49</option>
-                                        <option value="50">50</option>
-                                        <option value="51">51</option>
-                                        <option value="52">52</option>
-                                        <option value="53">53</option>
-                                        <option value="54">54</option>
-                                        <option value="55">55</option>
-                                        <option value="56">56</option>
-                                        <option value="57">57</option>
-                                        <option value="58">58</option>
-                                        <option value="59">59</option>
+                                    <select class="select-field inspection-select" disabled>
+                                        <option>{{ $protocol->minute_end }}</option>
                                     </select>
                                 </div>
                             </div>
@@ -261,7 +97,7 @@
                             </div>
                         </div>
 
-                        <textarea class="input-textarea" name='cop_initials' id="cop-initials"></textarea>
+                        <textarea class="input-textarea" id="cop-initials" disabled>{{ $protocol->cop_initials }}</textarea>
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-25">
@@ -283,7 +119,7 @@
                             </div>
                         </div>
 
-                        <textarea class="input-textarea" name='basis_of' id="basis-of"></textarea>
+                        <textarea class="input-textarea" id="basis-of" disabled>{{ $protocol->basis_of }}</textarea>
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-45">
@@ -323,7 +159,7 @@
                         </div>
 
 
-                        <textarea class="input-textarea" name='witnessed_one' id="witnessed-one"></textarea>
+                        <textarea class="input-textarea" id="witnessed-one" disabled>{{ $protocol->witnessed_one }}</textarea>
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-25">
@@ -332,7 +168,7 @@
                             <div class="p-count">2.</div>
                             <label for="witnessed-two" class="input-descr">Понятий</label>
                         </div>
-                        <textarea class="input-textarea" name='witnessed_two' id="witnessed-two"></textarea>
+                        <textarea class="input-textarea" id="witnessed-two" disabled>{{ $protocol->witnessed_two }}</textarea>
                     </div>
                 </div>
                 <div class="protocol__row protocol__mt-20">
@@ -366,13 +202,13 @@
                                 </div>
                                 <div class="prompt-block">
                                     <p class="exclamation-mark">i</p>
-                                    <p class="exclamation" id="exclamation-victim"">(прізвище, ім’я, по батькові, дата народження, місце
+                                    <p class="exclamation" id="exclamation-victim">(прізвище, ім’я, по батькові, дата народження, місце
                                         проживання, особистий підпис)</p>
                                 </div>
                             </div>
                         </div>
 
-                        <textarea class=" input-textarea" name='victim' id="victim"></textarea>
+                        <textarea class=" input-textarea" id="victim" disabled>{{ $protocol->victim }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-20">
@@ -418,7 +254,7 @@
                                                 проживання, особистий підпис)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='suspect' id="suspect"></textarea>
+                                    <textarea class="input-textarea" id="suspect" disabled>{{ $protocol->suspect }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-20">
@@ -470,7 +306,7 @@
                                                 проживання, особистий підпис)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='advocate' id="advocate"></textarea>
+                                    <textarea class="input-textarea" id="advocate" disabled>{{ $protocol->advocate }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-20">
@@ -520,8 +356,7 @@
                                                 проживання, особистий підпис)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='representative'
-                                        id="representative"></textarea>
+                                    <textarea class="input-textarea" id="representative" disabled>{{ $protocol->representative }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-40">
@@ -574,7 +409,7 @@
                                                 проживання, особистий підпис)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='specialist' id="specialist"></textarea>
+                                    <textarea class="input-textarea" id="specialist" disabled>{{ $protocol->specialist }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-20">
@@ -603,8 +438,7 @@
                                                 особистий підпис)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='other_participant_one'
-                                        id="other-participant-one"></textarea>
+                                    <textarea class="input-textarea" id="other-participant-one" disabled>{{ $protocol->other_participant_one }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-20">
@@ -618,8 +452,7 @@
                                                 особистий підпис)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='other_participant_two'
-                                        id="other-participant-two"></textarea>
+                                    <textarea class="input-textarea" id="other-participant-two" disabled>{{ $protocol->other_participant_two }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -640,7 +473,7 @@
                                                 ім'я, по батькові, адреса)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='owner' id="owner"></textarea>
+                                    <textarea class="input-textarea" id="owner" disabled>{{$protocol->owner}}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-40">
@@ -658,8 +491,7 @@
                                 </p>
                             </div>
                             <div class="protocol__row protocol__mt-40">
-                                <input class="protocol__input" type="text" name='users_signs' id="users-signs"
-                                    placeholder="(підписи осіб, які беруть участь у проведенні огляду)">
+                                <input class="protocol__input" type="text" id="users-signs" placeholder="(підписи осіб, які беруть участь у проведенні огляду)" value="{{$protocol->users_signs}}" disabled>
                             </div>
                         </div>
                         <div class="protocol__purple-separator protocol__mt-25"></div>
@@ -680,7 +512,7 @@
                                             параметри)</p>
                                     </div>
                                 </div>
-                                <textarea class="input-textarea" name='tech_devices' id="tech-devices"></textarea>
+                                <textarea class="input-textarea" id="tech-devices" disabled>{{$protocol->tech_devices}}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -688,8 +520,7 @@
                                         інформації,
                                         на які здійснюється запис: </label>
                                 </div>
-                                <textarea class="input-textarea" name='recording_devs'
-                                    id="recording-devs"></textarea>
+                                <textarea class="input-textarea" id="recording-devs" disabled>{{$protocol->recording_devs}}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-40">
                                 <div class="descr-input-block justify_start">
@@ -755,27 +586,15 @@
                                     </div>
                                 </div>
 
-                                <textarea class="input-textarea" name='review_conducted'
-                                    id="review-conducted"></textarea>
+                                <textarea class="input-textarea" id="review-conducted" disabled>{{$protocol->review_conducted}}</textarea>
                             </div>
                             <div class="protocol__row protocol__mt-30">
                                 <div class="inspection inspect-w-t protocol_mr-10">
                                     <p class="input-descr">Погодні умови</p>
                                     <div class="weather-time-block">
                                         <div class="select-time weather-select">
-                                            <select name="weather" class="select-field inspection-select">
-                                                <option value="Ясно">Ясно</option>
-                                                <option value="Сонячно">Сонячно</option>
-                                                <option value="Похмуро">Похмуро</option>
-                                                <option value="Туман">Туман</option>
-                                                <option value="Вітряно ">Вітряно </option>
-                                                <option value="Без опадів">Без опадів</option>
-                                                <option value="Мряка">Мряка</option>
-                                                <option value="Дощ">Дощ</option>
-                                                <option value="Легкий сніг">Легкий сніг</option>
-                                                <option value="Снігопад">Снігопад</option>
-                                                <option value="Заметіль температура повітря">Заметіль температура
-                                                    повітря</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->weather }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -784,12 +603,8 @@
                                     <p class="input-descr">Пора доби</p>
                                     <div class="weather-time-block">
                                         <div class="select-time daytime-select">
-                                            <select name="day_time" class="select-field inspection-select">
-                                                <option value="Світла">Світла
-                                                </option>
-                                                <option value="Темна">Темна
-                                                </option>
-                                                <option value="Сутінки ">Сутінки </option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->day_time }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -799,16 +614,8 @@
                                 <div class="inspection">
                                     <p class="input-descr">Освітлення</p>
                                     <div class="select-time lightning">
-                                        <select name="lightning" class="select-field inspection-select">
-                                            <option
-                                                value="Міським електроосвітленням (зазначити ліхтарі, що не функціонують)">
-                                                Міським електроосвітленням (зазначити ліхтарі, що не функціонують)
-                                            </option>
-                                            <option value="Світло вікон будинків">Світло вікон будинків
-                                            </option>
-                                            <option value="Похмуро">Іншими джерелами світла
-                                            </option>
-                                            <option value="Туман">Не освітлюється</option>
+                                        <select class="select-field inspection-select" disabled>
+                                            <option>{{ $protocol->lightning }}</option>
                                         </select>
                                     </div>
                                 </div>
@@ -833,7 +640,7 @@
                                         </div>
                                     </div>
 
-                                    <textarea class="input-textarea" name='address' id="address"></textarea>
+                                    <textarea class="input-textarea" id="address" disabled>{{$protocol->address}}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-50">
@@ -841,14 +648,8 @@
                                     <p class="input-descr">Підходи</p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time weather-select">
-                                            <select name="approach_select" class="select-field inspection-select">
-                                                <option value="Асфальтовані">Асфальтовані</option>
-                                                <option value="Грунтові">Грунтові</option>
-                                                <option value="Тротуарна плитка (бруківка)">Тротуарна плитка (бруківка)</option>
-                                                <option value="Кам’яні">Кам’яні</option>
-                                                <option value="Пісочні">Пісочні</option>
-                                                <option value="Засаджені газоном">Засаджені газоном</option>
-                                                <option value="Не застосовується">Не застосовується</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->approach_select }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -856,7 +657,7 @@
 
                                 <div class="descr-input-block other">
                                     <label for="approach" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='approach' id="approach"></textarea>
+                                    <textarea class="input-textarea" id="approach" disabled>{{$protocol->approach}}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-50">
@@ -864,20 +665,8 @@
                                     <p class="input-descr">Схеми перехресть і площ </p>
                                     <div class="weather-time-block justify_end streets-sheme">
                                         <div class="select-time streets-sheme">
-                                            <select name="ways_schemes_select"
-                                                class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Хрестоподібний">Хрестоподібний
-                                                </option>
-                                                <option value="Т-подібний">Т-подібний
-                                                </option>
-                                                <option value="Х-подібний">Х-подібний
-                                                </option>
-                                                <option value="У-подібний">У-подібний
-                                                </option>
-                                                <option value="Багатобічний ">Багатобічний
-                                                </option>
-                                                <option value="Площа, сквер">Площа, сквер</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->ways_schemes_select }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -885,8 +674,7 @@
 
                                 <div class="descr-input-block other">
                                     <label for="ways-schemes" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='ways_schemes'
-                                        id="ways-schemes"></textarea>
+                                    <textarea class="input-textarea" id="ways-schemes" disabled>{{$protocol->ways_schemes}}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-50">
@@ -894,23 +682,8 @@
                                     <p class="input-descr">Дорога</p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time weather-select">
-                                            <select name="roads_select" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Ясно">Проїжджа частина
-                                                </option>
-                                                <option value="Земляне полотно">Земляне полотно
-                                                </option>
-                                                <option value="Дорожнє полотно">Дорожнє полотно
-                                                </option>
-                                                <option value="Дорожня обстановка">Дорожня обстановка
-                                                </option>
-                                                <option value="Смуга відведення">Смуга відведення
-                                                </option>
-                                                <option value="Узбіччя">Узбіччя</option>
-                                                <option value="Кювет">Кювет</option>
-                                                <option value="Обріз">Обріз</option>
-                                                <option value="Осьова лінія дороги">Осьова лінія дороги</option>
-
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->roads_select }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -918,7 +691,7 @@
 
                                 <div class="descr-input-block other">
                                     <label for="roads" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" type="text" name='roads' id="roads"></textarea>
+                                    <textarea class="input-textarea" type="text" id="roads" disabled>{{$protocol->roads}}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-50">
@@ -926,16 +699,8 @@
                                     <p class="input-descr">Профіль вулиці </p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time streets-and-elems">
-                                            <select name="streets_select" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Проїжджа частина (дорожнє покриття)">Проїжджа частина
-                                                    (дорожнє
-                                                    покриття)
-                                                </option>
-                                                <option value="Смуга зелених насаджень">Смуга зелених насаджень
-                                                </option>
-                                                <option value="Тротуар">Тротуар</option>
-                                                <option value="Газон">Газон</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->streets_select }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -943,7 +708,7 @@
 
                                 <div class="descr-input-block other">
                                     <label for="streets" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='streets' id="streets"></textarea>
+                                    <textarea class="input-textarea" id="streets" disabled>{{$protocol->streets}}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-50">
@@ -951,24 +716,8 @@
                                     <p class="input-descr">Елементи вулиці </p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time streets-and-elems">
-                                            <select name="streets_elems_select"
-                                                class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Ширина вулиці">Ширина вулиці
-                                                </option>
-                                                <option value="Ширина тротуару">Ширина тротуару
-                                                </option>
-                                                <option value="Ширина проїжджої частини">Ширина проїжджої частини
-                                                </option>
-                                                <option value="Ширина трамвайної колії ">Ширина трамвайної колії
-                                                </option>
-                                                <option value="Посадочний майданчик">Посадочний майданчик
-                                                </option>
-                                                <option value="Центр перехрестя">Центр перехрестя
-                                                </option>
-                                                <option value="Острівець безпеки">Острівець безпеки
-                                                </option>
-                                                <option value="Осьова лінія">Осьова лінія</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->streets_elems_select }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -976,8 +725,7 @@
 
                                 <div class="descr-input-block other">
                                     <label for="streets-elems" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='streets_elems'
-                                        id="streets-elems"></textarea>
+                                    <textarea class="input-textarea" id="streets-elems" disabled>{{$protocol->streets_elems}}</textarea>
                                 </div>
 
                             </div>
@@ -987,28 +735,15 @@
                                         (спостереження)
                                         на місцях огляду та прилеглій території </label>
                                 </div>
-                                <textarea class="input-textarea" name='cameras_devs' id="cameras-devs"></textarea>
+                                <textarea class="input-textarea" id="cameras-devs" disabled>{{$protocol->cameras_devs}}</textarea>
                             </div>
                             <div class="protocol__row protocol__mt-50">
                                 <div class="inspection inspect-w-t protocol_mr-10">
                                     <p class="input-descr">Житловий будинок </p>
                                     <div class="weather-time-block living-house justify_end">
                                         <div class="select-time living-house">
-                                            <select name="house_select" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Дім-дача (з мансардою)">Дім-дача (з мансардою)
-
-                                                </option>
-                                                <option
-                                                    value="Цегляний житловий будинок">
-                                                    Цегляний житловий будинок </option>
-                                                <option
-                                                    value="Багатоповерховий панельний (секційний) житловий будинок">
-                                                    Багатоповерховий панельний (секційний) житловий будинок
-                                                </option>
-                                                <option value="Панельний (односекційний) житловий будинок">Панельний
-                                                    (односекційний) житловий будинок
-                                                </option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->house_select }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1022,36 +757,23 @@
                                             будинку та на
                                             якому поверсі проводиться огляд)</p>
                                     </div>
-                                    <textarea class="input-textarea" name='house' id="house"></textarea>
+                                    <textarea class="input-textarea" id="house" disabled>{{$protocol->house}}</textarea>
                                 </div>
 
                             </div>
                             <div class="protocol__row protocol__mt-40">
                                 <p class="block-header-descr">Об'єкти торгівлі і публічного харчування </p>
                                 <div class="select-time  catering">
-                                    <select name="catering" class="select-field inspection-select">
-                                        <option value="Не застосовується">Не застосовується</option>
-                                        <option value="Торгівельний центр, супермаркет, магазин">Торгівельний центр,
-                                            супермаркет, магазин
-
-                                        </option>
-                                        <option value="Кафе">Кафе
-                                        </option>
-                                        <option value="Ресторан">Ресторан</option>
-                                        <option value="Заклад публічного харчування">Заклад публічного харчування
-                                        </option>
-                                        <option value="Кіоск (торгівельний намет, ятка)">Кіоск (торгівельний намет,
-                                            ятка)
-                                        </option>
-                                        <option value="Інше">Інше</option>
+                                    <select class="select-field inspection-select" disabled>
+                                        <option>{{ $protocol->catering }}</option>
                                     </select>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-50">
                                 <div class="descr-input-block other">
                                     <label for="floor-others" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='floor_others'
-                                        id="floor-others"></textarea>
+                                    <textarea class="input-textarea"
+                                        id="floor-others" disabled>{{$protocol->floor_others}}</textarea>
                                 </div>
                                 <div class="descr-input-block other">
                                     <label for="floor" class="input-descr">Поверх</label>
@@ -1061,7 +783,7 @@
                                             приміщенні та
                                             на якому поверсі проводиться огляд)</p>
                                     </div>
-                                    <textarea class="input-textarea" name='floor' id="floor"></textarea>
+                                    <textarea class="input-textarea" id="floor" disabled>{{$protocol->floor}}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-50">
@@ -1069,29 +791,8 @@
                                     <p class="input-descr">Сходи і ліфт </p>
                                     <div class="weather-time-block justify_end">
                                         <div class="select-time doorhandle">
-                                            <select name="stairs_elevators" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Зовнішні сталеві пожежні сходи">Зовнішні сталеві
-                                                    пожежні сходи
-
-
-                                                </option>
-                                                <option value="Ліфт">
-                                                    Ліфт
-                                                </option>
-                                                <option value="Горищна драбина">
-                                                    Горищна драбина
-                                                </option>
-                                                <option
-                                                    value="Двомаршеві сходи з дрібнорозмічених залізобетонних елементів">
-                                                    Двомаршеві сходи з дрібнорозмічених залізобетонних елементів
-                                                </option>
-                                                <option value="Дерев'яні сходи">
-                                                    Дерев'яні сходи
-                                                </option>
-                                                <option value="Сходовий майданчик">
-                                                    Сходовий майданчик
-                                                </option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->stairs_elevators }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1099,8 +800,7 @@
 
                                 <div class="descr-input-block other_mw-515">
                                     <label for="elevators-stairs" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" type="text" name='elevators_stairs'
-                                        id="elevators-stairs"></textarea>
+                                    <textarea class="input-textarea" type="text" id="elevators-stairs" disabled>{{$protocol->elevators_stairs}}</textarea>
                                 </div>
 
                             </div>
@@ -1113,30 +813,8 @@
                                     <p class="input-descr">Двері</p>
                                     <div class="weather-time-block doors justify_end">
                                         <div class="select-time doors">
-                                            <select name="doors" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Вхідні тамбура">Вхідні тамбура
-                                                </option>
-                                                <option value="Квартири">Квартири</option>
-                                                <option value="Торгівельногоцентру">Торгівельного центру</option>
-                                                <option value="Супермаркету">Супермаркету</option>
-                                                <option value="Магазину">Магазину</option>
-                                                <option value="Кафе">Кафе</option>
-                                                <option value="Ресторану">Ресторану</option>
-                                                <option value="Закладу публічного харчування">Закладу публічного
-                                                    харчування
-                                                </option>
-                                                <option value="Кіоску (торгівельного намету)">Кіоску (торгівельного
-                                                    намету)
-                                                </option>
-                                                <option value="Одностулкові або двостулкові">Одностулкові або
-                                                    двостулкові
-                                                </option>
-                                                <option
-                                                    value="Матеріал (металеві; дерев’яні; металопластикові; ДВП; ДСП)">
-                                                    Матеріал (металеві; дерев’яні; металопластикові; ДВП; ДСП)
-                                                </option>
-                                                <option value="Інше">Інше</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->doors }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1144,7 +822,7 @@
 
                                 <div class="descr-input-block other other_mw-505">
                                     <label for="door-other" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='door_other' id="door-other"></textarea>
+                                    <textarea class="input-textarea" id="door-other" disabled>{{$protocol->door_other}}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-25">
@@ -1152,14 +830,8 @@
                                     <p class="input-descr">Дверні ручки </p>
                                     <div class="weather-time-block doorhandle justify_end">
                                         <div class="select-time doorhandle">
-                                            <select name="doorhandle" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Ручка-скоба на планці">Ручка-скоба на планці
-                                                </option>
-                                                <option value="Обертова Г-подібна ручка">Обертова Г-подібна ручка
-                                                </option>
-                                                <option value="Обертова ручка-кнопка">Обертова ручка-кнопка</option>
-                                                <option value="Інші">Інші</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->doorhandle }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1167,8 +839,7 @@
 
                                 <div class="descr-input-block other other_mw-505">
                                     <label for="doorhandle-other" class="input-descr">Інше</label>
-                                    <textarea class="input-textarea" name='doorhandle_other'
-                                        id="doorhandle-other"></textarea>
+                                    <textarea class="input-textarea" id="doorhandle-other" disabled>{{ $protocol->doorhandle_other }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-25">
@@ -1176,42 +847,8 @@
                                     <p class="input-descr">Дверні прилади </p>
                                     <div class="weather-time-block door-device justify_end">
                                         <div class="select-time door-device">
-                                            <select name="door_device" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Перекидний врізаний шпінгалет">Перекидний врізаний
-                                                    шпінгалет
-
-                                                </option>
-                                                <option value="Шпінгалет-засувка">Шпінгалет-засувка
-                                                </option>
-                                                <option value="Поперечна засувка з круглим стрижнем">Поперечна
-                                                    засувка з круглим
-                                                    стрижнем
-                                                </option>
-                                                <option
-                                                    value="Поперечна засувка з плоским стрижнем та кільцем для замка">
-                                                    Поперечна засувка з плоским стрижнем та кільцем для замка
-                                                </option>
-                                                <option value="Заставний крючок на планках">Заставний крючок на
-                                                    планках
-                                                </option>
-                                                <option value="Поперечний пробій">Поперечний пробій
-                                                </option>
-                                                <option value="Дверний запобіжний ланцюжок">Дверний запобіжний
-                                                    ланцюжок
-                                                </option>
-                                                <option value="Запірна штанга">Запірна штанга
-                                                </option>
-                                                <option value="Напівшарнірна звичайна петля">Напівшарнірна звичайна
-                                                    петля
-                                                </option>
-                                                <option value="Напівшарнірна кутова петля">Напівшарнірна кутова
-                                                    петля
-                                                </option>
-                                                <option value="Шарнірна петля">Шарнірна петля
-                                                </option>
-                                                <option value="Петля „стрілою”">Петля „стрілою”
-                                                </option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->door_device }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1225,7 +862,7 @@
                                             пошкодження, характер та механізм
                                             слідоутворення)</p>
                                     </div>
-                                    <textarea class="input-textarea" name='traces' id="traces"></textarea>
+                                    <textarea class="input-textarea" id="traces" disabled>{{ $protocol->traces }}</textarea>
                                 </div>
                             </div>
 
@@ -1239,36 +876,8 @@
                                     <p class="input-descr">Врізний</p>
                                     <div class="weather-time-block doors justify_end">
                                         <div class="select-time doors">
-                                            <select name="mortise_lock" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Врізний циліндровий замок">Врізний циліндровий замок
-                                                </option>
-                                                <option value="Меблевий сувальдний замок">Меблевий сувальдний замок
-                                                </option>
-                                                <option
-                                                    value="Врізний сувальдний замок із рігельним засовом та фіксатором, що регулюється">
-                                                    Врізний сувальдний замок із рігельним засовом та фіксатором, що
-                                                    регулюється</option>
-                                                <option
-                                                    value="Врізний сувальдний замок із важелем для відводу клямки ключем)">
-                                                    Врізний сувальдний замок із важелем для відводу клямки ключем)
-                                                </option>
-                                                <option
-                                                    value="Накладний (циліндричний двообертовий замок із косою клямкою">
-                                                    Накладний (циліндричний двообертовий замок із косою клямкою
-                                                </option>
-                                                <option value="Циліндричний напівобертів замок">Циліндричний
-                                                    напівобертів
-                                                    замок
-                                                </option>
-                                                <option value="Сувальдний двообертовий замок">Сувальдний
-                                                    двообертовий замок
-                                                </option>
-                                                <option value="Скриньовий сувальдний замок">Скриньовий сувальдний
-                                                    замок
-                                                </option>
-                                                <option value="Універсальний меблевий циліндричний прирізний замок">
-                                                    Універсальний меблевий циліндричний прирізний замок</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->mortise_lock }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1277,34 +886,12 @@
                                     <p class="input-descr">Навісний</p>
                                     <div class="weather-time-block doors justify_end">
                                         <div class="select-time doors">
-                                            <select name="padlock" class="select-field inspection-select">
-                                                <option value="Сувальдний двообертовий замок">Сувальдний
-                                                    двообертовий замок
-                                                </option>
-                                                <option
-                                                    value="Безсувальдний безпружинний замок із дужкою, що знімається">
-                                                    Безсувальдний безпружинний замок із дужкою, що знімається
-                                                </option>
-                                                <option value="Пружинний замок">Пружинний замок</option>
-                                                <option value="Циліндричний автоматичний висячий замок">Циліндричний
-                                                    автоматичний висячий замок</option>
-                                                <option value="Висячий контрольний замок">Висячий контрольний замок
-                                                </option>
-                                                <option value="Безсувальдний замок">Безсувальдний замок</option>
-                                                <option
-                                                    value="Висячі замки без ключа з чотиризначним літерним (зліва) та трьохзначним цифровим (справа) кодом">
-                                                    Висячі замки без ключа з чотиризначним літерним (зліва) та
-                                                    трьохзначним
-                                                    цифровим (справа) кодом</option>
-                                                <option value="Гвинтовий замок">Гвинтовий замок</option>
+                                            <select class="select-field inspection-select" disabled>
+                                                <option>{{ $protocol->padlock }}</option>
                                             </select>
                                         </div>
                                     </div>
                                 </div>
-
-
-
-
                             </div>
                             <div class="protocol__row protocol__mt-30">
                                 <div class="descr-input-block">
@@ -1318,7 +905,7 @@
                                                 слідоутворення)</p>
                                         </div>
                                     </div>
-                                    <textarea class="input-textarea" name='lock_other' id="lock-other"></textarea>
+                                    <textarea class="input-textarea" id="lock-other" disabled>{{ $protocol->lock_other }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -1343,7 +930,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mw-800 protocol_mnh-115"
-                                        id="rooms-count-size" name="rooms_count_size_texta"></textarea>
+                                        id="rooms-count-size" disabled>{{ $protocol->rooms_count_size_texta }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-30">
@@ -1363,7 +950,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mw-800" id="rooms-corridor"
-                                        name="rooms_corridor_texta"></textarea>
+                                       disabled>{{ $protocol->rooms_corridor_texta }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
@@ -1372,8 +959,8 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea" name='break_or_not1'
-                                    id="break-or-not1"> </textarea>
+                                <textarea class="input-textarea"
+                                    id="break-or-not1" disabled>{{ $protocol->break_or_not1 }} </textarea>
                             </div>
                         </div>
                         <div class="protocol__purple-separator protocol__mt-30"></div>
@@ -1396,7 +983,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mw-800 protocol_mnh-115" id="bathroom"
-                                        name="bathroom_texta"></textarea>
+                                        disabled>{{ $protocol->bathroom_texta }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
@@ -1405,8 +992,8 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea" name='break_or_not2'
-                                    id="break-or-not2"> </textarea>
+                                <textarea class="input-textarea"
+                                    id="break-or-not2" disabled>{{ $protocol->break_or_not2 }} </textarea>
                             </div>
                         </div>
                         <div class="protocol__purple-separator protocol__mt-40"></div>
@@ -1429,7 +1016,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mw-800 protocol_mnh-115" id="kitchen"
-                                        name="kitchen_texta"></textarea>
+                                         disabled>{{ $protocol->kitchen_texta }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
@@ -1438,8 +1025,8 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea" name='break_or_not7'
-                                    id="break-or-not7"> </textarea>
+                                <textarea class="input-textarea"
+                                    id="break-or-not7" disabled>{{ $protocol->break_or_not7 }} </textarea>
                             </div>
                         </div>
                         <div class="protocol__purple-separator protocol__mt-45"></div>
@@ -1449,7 +1036,7 @@
                         <div class="protocol__content protocol__colored-content">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea protocol_mnh-115" id="rooms-descr1"
-                                    name="rooms_descr1"></textarea>
+                                     disabled>{{ $protocol->rooms_descr1 }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -1457,8 +1044,8 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea protocol__mb-45" name='break_or_not3'
-                                    id="break-or-not3"> </textarea>
+                                <textarea class="input-textarea protocol__mb-45"
+                                    id="break-or-not3" disabled>{{ $protocol->break_or_not3 }} </textarea>
                             </div>
                         </div>
                         <div class="protocol__section-title protocol__title_restyle-black-text toggle-content ">
@@ -1469,7 +1056,7 @@
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea protocol_mnh-115" id="rooms-descr2"
-                                    name="rooms_descr2"></textarea>
+                                     disabled>{{ $protocol->rooms_descr2 }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -1477,8 +1064,8 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea protocol__mb-45" name='break_or_not4'
-                                    id="break-or-not4"> </textarea>
+                                <textarea class="input-textarea protocol__mb-45"
+                                    id="break-or-not4" disabled>{{ $protocol->break_or_not4 }} </textarea>
                             </div>
                         </div>
                         <div class="protocol__section-title protocol__title_restyle-black-text toggle-content">
@@ -1489,7 +1076,7 @@
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea protocol_mnh-115" id="rooms-descr3"
-                                    name="rooms_descr3"></textarea>
+                                     disabled>{{ $protocol->rooms_descr3 }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -1497,8 +1084,8 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea protocol__mb-45" name='break_or_not5'
-                                    id="break-or-not5"> </textarea>
+                                <textarea class="input-textarea protocol__mb-45"
+                                    id="break-or-not5" disabled>{{ $protocol->break_or_not5 }} </textarea>
                             </div>
                         </div>
                         <div class="protocol__section-title protocol__title_restyle-black-text toggle-content">
@@ -1509,7 +1096,7 @@
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea protocol_mnh-115" id="rooms-descr4"
-                                    name="rooms_descr4"></textarea>
+                                     disabled>{{ $protocol->rooms_descr4 }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-50">
                                 <div class="descr-input-block justify_start">
@@ -1517,8 +1104,8 @@
                                         (в чому
                                         проявляється порушення обстановки): </label>
                                 </div>
-                                <textarea class="input-textarea" name='break_or_not6'
-                                    id="break-or-not6"> </textarea>
+                                <textarea class="input-textarea"
+                                    id="break-or-not6" disabled>{{ $protocol->break_or_not6 }} </textarea>
                             </div>
                         </div>
                         <div class="protocol__purple-separator protocol__mt-50"></div>
@@ -1533,42 +1120,8 @@
                                     </p>
                                     <div class="weather-time-block balcony justify_end">
                                         <div class="select-time balcony">
-                                            <select name="balcony" class="select-field inspection-select">
-                                                <option value="Не застосовується">Не застосовується</option>
-                                                <option value="Віконні - двостулкова">Віконні - двостулкова
-                                                </option>
-                                                <option value="Одностулкова">Одностулкова</option>
-                                                <option value="Тристулкова(для житлових будинків)">Тристулкова(для
-                                                    житлових
-                                                    будинків)</option>
-                                                <option value="Двостулкова з нерівними стулками">Двостулкова з
-                                                    нерівними
-                                                    стулками</option>
-                                                <option value="Тристулкова (для громадських будівель)">Тристулкова
-                                                    (для
-                                                    громадських будівель)</option>
-                                                <option
-                                                    value="Дверні балконні - однопільна (для житлових будинків)">
-                                                    Дверні
-                                                    балконні - однопільна (для житлових будинків)</option>
-                                                <option value="Двопільна (для громадських будівель)">Двопільна (для
-                                                    громадських
-                                                    будівель)</option>
-                                                <option value="Віконний вітровий гачок на тумбі">Віконний вітровий
-                                                    гачок на
-                                                    тумбі</option>
-                                                <option value="Віконний дротяний гачок">Віконний дротяний гачок
-                                                </option>
-                                                <option value="Віконні ручки (Т-подібна; скоба)">Віконні ручки
-                                                    (Т-подібна;
-                                                    скоба)</option>
-                                                <option value="Віконні клямки">Віконні клямки</option>
-                                                <option value="Віконна засувка">Віконна засувка</option>
-                                                <option value="Розсувний шпінгалет">Розсувний шпінгалет</option>
-                                                <option value="Фрамужний прилад з шнуром і блоками">Фрамужний прилад
-                                                    з
-                                                    шнуром і
-                                                    блоками</option>
+                                            <select  class="select-field inspection-select">
+                                                <option>{{ $protocol->balcony }}</option>
                                             </select>
                                         </div>
                                     </div>
@@ -1589,8 +1142,8 @@
                                         </div>
                                     </div>
 
-                                    <textarea class="input-textarea" name='traces_damage'
-                                        id="traces-damage"></textarea>
+                                    <textarea class="input-textarea"
+                                        id="traces-damage" disabled>{{ $protocol->traces_damage }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -1610,13 +1163,13 @@
                         <div class="protocol__content">
                             <div class="protocol__row protocol__mt-30">
                                 <textarea class="input-textarea" id="determed-and-removed"
-                                    name="rooms_other_texta"></textarea>
+                                     disabled>{{ $protocol->rooms_other_texta }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <label for="object-traces" class="input-descr">Об’єкти, предмети (фрагменти, речі,
                                     фунт,
                                     документи, цінності, грошові кошти та інше)</label>
-                                <textarea class="input-textarea" name='object_traces' id="object-traces"></textarea>
+                                <textarea class="input-textarea"  id="object-traces" disabled>{{ $protocol->object_traces }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1647,7 +1200,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='finger_traces' id="finger-traces"></textarea>
+                                <textarea class="input-textarea"  id="finger-traces" disabled>{{ $protocol->finger_traces }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1678,7 +1231,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='shoes_traces' id="shoes-traces"></textarea>
+                                <textarea class="input-textarea"  id="shoes-traces" disabled>{{ $protocol->shoes_traces }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1705,8 +1258,8 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='vehicle_traces'
-                                    id="vehicle-traces"></textarea>
+                                <textarea class="input-textarea"
+                                    id="vehicle-traces" disabled>{{ $protocol->vehicle_traces }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1735,7 +1288,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='break_traces' id="break-traces"></textarea>
+                                <textarea class="input-textarea"  id="break-traces" disabled>{{ $protocol->break_traces }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1758,7 +1311,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <textarea class="input-textarea" name='blood_traces' id="blood-traces"></textarea>
+                                <textarea class="input-textarea"  id="blood-traces" disabled>{{ $protocol->blood_traces }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1776,7 +1329,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='micro_traces' id="micro-traces"></textarea>
+                                <textarea class="input-textarea"  id="micro-traces" disabled>{{ $protocol->micro_traces }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1799,7 +1352,7 @@
                                     </div>
 
                                 </div>
-                                <textarea class="input-textarea" name='bio_traces' id="bio-traces"></textarea>
+                                <textarea class="input-textarea" id="bio-traces" disabled>{{ $protocol->bio_traces }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <div class="descr-input-block justify_start">
@@ -1815,7 +1368,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <textarea class="input-textarea" name='other_traces' id="other-traces"></textarea>
+                                <textarea class="input-textarea" id="other-traces" disabled>{{ $protocol->other_traces }}</textarea>
                             </div>
                         </div>
                         <div class="protocol__purple-separator protocol__mt-30"></div>
@@ -1828,15 +1381,14 @@
                                     схема
                                     сліду знаряддя зламу; спеціально виготовлені предмети, зліпки об’єктів, інше)
                                 </label>
-                                <textarea class="input-textarea" name='p_add_plan' id="p-add-plan"></textarea>
+                                <textarea class="input-textarea"  id="p-add-plan" disabled>{{ $protocol->p_add_plan }}</textarea>
                             </div>
                             <div class="protocol__row direction_column protocol__mt-30">
                                 <label for="p-add-plan-info" class="input-descr">(носії комп’ютерної інформації,
                                     пояснення
                                     спеціалістів та інші матеріали, які пояснюють зміст протоколу)
                                 </label>
-                                <textarea class="input-textarea" name='p_add_plan_info'
-                                    id="p-add-plan-info"></textarea>
+                                <textarea class="input-textarea"  id="p-add-plan-info" disabled>{{ $protocol->p_add_plan_info }}</textarea>
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
@@ -1853,7 +1405,7 @@
                                         </div>
                                     </div>
 
-                                    <textarea class="input-textarea" name='p_signed' id="p-signed"></textarea>
+                                    <textarea class="input-textarea"  id="p-signed" disabled>{{ $protocol->p_signed }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -1867,14 +1419,14 @@
                                             <div class="p-count">1.</div>
                                             <label for="participant1" class="input-descr">ПІБ </label>
                                         </div>
-                                        <textarea class="input-textarea fullname-input" name='participant1'
-                                            id="participant1"></textarea>
+                                        <textarea class="input-textarea fullname-input"
+                                            id="participant1" disabled>{{ $protocol->participant1 }}</textarea>
                                     </div>
                                     <div class="participant-second-block">
                                         <label for="participant1-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant1_sign'
-                                            id="participant1-sign"></textarea>
+                                        <textarea class="input-textarea sign-input"
+                                            id="participant1-sign" disabled>{{ $protocol->participant1_sign }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1885,14 +1437,14 @@
                                             <div class="p-count">2.</div>
                                             <label for="participant2" class="input-descr">ПІБ </label>
                                         </div>
-                                        <textarea class="input-textarea fullname-input" name='participant2'
-                                            id="participant2"></textarea>
+                                        <textarea class="input-textarea fullname-input"
+                                            id="participant2" disabled>{{ $protocol->participant2 }}</textarea>
                                     </div>
                                     <div class="participant-second-block">
                                         <label for="participant2-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant2_sign'
-                                            id="participant2-sign"></textarea>
+                                        <textarea class="input-textarea sign-input"
+                                            id="participant2-sign" disabled>{{ $protocol->participant2_sign }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1903,14 +1455,14 @@
                                             <div class="p-count">3.</div>
                                             <label for="participant3" class="input-descr">ПІБ </label>
                                         </div>
-                                        <textarea class="input-textarea fullname-input" name='participant3'
-                                            id="participant3"></textarea>
+                                        <textarea class="input-textarea fullname-input"
+                                            id="participant3" disabled>{{ $protocol->participant3 }}</textarea>
                                     </div>
                                     <div class="participant-second-block">
                                         <label for="participant3-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant3_sign'
-                                            id="participant3-sign"></textarea>
+                                        <textarea class="input-textarea sign-input"
+                                            id="participant3-sign" disabled>{{ $protocol->participant3_sign }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1921,14 +1473,14 @@
                                             <div class="p-count">4.</div>
                                             <label for="participant4" class="input-descr">ПІБ </label>
                                         </div>
-                                        <textarea class="input-textarea fullname-input" name='participant4'
-                                            id="participant4"></textarea>
+                                        <textarea class="input-textarea fullname-input"
+                                            id="participant4" disabled>{{ $protocol->participant4 }}</textarea>
                                     </div>
                                     <div class="participant-second-block">
                                         <label for="participant4-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant4_sign'
-                                            id="participant4-sign"></textarea>
+                                        <textarea class="input-textarea sign-input"
+                                            id="participant4-sign" disabled>{{ $protocol->participant4_sign }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1939,14 +1491,14 @@
                                             <div class="p-count">5.</div>
                                             <label for="participant5" class="input-descr">ПІБ </label>
                                         </div>
-                                        <textarea class="input-textarea fullname-input" name='participant5'
-                                            id="participant5"></textarea>
+                                        <textarea class="input-textarea fullname-input"
+                                            id="participant5" disabled>{{ $protocol->participant5 }}</textarea>
                                     </div>
                                     <div class="participant-second-block">
                                         <label for="participant5-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant5_sign'
-                                            id="participant5-sign"></textarea>
+                                        <textarea class="input-textarea sign-input"
+                                            id="participant5-sign" disabled>{{ $protocol->participant5_sign }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1957,14 +1509,14 @@
                                             <div class="p-count">6.</div>
                                             <label for="participant6" class="input-descr">ПІБ </label>
                                         </div>
-                                        <textarea class="input-textarea fullname-input" name='participant6'
-                                            id="participant6"></textarea>
+                                        <textarea class="input-textarea fullname-input"
+                                            id="participant6" disabled>{{ $protocol->participant6 }}</textarea>
                                     </div>
                                     <div class="participant-second-block">
                                         <label for="participant6-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='participant6_sign'
-                                            id="participant6-sign"></textarea>
+                                        <textarea class="input-textarea sign-input"
+                                            id="participant6-sign" disabled>{{ $protocol->participant6_sign }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1979,14 +1531,14 @@
                                             <div class="p-count">1.</div>
                                             <label for="witness1" class="input-descr">ПІБ </label>
                                         </div>
-                                        <textarea class="input-textarea fullname-input" name='witness1'
-                                            id="witness1"></textarea>
+                                        <textarea class="input-textarea fullname-input"
+                                            id="witness1" disabled>{{ $protocol->witness1 }}</textarea>
                                     </div>
                                     <div class="participant-second-block">
                                         <label for="witness1-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='witness1_sign'
-                                            id="witness1-sign"></textarea>
+                                        <textarea class="input-textarea sign-input"
+                                            id="witness1-sign" disabled>{{ $protocol->witness1_sign }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -1997,14 +1549,14 @@
                                             <div class="p-count">2.</div>
                                             <label for="witness2" class="input-descr">ПІБ </label>
                                         </div>
-                                        <textarea class="input-textarea fullname-input" name='witness2'
-                                            id="witness2"></textarea>
+                                        <textarea class="input-textarea fullname-input"
+                                            id="witness2" disabled>{{ $protocol->witness2 }}</textarea>
                                     </div>
                                     <div class="participant-second-block">
                                         <label for="witness2-sign"
                                             class="input-descr protocol__ai-center">Підпис</label>
-                                        <textarea class="input-textarea sign-input" name='witness2_sign'
-                                            id="witness2-sign"></textarea>
+                                        <textarea class="input-textarea sign-input"
+                                            id="witness2-sign" disabled>{{ $protocol->witness2_sign }}</textarea>
                                     </div>
                                 </div>
                             </div>
@@ -2025,8 +1577,8 @@
                                         </div>
                                     </div>
 
-                                    <textarea class="input-textarea" name='survey_conducted'
-                                        id="survey-conducted"></textarea>
+                                    <textarea class="input-textarea"
+                                        id="survey-conducted" disabled>{{ $protocol->survey_conducted }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2039,33 +1591,14 @@
                         </div>
                         <div class="protocol__content protocol__colored-content">
                             <div class="protocol__row protocol__mt-50">
-                                <label for="p-add-photo1"
-                                    class="input-descr protocol__ai-center p-photo-descr">Додати
-                                    фото</label>
-
-                                <div class="photo-block-wrapper">
-                                    <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
-                                        <label class="custom-upload-form p-custom-upload-form" for="p-add-photo1">
-                                            <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo1" name="p_add_photo1">
-                                            Назва файлу
-                                        </label>
-                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
-                                            id="p-add-photo1-btn">Завантажити</button>
-                                    </div>
-                                    <div class="delete-photo-block">
-                                        <button type="button" class="input-descr protocol__ai-center">x</button>
-                                        <p class="input-descr protocol__ai-center">Довга назва фото</p>
-                                    </div>
-                                </div>
-
+                                <img class="img-fluid mx-auto text-center" src="{{ asset($protocol->p_add_photo1) }}">
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="photo-descr1" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr1'
-                                        id="photo-descr1"></textarea>
+                                    <textarea class="input-textarea p-photo-input"
+                                        id="photo-descr1" disabled>{{ $protocol->photo_descr1 }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -2082,7 +1615,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block1' id="investigator-photo-block1"></textarea>
+                                        id="investigator-photo-block1" disabled>{{ $protocol->investigator_photo_block1 }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2093,32 +1626,13 @@
                         </div>
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-50">
-                                <label for="p-add-photo2"
-                                    class="input-descr protocol__ai-center p-photo-descr">Додати
-                                    фото</label>
-
-                                <div class="photo-block-wrapper">
-                                    <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
-                                        <label class="custom-upload-form p-custom-upload-form" for="p-add-photo2">
-                                            <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo2" name="p_add_photo2">
-                                            Назва файлу
-                                        </label>
-                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
-                                            id="p-add-photo2-btn">Завантажити</button>
-                                    </div>
-                                    <div class="delete-photo-block">
-                                        <button type="button" class="input-descr protocol__ai-center">x</button>
-                                        <p class="input-descr protocol__ai-center">Довга назва фото</p>
-                                    </div>
-                                </div>
-
+                                <img class="img-fluid mx-auto text-center" src="{{ asset($protocol->p_add_photo2) }}">
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="2" class="input-descr p-photo-descr">Опис фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr2'
-                                        id="photo-descr2"></textarea>
+                                    <textarea class="input-textarea p-photo-input"
+                                        id="photo-descr2" disabled>{{ $protocol->photo_descr2 }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -2135,7 +1649,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block2' id="investigator-photo-block2"></textarea>
+                                        id="investigator-photo-block2" disabled>{{ $protocol->investigator_photo_block2 }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2146,32 +1660,14 @@
                         </div>
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-50">
-                                <label for="3" class="input-descr protocol__ai-center p-photo-descr">Додати
-                                    фото</label>
-
-                                <div class="photo-block-wrapper">
-                                    <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
-                                        <label class="custom-upload-form p-custom-upload-form" for="p-add-photo3">
-                                            <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo3" name="p_add_photo3">
-                                            Назва файлу
-                                        </label>
-                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
-                                            id="p-add-photo3-btn">Завантажити</button>
-                                    </div>
-                                    <div class="delete-photo-block">
-                                        <button type="button" class="input-descr protocol__ai-center">x</button>
-                                        <p class="input-descr protocol__ai-center">Довга назва фото</p>
-                                    </div>
-                                </div>
-
+                                <img class="img-fluid mx-auto text-center" src="{{ asset($protocol->p_add_photo3) }}">
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="photo-descr3" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr3'
-                                        id="photo-descr3"></textarea>
+                                    <textarea class="input-textarea p-photo-input"
+                                        id="photo-descr3" disabled>{{ $protocol->photo_descr3 }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -2188,7 +1684,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block3' id="investigator-photo-block3"></textarea>
+                                        id="investigator-photo-block3" disabled>{{ $protocol->investigator_photo_block3 }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2199,33 +1695,14 @@
                         </div>
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-50">
-                                <label for="p-add-photo4"
-                                    class="input-descr protocol__ai-center p-photo-descr">Додати
-                                    фото</label>
-
-                                <div class="photo-block-wrapper">
-                                    <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
-                                        <label class="custom-upload-form p-custom-upload-form" for="p-add-photo4">
-                                            <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo4" name="p_add_photo4">
-                                            Назва файлу
-                                        </label>
-                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
-                                            id="p-add-photo4-btn">Завантажити</button>
-                                    </div>
-                                    <div class="delete-photo-block">
-                                        <button type="button" class="input-descr protocol__ai-center">x</button>
-                                        <p class="input-descr protocol__ai-center">Довга назва фото</p>
-                                    </div>
-                                </div>
-
+                                <img class="img-fluid mx-auto text-center" src="{{ asset($protocol->p_add_photo4) }}">
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="photo-descr4" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr4'
-                                        id="photo-descr4"></textarea>
+                                    <textarea class="input-textarea p-photo-input"
+                                        id="photo-descr4" disabled>{{ $protocol->photo_descr4 }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -2242,7 +1719,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block4' id="investigator-photo-block4"></textarea>
+                                        id="investigator-photo-block4" disabled>{{ $protocol->investigator_photo_block4 }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2253,33 +1730,14 @@
                         </div>
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-50">
-                                <label for="p-add-photo5"
-                                    class="input-descr protocol__ai-center p-photo-descr">Додати
-                                    фото</label>
-
-                                <div class="photo-block-wrapper">
-                                    <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
-                                        <label class="custom-upload-form p-custom-upload-form" for="p-add-photo5">
-                                            <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo5" name="p_add_photo5">
-                                            Назва файлу
-                                        </label>
-                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
-                                            id="p-add-photo5-btn">Завантажити</button>
-                                    </div>
-                                    <div class="delete-photo-block">
-                                        <button type="button" class="input-descr protocol__ai-center">x</button>
-                                        <p class="input-descr protocol__ai-center">Довга назва фото</p>
-                                    </div>
-                                </div>
-
+                                <img class="img-fluid mx-auto text-center" src="{{ asset($protocol->p_add_photo5) }}">
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="photo-descr5" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr5'
-                                        id="photo-descr5"></textarea>
+                                    <textarea class="input-textarea p-photo-input"
+                                        id="photo-descr5" disabled>{{ $protocol->photo_descr5 }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -2296,7 +1754,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block5' id="investigator-photo-block5"></textarea>
+                                        id="investigator-photo-block5" disabled>{{ $protocol->investigator_photo_block5 }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2307,33 +1765,14 @@
                         </div>
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-50">
-                                <label for="p-add-photo6"
-                                    class="input-descr protocol__ai-center p-photo-descr">Додати
-                                    фото</label>
-
-                                <div class="photo-block-wrapper">
-                                    <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
-                                        <label class="custom-upload-form p-custom-upload-form" for="p-add-photo6">
-                                            <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo6" name="p_add_photo6">
-                                            Назва файлу
-                                        </label>
-                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
-                                            id="p-add-photo6-btn">Завантажити</button>
-                                    </div>
-                                    <div class="delete-photo-block">
-                                        <button type="button" class="input-descr protocol__ai-center">x</button>
-                                        <p class="input-descr protocol__ai-center">Довга назва фото</p>
-                                    </div>
-                                </div>
-
+                                <img class="img-fluid mx-auto text-center" src="{{ asset($protocol->p_add_photo6) }}">
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="photo-descr6" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr6'
-                                        id="photo-descr6"></textarea>
+                                    <textarea class="input-textarea p-photo-input"
+                                        id="photo-descr6" disabled>{{ $protocol->photo_descr6 }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -2350,7 +1789,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block6' id="investigator-photo-block6"></textarea>
+                                        id="investigator-photo-block6" disabled>{{ $protocol->investigator_photo_block6 }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2361,33 +1800,14 @@
                         </div>
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-50">
-                                <label for="p-add-photo7"
-                                    class="input-descr protocol__ai-center p-photo-descr">Додати
-                                    фото</label>
-
-                                <div class="photo-block-wrapper">
-                                    <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
-                                        <label class="custom-upload-form p-custom-upload-form" for="p-add-photo7">
-                                            <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo7" name="p_add_photo7">
-                                            Назва файлу
-                                        </label>
-                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
-                                            id="p-add-photo7-btn">Завантажити</button>
-                                    </div>
-                                    <div class="delete-photo-block">
-                                        <button type="button" class="input-descr protocol__ai-center">x</button>
-                                        <p class="input-descr protocol__ai-center">Довга назва фото</p>
-                                    </div>
-                                </div>
-
+                                <img class="img-fluid mx-auto text-center" src="{{ asset($protocol->p_add_photo7) }}">
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="photo-descr7" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr7'
-                                        id="photo-descr7"></textarea>
+                                    <textarea class="input-textarea p-photo-input"
+                                        id="photo-descr7" disabled>{{ $protocol->photo_descr7 }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -2404,7 +1824,7 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block7' id="investigator-photo-block7"></textarea>
+                                        id="investigator-photo-block7" disabled>{{ $protocol->investigator_photo_block7 }}</textarea>
                                 </div>
                             </div>
                         </div>
@@ -2415,33 +1835,14 @@
                         </div>
                         <div class="protocol__content protocol__colored-content p__hide">
                             <div class="protocol__row protocol__mt-50">
-                                <label for="p-add-photo8"
-                                    class="input-descr protocol__ai-center p-photo-descr">Додати
-                                    фото</label>
-
-                                <div class="photo-block-wrapper">
-                                    <div class="groups-edit__student-add-form p-upload-block protocol__ai-center">
-                                        <label class="custom-upload-form p-custom-upload-form" for="p-add-photo8">
-                                            <input class='eg-input add-style base-upload' type="file"
-                                                id="p-add-photo8" name="p_add_photo8">
-                                            Назва файлу
-                                        </label>
-                                        <button type="button" class="add-student add-student_restyle p-btn-upload"
-                                            id="p-add-photo8-btn">Завантажити</button>
-                                    </div>
-                                    <div class="delete-photo-block">
-                                        <button type="button" class="input-descr protocol__ai-center">x</button>
-                                        <p class="input-descr protocol__ai-center">Довга назва фото</p>
-                                    </div>
-                                </div>
-
+                                <img class="img-fluid mx-auto text-center" src="{{ asset($protocol->p_add_photo8) }}">
                             </div>
                             <div class="protocol__row protocol__mt-35">
                                 <div class="descr-input-block">
                                     <label for="photo-descr8" class="input-descr p-photo-descr">Опис
                                         фотознімку</label>
-                                    <textarea class="input-textarea p-photo-input" name='photo_descr8'
-                                        id="photo-descr8"></textarea>
+                                    <textarea class="input-textarea p-photo-input"
+                                        id="photo-descr8" disabled>{{ $protocol->photo_descr8 }}</textarea>
                                 </div>
                             </div>
                             <div class="protocol__row protocol__mt-35">
@@ -2458,90 +1859,36 @@
                                         </div>
                                     </div>
                                     <textarea class="input-textarea protocol__mb-45"
-                                        name='investigator_photo_block8' id="investigator-photo-block8"></textarea>
+                                        id="investigator-photo-block8" disabled>{{ $protocol->investigator_photo_block8 }}</textarea>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="protocol__purple-separator protocol__mt-30"></div>
+                        <div class="protocol__section-title">Оцінка:</div>
+                        <div class="protocol__row protocol__mt-25">
+                            <div class="descr-input-block justify-content-center">
+                                <label for="raiting" class="input-descr ml-4">Оцінка</label>
+                                <input class="protocol__input" type="text" id="raiting" name="raiting" value="{{ $protocol->raiting }}">
                             </div>
                         </div>
                         <div class="protocol__content">
                             <div class="protocol__row protocol__mt-35">
                                 <div class="protocol-btns-block">
-                                    @isset($user)
+
                                     <button type="submit" class="groups-edit__create-group sce__buttons-restyle"
                                         id="sendProtocol">Зберегти
                                     </button>
-                                    @endisset
 
-                                    <button type="reset" class="groups-edit__back-to-groups sce__buttons-restyle"
-                                        id="backToContent">Назад
 
-                                    </button>
+                                    <a class="groups-edit__back-to-groups sce__buttons-restyle" href="{{ url($referer)}}">Назад</a>
                                 </div>
                             </div>
                         </div>
 
                     </div>
     </form>
-    <!-- protocol modal window end -->
-    <div class="content-wrapper">
-       <div class="direction-separator">
-        <div class="direction-separator_badge"><span>{{ $lesson->course_name ?? 'Без назви' }}</span></div>
-    </div>
-    <div class="container">
 
-        <ul class="breadcrumbs_list">
-            <li class="breadcrumbs_item">
-                <a href="{{ route('main') }}" class="breadcrumbs_link">Головна</a>
-            </li>
-            <li class="breadcrumbs_item">
-                <a href="{{ route('view_course', $course->id) }}" class="breadcrumbs_link">{{ $course->name }}</a>
-            </li>
-            <li class="breadcrumbs_item">
-                <a href="{{ route('view_lesson', [$course->id, $lesson->id]) }}" class="breadcrumbs_link breadcrumbs_active">{{ $lesson->course_name ?? 'Без назви' }}</a>
-            </li>
 
-        </ul>
-
-        <div class="string-menu_wrapper">
-            <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id]) }}"><span>Як це працює</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'video']) }}"><span>Відеолекція</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'model']) }}"><span>3D модель</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn  active" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
-            </div>
-            <div class="string-menu_inner">
-                <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'test']) }}"><span>Завдання</span></a>
-            </div>
-
-            @include('layouts.front.includes.nextprevlesson')
-
-        </div>
-
-      <!--<div class="protocole_book programs-item_book">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer Lorem Ipsum has been the industry's </div>-->
-      @if (session('success'))
-      <div class="alert alert-success" role="alert">
-          {{ session('success') }}
-      </div>
-      @endif
-      <div class="protocole-text string-text">
-        {!! $lesson->course_protocol_descr !!}
-      </div>
-      <a class="protocole-btn btn-watch--more" href="#" id="modalWindowOpen"><span>відкрити файл</span></a>
-      {{--@forelse (collect(json_decode($lesson->add_document)) as $document)
-            <a class="protocole-btn btn-watch--more" href="{{ asset('docs/'.$document) }}"><span>Протокол № {{ $loop->iteration }}</span></a>
-      @empty
-      <div class="string-text">
-        Протоколи відсутні
-      </div>
-      @endforelse--}}
-
-    </div>
-    </div>
 
     <div class="scroll-wrapper">
         <div class="to-top-button">></div>
@@ -2550,24 +1897,5 @@
 @endsection
 
 @section('js')
-<script>
-    autosize($('.input-textarea'));
 
-    //photo upload btn emulation and uploaded file name update start
-    const photoButtons = document.querySelectorAll('.add-student.add-student_restyle.p-btn-upload');
-    const nearestLable = document.querySelectorAll('.custom-upload-form.p-custom-upload-form');
-    const inputElement = document.querySelectorAll(".eg-input.add-style.base-upload");
-
-    photoButtons.forEach(btn => {
-        btn.addEventListener('click', function () {
-            this.previousElementSibling.click();
-        })
-    })
-
-    for (let i = 0; i < inputElement.length; i++) {
-        inputElement[i].addEventListener("change", function () {
-            //inputElement[i].parentNode.innerText = inputElement[i].files[0].name;
-        });
-    }
-</script>
 @endsection

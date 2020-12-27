@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Auth;
 use DB;
 
@@ -354,16 +355,17 @@ class StudentController extends Controller
         if($file->getClientOriginalExtension() == "xlsx"){
             // Формируем из экселя аррей
             $data = Excel::toArray(new StudentsImport, $file);
-
+            //dd($data);
             foreach($data as $row){
                 foreach($row as $column_data){
                     //dd($column_data['data_zavantazennya']);
                     // Проверяем на существующую запись
                     $copy_check = DB::table('students_data')->where('ID_FO', $column_data['id_fo'])->first();
-
+                    //dd($column_data);
                     if($copy_check){
 
                     } else {
+                        // Добавляем данные в students_data
                         DB::table('students_data')->insert([
                             'upload_date' => $column_data['data_zavantazennya'],
                             'status_from' => $column_data['status_z'],
@@ -375,6 +377,25 @@ class StudentController extends Controller
                             'specialty' => $column_data['specialnist'],
                             'reason_for_deduction' => $column_data['pricina_vidraxuvannya'],
                         ]);
+
+                        $fio_expld = explode(" ", $column_data['zdobuvac']);
+                        // Добавляем в users
+                        $upld_stud_id = DB::table('users')->insertGetId([
+                            'surname' => $fio_expld[0],
+                            'name' => $fio_expld[1],
+                            'patronymic' => $fio_expld[2],
+                            'email' => $column_data['email'],
+                            'password' => Hash::make($column_data['parol']),
+                            'role' => 'student',
+                            'status' => 'confirmed',
+                        ]);
+
+                        // Добавляем в students
+                        DB::table('students')->insert([
+                            'user_id' => $upld_stud_id,
+                            'full_name' => $column_data['zdobuvac'],
+                        ]);
+
                     }
                 }
             }
@@ -413,7 +434,53 @@ class StudentController extends Controller
             } else {
                 $lesson->video_count = count(json_decode($lesson->video_name));
             }
+
+            // Результаты теста по курсу
+            if($lesson->test_id != null){
+                $lesson->test_exist = true;
+                // Берем инфу о законченных тестах
+                $finished_test_info = DB::table('finished_tests_info')->where([
+                    'user_id' => $student_id,
+                    'test_id' => $lesson->test_id,
+                    'course_id' => $course_id,
+                ])->first();
+                // Аррей с инфой о результатах
+                $test_results = [];
+                // Проверяем есть ли результаты
+                if($finished_test_info){
+                    // Если есть - берем нужную информацию и передаем в аррей
+                    $test_results_decode = json_decode($finished_test_info->test_questions_json);
+                    $test_results['max_score'] = $test_results_decode->max_score;
+                    $test_results['final_score'] = $test_results_decode->final_score;
+                    $test_results['completion_percent'] = floor((($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100);//app('App\Http\Controllers\HomePageController')->get_percentage($test_results['final_score'], $test_results['max_score']);
+                    //(($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100%;
+                }
+                // По результатам - передаем инфу в общий аррей урока
+                $lesson->test_results = $test_results;
+                //dd($finished_test_info);
+            } else {
+                $lesson->test_exist = false;
+                $lesson->test_results = [];
+            }
         }
+
+        $course_protocols = [];
+        //Протоколы для курса
+        foreach($course_lessons as $lesson){
+            $current_protocol = DB::table('protocols')->where([
+                                                            ['course_id', '=', $course_id],
+                                                            ['lesson_id', '=', $lesson->id],
+                                                            ['user_id', '=', auth()->user()->id],
+                                                        ])->first();
+            if($lesson->show_protocol) {
+                array_push($course_protocols, $current_protocol);
+            }
+            else {
+                array_push($course_protocols, null);
+            }
+        }
+
+        
 
         // Определяем следующего студента для кнопки
         $role = Auth::user()->role;
@@ -433,7 +500,7 @@ class StudentController extends Controller
             }
         }
 
-        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count'));
+        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count', 'course_protocols'));
     }
 
 }
