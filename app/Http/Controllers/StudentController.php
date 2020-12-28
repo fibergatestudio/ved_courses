@@ -476,7 +476,7 @@ class StudentController extends Controller
             $current_protocol = DB::table('protocols')->where([
                                                             ['course_id', '=', $course_id],
                                                             ['lesson_id', '=', $lesson->id],
-                                                            ['user_id', '=', auth()->user()->id],
+                                                            ['user_id', '=', $student_id],
                                                         ])->first();
             if($lesson->show_protocol) {
                 array_push($course_protocols, $current_protocol);
@@ -486,7 +486,7 @@ class StudentController extends Controller
             }
         }
 
-        
+
 
         // Определяем следующего студента для кнопки
         $role = Auth::user()->role;
@@ -506,7 +506,7 @@ class StudentController extends Controller
             }
         }
 
-        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count', 'course_protocols'));
+        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count', 'course_protocols', 'student_id'));
     }
 
 }
