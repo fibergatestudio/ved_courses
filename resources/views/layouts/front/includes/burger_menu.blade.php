@@ -11,7 +11,9 @@
         <a class="menu_title-link" href="{{ route('about')}}">Про ресурс</a>
     </li>
     <li class="menu_title-inner">
-        <a class="menu_title-link" href="{{ URL::to('/') }}/#direction-separator_badge">Тематичні напрями</a>
+        <a class="menu_title-link" href="{{ URL::to('/') }}/#direction-separator_badge"
+            onclick="$('.menu_title-wrapper').hide();"
+            >Тематичні напрями</a>
     </li>
     @guest
         <li class="menu_title-inner">
@@ -20,9 +22,6 @@
         <li class="menu_title-inner">
             <a class="menu_title-link" href="##">Викладач</a>
         </li>
-        <!--<li class="menu_title-inner">
-            <a class="menu_title-link" href="##" data-toggle="modal" data-target="#exampleModal">Увійти</a>
-        </li>-->
         <li class="menu_title-inner">
             <a class="menu_title-link" href="{{ route('login') }}">Увійти</a>
         </li>
@@ -38,14 +37,8 @@
             <li class="menu_title-inner">
                 <a class="menu_title-link" href="{{ route('admin_panel') }}">Управління</a>
             </li>
-            {{-- <li class="menu_title-inner">
-                <a class="menu_title-link" href="##">Налаштування</a>
-            </li> --}}
         @endif
         @if( Auth::user()->role == "teacher")
-            <!--<li class="menu_title-inner">
-                <a class="menu_title-link" href="##">Студент</a>
-            </li>-->
             <li class="menu_title-inner menu_title-innerStudent">
                 <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
             </li>
@@ -53,27 +46,24 @@
                 <a class="menu_title-link" href="{{ route('teacher_panel') }}">Панель управління</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="##">Профіль</a>
+                <a class="menu_title-link" href="{{ route('teacher.profile') }}">Профіль</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="##">Налаштування</a>
+                <a class="menu_title-link" href="{{ route('teacher.setting' )}}">Налаштування</a>
             </li>
         @endif
         @if( Auth::user()->role == "student")
-            <!--<li class="menu_title-inner">
-                <a class="menu_title-link" href="##">Викладач</a>
-            </li>-->
             <li class="menu_title-inner menu_title-innerStudent">
                 <a class="menu_title-link menu_title-linkStudent" href="##">{{ auth()->user()->name }}</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="{{ route('home') }}">Панель управління</a>
+                <a class="menu_title-link" href="{{ route('student_courses') }}">Панель управління</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="##">Профіль</a>
+                <a class="menu_title-link" href="{{ route('student_profile') }}">Профіль</a>
             </li>
             <li class="menu_title-inner">
-                <a class="menu_title-link" href="##">Налаштування</a>
+                <a class="menu_title-link" href="{{ route('student_information') }}">Налаштування</a>
             </li>
         @endif
         <li class="menu_title-inner">

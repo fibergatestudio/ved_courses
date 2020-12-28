@@ -74,48 +74,12 @@
                         @foreach($students as $student)
                             <div class="sc-string">
                                 <div class="sc-string_inner">{{ $loop->iteration }}.</div>
-                                <div class="sc-string_inner">
-                                    @if(empty($student->full_name))
-                                        Немає
-                                    @else
-                                        {{ $student->full_name }}
-                                    @endif
-                                </div>
-                                <div class="sc-string_inner">
-                                    @if(empty($student->university_name))
-                                        Немає
-                                    @else
-                                        {{ $student->university_name }}
-                                    @endif
-                                </div>
-                                <div class="sc-string_inner">
-                                    @if(empty($student->course_number))
-                                        Немає
-                                    @else
-                                        {{ $student->course_number }}
-                                    @endif
-                                </div>
-                                <div class="sc-string_inner">
-                                    @if(empty($student->group_number))
-                                        Немає
-                                    @else
-                                        {{ $student->group_number }}
-                                    @endif
-                                </div>
-                                <div class="sc-string_inner">
-                                    @if(empty($student->student_phone_number))
-                                        Немає
-                                    @else
-                                        {{ $student->student_phone_number }}
-                                    @endif
-                                </div>
-                                <div class="sc-string_inner">
-                                    @if(empty($student->assigned_teacher_id))
-                                        Немає
-                                    @else
-                                        {{ $student->assigned_teacher_id }}
-                                    @endif
-                                </div>
+                                <div class="sc-string_inner">{{ $student->full_name ?? 'Немає' }}</div>
+                                <div class="sc-string_inner">{{ $student->university_name ?? 'Немає' }}</div>
+                                <div class="sc-string_inner">{{ $student->course_number ?? 'Немає' }}</div>
+                                <div class="sc-string_inner">{{ $student->group_number  ?? 'Немає' }}</div>
+                                <div class="sc-string_inner">{{ $student->student_phone_number  ?? 'Немає' }}</div>
+                                <div class="sc-string_inner">{{ $student->assigned_teacher_id  ?? 'Немає' }}</div>
                                 <div class="sc-string_inner">
                                     <a class="flexTable-btn_edit sc__student-success-btn" id="stSuccess"
                                         href="{{ route('students_success',['student_id' => $student->user_id]) }}">Успішність</a>
@@ -150,63 +114,27 @@
                         </div>
                         <div class="flexMobile-string blackFont">ПІБ студента</div>
                         <div class="flexMobile-string grayFont">
-                            <div class="text-limiter">
-                                @if(empty($student->full_name))
-                                    Немає
-                                @else
-                                    {{ $student->full_name }}
-                                @endif
-                            </div>
+                            <div class="text-limiter">{{ $student->full_name  ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string blackFont">Назва ВУЗа</div>
                         <div class="flexMobile-string grayFont">
-                            <div class="text-limiter">
-                                @if(empty($student->university_name))
-                                    Немає
-                                @else
-                                    {{ $student->university_name }}
-                                @endif
-                            </div>
+                            <div class="text-limiter">{{ $student->university_name  ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string blackFont">Назва курсу</div>
                         <div class="flexMobile-string grayFont">
-                            <div class="text-limiter">
-                                @if(empty($student->course_number))
-                                    Немає
-                                @else
-                                    {{ $student->course_number }}
-                                @endif
-                            </div>
+                            <div class="text-limiter">{{ $student->course_number  ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string blackFont">Номер групи</div>
                         <div class="flexMobile-string grayFont">
-                            <div class="text-limiter">
-                                @if(empty($student->group_number))
-                                    Немає
-                                @else
-                                    {{ $student->group_number }}
-                                @endif
-                            </div>
+                            <div class="text-limiter">{{ $student->group_number  ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string blackFont sc-margin-b-5">Номер телефону</div>
                         <div class="flexMobile-string grayFont sc-margin-b-15">
-                            <div class="text-limiter">
-                                @if(empty($student->student_number))
-                                    Немає
-                                @else
-                                    {{ $student->student_number }}
-                                @endif
-                            </div>
+                            <div class="text-limiter">{{ $student->student_number  ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string blackFont sc-margin-b-5">ПІБ викладача</div>
                         <div class="flexMobile-string grayFont sc-margin-b-15">
-                            <div class="text-limiter">
-                                @if(empty($student->assigned_teacher_id))
-                                    Немає
-                                @else
-                                    {{ $student->assigned_teacher_id }}
-                                @endif
-                            </div>
+                            <div class="text-limiter">{{ $student->assigned_teacher_id  ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string flex-btns_restyle sc__m-flex-btns">
                             <a class="flexTable-btn_edit sc__student-success-btn" id="stSuccess"
@@ -223,6 +151,7 @@
                                 'modalId' => 'deleteModalm',
                                 'secondId' => $loop->iteration,
                                 'target' => $student->full_name,
+                                'modalPath' => route('students_controll_delete', ['student_id' =>  $student->user_id ]),
                             ])
                         </div>
                     </div>

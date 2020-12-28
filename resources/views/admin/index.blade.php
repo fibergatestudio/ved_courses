@@ -6,7 +6,10 @@
         </div>
         <div class="courseControl-container sticky-container container container-height">
 
-            @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Панель Адміна', 'imgPath' => 'img/teacher-mobileMenu-1.png'])
+            @include('layouts.front.includes.admin_sidebar_vrst', [
+                'headTitle' => 'Панель Адміна',
+                'imgPath' => 'img/teacher-mobileMenu-1.png'
+            ])
 
             <div class="cource-container--mobile">
                 <div class="multipleChoice-top-title">

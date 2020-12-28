@@ -85,33 +85,32 @@
                             </div>
 
                             <div class="courseAdditional-flexbox">
+
+                                <div class="courseAdditional-flexbox_item">
+                                    <div class="courseAdditional-left_text">Додати документ</div>
+                                </div>
                                 <div class="courseAdditional-flexbox_item courseAdditional-mobile-only">
                                     Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
                                 </div>
-
-                                <input type="hidden" id="docs_counter" name="docs_counter" value="0">
+                                <div class="courseAdditional-flexbox_item">
+                                    <div class="courseAdditional-input-wrapper">
+                                        <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
+                                        <input class="courseAdditional-input_button" type="file" :name="'add_document' + index" onchange="showFile(this)">
+                                        <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
+                                    </div>
+                                </div>
                                 <div id="docs">
-                                    <div v-for="(id,index) in ids" style="display: flex; align-items: center;">
-                                        <!-- <input type="file" class="form-control" :name="'add_document' + index" value=""> -->
-
-                                        <div class="courseAdditional-flexbox_item">
-                                            <div class="courseAdditional-left_text">Додати документ</div>
-                                        </div>
-                                        <div class="courseAdditional-flexbox_item">
-                                            <div class="courseAdditional-input-wrapper">
-                                                <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
-                                                <input class="courseAdditional-input_button" type="file" :name="'add_document' + index" onchange="showFile(this)">
-                                                <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
-                                            </div>
-                                        </div>
+                                    <div v-for="(id,index) in ids" class="courseAdditional-flexbox">
                                         <div class="courseAdditional-flexbox_item">
                                             <a class="courseAdditional-docName" href="##" @click="removeNewEntry(index)">
 
                                             </a>
                                         </div>
                                     </div>
-                                    <!-- <div onclick="docs.addNewEntry()" class="btn btn-success">Добавить След. Док.</div> -->
                                 </div>
+                                <!-- <div onclick="docs.addNewEntry()" class="btn btn-success">Добавить След. Док.</div> -->
+                                <input type="hidden" id="docs_counter" name="docs_counter" value="0">
+                                <!-- <input type="file" class="form-control" :name="'add_document' + index" value=""> -->
                             </div>
                             <a class="courseAdditional-btn" href="##" onclick="docs.addNewEntry()">
                                 <span>Додати наступний документ</span>
@@ -309,7 +308,7 @@
             }
             /* alert(fileName); */
         }
- 
+
         function submitForm(){
 
             // Получаем кол-во видео
