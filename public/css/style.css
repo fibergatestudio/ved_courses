@@ -3683,7 +3683,7 @@ element.style {
 .answer-block {
     font-family: SegoeUIRegular, sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.333em;
     color: #000;
     background-color: #f8effb;
@@ -3692,9 +3692,9 @@ element.style {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
-    padding: .4em 2.5em;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    padding: .4em 1em;
+    margin-top: 3px;
+    margin-bottom: 3px;
     position: relative;
     cursor: -webkit-grabbing;
     cursor: grabbing

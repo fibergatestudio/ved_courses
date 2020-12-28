@@ -145,12 +145,13 @@
                                 
                                     <?php $dd_counter = 1; ?>
                                     @foreach($testDragDrop as $dragDrop)
-                                    <div class="test_b-grid_wrapper">
+                                    <div class="test_b-grid_wrapper" style="display:flex;">
                                         <?php 
                                         $dd_answers_json = json_decode($dragDrop->answers_json);
 
                                         $text_fields = [];
                                         $fixed_test_fields = [];
+                                        //dd($dd_answers_json);
                                         preg_match_all('/(.*?)(\[\[.*?\]\]|$)/', strip_tags($dd_answers_json->question), $text_fields);
                                         foreach($text_fields[0] as $text_field){
                                             $text_field = preg_replace('/\[\[([^\]]+)\]\]/', '', $text_field);
@@ -165,7 +166,7 @@
                                         $answ_curr_c = 0;
                                         ?>
                                         
-                                        <div class="test_b-grid_inner">
+                                        <div class="test_b-grid_inner" style="width: 70%;">
                                             <div class="test_b-grid_question">
                                                 <input type="hidden" name="drag_drop_id[]" value="{{ $dragDrop->id }}">
                                                 <input type="hidden" name="test_answers_count{{ $dragDrop->id }}" value="{{ count($answer_fields[1]) }}">
@@ -195,7 +196,7 @@
                                                 ?>
                                             </div>
                                         </div>
-                                        <div class="test_b-grid_inner">
+                                        <div class="test_b-grid_inner" style="width: 30%;">
                                             <div id="answers{{ $dragDrop->id }}" class="test_b-grid_answer" style="display: grid;">
                                                 <div class="answer-circle"><span>{{ $dd_counter }}</span></div>
                                                 @foreach($dd_answers_json->answers as $answer)

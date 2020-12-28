@@ -443,7 +443,7 @@ class StudentController extends Controller
                     'user_id' => $student_id,
                     'test_id' => $lesson->test_id,
                     'course_id' => $course_id,
-                ])->first();
+                ])->orderBy('total_score', 'desc')->first();
                 // Аррей с инфой о результатах
                 $test_results = [];
                 // Проверяем есть ли результаты
@@ -452,7 +452,13 @@ class StudentController extends Controller
                     $test_results_decode = json_decode($finished_test_info->test_questions_json);
                     $test_results['max_score'] = $test_results_decode->max_score;
                     $test_results['final_score'] = $test_results_decode->final_score;
-                    $test_results['completion_percent'] = floor((($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100);//app('App\Http\Controllers\HomePageController')->get_percentage($test_results['final_score'], $test_results['max_score']);
+                    $test_results['completion_percent'] = abs(
+                        floor(
+                            ( ( ($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score']) ) * 100 ) - 100
+                        )
+                    );
+                    //$test_results['completion_percent'] = (1 - $test_results['max_score'] / $test_results['final_score']) * 100;
+                    //app('App\Http\Controllers\HomePageController')->get_percentage($test_results['final_score'], $test_results['max_score']);
                     //(($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100%;
                 }
                 // По результатам - передаем инфу в общий аррей урока
