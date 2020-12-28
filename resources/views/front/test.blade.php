@@ -180,8 +180,8 @@
                                                 <input type="hidden" id="q_count" name="q_count{{ $dragDrop->id }}" value="<?php echo count($answer_fields[1]); ?>">
                                                     <?php
                                                     foreach($answer_fields[1] as $answ_field){ 
-                                                        echo $fixed_test_fields[$answ_curr_c]; ?>
-                                                         <input type="hidden" id="true_answer{{ $dragDrop->id }}<?php echo $answ_field; ?>" name="answer_dragdrop{{ $dragDrop->id }}[]" value="">
+                                                        //echo $fixed_test_fields[$answ_curr_c]; ?>
+                                                        <input type="hidden" id="true_answer{{ $dragDrop->id }}<?php echo $answ_field; ?>" name="answer_dragdrop{{ $dragDrop->id }}[]" value="">
                                                         <div class="test_b-questionBlock questionBlock-small" style="width:auto; min-width:90px; min-height:40px;">
                                                             <span id="answer{{ $dragDrop->id }}<?php echo $answ_field; ?>"><?php echo $answ_field; ?></span>
                                                         </div> 

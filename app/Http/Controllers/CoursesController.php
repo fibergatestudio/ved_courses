@@ -86,18 +86,26 @@ class CoursesController extends Controller
                 $lesson->video_count = count(json_decode($lesson->video_name));
             }
 
-            // $video_arr = [];
-            // $i = 0;
-            // foreach(json_decode($lesson->video_name) as $video){
-            //     $video_arr["video_name"] = $video;
-            //     $i++;
-            // }
-            // $a = 0;
-            // foreach(json_decode($lesson->video_length) as $video_l){
-            //     $video_arr["video_length"] = $video_l;
-            //     //$a++;
-            // }
-            // dd($video_arr);
+            $video_arr = [];
+            $i = 0;
+            //dd(json_decode($lesson->video_name));
+            if($lesson->video_name != "[]"){
+                foreach(json_decode($lesson->video_name) as $video){
+                    $video_arr[$i]["video_name"] = $video;
+                    $i++;
+                }
+            }
+            //dd($lesson->video_length);
+            if($lesson->video_length != "[]" && $lesson->video_length != ""){
+                $a = 0;
+                foreach(json_decode($lesson->video_length) as $video_l){
+                    $video_arr[$a]["video_length"] = $video_l;
+                    $a++;
+                }
+            }
+
+            //dd($video_arr);
+            $lesson->video_arr = $video_arr;
 
         }
 

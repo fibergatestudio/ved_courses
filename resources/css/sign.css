@@ -69,8 +69,8 @@
 
 /*Video collection restyle*/
 .hidden-menu_column:first-child {
-    max-width: 40px;
-    min-width: 0;
+    max-width: 80px;
+    min-width: 40px;
 }
 
 .hidden-menu_column:nth-child(2) {

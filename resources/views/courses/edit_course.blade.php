@@ -237,13 +237,17 @@
                                         <div class="courseEdit_video">{{ $lesson->video_count }} відео</div>
 
                                         <table class="hidden-menu">
-                                            <tbody>
-                                            <!-- <tr class="hidden-menu_string">
-                                                <td class="courseEdit-hidden_column hidden-menu_column">3 хв.</td>
-                                                <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                                                <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                            </tr> -->
-                                            </tbody>
+                                            <tbody> 
+                                            @foreach($lesson->video_arr as $l_video)
+                                                @if(isset($l_video['video_length']) && isset($l_video['video_name'] ))
+                                                <tr class="hidden-menu_string">
+                                                    @if(isset($l_video['video_length']))<td class="courseEdit-hidden_column hidden-menu_column"> {{ $l_video['video_length'] }} хв.</td>@endif
+                                                    <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
+                                                    @if(isset($l_video['video_name'] ))<td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ $l_video['video_name'] }}</a></td>@endif
+                                                </tr>
+                                                @endif
+                                            @endforeach
+                                            </tbody>    
                                         </table>
                                     </div>
 
