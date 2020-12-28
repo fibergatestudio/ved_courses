@@ -309,7 +309,7 @@
             /* alert(fileName); */
         }
 
-        function submitForm(){
+        function submitForm(){ 
 
             // Получаем кол-во видео
             var video_counter = $('#videos_counter').val();
@@ -328,13 +328,14 @@
                     var link = $.trim( $(v_link).val() );
 
                     // Check if empty of not
-                    if (name  === '') {
-                        alert('Название видео '+ number +' пустое.');
-                        return false;
-                    } else if (length  === '') {
-                        alert('Длинна видео '+ number +' пустое.');
-                        return false;
-                    } else if (link  === '') {
+                    // if (name  === '') {
+                    //     alert('Название видео '+ number +' пустое.');
+                    //     return false;
+                    // } else if (length  === '') {
+                    //     alert('Длинна видео '+ number +' пустое.');
+                    //     return false;
+                    // } else 
+                    if (link  === '') {
                         alert('Ссылка видео '+ number +' пустая.');
                         return false;
                     } else if(i == video_counter){
@@ -353,13 +354,14 @@
                 var link = $.trim( $(v_link).val() );
 
                 // Check if empty of not
-                if (name  === '') {
-                    alert('Название видео 1 пустое.');
-                    return false;
-                } else if (length  === '') {
-                    alert('Длинна видео 1 пустое.');
-                    return false;
-                } else if (link  === '') {
+                // if (name  === '') {
+                //     alert('Название видео 1 пустое.');
+                //     return false;
+                // } else if (length  === '') {
+                //     alert('Длинна видео 1 пустое.');
+                //     return false;
+                // } else 
+                if (link  === '') {
                     alert('Ссылка видео 1 пустая.');
                     return false;
                 } else {

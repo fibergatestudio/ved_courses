@@ -4607,7 +4607,8 @@ element.style {
     justify-content: space-between;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .courseAdditional-flexbox_item:nth-child(3) {

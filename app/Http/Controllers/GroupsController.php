@@ -138,10 +138,15 @@ class GroupsController extends Controller
             $courses= DB::table('courses')->get();
             $id_arr = [];
             foreach ($courses as $value) {
-                $temp_arr = json_decode($value->assigned_teacher_id);
-                if (in_array($teacher_id, $temp_arr)) {
-                    $id_arr[] = $value->id;
+                // + Доп проверка есть ли привязанный учитель к группе
+                if($value->assigned_teacher_id){
+                   $temp_arr = json_decode($value->assigned_teacher_id);
+                    //dd($temp_arr);
+                    if (in_array($teacher_id, $temp_arr)) {
+                        $id_arr[] = $value->id;
+                    } 
                 }
+                
             }
             $courses= DB::table('courses')->whereIn('id', $id_arr)->get();
 

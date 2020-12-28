@@ -342,11 +342,16 @@ class CoursesController extends Controller
 
             $video_link = $request->$r_video_link;
             // Заносим информацию в аррей
-            if($video_name == null){ $video_name_arr = null; } else { array_push($video_name_arr, $video_name); }
-            if($video_length == null){ $video_lenght_arr = null; } else { array_push($video_lenght_arr, $video_length); }
-            if($filename == null){ $video_file_arr = null; } else { array_push($video_file_arr, $filename); }
-            if($video_link == null){ $video_link_arr = null; } else { array_push($video_link_arr, $video_link); }
-
+                // Если все поля пустые
+            if($video_name == null && $video_length == null && $filename == null && $video_link == null ){
+                // Ничего не добавляем что бы не делать дублей пустых
+            } else {
+                // Если что-то из этого есть - продолжаем передавить инфу в арреи
+                if($video_name == null){ array_push($video_name_arr, null); } else { array_push($video_name_arr, $video_name); }
+                if($video_length == null){ array_push($video_lenght_arr, null); } else { array_push($video_lenght_arr, $video_length); }
+                if($filename == null){ array_push($video_file_arr, null); } else { array_push($video_file_arr, $filename); }
+                if($video_link == null){ array_push($video_link_arr, null); } else { array_push($video_link_arr, $video_link); }
+            }
         }
         //dd($video_file_arr);
 
@@ -485,11 +490,17 @@ class CoursesController extends Controller
 
             $video_link = $request->$r_video_link;
             // Заносим информацию в аррей
-            if($video_name == null){  } else { array_push($video_name_arr, $video_name); }
-            if($video_length == null){  } else { array_push($video_lenght_arr, $video_length); }
-            if($filename == null){  } else { array_push($video_file_arr, $filename); }
-            if($video_link == null){  } else { array_push($video_link_arr, $video_link); }
-
+                // Если все поля пустые
+            if($video_name == null && $video_length == null && $filename == null && $video_link == null ){
+                // Ничего не добавляем что бы не делать дублей пустых
+            } else {
+                // Если что-то из этого есть - продолжаем передавить инфу в арреи
+                if($video_name == null){  array_push($video_name_arr, null); } else { array_push($video_name_arr, $video_name); }
+                if($video_length == null){  array_push($video_lenght_arr, null); } else { array_push($video_lenght_arr, $video_length); }
+                if($filename == null){  array_push($video_file_arr, null); } else { array_push($video_file_arr, $filename); }
+                if($video_link == null){  array_push($video_link_arr, null); } else { array_push($video_link_arr, $video_link); }
+            }
+          
         }
         // Мерджим старые названия с новыми
         $video_file_arr = array_merge($video_file_arr, $old_video_names);
