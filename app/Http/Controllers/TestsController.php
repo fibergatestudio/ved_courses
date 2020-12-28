@@ -328,7 +328,7 @@ class TestsController extends Controller
         $r_answer_arr = [
             'right_answer' => $request->right_answer,
         ];
-        $answers_arr['question'] = $request->question_text;
+        $answers_arr['question'] = strip_tags($request->question_text);
         $answers_arr['answers'] = $arr_answ;
         //dd($answers_arr);
 
