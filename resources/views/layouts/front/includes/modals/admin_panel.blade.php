@@ -7,11 +7,8 @@
                     <a class="student-menu-link" href="{{ route('courses_controll') }}">Панель курсів</a>
                 </li>
                 <li class="student-menu-inner">
-                    <a class="student-menu-link" href="{{ route('admin_panel') }}">Управління</a>
+                    <a class="student-menu-link" href="{{ route('admin_panel') }}">Панель управління</a>
                 </li>
-                <!-- <li class="student-menu-inner">
-                    <a class="student-menu-link" href="##">Налаштування</a>
-                </li> -->
                 <li class="student-menu-inner">
                     <a class="student-menu-link" href="{{ route('logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">Вийти</a>

@@ -123,16 +123,15 @@
                             <div class="courseEdit-teachers teachers-grid_wrapper" id="teacher{{ $teacher->id }}">
                                 <div class="teachers-grid_item">
                                     @if (App\User::find($teacher->id)->getMedia('photos')->last())
-                                    <div class="courseEdit-item_photo" style="background-image: url({{ asset(App\User::find($teacher->id)->getMedia('photos')->last()->getUrl('thumb_big')) }}) !important;"> </div>
+                                        <div class="courseEdit-item_photo" style="background-image: url({{ asset(App\User::find($teacher->id)->getMedia('photos')->last()->getUrl('thumb_big')) }}) !important;"> </div>
                                     @else
-                                    <div class="courseEdit-item_photo"> </div>
+                                        <div class="courseEdit-item_photo"> </div>
                                     @endif
                                 </div>
                                 <div class="teachers-grid_item">
-                                    <div style="display:flex;">
-                                        <div class="teachers-item_name col">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
-                                        <a class="courseAdditional-docName curs-teacher-del-btn" href="##" onclick="deleteTeacher({{ $teacher->id }});"></a>
-                                    </div>
+                                        <div class="teachers-item_name d-flex justify-content-between">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}
+                                            <a class="courseAdditional-docName justify-content-end" href="##" onclick="deleteTeacher({{ $teacher->id }});" style="width: 0px;"></a>
+                                        </div>
                                     <div class="courseEdit-item_position teachers-item_position col">Професор наук</div>
                                 </div>
                                 <div class="teachers-grid_item">

@@ -12,7 +12,7 @@
             ])
 
             <div class="cource-container--mobile">
-                <div class="multipleChoice-top-title">
+                <div class="multipleChoice-top-title d-none d-md-block">
                     <h3 class="multipleChoice-title">Панель Вчителя</h3>
                 </div>
                 <div class="multipleChoice-block newTest-block active">
@@ -20,9 +20,8 @@
                 </div>
                 <div class="multipleChoice-block newTest-block active">
                     <div class="newTest-top active">Вітаю!</div>
-                    <div class="newTest-wrapper show">
-                        Для управління використовуйте панель зліва.
-                    </div>
+                    <div class="newTest-wrapper show">Для управління використовуйте панель <span class="d-none d-md-inline">зліва</span>
+                        <span class="d-inline d-md-none">зверху</span>.</div>
                 </div>
             </div>
         </div>
