@@ -176,7 +176,6 @@
                                                     <span id="answer{{ $dragDrop->id }}">{{ $dd_counter }}</span>
                                                 </div>  -->
 
-                                                {{ $dd_counter }}.
                                                 <input type="hidden" id="q_count" name="q_count{{ $dragDrop->id }}" value="<?php echo count($answer_fields[1]); ?>">
                                                     <?php
                                                     foreach($answer_fields[1] as $answ_field){ 
