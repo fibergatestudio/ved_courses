@@ -9154,7 +9154,7 @@ border: 0 !important;
 		padding-left: 2em;
 		margin-bottom: 5px;
 	}
-	
+
 	.groups-title__elem_style:nth-child(1){
 		padding-left: 2em;
 		width: 100%;
@@ -9173,13 +9173,13 @@ border: 0 !important;
 		width: 100%;
 	}
 	.groups-row__elem_restyle{
-		width: 10% !important; 
+		width: 10% !important;
 		margin-top: 1em;
 		margin-bottom: 0;
 		font-size: 10%;
 		color: #000;
 	}
-	
+
 	.groups__elem_style{
 		width: 100%;
 		padding-left: 2em;
@@ -9286,7 +9286,7 @@ border: 0 !important;
 		padding-bottom: 0px;
 		margin-bottom: 1em;
 	}
-	
+
 }
 
 /* Groups-control end section */
@@ -9545,7 +9545,7 @@ border: 0 !important;
 	}
 	.eg-input{
 		font-size: inherit;
-	}	
+	}
 	.add-style{
 		width: 70%;
 		border-top-right-radius: 0px;
@@ -9630,7 +9630,7 @@ border: 0 !important;
 	}
 
 }
-	
+
 /* Groups-control edit end section */
 
 /* Students control start section */
@@ -10051,7 +10051,7 @@ border: 0 !important;
 	.sce_width-55, .sce_width-40{
 		width: 100%;
 	}
-	
+
 
 }
 /* Students control edit end section */
@@ -10106,7 +10106,7 @@ border: 0 !important;
 	font-size: 13px;
 	color: #878787;
 	text-align: left;
-}	
+}
 
 .ug__title-elem:not(:first-child){
 	width: 10%;
@@ -10428,7 +10428,7 @@ border: 0 !important;
 	align-items: start;
 }
 .ccec__add-student-block_style{
-	margin-bottom: 30px;	
+	margin-bottom: 30px;
 }
 .ccec-teacher-block_style{
 	margin: 0 auto 25px;
@@ -10852,10 +10852,10 @@ border: 0 !important;
 	width: 100%;
 	display: grid;
 	grid-template-columns: 4fr 13fr 7fr;
-	grid-template-areas: 
-	"a1 a2 a2" 
-	"a1 a3 a3" 
-	"a1 a4 a4" 
+	grid-template-areas:
+	"a1 a2 a2"
+	"a1 a3 a3"
+	"a1 a4 a4"
 	"a1 a5 a5";
 	grid-gap: 10px;
 	margin-bottom: 50px
@@ -10892,7 +10892,8 @@ border: 0 !important;
 .time-and-reslts{
 	display: flex;
 	flex-direction: row;
-	justify-content: start;
+    justify-content: start;
+    min-width: 100%;
 }
 .wwl__circle-mark{
 	width: 10px;
@@ -10920,10 +10921,10 @@ border: 0 !important;
 .descr a{
 	margin-bottom: 15px;
 }
-.description .descr:last-child a{
+.description .descr:last-child a, .description .descr:last-child span{
 	margin-bottom: 10px;
 }
-.descr a, .no-result, .is-result{
+.descr a, .descr span, .no-result, .is-result{
 	display: block;
 	font-family: SegoeUI, sans-serif;
 	font-size: 15px;
@@ -10967,10 +10968,10 @@ p.program_wwl-protocol{
 		width: 100%;
 		display: grid;
 		grid-template-columns: 24fr;
-		grid-template-areas: 
-		"a1" 
-		"a2" 
-		"a3" 
+		grid-template-areas:
+		"a1"
+		"a2"
+		"a3"
 		"a4"
 		"a5";
 		grid-gap: 10px;
@@ -11289,7 +11290,7 @@ p.program_wwl-protocol{
 	border-top-left-radius: 3px;
 	border-top-right-radius: 3px;
 	-webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
-    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);      
+    box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
 }
 .ss__student-datas{
 	display: flex;
@@ -11339,7 +11340,7 @@ p.program_wwl-protocol{
 	font-weight: 400;
 	color: #878787;
 	padding-left: 30px;
-} 
+}
 .students-phone{
 	font-size: 13px;
 	font-weight: 400;
@@ -11434,11 +11435,11 @@ p.program_wwl-protocol{
 	width: 100%;
 	display: grid;
 	grid-template-columns: 4fr 13fr 7fr;
-	grid-template-areas: 
-	"a1 a2 a2" 
-	"a1 a3 a3" 
-	"a1 a4 a4" 
-	"a1 a5 a5"; 
+	grid-template-areas:
+	"a1 a2 a2"
+	"a1 a3 a3"
+	"a1 a4 a4"
+	"a1 a5 a5";
 	grid-gap: 10px;
 	margin-bottom: 50px
 }
@@ -11621,8 +11622,8 @@ p.program_wwl-protocol{
 		background-size: 80%;
 	}
 	.ss__grid_wrapper {
-		grid-template-areas: 
-		"a1 a1 a1" 
+		grid-template-areas:
+		"a1 a1 a1"
 		"a2 a2 a2"
 		"a3 a3 a3"
 		"a4 a4 a4"
@@ -11680,6 +11681,7 @@ p.program_wwl-protocol{
 
 
 /* student`s success page end */
+
 .mer-e{
     width: 33% !important;
     margin-right: 5% !important;

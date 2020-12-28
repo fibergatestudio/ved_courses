@@ -159,13 +159,17 @@
                                         <div class="gray-separator gray-separator_restyle ss__gray-septr"></div>
                                         <p class="program_wwl-protocol ">Теоретичний матеріал</p>
                                         <div class="time-and-reslts">
-                                            <div class="time">2 хв.</div>
+                                            <div class="time">
+                                                @if ($lesson->learning_protocol_time)
+                                                    {{ $lesson->learning_protocol_time.' хв.' }}
+                                                @endif
+                                            </div>
+                                            @if ($lesson->learning_protocol_time)
                                             <div class="wwl__circle-mark"></div>
+                                            @endif
                                             <div class="description">
                                                 <p class="descr descr_rest">
-                                                    <a href="#">Lorem Ipsum has been the industry's standard dummy
-                                                        text ever since the 1500s, when an unknown printer
-                                                    </a>
+                                                    <span>{{ $lesson->course_protocol_descr ?? '' }}</span>
                                                 </p>
                                             </div>
                                         </div>
@@ -173,7 +177,7 @@
 
                                                 @if ($course_protocols[$loop->index])
                                                 <p class="text-p">
-                                                    <a href="{{ route('protocol.show', ['course_id' => $course_info->id, 'lesson_id' => $lesson->id, 'user_id' => auth()->user()->id]) }}">Протокол</a>
+                                                    <a href="{{ route('protocol.show', ['course_id' => $course_info->id, 'lesson_id' => $lesson->id, 'user_id' => $student_id]) }}">Протокол</a>
                                                     @if ($course_protocols[$loop->index]->raiting)
                                                     <p class="is-result">
                                                         <span class="ss__test-decoration">Бали за протокол</span>
@@ -185,7 +189,7 @@
                                                 </p>
                                                 @else
                                                     <p>Протокол в уроці відсутній</p>
-                                                @endif 
+                                                @endif
                                             <p class="is-result hide">Тест
                                                 (<span id="correctAnswers">0</span>/<span
                                                     id="totalAnswers">20</span>)&nbsp;
@@ -211,7 +215,7 @@
                                                 </p>
                                             </div>
                                         </div>
-                                        
+
                                         <div class="results ss__results">
                                             @if(empty($lesson->test_results))
                                             <p class="no-result">Немає балів за виконання у цьому розділі</p>
@@ -226,7 +230,7 @@
                                             </p>
                                             @endif
                                         </div>
-                                       
+
                                     </div>
                                     @endif
                                 </div>

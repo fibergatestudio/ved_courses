@@ -38,7 +38,7 @@ class ProtocolController extends Controller
      */
     public function show($course_id, $lesson_id, $user_id, Request $request)
     {
-        $referer = $request->headers->get('referer');
+        $referer = route('students_success', ['student_id' => $user_id]);
         $protocol = DB::table('protocols')->where([
             'course_id' => $course_id,
             'lesson_id' => $lesson_id,
