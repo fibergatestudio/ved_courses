@@ -1,6 +1,18 @@
 @extends('layouts.front.front_child')
 
 @section('content')
+<style>
+
+.today{
+    background-color: #8a4f9f4f;
+    color: #8a4f9f;
+}
+.table-condensed{
+    text-align: center;
+}
+
+</style>
+
     <section class="courseControl">
         @if(session()->has('message_success'))
             <div class="alert alert-success">
@@ -17,7 +29,7 @@
 
                 <form action="{{ route('update_test_info_questions', ['test_info_id' => $test_info_id]) }}" id="test_edit_form" method="POST" >
                     @csrf
-                    <h3 class="courseEdit-title courseControl-title">Редагування тесту</h3>
+                    <h3 class="courseEdit-title courseControl-title">Редагування тесту</h3> 
                     <div class="editing-string-top">
                         <div class="editing-top_inner">
                             Питань:<span><?php echo count($test_question_answers); ?></span>
@@ -39,6 +51,177 @@
                         </div>
 
                     </div>
+                    <div class="newTest-block active">
+                        <div class="newTest-top active">
+                            Загальне
+                        </div>
+                        <div class="newTest-wrapper show" style="background-color:unset;">
+
+                            <div class="courseAdd-inner courseAdd-inner_margbottom">
+                                <div class="courseAdd-inner_left">
+                                    <div class="courseAdd_left--name">
+                                        Назва<sup>*</sup>
+                                    </div>
+                                </div>
+                                <div class="courseAdd-inner_right">
+                                    <input class="course-faq--input courseAdditional--input" name="name" type="text" value="{{ $test_view_info->name }}">
+                                </div>
+                            </div>
+
+                            <div class="courseAdd-inner courseAdd-inner_margbottom">
+                                <div class="courseAdd-inner_left">
+                                    <div class="courseAdd_left--name">
+                                        Опис<sup>*</sup>
+                                    </div>
+                                </div>
+                                <div class="courseAdd-inner_right">
+                                        <textarea class="tinyMCE-area" name="description">{{ $test_view_info->description }}</textarea>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="newTest-block active" style="background-color:unset;">
+                        <div class="newTest-top active">
+                            Вибір часу
+                        </div>
+                        <div class="newTest-wrapper show">
+
+                            <div class="newTest-date-inner">
+                                <div class="newTest-date-item">Початок
+                                </div>
+                                <div class="newTest-date-item">
+                                    <input type="text" name="start_date_time" class="datepicker form-control date-input-restyling" value="{{ $test_view_info->start_date_time }}">
+                                </div>
+                            </div>
+
+                            <div class="newTest-date-inner">
+                                <div class="newTest-date-item">Завершити
+                                </div>
+                                <div class="newTest-date-item">
+                                    <input type="text" name="end_date_time" class="datepicker form-control date-input-restyling" value="{{ $test_view_info->end_date_time }}">
+                                </div>
+                            </div>
+
+                            <div class="newTest-dedline">
+                                <div class="newTest-dedline-inner">
+                                    Обмеження в часі
+                                </div>
+                                <div class="newTest-dedline-inner">
+                                    <input class="newTest-dedline-input_left" type="number" name="time_limit" placeholder="0" value="{{ $test_view_info->time_limit }}">
+                                    <input class="newTest-dedline-input_right" type="text" placeholder="хвилин(а)">
+                                </div>
+                            </div>
+
+                            <div class="newTest-timeInstruction">
+                                <div class="newTest-timeInstruction-inner">
+                                    Коли час спливає
+                                </div>
+                                <div class="newTest-timeInstruction-inner">
+                                    <div class="newTest-timeInstruction-wrapper">
+                                    <select class="newTest-timeInstruction-select" name="when_time_is_up">
+                                        <option value="1" @if($test_view_info->when_time_is_up == 1) selected @endif>Відповіді повинні бути відправлені до завершення часу, інакше вони не зарахуються</option>
+                                        <option value="2" @if($test_view_info->when_time_is_up == 2) selected @endif>Без обмеження в часі</option>
+                                    </select>
+                                    <div class="newTest-timeInstruction_arrowBlock"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="newTest-block active">
+                        <div class="newTest-top active">
+                            Оцінка
+                        </div>
+                        <div class="newTest-wrapper show">
+                        <div class="newTest-mark-string">
+                                <div class="newTest-mark-inner_left">
+                                    Прохідний бал
+                                </div>
+                                <div class="newTest-mark-inner_right">
+                                    <input class="newTest-mark-input" type="number" name="passing_score" placeholder="0" value="{{ $test_view_info->passing_score }}">
+                                </div>
+                        </div>
+                        <div class="newTest-mark-string">
+                            <div class="newTest-mark-inner_left">
+                                Дозволено спроб
+                            </div>
+                            <div class="newTest-mark-inner_right">
+                                <div class="newTest-mark-wrapper">
+                                    <select class="newTest-mark-select" name="available_attempts" >
+                                        <option value="1" @if($test_view_info->available_attempts == 1) selected @endif>Одна спроба</option>
+                                        <option value="2" @if($test_view_info->available_attempts == 2) selected @endif>Перша спроба</option>
+                                        <option value="3" @if($test_view_info->available_attempts == 3) selected @endif>Остання спроба</option>
+                                    </select>
+                                    <div class="newTest-mark_arrowBlock"></div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="newTest-mark-string">
+                            <div class="newTest-mark-inner_left">
+                                Метод оцінювання
+                            </div>
+                            <div class="newTest-mark-inner_right">
+                                <div class="newTest-mark-wrapper">
+                                    <select class="newTest-mark-select" name="assessment_method">
+                                        <option value="1" @if($test_view_info->assessment_method == 1) selected @endif>Краща оцінка</option>
+                                        <option value="2" @if($test_view_info->assessment_method == 2) selected @endif>Середня оцінка</option>
+                                        <option value="3" @if($test_view_info->assessment_method == 3) selected @endif>Незадовiльнa оцінка</option>
+                                    </select>
+                                    <div class="newTest-mark_arrowBlock"></div>
+                                    </div>
+                            </div>
+
+                        </div>
+
+
+                        </div>
+                    </div>
+
+                    <div class="newTest-block active">
+                        <div class="newTest-top active">
+                            Загальне налаштування модуля
+                        </div>
+                        <div class="newTest-wrapper show">
+                        <div class="newTest-quest-string">
+                            <div class="newTest-quest-inner_left main-settings_inner_left">
+                                Доступність
+                            </div>
+                            <div class="newTest-quest-inner_right">
+                                <div class="newTest-quest-wrapper">
+                                    <select class="newTest-quest-select" name="availability">
+                                        <option value="1" @if($test_view_info->availability == 1) selected @endif>Показати на сторінці курсу</option>
+                                        <option value="2" @if($test_view_info->availability == 2) selected @endif>Опция 2</option>
+                                        <option value="3" @if($test_view_info->availability == 3) selected @endif>Опция 3</option>
+                                    </select>
+                                    <div class="newTest-quest_arrowBlock"></div>
+                                    </div>
+                            </div>
+                        </div>
+                        <div class="newTest-quest-string">
+                            <div class="newTest-quest-inner_left main-settings_inner_left">
+                                Режим роботи з групами
+                            </div>
+                            <div class="newTest-quest-inner_right">
+                                <div class="newTest-quest-wrapper">
+                                    <select class="newTest-quest-select" name="operating_mode" >
+                                        <option value="0" selected="">Доступні групи</option>
+                                        @foreach($groups as $group)
+                                            <option value="{{ $group->id }}" @if($test_view_info->operating_mode == $group->id ) selected @endif>{{ $group->name }}</option>
+                                        @endforeach
+                                    </select>
+                                    <div class="newTest-quest_arrowBlock"></div>
+                                    </div>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
 
                     <!-- <div class="editing-string-bottom">
                         Всього балів :<span>69.00</span>
@@ -191,9 +374,21 @@
     </script>
 
     <script>
+        // $('.datepicker').datepicker({
+        //         weekStart: 1,
+        //         daysOfWeekHighlighted: "6,0",
+        //         autoclose: true,
+        //         timepicker: true,
+        //         datepicker: true,
+        //         format: 'dd/mm/yyyy',
+        //                 });
         $('.datepicker').datepicker({
                 weekStart: 1,
+                minDate: new Date(),
+                startDate: new Date(),
                 daysOfWeekHighlighted: "6,0",
+                todayHighlight: true,
+                language: 'uk',
                 autoclose: true,
                 timepicker: true,
                 datepicker: true,

@@ -402,9 +402,10 @@ class TestsController extends Controller
 
         }
 
+        $groups = DB::table('groups')->get();
         //dd($test_question_answers);
 
-        return view('tests.view_test_info_questions', compact('test_info_id', 'test_view_info', 'test_question_answers'));
+        return view('tests.view_test_info_questions', compact('test_info_id', 'test_view_info', 'test_question_answers', 'groups'));
     }
 
     public function update_test_info_questions($test_info_id, Request $request){
@@ -419,6 +420,24 @@ class TestsController extends Controller
 
         DB::table('tests_info')->where('id', $test_info_id)->update([
             'max_score' => $max_score,
+            // Общее
+            'name'                      => $request->name,
+            'description'               => $request->description,
+            // Выбор времени
+            'start_date_time'           => $request->start_date_time,
+            'end_date_time'             => $request->end_date_time,
+            'time_limit'                => $request->time_limit,
+            'when_time_is_up'           => $request->when_time_is_up, 
+            // Оценка
+            'passing_score'             => $request->passing_score,
+            'available_attempts'        => $request->available_attempts,
+            'assessment_method'         => $request->assessment_method,
+            // Поведение вопросов
+            'random_answers_order'      => $request->random_answers_order,
+            'getting_result'            => $request->getting_result,
+            // Общие настройки модуля
+            'availability'              => $request->availability,
+            'operating_mode'            => $request->operating_mode,
         ]);
 
         $info = DB::table('tests_questions')->where('id', $test_info_id)->first();
