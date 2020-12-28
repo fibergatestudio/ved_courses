@@ -17,7 +17,6 @@ class ProtocolController extends Controller
     public function store(Request $request)
     {
         $protocol = $request->except('_token');
-        dd($request);
         $courseId = $protocol['course_id'];
         $lessonId = $protocol['lesson_id'];
         $userId = $protocol['user_id'];
