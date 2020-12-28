@@ -195,7 +195,7 @@
                                                     } ?>
                                                 <?php //var_dump(count($answer_fields[1]), $answ_curr_c, count($fixed_test_fields)); 
                                                     if(count($answer_fields[1]) == $answ_curr_c){
-                                                        echo $fixed_test_fields[$answ_curr_c++] . ".";
+                                                        echo $fixed_test_fields[$answ_curr_c++];// . ".";
                                                     }
                                                 ?>
                                             </div>
@@ -246,9 +246,12 @@
                                                         put: function(to, from){
                                                             var from_id = from.el.id.replace(/\D+/g, '');
                                                             var to_id = to.el.id.replace(/\D+/g, '');
-                                                            //console.log(from_id, to_id);
+                                                            // Спилитим число
+                                                            var to_id_split = to_id.split('');
+                                                            
+                                                            console.log(from_id, to_id_split[0]);
                                                             //console.log(answer_el);
-
+                                                            if(from_id == to_id_split[0]){
                                                                 var true_answer = '#true_answer' + to_id;
                                                                 console.log(true_answer);
                                                                 setTimeout(function(){
@@ -260,6 +263,7 @@
 
 
                                                                 return to.el.children.length < 1;
+                                                            } 
                                                         }
                                                     },
                                                     animation: 100
@@ -267,7 +271,7 @@
                                                 }
                                             //});
 
-                                            //var answer_el = document.getElementById("answer1");
+                                            // var answer_el = document.getElementById("answer1");
                                             // Sortable.create(answer_el, {
                                             // group: {
                                             //     name: answer,
