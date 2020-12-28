@@ -130,8 +130,11 @@
                                 </div>
                                 <div class="teachers-grid_item">
                                     <div style="display:flex;">
-                                        <div class="teachers-item_name col">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</div>
+                                        <div class="teachers-item_name col">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}
+
                                         <a class="courseAdditional-docName curs-teacher-del-btn" href="##" onclick="deleteTeacher({{ $teacher->id }});"></a>
+                                        </div>
+                                       
                                     </div>
                                     <div class="courseEdit-item_position teachers-item_position col">Професор наук</div>
                                 </div>

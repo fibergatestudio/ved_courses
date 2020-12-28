@@ -85,11 +85,11 @@
                                         <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
                                         <div class="answer-radio">
                                                 <input type="radio" class="answer-radio_input" id="answer_true" name="answer_truefalse[]" value="1">
-                                                <label class="answer-radio_label" for="answer_true">Верно</label>
+                                                <label class="answer-radio_label" for="answer_true">Вірно</label>
                                         </div>
                                         <div class="answer-radio">
                                                 <input type="radio" class="answer-radio_input" id="answer_false" name="answer_truefalse[]" value="0">
-                                                <label class="answer-radio_label" for="answer_false">Не верно</label>
+                                                <label class="answer-radio_label" for="answer_false">Не вірно</label>
                                         </div>
                                     </div>
                                 </div>
@@ -143,7 +143,9 @@
                                 </div>
                                 <div class="test_b separator"></div>
                                 
-                                    <?php $dd_counter = 1; ?>
+                                    <?php $dd_counter = 1;
+                                        $total_quest_counter = 1;
+                                    ?>
                                     @foreach($testDragDrop as $dragDrop)
                                     <div class="test_b-grid_wrapper" style="display:flex;">
                                         <?php 
@@ -164,6 +166,7 @@
 
 
                                         $answ_curr_c = 0;
+                                        $test = 0;
                                         ?>
                                         
                                         <div class="test_b-grid_inner" style="width: 70%;">
@@ -178,20 +181,22 @@
 
                                                 <input type="hidden" id="q_count" name="q_count{{ $dragDrop->id }}" value="<?php echo count($answer_fields[1]); ?>">
                                                     <?php
+                                                    $fking_test_value = 1;
                                                     foreach($answer_fields[1] as $answ_field){ 
                                                         echo $fixed_test_fields[$answ_curr_c]; ?>
                                                         <input type="hidden" id="true_answer{{ $dragDrop->id }}<?php echo $answ_field; ?>" name="answer_dragdrop{{ $dragDrop->id }}[]" value="">
                                                         <div class="test_b-questionBlock questionBlock-small" style="width:auto; min-width:90px; min-height:40px;">
-                                                            <span id="answer{{ $dragDrop->id }}<?php echo $answ_field; ?>"><?php echo $answ_field; ?></span>
+                                                            <span id="answer{{ $dragDrop->id }}<?php echo $fking_test_value; //echo $answ_field; ?>"><?php echo $total_quest_counter; ?></span>
                                                         </div> 
                                                         <?php 
+                                                        $fking_test_value++;
                                                         $answ_curr_c++; 
+                                                        $total_quest_counter++;
                                                     } ?>
                                                 <?php //var_dump(count($answer_fields[1]), $answ_curr_c, count($fixed_test_fields)); 
                                                     if(count($answer_fields[1]) == $answ_curr_c){
-                                                        echo $fixed_test_fields[$answ_curr_c++];
+                                                        echo $fixed_test_fields[$answ_curr_c++] . ".";
                                                     }
-                                                
                                                 ?>
                                             </div>
                                         </div>
