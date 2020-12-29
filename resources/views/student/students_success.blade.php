@@ -205,12 +205,11 @@
                                         <a href="##">Тест</a>
                                         <div class="gray-separator gray-separator_restyle"></div>
                                         <div class="time-and-reslts">
-                                            <div class="time">2 хв.</div>
+                                            <div class="time">@if(isset($lesson->test_info)) {{ $lesson->test_info->time_limit }} хв. @endif</div>
                                             <div class="wwl__circle-mark"></div>
                                             <div class="description">
                                                 <p class="descr descr_rest">
-                                                    <a href="#">Lorem Ipsum has been the industry's standard dummy
-                                                        text ever since the 1500s, when an unknown printer
+                                                    <a href="#">@if(isset($lesson->test_info))  {{ strip_tags($lesson->test_info->description) }} @endif
                                                     </a>
                                                 </p>
                                             </div>

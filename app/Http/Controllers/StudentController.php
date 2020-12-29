@@ -466,6 +466,9 @@ class StudentController extends Controller
                 }
                 // По результатам - передаем инфу в общий аррей урока
                 $lesson->test_results = $test_results;
+
+                $test_info = DB::table('tests_info')->where('id', $lesson->test_id)->first();
+                $lesson->test_info = $test_info;
                 //dd($finished_test_info);
             } else {
                 $lesson->test_exist = false;
