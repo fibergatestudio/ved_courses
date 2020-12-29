@@ -379,7 +379,7 @@ class HomePageController extends Controller
 
             array_push($test_questions_json, $true_false_q);
         }
-
+        //dd($test_questions_json);
         // Множественный выбор
         if(isset($multiply_ids)){
             foreach($multiply_ids as $key=>$multiply_id){
@@ -509,7 +509,7 @@ class HomePageController extends Controller
             array_push($test_questions_json, $drag_drop_q);
         }
         $test_questions_json['final_score'] = round($test_questions_json['final_score'], 0); // |0 abs()
-        dd($test_questions_json);
+        //dd($test_questions_json);
         //Общее кол-во баллов
         //$t_score = 100;
 
