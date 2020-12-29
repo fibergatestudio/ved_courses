@@ -436,7 +436,7 @@ class StudentController extends Controller
             }
 
             $mm = DB::table('finished_tests_info')->get();
-            dd($mm, "Stud_id: " . $student_id, "Lesson_id: " . $lesson->test_id, "Course_id: " . $course_id, "Lesso_info: " . $lesson);
+            dd($mm, "Stud_id: " . $student_id, "Lesson_id: " . $lesson->test_id, "Course_id: " . $course_id, "Lesso_info: ", $lesson);
 
             // Результаты теста по курсу
             if($lesson->test_id != null){
