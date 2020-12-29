@@ -435,8 +435,8 @@ class StudentController extends Controller
                 $lesson->video_count = count(json_decode($lesson->video_name));
             }
 
-            $mm = DB::table('finished_tests_info')->get();
-            dd($mm, "Stud_id: " . $student_id, "Lesson_id: " . $lesson->test_id, "Course_id: " . $course_id, "Lesso_info: ", $lesson);
+            //$mm = DB::table('finished_tests_info')->get();
+            //dd($mm, "Stud_id: " . $student_id, "Lesson_id: " . $lesson->test_id, "Course_id: " . $course_id, $lesson);
 
             // Результаты теста по курсу
             if($lesson->test_id != null){
@@ -444,7 +444,7 @@ class StudentController extends Controller
                 // Берем инфу о законченных тестах
                 $finished_test_info = DB::table('finished_tests_info')->where([
                     'user_id' => $student_id,
-                    'test_id' => $lesson->test_id,
+                    //'test_id' => $lesson->test_id,
                     'course_id' => $course_id,
                 ])->orderBy('total_score', 'desc')->first();
                 // Аррей с инфой о результатах
