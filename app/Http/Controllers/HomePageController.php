@@ -403,8 +403,9 @@ class HomePageController extends Controller
                 $answers_json = json_decode($multiply_db->answers_json);
                 //dd($answers_json, $current_answers);
                 //$m_q_num = count($answers_json);
+                //dd($answers_json);
                 foreach($answers_json as $answer_info){
-
+                    //dd($answer_info, $current_answers);
                     // Проверяем если ответ не пустой и если ответ есть в арррее
                     if($current_answers != null && in_array($answer_info->answer, $current_answers)){
                         // Если оценка +вая - то добавляем 
@@ -422,6 +423,7 @@ class HomePageController extends Controller
                     //     $curr_multi_grade = 0;
                     // }
                     // Если оценка не указана - ставим 0
+                    //dd($curr_multi_grade);
                     if($answer_info->answer){
                         $multi_array['answer_grade'] = $answer_info->answer_grade;
                         //$test_questions_json['final_score'] = $test_questions_json['final_score'] + ($grade_per_quest / 2);
@@ -429,6 +431,7 @@ class HomePageController extends Controller
                         $multi_array['answer_grade'] = 0;
                     }
                 }
+                //dd($curr_multi_grade);
                 array_push($multiply_q, $multi_array);
                 // Если значени оценки - минусовое - ставим 0
                 if ($curr_multi_grade < 0) {
@@ -505,8 +508,8 @@ class HomePageController extends Controller
             }
             array_push($test_questions_json, $drag_drop_q);
         }
-        $test_questions_json['final_score'] = floor( $test_questions_json['final_score'] );
-        //dd($test_questions_json);
+        $test_questions_json['final_score'] = round($test_questions_json['final_score'], 0); // |0 abs()
+        dd($test_questions_json);
         //Общее кол-во баллов
         //$t_score = 100;
 
