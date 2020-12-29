@@ -67,7 +67,7 @@
                                 <div class="deleteMenu-text">
                                     Результати тесту.
                                     <?php $results = json_decode(session('test_results')); ?>
-                                        Ваша оцінка {{ $results->final_score }} балів. У вас є ще {{ $results->tries_left}} спроб.
+                                        Ваша оцінка {{ $results->final_score }} / {{ $results->max_score }} балів. У вас є ще {{ $results->tries_left}} спроб.
                                 </div>
                                 <div class="deleteMenu-btn">
                                     <a class="flexTable-btn_delete" href="##"

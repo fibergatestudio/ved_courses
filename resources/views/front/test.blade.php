@@ -181,15 +181,15 @@
 
                                                 <input type="hidden" id="q_count" name="q_count{{ $dragDrop->id }}" value="<?php echo count($answer_fields[1]); ?>">
                                                     <?php
-                                                    $fking_test_value = 1;
+                                                    $ng_test_value = 1;
                                                     foreach($answer_fields[1] as $answ_field){ 
                                                         echo $fixed_test_fields[$answ_curr_c]; ?>
-                                                        <input type="hidden" id="true_answer{{ $dragDrop->id }}<?php echo $answ_field; ?>" name="answer_dragdrop{{ $dragDrop->id }}[]" value="">
+                                                        <input type="hidden" id="true_answer{{ $dragDrop->id }}<?php echo $ng_test_value; ?>" name="answer_dragdrop{{ $dragDrop->id }}[]" value="">
                                                         <div class="test_b-questionBlock questionBlock-small" style="width:auto; min-width:90px; min-height:40px;">
-                                                            <span id="answer{{ $dragDrop->id }}<?php echo $fking_test_value; //echo $answ_field; ?>"><?php echo $total_quest_counter; ?></span>
+                                                            <span id="answer{{ $dragDrop->id }}<?php echo $ng_test_value; //echo $answ_field; ?>"><?php echo $total_quest_counter; ?></span>
                                                         </div> 
                                                         <?php 
-                                                        $fking_test_value++;
+                                                        $ng_test_value++;
                                                         $answ_curr_c++; 
                                                         $total_quest_counter++;
                                                     } ?>
@@ -259,7 +259,7 @@
 
                                                                     $(true_answer).val(new_passed_el);
 
-                                                                }, 300);
+                                                                }, 100);
 
 
                                                                 return to.el.children.length < 1;

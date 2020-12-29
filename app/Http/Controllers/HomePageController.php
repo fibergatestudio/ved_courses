@@ -368,7 +368,8 @@ class HomePageController extends Controller
                 if($current_answers[$key] == $right_answer){
                     // Ответил верно
                     $tf_array['answered_right'] = "Так";
-                    $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
+                    //$test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
+                    $test_questions_json['final_score'] = $test_questions_json['final_score'] + $true_false_db->default_score;
                 } else {
                     // Ответил не верно
                     $tf_array['answered_right'] = "Ні";
@@ -450,9 +451,7 @@ class HomePageController extends Controller
                 $dd_array['question_type'] = "Перетягування в тексті";
                 $dd_array['question_text'] = $drag_drop_db->question_text;
                 $test_questions_json['max_score'] = $test_questions_json['max_score'] + $drag_drop_db->default_score;
-                if(isset($drag_drop_db->default_score)){
-                    $dd_array['max_score'] = $drag_drop_db->default_score;
-                } else {  $dd_array['max_score'] = 0; }
+                if(isset($drag_drop_db->default_score)){ $dd_array['max_score'] = $drag_drop_db->default_score; } else {  $dd_array['max_score'] = 0; }
                 $dd_array['score'] = 0;
                 // Текущий выбранный ответ
                 $answer_drag_drop = 'answer_dragdrop' . $drag_drop_id;
@@ -506,6 +505,7 @@ class HomePageController extends Controller
             }
             array_push($test_questions_json, $drag_drop_q);
         }
+        $test_questions_json['final_score'] = $test_questions_json['final_score'] | 0;
         //dd($test_questions_json);
         //Общее кол-во баллов
         //$t_score = 100;
