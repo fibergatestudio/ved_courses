@@ -586,8 +586,8 @@ class HomePageController extends Controller
         // Записываем данны в пройденные тесты.
         DB::table('finished_tests_info')->insert([
             'user_id' => Auth::user()->id,
-            'test_id' => $test_id,
-            'course_id' => $course_id,
+            'test_id' => $course_id, //$test_id,
+            'course_id' => $test_id, //$course_id,
             'test_questions_json' => $encoded_results,
             'total_score' => $test_questions_json['final_score'],
         ]);
