@@ -195,13 +195,13 @@
                                     </div>
                                     <div class="courseEdit-hidden">
                                         <div class="courseEdit-underline"></div>
-                                        {{ $lesson->course_description }}
+                                        {{ strip_tags($lesson->course_description) }}
                                         {{-- <table class="hidden-menu">
                                             <tbody>
                                                 <tr class="hidden-menu_string">
                                                     <td class="courseEdit-hidden_column hidden-menu_column">{{ $lesson->learning_time }} хв.</td>
                                                     <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                                                    <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ $lesson->course_description }}</a></td>
+                                                    <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ strip_tags($lesson->course_description) }}</a></td>
                                                 </tr>
                                             </tbody>
                                         </table>--}}
@@ -237,11 +237,15 @@
 
                                         <table class="hidden-menu">
                                             <tbody>
-                                            <!-- <tr class="hidden-menu_string">
-                                                <td class="courseEdit-hidden_column hidden-menu_column">3 хв.</td>
-                                                <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                                                <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer</a></td>
-                                            </tr> -->
+                                            @foreach($lesson->video_arr as $l_video)
+                                                @if(isset($l_video['video_length']) && isset($l_video['video_name'] ))
+                                                <tr class="hidden-menu_string">
+                                                    @if(isset($l_video['video_length']))<td class="courseEdit-hidden_column hidden-menu_column"> {{ $l_video['video_length'] }} хв.</td>@endif
+                                                    <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
+                                                    @if(isset($l_video['video_name'] ))<td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ $l_video['video_name'] }}</a></td>@endif
+                                                </tr>
+                                                @endif
+                                            @endforeach
                                             </tbody>
                                         </table>
                                     </div>

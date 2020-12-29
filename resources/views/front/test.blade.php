@@ -85,11 +85,11 @@
                                         <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
                                         <div class="answer-radio">
                                                 <input type="radio" class="answer-radio_input" id="answer_true" name="answer_truefalse[]" value="1">
-                                                <label class="answer-radio_label" for="answer_true">Верно</label>
+                                                <label class="answer-radio_label" for="answer_true">Вірно</label>
                                         </div>
                                         <div class="answer-radio">
                                                 <input type="radio" class="answer-radio_input" id="answer_false" name="answer_truefalse[]" value="0">
-                                                <label class="answer-radio_label" for="answer_false">Не верно</label>
+                                                <label class="answer-radio_label" for="answer_false">Не вірно</label>
                                         </div>
                                     </div>
                                 </div>
@@ -143,14 +143,17 @@
                                 </div>
                                 <div class="test_b separator"></div>
                                 
-                                    <?php $dd_counter = 1; ?>
+                                    <?php $dd_counter = 1;
+                                        $total_quest_counter = 1;
+                                    ?>
                                     @foreach($testDragDrop as $dragDrop)
-                                    <div class="test_b-grid_wrapper">
+                                    <div class="test_b-grid_wrapper" style="display:flex;">
                                         <?php 
                                         $dd_answers_json = json_decode($dragDrop->answers_json);
 
                                         $text_fields = [];
                                         $fixed_test_fields = [];
+                                        //dd($dd_answers_json);
                                         preg_match_all('/(.*?)(\[\[.*?\]\]|$)/', strip_tags($dd_answers_json->question), $text_fields);
                                         foreach($text_fields[0] as $text_field){
                                             $text_field = preg_replace('/\[\[([^\]]+)\]\]/', '', $text_field);
@@ -163,9 +166,10 @@
 
 
                                         $answ_curr_c = 0;
+                                        $test = 0;
                                         ?>
                                         
-                                        <div class="test_b-grid_inner">
+                                        <div class="test_b-grid_inner" style="width: 70%;">
                                             <div class="test_b-grid_question">
                                                 <input type="hidden" name="drag_drop_id[]" value="{{ $dragDrop->id }}">
                                                 <input type="hidden" name="test_answers_count{{ $dragDrop->id }}" value="{{ count($answer_fields[1]) }}">
@@ -175,27 +179,28 @@
                                                     <span id="answer{{ $dragDrop->id }}">{{ $dd_counter }}</span>
                                                 </div>  -->
 
-                                                {{ $dd_counter }}.
                                                 <input type="hidden" id="q_count" name="q_count{{ $dragDrop->id }}" value="<?php echo count($answer_fields[1]); ?>">
                                                     <?php
+                                                    $ng_test_value = 1;
                                                     foreach($answer_fields[1] as $answ_field){ 
                                                         echo $fixed_test_fields[$answ_curr_c]; ?>
-                                                         <input type="hidden" id="true_answer{{ $dragDrop->id }}<?php echo $answ_field; ?>" name="answer_dragdrop{{ $dragDrop->id }}[]" value="">
+                                                        <input type="hidden" id="true_answer{{ $dragDrop->id }}<?php echo $ng_test_value; ?>" name="answer_dragdrop{{ $dragDrop->id }}[]" value="">
                                                         <div class="test_b-questionBlock questionBlock-small" style="width:auto; min-width:90px; min-height:40px;">
-                                                            <span id="answer{{ $dragDrop->id }}<?php echo $answ_field; ?>"><?php echo $answ_field; ?></span>
+                                                            <span id="answer{{ $dragDrop->id }}<?php echo $ng_test_value; //echo $answ_field; ?>"><?php echo $total_quest_counter; ?></span>
                                                         </div> 
                                                         <?php 
+                                                        $ng_test_value++;
                                                         $answ_curr_c++; 
+                                                        $total_quest_counter++;
                                                     } ?>
                                                 <?php //var_dump(count($answer_fields[1]), $answ_curr_c, count($fixed_test_fields)); 
                                                     if(count($answer_fields[1]) == $answ_curr_c){
-                                                        echo $fixed_test_fields[$answ_curr_c++];
+                                                        echo $fixed_test_fields[$answ_curr_c++];// . ".";
                                                     }
-                                                
                                                 ?>
                                             </div>
                                         </div>
-                                        <div class="test_b-grid_inner">
+                                        <div class="test_b-grid_inner" style="width: 30%;">
                                             <div id="answers{{ $dragDrop->id }}" class="test_b-grid_answer" style="display: grid;">
                                                 <div class="answer-circle"><span>{{ $dd_counter }}</span></div>
                                                 @foreach($dd_answers_json->answers as $answer)
@@ -241,9 +246,12 @@
                                                         put: function(to, from){
                                                             var from_id = from.el.id.replace(/\D+/g, '');
                                                             var to_id = to.el.id.replace(/\D+/g, '');
-                                                            //console.log(from_id, to_id);
+                                                            // Спилитим число
+                                                            var to_id_split = to_id.split('');
+                                                            
+                                                            console.log(from_id, to_id_split[0]);
                                                             //console.log(answer_el);
-
+                                                            if(from_id == to_id_split[0]){
                                                                 var true_answer = '#true_answer' + to_id;
                                                                 console.log(true_answer);
                                                                 setTimeout(function(){
@@ -251,10 +259,11 @@
 
                                                                     $(true_answer).val(new_passed_el);
 
-                                                                }, 300);
+                                                                }, 100);
 
 
                                                                 return to.el.children.length < 1;
+                                                            } 
                                                         }
                                                     },
                                                     animation: 100
@@ -262,7 +271,7 @@
                                                 }
                                             //});
 
-                                            //var answer_el = document.getElementById("answer1");
+                                            // var answer_el = document.getElementById("answer1");
                                             // Sortable.create(answer_el, {
                                             // group: {
                                             //     name: answer,

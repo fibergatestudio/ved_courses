@@ -368,7 +368,8 @@ class HomePageController extends Controller
                 if($current_answers[$key] == $right_answer){
                     // Ответил верно
                     $tf_array['answered_right'] = "Так";
-                    $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
+                    //$test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
+                    $test_questions_json['final_score'] = $test_questions_json['final_score'] + $true_false_db->default_score;
                 } else {
                     // Ответил не верно
                     $tf_array['answered_right'] = "Ні";
@@ -378,7 +379,7 @@ class HomePageController extends Controller
 
             array_push($test_questions_json, $true_false_q);
         }
-
+        //dd($test_questions_json);
         // Множественный выбор
         if(isset($multiply_ids)){
             foreach($multiply_ids as $key=>$multiply_id){
@@ -402,8 +403,9 @@ class HomePageController extends Controller
                 $answers_json = json_decode($multiply_db->answers_json);
                 //dd($answers_json, $current_answers);
                 //$m_q_num = count($answers_json);
+                //dd($answers_json);
                 foreach($answers_json as $answer_info){
-
+                    //dd($answer_info, $current_answers);
                     // Проверяем если ответ не пустой и если ответ есть в арррее
                     if($current_answers != null && in_array($answer_info->answer, $current_answers)){
                         // Если оценка +вая - то добавляем 
@@ -421,6 +423,7 @@ class HomePageController extends Controller
                     //     $curr_multi_grade = 0;
                     // }
                     // Если оценка не указана - ставим 0
+                    //dd($curr_multi_grade);
                     if($answer_info->answer){
                         $multi_array['answer_grade'] = $answer_info->answer_grade;
                         //$test_questions_json['final_score'] = $test_questions_json['final_score'] + ($grade_per_quest / 2);
@@ -428,6 +431,7 @@ class HomePageController extends Controller
                         $multi_array['answer_grade'] = 0;
                     }
                 }
+                //dd($curr_multi_grade);
                 array_push($multiply_q, $multi_array);
                 // Если значени оценки - минусовое - ставим 0
                 if ($curr_multi_grade < 0) {
@@ -450,9 +454,7 @@ class HomePageController extends Controller
                 $dd_array['question_type'] = "Перетягування в тексті";
                 $dd_array['question_text'] = $drag_drop_db->question_text;
                 $test_questions_json['max_score'] = $test_questions_json['max_score'] + $drag_drop_db->default_score;
-                if(isset($drag_drop_db->default_score)){
-                    $dd_array['max_score'] = $drag_drop_db->default_score;
-                } else {  $dd_array['max_score'] = 0; }
+                if(isset($drag_drop_db->default_score)){ $dd_array['max_score'] = $drag_drop_db->default_score; } else {  $dd_array['max_score'] = 0; }
                 $dd_array['score'] = 0;
                 // Текущий выбранный ответ
                 $answer_drag_drop = 'answer_dragdrop' . $drag_drop_id;
@@ -480,17 +482,59 @@ class HomePageController extends Controller
                 // $right_answer = $answers_json->answers[$right_answer_id];
                 //dd($grade_per_quest);
                 $dd_array['all_answers_names'] = $all_answers_names;
-                $dd_array['right_answers'] = array_slice($dd_array['all_answers_names'], 0, $dd_array['answers_count']);
+                // Верные ответы
+                //$dd_array['right_answers'] = array_slice($dd_array['all_answers_names'], 0, $dd_array['answers_count']);
+                $right_answers= [];
+                    //
+                // Аррей с данными
+                $text_fields = [];
+                // Убираем лишнее с текста
+                preg_match_all('/(.*?)(\[\[.*?\]\]|$)/', strip_tags($dd_array['question_text']), $text_fields);
+                // Выделяем варианты ответ
+                $arr_answers = array_filter($text_fields[2]);
+                // перебираем
+                foreach($arr_answers as $answer_clear){
+                    $clear_string = str_replace(array('[[',']]'),'',$answer_clear);
+                    $dd_array['right_answers'] = $clear_string;
+                    array_push($right_answers, $clear_string - 1);
+                    //dd($clear_string);
+                }
+                $dd_array['right_answers'] = $right_answers;
+
+                //dd($dd_array['all_answers_names'], $dd_array['right_answers'], $dd_array['selected_answers'], $dd_array['answers_count']);
+
                 $right_count = 0;
                 $grade_per_dragdrop = $dd_array['max_score'] / $dd_array['answers_count'];
-                for($i = 0; $i < $dd_array['answers_count']; $i++){
-                    if($dd_array['selected_answers'][$i] == $dd_array['right_answers'][$i]){
-                        $right_count++;
-                        //$dd_array['q_count'] = $right_count;
-                        $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop; //$grade_per_quest;
-                        $dd_array['score'] = $dd_array['score'] + $grade_per_dragdrop;
+
+
+                // for($i = 0; $i < $dd_array['answers_count']; $i++){
+
+                //     if($dd_array['selected_answers'][$i] == $dd_array['right_answers'][$i]){
+                //         $right_count++;
+                //         //$dd_array['q_count'] = $right_count;
+                //         $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop; //$grade_per_quest;
+                //         $dd_array['score'] = $dd_array['score'] + $grade_per_dragdrop;
+                //     }
+
+                // }
+                // Аррей с верными ответами
+                $right_answers_names = [];
+                // Заносим данные в аррей
+                foreach($dd_array['all_answers_names'] as $key => $rght_answer_name){
+                    foreach($dd_array['right_answers'] as $right_answer_id){
+                        if($right_answer_id == $key){
+                            array_push($right_answers_names, $rght_answer_name);
+                        }
                     }
                 }
+                // Перебираем выбранные ответы - если совпадают - добавляем баллы
+                foreach($dd_array['selected_answers'] as $selected_answer){
+                    if(in_array($selected_answer, $right_answers_names)){
+                        $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop;
+                    }
+                }
+                //dd($grade_per_dragdrop, $dd_array, $right_answers_names, $dd_array['all_answers_names'], $dd_array['selected_answers']);
+
                 //dd($dd_array);
                 // Проверяем верно ли ответил
                 // if($right_answer == $current_answers[$key]){
@@ -506,6 +550,7 @@ class HomePageController extends Controller
             }
             array_push($test_questions_json, $drag_drop_q);
         }
+        $test_questions_json['final_score'] = round($test_questions_json['final_score'], 0); // |0 abs()
         //dd($test_questions_json);
         //Общее кол-во баллов
         //$t_score = 100;
@@ -537,12 +582,12 @@ class HomePageController extends Controller
 
         $encoded_results = json_encode($test_questions_json);
 
-        //dd($test_questions_json);
+        //dd($test_questions_json, "Coutse_id " . $course_id, "Test_id " . $test_id, "Lesson_id " . $lesson_id);
         // Записываем данны в пройденные тесты.
         DB::table('finished_tests_info')->insert([
             'user_id' => Auth::user()->id,
-            'test_id' => $test_id,
-            'course_id' => $course_id,
+            'test_id' => $lesson_id, //$test_id,
+            'course_id' => $test_id, //$course_id,
             'test_questions_json' => $encoded_results,
             'total_score' => $test_questions_json['final_score'],
         ]);

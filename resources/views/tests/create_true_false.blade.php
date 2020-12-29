@@ -289,8 +289,8 @@
                                 <div class="question-add_right multipleChoice-string_right"> 
                                     <div class="newTest-quest-wrapper">
                                         <select class="newTest-quest-select" name="right_answer"> 
-                                            <option value="1" selected>Неправильно</option> 
-                                            <option value="2">Правильно</option>                                   
+                                            <option value="0" selected>Неправильно</option> 
+                                            <option value="1">Правильно</option>                                   
                                         </select>
                                         <div class="newTest-quest_arrowBlock"></div>
                                     </div>

@@ -379,7 +379,7 @@
                                                     <option value="0">0%</option>
                                                     <option value="20">20%</option>
                                                     <option value="25">25%</option>
-                                                    <option value="33">33%</option>
+                                                    <option value="33.33">33.33%</option>
                                                     <option value="50">50%</option>
                                                     <option value="100">100%</option>                                  
                                                 </select>

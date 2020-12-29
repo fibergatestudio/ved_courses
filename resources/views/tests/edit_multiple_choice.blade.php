@@ -273,7 +273,7 @@
                                                         <option value="0">0%</option>
                                                         <option value="20">20%</option>
                                                         <option value="25">25%</option>
-                                                        <option value="33">33%</option>
+                                                        <option value="33.33">33.33%</option>
                                                         <option value="50">50%</option>
                                                         <option value="100">100%</option>                                  
                                                     </select>
@@ -434,7 +434,7 @@
                     });  }, 100);
 
                     this.ids.push({id: currentCounter});
-                    document.getElementById("counter").value = currentCounter;
+                    document.getElementById("answer_counter").value = currentCounter;
 
                     
                 },

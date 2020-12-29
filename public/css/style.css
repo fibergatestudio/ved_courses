@@ -3683,7 +3683,7 @@ element.style {
 .answer-block {
     font-family: SegoeUIRegular, sans-serif;
     font-weight: 400;
-    font-size: 18px;
+    font-size: 17px;
     line-height: 1.333em;
     color: #000;
     background-color: #f8effb;
@@ -3692,9 +3692,9 @@ element.style {
     width: -webkit-fit-content;
     width: -moz-fit-content;
     width: fit-content;
-    padding: .4em 2.5em;
-    margin-top: 8px;
-    margin-bottom: 8px;
+    padding: .4em 1em;
+    margin-top: 3px;
+    margin-bottom: 3px;
     position: relative;
     cursor: -webkit-grabbing;
     cursor: grabbing
@@ -4607,7 +4607,8 @@ element.style {
     justify-content: space-between;
     -webkit-box-align: center;
     -ms-flex-align: center;
-    align-items: center
+    align-items: center;
+    margin-bottom: 15px;
 }
 
 .courseAdditional-flexbox_item:nth-child(3) {
@@ -8873,8 +8874,8 @@ element.style {
 
 /*Video collection restyle*/
 .hidden-menu_column:first-child {
-    max-width: 40px;
-    min-width: 0;
+    max-width: 80px;
+    min-width: 40px;
 }
 
 .hidden-menu_column:nth-child(2) {
@@ -10891,7 +10892,8 @@ border: 0 !important;
 .time-and-reslts{
 	display: flex;
 	flex-direction: row;
-	justify-content: start;
+    justify-content: start;
+    min-width: 100%;
 }
 .wwl__circle-mark{
 	width: 10px;
@@ -10919,10 +10921,10 @@ border: 0 !important;
 .descr a{
 	margin-bottom: 15px;
 }
-.description .descr:last-child a{
+.description .descr:last-child a, .description .descr:last-child span{
 	margin-bottom: 10px;
 }
-.descr a, .no-result, .is-result{
+.descr a, .descr span, .no-result, .is-result{
 	display: block;
 	font-family: SegoeUI, sans-serif;
 	font-size: 15px;
@@ -11679,6 +11681,7 @@ p.program_wwl-protocol{
 
 
 /* student`s success page end */
+
 .mer-e{
     width: 33% !important;
     margin-right: 5% !important;
@@ -11823,7 +11826,8 @@ input[type="text"]::placeholder{
     margin-left: 5px;
 }
 .curs-teacher-del-btn{
-    left: -80px;
+    right: 15px;
+    top: -17px;
 }
 
 /* protocol form block start*/

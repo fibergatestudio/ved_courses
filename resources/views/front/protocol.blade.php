@@ -2564,10 +2564,19 @@
         })
     })
 
-    for (let i = 0; i < inputElement.length; i++) {
-        inputElement[i].addEventListener("change", function () {
-            //inputElement[i].parentNode.innerText = inputElement[i].files[0].name;
-        });
+    function changeFile() {
+        let copyOfParentNode = this.parentNode.cloneNode(true);
+        let copyOfInput = this.cloneNode(true);
+        copyOfInput.addEventListener("change", changeFile, false);
+        copyOfParentNode.innerText = '';
+        let text = document.createTextNode(copyOfInput.files[0].name);
+        copyOfParentNode.appendChild(text);
+        copyOfParentNode.appendChild(copyOfInput);
+        this.parentNode.parentNode.replaceChild(copyOfParentNode, this.parentNode);
     }
+
+    for (let i = 0; i < inputElement.length; i++) {
+        inputElement[i].addEventListener("change", changeFile, false);
+    };
 </script>
 @endsection

@@ -9,7 +9,7 @@
             @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління студентами', 'imgPath' => 'img/teacher-mobileMenu-4.png'])
 
             <h3 class="sc__main-title">Управління студентами</h3>
-            @if(session()->has('message_success'))
+            {{-- @if(session()->has('message_success'))
                 <div class="alert alert-success">
                     {{ session()->get('message_success') }}
                 </div>
@@ -18,7 +18,7 @@
                 <div class="alert alert-danger">
                     {{ session()->get('message_error') }}
                 </div>
-            @endif
+            @endif --}}
             <div class="sc-header">
                 <p class="sc-header__desc .order-1">Додати базу студентів</p>
                 <div class="groups-edit__group groups-edit__group_restyle  order-3 margin-0">
@@ -188,12 +188,26 @@
 @endsection
 
 @section('js')
+
+            @if(session()->has('message_success'))
+                <script>
+                $( document ).ready(function() {
+                    alert( "Імпорт успішний!" );
+                });
+                </script>
+            @elseif(session()->has('message_error'))
+                <script>
+                $( document ).ready(function() {
+                    alert( "Неправильний формат файлу! Вірний формат - XLSX!" );
+                });
+                </script>
+            @endif
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script>
 
         $( "#students_upload_form" ).submit(function( event ) {
             if( document.getElementById("baseUpload").files.length == 0 ){
-                alert( "Додайте файл импорту!" );
+                alert( "Додайте файл імпорту!" );
                 event.preventDefault();
             }
             //event.preventDefault();

@@ -403,7 +403,7 @@ class StudentController extends Controller
             return redirect()->back()->with('message_error', 'Неправильний формат файлу! Вірний формат - XLSX');
         }
 
-        return redirect()->back()->with('message_success', 'Импорт успешен!');
+        return redirect()->back()->with('message_success', 'Імпорт успішний!'); 
     }
 
 
@@ -435,6 +435,9 @@ class StudentController extends Controller
                 $lesson->video_count = count(json_decode($lesson->video_name));
             }
 
+            //$mm = DB::table('finished_tests_info')->get();
+            //dd($mm, "Stud_id: " . $student_id, "Lesson_id: " . $lesson->test_id, "Course_id: " . $course_id, $lesson);
+
             // Результаты теста по курсу
             if($lesson->test_id != null){
                 $lesson->test_exist = true;
@@ -443,7 +446,7 @@ class StudentController extends Controller
                     'user_id' => $student_id,
                     'test_id' => $lesson->test_id,
                     'course_id' => $course_id,
-                ])->first();
+                ])->orderBy('total_score', 'desc')->first();
                 // Аррей с инфой о результатах
                 $test_results = [];
                 // Проверяем есть ли результаты
@@ -452,11 +455,20 @@ class StudentController extends Controller
                     $test_results_decode = json_decode($finished_test_info->test_questions_json);
                     $test_results['max_score'] = $test_results_decode->max_score;
                     $test_results['final_score'] = $test_results_decode->final_score;
-                    $test_results['completion_percent'] = floor((($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100);//app('App\Http\Controllers\HomePageController')->get_percentage($test_results['final_score'], $test_results['max_score']);
+                    $test_results['completion_percent'] = abs(
+                        floor(
+                            ( ( ($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score']) ) * 100 ) - 100
+                        )
+                    );
+                    //$test_results['completion_percent'] = (1 - $test_results['max_score'] / $test_results['final_score']) * 100;
+                    //app('App\Http\Controllers\HomePageController')->get_percentage($test_results['final_score'], $test_results['max_score']);
                     //(($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100%;
                 }
                 // По результатам - передаем инфу в общий аррей урока
                 $lesson->test_results = $test_results;
+
+                $test_info = DB::table('tests_info')->where('id', $lesson->test_id)->first();
+                $lesson->test_info = $test_info;
                 //dd($finished_test_info);
             } else {
                 $lesson->test_exist = false;
@@ -470,7 +482,7 @@ class StudentController extends Controller
             $current_protocol = DB::table('protocols')->where([
                                                             ['course_id', '=', $course_id],
                                                             ['lesson_id', '=', $lesson->id],
-                                                            ['user_id', '=', auth()->user()->id],
+                                                            ['user_id', '=', $student_id],
                                                         ])->first();
             if($lesson->show_protocol) {
                 array_push($course_protocols, $current_protocol);
@@ -480,7 +492,7 @@ class StudentController extends Controller
             }
         }
 
-        
+
 
         // Определяем следующего студента для кнопки
         $role = Auth::user()->role;
@@ -500,7 +512,7 @@ class StudentController extends Controller
             }
         }
 
-        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count', 'course_protocols'));
+        return view('student.students_success', compact('student', 'next_student', 'course_lessons', 'course_info', 'lesson_count', 'course_protocols', 'student_id'));
     }
 
 }

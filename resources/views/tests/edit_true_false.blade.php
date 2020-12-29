@@ -204,8 +204,8 @@
                                 <div class="question-add_right multipleChoice-string_right"> 
                                     <div class="newTest-quest-wrapper">
                                         <select class="newTest-quest-select" name="right_answer"> 
-                                            <option value="1" @if( $t_question_info->right_answer == 1) selected @endif>Неправильно</option> 
-                                            <option value="2" @if( $t_question_info->right_answer == 2) selected @endif>Правильно</option>                                   
+                                            <option value="0" @if( $t_question_info->right_answer == 0) selected @endif>Неправильно</option> 
+                                            <option value="1" @if( $t_question_info->right_answer == 1) selected @endif>Правильно</option>                                   
                                         </select>
                                         <div class="newTest-quest_arrowBlock"></div>
                                     </div>
