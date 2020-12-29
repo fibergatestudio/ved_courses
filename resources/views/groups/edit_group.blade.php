@@ -54,21 +54,21 @@
                         <div class="groups-edit__teacher-block ge__teacher-course">
                             <p class="groups-edit__current-teacher eg-text-style ge__mb-20">
                                 <span class="ccec-header_style">Поточний викладач:&nbsp;</span>
-                                <span class="ccec-header_style" id="currentTeacher">{{ $group_info->assigned_teacher_name }}</span>
+                                <span class="ccec-header_style" id="currentTeacher">{{ $group_info->assigned_teacher_name ?? 'Немає' }}</span>
                             </p>
                             <p class="groups-edit__current-teacher eg-text-style">
                                 <span class="ccec-header_style">Назва курсу :&nbsp;</span>
                                 <select class='eg-input uge__input_style' name="course_number" style="height: 50px">
                                     <option value="">Повна назва курсу студента</option>
-                                    @if($courses)
-                                    @foreach($courses as $course)
-                                    @if($course->name === $group_info->course_number)
-                                    <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
-                                    @else
-                                    <option value="{{ $course->name }}">{{ $course->name }}</option>
-                                    @endif
-                                    @endforeach
-                                    @endif
+                                        @if($courses)
+                                            @foreach($courses as $course)
+                                                @if($course->name === $group_info->course_number)
+                                                    <option value="{{ $course->name }}" selected>{{ $course->name }}</option>
+                                                @else
+                                                    <option value="{{ $course->name }}">{{ $course->name }}</option>
+                                                @endif
+                                            @endforeach
+                                        @endif
                                 </select>
                                 <!-- <span class="ccec-header_style" id="courseNamer"></span> -->
                             </p>
@@ -189,7 +189,7 @@
                     <input type="text" class="eg-input" value="{{ $auth_teacher->surname}} {{ $auth_teacher->name }} {{ $auth_teacher->patronymic }}" disabled>
                     <input type="hidden" name="teacher_id" value="{{ $auth_teacher->id }}">
                     @else
-                    <div class="select uge__select_block ge__select_style">                       
+                    <div class="select uge__select_block ge__select_style">
                         <select name="teacher_id"
                             class="select-teacher select-teacher_sce_restyle uge__select_style"
                             id="selectTeacher">
@@ -201,7 +201,7 @@
                                     <option value="{{ $teacher->id }}">{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
                                 @endif
                             @endforeach
-                        </select>                        
+                        </select>
                     </div>
                     @endif
                 </div>
@@ -451,7 +451,7 @@
     </script>
 
     <script type="text/javascript">
-        
+
         coursesObj = JSON.parse(coursesObj);
 
         function formEditGroup(form) {
@@ -464,8 +464,8 @@
                     if (temp.indexOf(teacher) === -1) {
                         alert("У цього викладача немає такого курсу !");
                         return false;
-                    }                 
-                }               
+                    }
+                }
             }
             form.submit();
         }

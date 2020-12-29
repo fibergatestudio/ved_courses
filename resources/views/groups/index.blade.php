@@ -34,7 +34,7 @@
                         <div class="groups-content">
                             <div class="groups-row groups-row_style">
                                 <div class="groups__elem groups__elem_style">{{ $loop->iteration }}.</div>
-                                <div class="groups__elem groups__elem_style">{{ $group->name ?? '' }}</div>
+                                <div class="groups__elem groups__elem_style">{{ $group->name ?? 'Немає' }}</div>
                                 <div class="groups__elem groups__elem_style">
                                     <a class="flexTable-btn_edit groups-btn-edit-restyle elem-bgc-white" href="##"
                                         data-toggle="modal" data-target="#showStudents{{ $group->id }}">

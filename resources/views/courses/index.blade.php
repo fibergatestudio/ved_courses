@@ -6,7 +6,10 @@
         </div>
         <div class="courseControl-container sticky-container container container-height">
 
-            @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
+            @include('layouts.front.includes.admin_sidebar_vrst', [
+                'headTitle' => 'Управління курсами',
+                'imgPath' => 'img/teacher-mobileMenu-2.png'
+            ])
 
             <div class="row justify-content-center">
                 <h3 class="courseControl-title curs-tit">Управління курсами</h3>
@@ -29,34 +32,26 @@
                         </div>
                         @foreach($courses as $course)
                             <div class="flexTable-string">
-                                <div class="flexTable-string_inner">{{ $course->id }}.</div>
-                                <div class="flexTable-string_inner">{{ $course->name }}</div>
-                                <div class="flexTable-string_inner">{{ $course->description }}</div>
-                                <div class="flexTable-string_inner">{{ $course->views }}</div>
-                                <div class="flexTable-string_inner">{{ $course->finished_count }}</div>
-                                <div class="flexTable-string_inner">{{ $course->creator_name }}</div>
+                                <div class="flexTable-string_inner">{{ $loop->iteration }}.</div>
+                                <div class="flexTable-string_inner">{{ $course->name ?? 'Немає' }}</div>
+                                <div class="flexTable-string_inner">{{ $course->description ?? 'Немає' }}</div>
+                                <div class="flexTable-string_inner">{{ $course->views ?? 'Немає' }}</div>
+                                <div class="flexTable-string_inner">{{ $course->finished_count ?? 'Немає' }}</div>
+                                <div class="flexTable-string_inner">{{ $course->creator_name ?? 'Немає' }} ({{ $course->creator_id ?? 'Немає' }})</div>
                                 <div class="flexTable-string_inner">
-                                    <a class="flexTable-btn_edit" href="{{ route('edit_course', ['course_id' => $course->id ]) }}"><span>Редагувати</span></a>
+                                    <a class="flexTable-btn_edit" href="{{ route('edit_course', ['course_id' => $course->id ]) }}">
+                                        <span>Редагувати</span>
+                                    </a>
                                     <a class="flexTable-btn_delete" href="##" data-toggle="modal"
-                                        data-target="#deleteModal{{ $course->id }}"><span>Видалити</span></a>
-                                    <div class="bootstrap-restylingStudent modal fade" id="deleteModal{{ $course->id }}" tabindex="-1" role="dialog"
-                                            aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog  modal-dialog_restyle">
-                                            <div class="modal-content">
-                                                <div class="deleteMenu-wrapper">
-                                                    <div class="deleteMenu-topImg">
-                                                        <img src="/img/basket.png" alt="icon">
-                                                    </div>
-                                                    <div class="deleteMenu-text">
-                                                        Ви точно бажаєте видалити <br> Курс {{ $course->name }} ?
-                                                    </div>
-                                                    <div class="deleteMenu-btn">
-                                                        <a class="flexTable-btn_delete" href="{{ route('delete_course', ['course_id' => $course->id ]) }}"><span>Видалити</span></a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
+                                        data-target="#deleteModal{{ $course->id }}">
+                                        <span>Видалити</span>
+                                    </a>
+                                    @include('layouts.front.includes.modals.delete_user', [
+                                        'modalId' => 'deleteModal',
+                                        'secondId' => $course->id,
+                                        'modalPath' => route('delete_course', ['course_id' => $course->id ]),
+                                        'target' => $course->name
+                                    ])
                                 </div>
                             </div>
                         @endforeach
@@ -68,35 +63,45 @@
                     <div class="flexMobile-block">
                         <div class="flexMobile-string">
                             <div class="flexMobile-string_inner blackFont">№</div>
-                            <div class="flexMobile-string_inner grayFont">{{ $course->id }}.</div>
+                            <div class="flexMobile-string_inner grayFont">{{ $loop->iteration }}.</div>
                         </div>
                         <div class="flexMobile-string blackFont">Назва курсу
                         </div>
                         <div class="flexMobile-string grayFont">
-                            <div class="text-limiter"> {{ $course->name }}</div>
+                            <div class="text-limiter"> {{ $course->name ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string blackFont">Опис
                         </div>
                         <div class="flexMobile-string grayFont">
-                            <div class="text-limiter">{{ $course->description }}</div>
+                            <div class="text-limiter">{{ $course->description ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string">
                             <div class="flexMobile-string_inner blackFont">Переглядів</div>
-                            <div class="flexMobile-string_inner grayFont">{{ $course->views }}</div>
+                            <div class="flexMobile-string_inner grayFont">{{ $course->views ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string">
                             <div class="flexMobile-string_inner blackFont">Пройдено разів</div>
-                            <div class="flexMobile-string_inner grayFont">{{ $course->finished_count }}</div>
+                            <div class="flexMobile-string_inner grayFont">{{ $course->finished_count ?? 'Немає' }}</div>
                         </div>
                         <div class="flexMobile-string blackFont">Творець (id)
                         </div>
                         <div class="flexMobile-string grayFont">
-                            <div class="text-limiter">{{ $course->creator_id }} {{ $course->creator_name }}</div>
+                            <div class="text-limiter">{{ $course->creator_name ?? 'Немає' }} ({{ $course->creator_id ?? 'Немає' }})</div>
                         </div>
                         <div class="flexMobile-string btns-string">
-                            <a class="flexMobile-btn_edit" href="{{ route('edit_course', ['course_id' => $course->id ]) }}"><span>Редагувати</span></a>
+                            <a class="flexMobile-btn_edit" href="{{ route('edit_course', ['course_id' => $course->id ]) }}">
+                                <span>Редагувати</span>
+                            </a>
                             <a class="flexMobile-btn_delete" href="##" data-toggle="modal"
-                                data-target="#deleteModal"><span>Видалити</span></a>
+                                data-target="#deleteModalm{{ $course->id }}">
+                                <span>Видалити</span>
+                            </a>
+                            @include('layouts.front.includes.modals.delete_user', [
+                                'modalId' => 'deleteModalm',
+                                'secondId' => $course->id,
+                                'modalPath' => route('delete_course', ['course_id' => $course->id ]),
+                                'target' => $course->name
+                            ])
                         </div>
                     </div>
                 @endforeach

@@ -68,19 +68,20 @@
                         <div class="groups-edit__add-teacher-block mw-100">
                             <p class="groups-edit__current-teacher eg-text-style">Додати викладача</p>
                             @if($auth_teacher->role === 'teacher')
-                            <input type="text" class="eg-input" value="{{ $auth_teacher->surname}} {{ $auth_teacher->name }} {{ $auth_teacher->patronymic }}" disabled style="margin-bottom: 30px;">
-                            <input type="hidden" name="teacher_id" value="{{ $auth_teacher->id }}">
+                                <input type="text" class="eg-input"
+                                    value="{{ $auth_teacher->surname}} {{ $auth_teacher->name }} {{ $auth_teacher->patronymic }}"
+                                    disabled style="margin-bottom: 30px;">
+                                <input type="hidden" name="teacher_id" value="{{ $auth_teacher->id }}">
                             @else
-                            <div class="select">                                                                
+                            <div class="select">
                                 <select class="select-teacher mw-100" name="teacher_id" id="selectTeacher">
                                     <option>Немає</option>
-                                    @foreach($teachers_list as $teacher)
-                                    <option value="{{ $teacher->id }}"
-                                        {{-- {{ (old("teacher_id") == $teacher->id) ? "selected":"" }} --}}
-                                        >{{ $teacher->surname}} {{ $teacher->name }} {{ $teacher->patronymic }}
-                                    </option>
-                                    @endforeach
-                                </select>                                    
+                                    @if($teachers_list)
+                                        @foreach($teachers_list as $teacher)
+                                            <option value="{{ $teacher->id }}">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}</option>
+                                        @endforeach
+                                    @endif
+                                </select>
                             </div>
                             @endif
                         </div>

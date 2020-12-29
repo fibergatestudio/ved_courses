@@ -124,8 +124,6 @@ class GroupsController extends Controller
 
                 if($student_user){
                     $student->student_email = $student_user->email;
-                    // /*Дубляж на всякий полного имени студента из таблицы пользователей*/
-                    // $student->full_name = $student_user->surname . " " . $student_user->name . " " . $student_user->patronymic;
                 }
                 array_push($students_array, $student);
             }
@@ -135,7 +133,7 @@ class GroupsController extends Controller
             //Привязка курса к студентам
             // Собираем доступные курсы
             $teacher_id = $group_info->assigned_teacher_id;
-            $courses= DB::table('courses')->get();
+            $courses = DB::table('courses')->get();
             $id_arr = [];
             foreach ($courses as $value) {
                 // + Доп проверка есть ли привязанный учитель к группе
@@ -144,9 +142,8 @@ class GroupsController extends Controller
                     //dd($temp_arr);
                     if (in_array($teacher_id, $temp_arr)) {
                         $id_arr[] = $value->id;
-                    } 
+                    }
                 }
-                
             }
             $courses= DB::table('courses')->whereIn('id', $id_arr)->get();
 
