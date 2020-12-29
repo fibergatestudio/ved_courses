@@ -505,7 +505,7 @@ class HomePageController extends Controller
             }
             array_push($test_questions_json, $drag_drop_q);
         }
-        $test_questions_json['final_score'] = $test_questions_json['final_score'] | 0;
+        $test_questions_json['final_score'] = floor( $test_questions_json['final_score'] );
         //dd($test_questions_json);
         //Общее кол-во баллов
         //$t_score = 100;
