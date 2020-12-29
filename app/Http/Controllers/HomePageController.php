@@ -582,7 +582,7 @@ class HomePageController extends Controller
 
         $encoded_results = json_encode($test_questions_json);
 
-        dd($test_questions_json, "Coutse_id " . $course_id, "Test_id " . $test_id, "Lesson_id " . $lesson_id);
+        //dd($test_questions_json, "Coutse_id " . $course_id, "Test_id " . $test_id, "Lesson_id " . $lesson_id);
         // Записываем данны в пройденные тесты.
         DB::table('finished_tests_info')->insert([
             'user_id' => Auth::user()->id,
