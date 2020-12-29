@@ -30,7 +30,7 @@
                                     <div class="courseAdd_left--name">Опис<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdd-inner_right">
-                                    <textarea class="tinyMCE-area" name="description"></textarea>
+                                    <textarea class="tinyMCE-area" id="description" name="description"></textarea>
                                 </div>
                             </div>
                         </div>
@@ -81,6 +81,22 @@
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
     <script>
+        tinymce.init({
+            selector: '.tinyMCE-area',
+            menubar: false,
+            plugins: [
+                'advlist autolink lists link image charmap print preview anchor',
+                'searchreplace visualblocks code fullscreen',
+                'insertdatetime media table paste code help wordcount'
+            ],
+            toolbar:
+                'bold italic backcolor | alignleft aligncenter ' +
+                'alignright alignjustify | bullist numlist | ' +
+                'insertfile link image media pageembed template ' ,
+            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+        });
+    </script>
+    <script>
         $(document).ready(function() {
             $('input[type="file"]').change(function(e) {
                 var geekss = e.target.files[0].name; 
@@ -100,9 +116,15 @@
             // Получаем инфу
             var name = $.trim( $('#course_name').val() );
 
-            // Check if empty of not
+            // var myContent = tinymce.activeEditor.getContent();
+            var description = tinymce.get('description').getContent();
+            //alert(myContent);
+
             if (name  === '') {
-                alert('Название курса пустое!');
+                alert('Введіть назву курсу!');
+                return false;
+            } else if(description == ""){
+                alert('Введіть опис курсу!');
                 return false;
             } else {
                 document.getElementById('create_course').submit();
@@ -115,24 +137,6 @@
             $( "#create_course" ).submit();
         });
     </script>
-
-    <script>
-        tinymce.init({
-            selector: '.tinyMCE-area',
-            menubar: false,
-            plugins: [
-                'advlist autolink lists link image charmap print preview anchor',
-                'searchreplace visualblocks code fullscreen',
-                'insertdatetime media table paste code help wordcount'
-            ],
-            toolbar:
-                'bold italic backcolor | alignleft aligncenter ' +
-                'alignright alignjustify | bullist numlist | ' +
-                'insertfile link image media pageembed template ' ,
-            content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
-        });
-    </script>
-
 
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
         integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"

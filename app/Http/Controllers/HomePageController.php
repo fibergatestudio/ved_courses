@@ -482,17 +482,59 @@ class HomePageController extends Controller
                 // $right_answer = $answers_json->answers[$right_answer_id];
                 //dd($grade_per_quest);
                 $dd_array['all_answers_names'] = $all_answers_names;
-                $dd_array['right_answers'] = array_slice($dd_array['all_answers_names'], 0, $dd_array['answers_count']);
+                // Верные ответы
+                //$dd_array['right_answers'] = array_slice($dd_array['all_answers_names'], 0, $dd_array['answers_count']);
+                $right_answers= [];
+                    //
+                // Аррей с данными
+                $text_fields = [];
+                // Убираем лишнее с текста
+                preg_match_all('/(.*?)(\[\[.*?\]\]|$)/', strip_tags($dd_array['question_text']), $text_fields);
+                // Выделяем варианты ответ
+                $arr_answers = array_filter($text_fields[2]);
+                // перебираем
+                foreach($arr_answers as $answer_clear){
+                    $clear_string = str_replace(array('[[',']]'),'',$answer_clear);
+                    $dd_array['right_answers'] = $clear_string;
+                    array_push($right_answers, $clear_string - 1);
+                    //dd($clear_string);
+                }
+                $dd_array['right_answers'] = $right_answers;
+
+                //dd($dd_array['all_answers_names'], $dd_array['right_answers'], $dd_array['selected_answers'], $dd_array['answers_count']);
+
                 $right_count = 0;
                 $grade_per_dragdrop = $dd_array['max_score'] / $dd_array['answers_count'];
-                for($i = 0; $i < $dd_array['answers_count']; $i++){
-                    if($dd_array['selected_answers'][$i] == $dd_array['right_answers'][$i]){
-                        $right_count++;
-                        //$dd_array['q_count'] = $right_count;
-                        $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop; //$grade_per_quest;
-                        $dd_array['score'] = $dd_array['score'] + $grade_per_dragdrop;
+
+
+                // for($i = 0; $i < $dd_array['answers_count']; $i++){
+
+                //     if($dd_array['selected_answers'][$i] == $dd_array['right_answers'][$i]){
+                //         $right_count++;
+                //         //$dd_array['q_count'] = $right_count;
+                //         $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop; //$grade_per_quest;
+                //         $dd_array['score'] = $dd_array['score'] + $grade_per_dragdrop;
+                //     }
+
+                // }
+                // Аррей с верными ответами
+                $right_answers_names = [];
+                // Заносим данные в аррей
+                foreach($dd_array['all_answers_names'] as $key => $rght_answer_name){
+                    foreach($dd_array['right_answers'] as $right_answer_id){
+                        if($right_answer_id == $key){
+                            array_push($right_answers_names, $rght_answer_name);
+                        }
                     }
                 }
+                // Перебираем выбранные ответы - если совпадают - добавляем баллы
+                foreach($dd_array['selected_answers'] as $selected_answer){
+                    if(in_array($selected_answer, $right_answers_names)){
+                        $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop;
+                    }
+                }
+                //dd($grade_per_dragdrop, $dd_array, $right_answers_names, $dd_array['all_answers_names'], $dd_array['selected_answers']);
+
                 //dd($dd_array);
                 // Проверяем верно ли ответил
                 // if($right_answer == $current_answers[$key]){

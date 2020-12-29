@@ -22,7 +22,7 @@
                                     <div class="courseAdd_left--name">Опис<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdd-inner_right">
-                                    <textarea class="tinyMCE-area" name="course_description"></textarea>
+                                    <textarea class="tinyMCE-area" id="course_description" name="course_description"></textarea>
                                 </div>
                             </div>
 
@@ -31,7 +31,7 @@
                                     <div class="courseAdd_left--name">Назва<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdditional-bottom_right">
-                                    <input class="courseAdditional--input" name="course_name" type="text">
+                                    <input class="courseAdditional--input" id="course_name" name="course_name" type="text">
                                 </div>
                             </div><br>
 
@@ -40,7 +40,7 @@
                                     <div class="courseAdd_left--name">Час на вивчення (хвилини)<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdditional-bottom_right">
-                                    <input class="courseAdditional--input" name="learning_time" type="text">
+                                    <input class="courseAdditional--input" id="learning_time" name="learning_time" type="text">
                                 </div>
                             </div>
                         </div>
@@ -76,7 +76,7 @@
                                     <div class="courseAdd_left--name">Час на вивчення (хвилини)<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdditional-bottom_right">
-                                    <input class="courseAdditional--input" name="learning_protocol_time" type="text">
+                                    <input class="courseAdditional--input" id="learning_protocol_time" name="learning_protocol_time" type="text">
                                 </div>
                             </div>
 
@@ -313,64 +313,59 @@
 
             // Получаем кол-во видео
             var video_counter = $('#videos_counter').val();
-            // Перебираем поля каждого видео
-            if(video_counter > 0){
-                for(i = 0; i <= video_counter; i++){
-                    // Имена инпутов для проверки
-                    var number = i+1;
-                    var v_name = '#video_name' + i;
-                    var v_lenght = '#video_length' + i;
-                    var v_link = '#video_link' + i;
 
-                    // Получаем инфу
-                    var name = $.trim( $(v_name).val() );
-                    var length = $.trim( $(v_lenght).val() );
-                    var link = $.trim( $(v_link).val() );
+            var lesson_name = $.trim( $('#course_name').val() );
+            var course_description = tinymce.get('course_description').getContent();
+            var lesson_learning_time = $.trim( $('#learning_time').val() );
+            var course_protocol_descr = tinymce.get('course_protocol_descr').getContent();
+            var learning_protocol_time = $.trim( $('#learning_protocol_time').val() );
+            //var course_description = tinymce.get('course_description').getContent();
 
-                    // Check if empty of not
-                    // if (name  === '') {
-                    //     alert('Название видео '+ number +' пустое.');
-                    //     return false;
-                    // } else if (length  === '') {
-                    //     alert('Длинна видео '+ number +' пустое.');
-                    //     return false;
-                    // } else 
-                    if (link  === '') {
-                        alert('Ссылка видео '+ number +' пустая.');
-                        return false;
-                    } else if(i == video_counter){
-                        document.getElementById('add_lesson_form').submit();
-                    }
-                }
-            } else if(video_counter == 0){
-                console.log(video_counter);
-                var v_name = '#video_name' + video_counter;
-                var v_lenght = '#video_length' + video_counter;
-                var v_link = '#video_link' + video_counter;
-
-                // Получаем инфу
-                var name = $.trim( $(v_name).val() );
-                var length = $.trim( $(v_lenght).val() );
-                var link = $.trim( $(v_link).val() );
-
-                // Check if empty of not
-                // if (name  === '') {
-                //     alert('Название видео 1 пустое.');
-                //     return false;
-                // } else if (length  === '') {
-                //     alert('Длинна видео 1 пустое.');
-                //     return false;
-                // } else 
-                if (link  === '') {
-                    alert('Ссылка видео 1 пустая.');
-                    return false;
-                } else {
-                    document.getElementById('add_lesson_form').submit();
-                }
+            if(lesson_name == ''){
+                alert('Введіть назву заняття!');
+                return false;
+            } else if(course_description == ''){
+                alert('Введіть опис заняття!');
+                return false;
+            } else if(lesson_learning_time == ''){
+                alert('Введіть "час на вивчення" заняття!');
+                return false;
+            } else if(course_protocol_descr == ''){
+                alert('Введіть опис протоколу!');
+                return false;
+            } else if(learning_protocol_time == ''){
+                alert('Введіть "час на вивчення" протоколу!');
+                return false;
             } else {
-                document.getElementById('add_lesson_form').submit();
-            }
-            //});
+                    if(video_counter > 0){
+                        for(i = 0; i <= video_counter; i++){
+                            // Имена инпутов для проверки
+                            var number = i+1;
+                            //var v_name = '#video_name' + i;
+                            //var v_lenght = '#video_length' + i;
+                            var v_link = '#video_link' + i;
+
+                            // Получаем инфу
+                            //var name = $.trim( $(v_name).val() );
+                            //var length = $.trim( $(v_lenght).val() );
+                            var link = $.trim( $(v_link).val() );
+                            
+                                if (link  === '') {
+                                    alert('Ссылка видео '+ number +' пустая.');
+                                    return false;
+                                } else if(i == video_counter){
+                                    document.getElementById('add_lesson_form').submit();
+                                }
+                        }
+                    } else if(video_counter == 0){
+                        console.log(video_counter);
+
+                            document.getElementById('add_lesson_form').submit();
+                    }
+
+            } 
+                //document.getElementById('add_lesson_form').submit();
+            // Перебираем поля каждого видео
         }
 
     </script>

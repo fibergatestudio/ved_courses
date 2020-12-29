@@ -403,7 +403,7 @@ class StudentController extends Controller
             return redirect()->back()->with('message_error', 'Неправильний формат файлу! Вірний формат - XLSX');
         }
 
-        return redirect()->back()->with('message_success', 'Импорт успешен!');
+        return redirect()->back()->with('message_success', 'Імпорт успішний!'); 
     }
 
 

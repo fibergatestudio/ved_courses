@@ -199,13 +199,13 @@
                                     </div>
                                     <div class="courseEdit-hidden">
                                         <div class="courseEdit-underline"></div>
-                                        {{ $lesson->course_description }}
+                                        {{ strip_tags($lesson->course_description) }}
                                         {{-- <table class="hidden-menu">
                                             <tbody>
                                                 <tr class="hidden-menu_string">
                                                     <td class="courseEdit-hidden_column hidden-menu_column">{{ $lesson->learning_time }} хв.</td>
                                                     <td class="courseEdit-hidden_column hidden-menu_column"><div class="hidden-menu_dot"></div></td>
-                                                    <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ $lesson->course_description }}</a></td>
+                                                    <td class="courseEdit-hidden_column hidden-menu_column"> <a href="##">{{ strip_tags($lesson->course_description) }}</a></td>
                                                 </tr>
                                             </tbody>
                                         </table>--}}
