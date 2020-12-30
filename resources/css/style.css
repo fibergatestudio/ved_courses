@@ -8586,12 +8586,12 @@ element.style {
 }
 
 @media (max-width:400px) {
-    .photo-photo {
+    /* .photo-photo {
         width: 68px;
         height: 68px;
         margin-left: 0;
         margin-right: 15px
-    }
+    } */
 
     .photo-photo:before {
         content: url(../img/logo-profile-small.png)
