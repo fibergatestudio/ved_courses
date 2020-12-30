@@ -465,13 +465,17 @@ class HomePageController extends Controller
                 $test_questions_json['max_score'] = $test_questions_json['max_score'] + $true_false_db->default_score;
                 // Текущий ответы
                 $current_answers = $request->answer_truefalse;
-                $tf_array['selected_answer'] = $current_answers[$key];
+                //dd($current_answers, count($true_false_ids));
+                if(isset($current_answers[$key])){
+                    $tf_array['selected_answer'] = $current_answers[$key];
+                } 
+                //$tf_array['selected_answer'] = $current_answers[$key];
                 // Верный ответ
                 $right_answer = $true_false_db->right_answer;
                 $tf_array['right_answer'] = $right_answer;
                 //dd($request->all());
                 // Проверяем верно ли ответил
-                if($current_answers[$key] == $right_answer){
+                if(isset($current_answers[$key]) && $current_answers[$key] == $right_answer){
                     // Ответил верно
                     $tf_array['answered_right'] = "Так";
                     //$test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
