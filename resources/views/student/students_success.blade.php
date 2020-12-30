@@ -184,7 +184,7 @@
                                                         <span>{{$course_protocols[$loop->index]->raiting}}</span>
                                                     </p>
                                                     @else
-                                                        <p class="no-result">Немає балів за виконання у цьому розділі</p>
+                                                        <p class="no-result">Протокол потребує перевірки</p>
                                                     @endif
                                                 </p>
                                                 @else
