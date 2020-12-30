@@ -188,7 +188,11 @@
                                                     @endif
                                                 </p>
                                                 @else
-                                                    <p>Протокол в уроці відсутній</p>
+                                                    @if ($course_protocols[$loop->index] === false)
+                                                        <p>Протокол не заповнено</p>
+                                                    @else
+                                                        <p>Протокол в занятті відсутній</p>
+                                                    @endif
                                                 @endif
                                             <p class="is-result hide">Тест
                                                 (<span id="correctAnswers">0</span>/<span
@@ -206,8 +210,8 @@
                                         <div class="gray-separator gray-separator_restyle"></div>
                                         <div class="time-and-reslts">
                                             <div class="time">
-                                                @if(isset($lesson->test_info)) 
-                                                    {{ $lesson->test_info->time_limit }} хв. 
+                                                @if(isset($lesson->test_info))
+                                                    {{ $lesson->test_info->time_limit }} хв.
                                                 @endif
                                             </div>
                                             <div class="wwl__circle-mark"></div>
