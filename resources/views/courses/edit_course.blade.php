@@ -52,9 +52,13 @@
                                     </div>
 
                                     <div class="courseAdd-info-wrapper">
-                                        <img src="/images/{{ $course_info->course_image_path }}" id="imgprev" heigth="150" width="150">
+                                        <img @if(!empty($course_info->course_image_path)) src="/images/{{ $course_info->course_image_path }}" @endif id="imgprev" heigth="150" width="150">
                                         <a class="courseAdditional-docName docName-restyling" id="img_upload_name" href="{{ route('delete_photo', ['course_id' => $course_info->id ] )}}">
-                                            {{ $course_info->course_image_path }}
+                                            @if(!empty($course_info->course_image_path))
+                                                {{ $course_info->course_image_path }}
+                                            @else
+                                                Нема фото
+                                            @endif
                                         </a>
                                     </div>
 

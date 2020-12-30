@@ -51,7 +51,7 @@
                                     <div class="courseAdd-info-wrapper">
                                         <img src="" id="imgprev" heigth="150" width="150">
                                         <a class="courseAdditional-docName docName-restyling" id="img_upload_name" href="##">
-                                            Довга назва фото
+                                            Нема фото
                                         </a>
                                     </div>
 
