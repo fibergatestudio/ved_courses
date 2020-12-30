@@ -254,6 +254,7 @@ class HomePageController extends Controller
             // Вопросы теста
             if(isset($testInfo)){
                 $testQuestions = DB::table('tests_questions')->where('test_id', $testInfo->id)->get();
+                //dd($testQuestions);
                 $testMultiplyIDS = [];
                 $testTrueFalseIDS = [];
                 $testDragDropIDS = [];
@@ -377,7 +378,7 @@ class HomePageController extends Controller
                 }
                 
 
-            return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson', 'testInfo', 'testDragDrop', 'testMultiply', 'testTrueFalse'));
+            return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson', 'testInfo', 'testDragDrop', 'testMultiply', 'testTrueFalse', 'testQuestions'));
             } else {
                 return view('front.test', compact('course', 'lesson', 'lessonNumber', 'prevLesson', 'nextLesson'));
             }
