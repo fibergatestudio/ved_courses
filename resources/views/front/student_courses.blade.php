@@ -52,10 +52,10 @@
                         <h4> {{ $course->name }}</h4>
                     </div>
                     <div class="direction-inner_bottom--text">
-                        {{ $course->description }}
+                        {{ strip_tags($course->description) }}
                     </div>
                     <div class="more-btn-block">
-                        <a class="btn-watch active w2__btn_restyle" href="{{ route('success_for_student',['student_id' => $user_id ]) }}"><span class="btn-watch_inner">Успiшнiсть</span></a>
+                        <a class="btn-watch active w2__btn_restyle" href="{{ route('success_for_student',['course_id' => $course->id,'student_id' => $user_id ]) }}"><span class="btn-watch_inner">Успiшнiсть</span></a>
                     </div>
                 </div>
             </div>

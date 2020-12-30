@@ -121,7 +121,7 @@ use Illuminate\Support\Facades\Auth;
     // Курсы в процессе изучения
     Route::get('/student/courses/process', 'HomePageController@student_courses')->name('student_courses')->middleware('auth','role:student');
     // Успешность в процессе изучения курса
-    Route::get('/student/courses/success_for_student/{student_id}', 'HomePageController@success_for_student')->name('success_for_student')->middleware('auth','role:student');
+    Route::get('/student/courses/{course_id}/success_for_student/{student_id}', 'HomePageController@success_for_student')->name('success_for_student')->middleware('auth','role:student');
     // Завершенные курсы
     Route::get('/student/courses/ended', 'HomePageController@student_courses_ended')->name('student_courses_ended')->middleware('auth','role:student');
 //////////

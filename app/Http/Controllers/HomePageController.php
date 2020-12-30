@@ -44,9 +44,114 @@ class HomePageController extends Controller
         return view('front.student_courses', compact('course', 'user_id'));
     }
 
-    public function success_for_student()
-    {
-        return view('front.success_for_student');
+    public function success_for_student($course_id, $student_id)
+    { 
+        $course_info = DB::table('courses')->where('id', $course_id)->first();
+        $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
+
+        foreach($courses_program as $course_program){
+            $course_test_info = DB::table('finished_tests_info')->where([
+                'user_id' => $student_id,
+                'test_id' => $course_program->test_id,
+                'course_id' => $course_id,
+            ])->orderBy('total_score', 'desc')->first();
+            //dd($course_test_info);
+            $course_program->finished_test_info = $course_test_info;
+        }
+
+        //dd($course_id);
+        // $student_finished_tests = DB::table('finished_tests_info')->where([
+        //     'user_id' => $student_id,
+        //     'course_id' => $course_id,
+        // ])->orderBy('total_score', 'desc')->get();
+        //dd($student_finished_tests);
+
+        $student = DB::table('students')->where('user_id', $student_id)->first();
+        $email = DB::table('users')->where('id', $student_id)->first()->email;
+        $student->email = $email;
+
+        $course_id = null;
+        $course_lessons = (object)[];
+        $lesson_count = null;
+        $course_info = DB::table('courses')->where('name', $student->course_number)->first();
+        if (is_object($course_info)) {
+            $course_id = $course_info->id;
+        }
+
+        // Программа курса
+        if ($course_id) {
+            $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
+            $lesson_count = $course_lessons->count();
+        }
+
+        // Видео для курса
+        foreach($course_lessons as $lesson){
+            if($lesson->video_name == null || $lesson->video_name == "null" ){
+                $lesson->video_count = 0;
+            } else {
+                $lesson->video_count = count(json_decode($lesson->video_name));
+            }
+
+            //$mm = DB::table('finished_tests_info')->get();
+            //dd($mm, "Stud_id: " . $student_id, "Lesson_id: " . $lesson->test_id, "Course_id: " . $course_id, $lesson);
+
+            // Результаты теста по курсу
+            if($lesson->test_id != null){
+                $lesson->test_exist = true;
+                // Берем инфу о законченных тестах
+                $finished_test_info = DB::table('finished_tests_info')->where([
+                    'user_id' => $student_id,
+                    'test_id' => $lesson->test_id,
+                    'course_id' => $course_id,
+                ])->orderBy('total_score', 'desc')->first();
+                // Аррей с инфой о результатах
+                $test_results = [];
+                // Проверяем есть ли результаты
+                if($finished_test_info){
+                    // Если есть - берем нужную информацию и передаем в аррей
+                    $test_results_decode = json_decode($finished_test_info->test_questions_json);
+                    $test_results['max_score'] = $test_results_decode->max_score;
+                    $test_results['final_score'] = $test_results_decode->final_score;
+                    $test_results['completion_percent'] = abs(
+                        floor(
+                            ( ( ($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score']) ) * 100 ) - 100
+                        )
+                    );
+                    //$test_results['completion_percent'] = (1 - $test_results['max_score'] / $test_results['final_score']) * 100;
+                    //app('App\Http\Controllers\HomePageController')->get_percentage($test_results['final_score'], $test_results['max_score']);
+                    //(($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100%;
+                }
+                // По результатам - передаем инфу в общий аррей урока
+                $lesson->test_results = $test_results;
+
+                $test_info = DB::table('tests_info')->where('id', $lesson->test_id)->first();
+                $lesson->test_info = $test_info;
+                //dd($finished_test_info);
+            } else {
+                $lesson->test_exist = false;
+                $lesson->test_results = [];
+            }
+        }
+
+        $course_protocols = [];
+        //Протоколы для курса
+        foreach($course_lessons as $lesson){
+            $current_protocol = DB::table('protocols')->where([
+                                                            ['course_id', '=', $course_id],
+                                                            ['lesson_id', '=', $lesson->id],
+                                                            ['user_id', '=', $student_id],
+                                                        ])->first();
+            if($lesson->show_protocol) {
+                array_push($course_protocols, $current_protocol);
+            }
+            else {
+                array_push($course_protocols, null);
+            }
+        }
+
+        
+
+        return view('front.success_for_student', compact('courses_program', 'course_lessons', 'course_info', 'course_protocols', 'lesson_count'));
     }
 
     public function student_courses_ended()
