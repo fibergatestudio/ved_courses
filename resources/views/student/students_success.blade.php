@@ -205,7 +205,11 @@
                                         <a href="##">Тест</a>
                                         <div class="gray-separator gray-separator_restyle"></div>
                                         <div class="time-and-reslts">
-                                            <div class="time">@if(isset($lesson->test_info)) {{ $lesson->test_info->time_limit }} хв. @endif</div>
+                                            <div class="time">
+                                                @if(isset($lesson->test_info)) 
+                                                    {{ $lesson->test_info->time_limit }} хв. 
+                                                @endif
+                                            </div>
                                             <div class="wwl__circle-mark"></div>
                                             <div class="description">
                                                 <p class="descr descr_rest">

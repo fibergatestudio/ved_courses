@@ -192,13 +192,17 @@
             @if(session()->has('message_success'))
                 <script>
                 $( document ).ready(function() {
-                    alert( "Імпорт успішний!" );
+                    
+                    var text = '{{ Session::get('message_success') }}';
+                    alert( text );
                 });
                 </script>
             @elseif(session()->has('message_error'))
                 <script>
                 $( document ).ready(function() {
-                    alert( "Неправильний формат файлу! Вірний формат - XLSX!" );
+                    //alert( "Неправильний формат файлу! Вірний формат - XLSX!" );
+                    var text = '{{ Session::get('message_error') }}';
+                    alert( text );
                 });
                 </script>
             @endif

@@ -214,6 +214,8 @@ class StudentController extends Controller
     public function students_controll_delete($student_id){
         //dd('work in progress!!!');
 
+
+        //dd($student_id);
         if(isset($student_id)){
             //проверка на существование пользователя
             $user = DB::table('users')->where('id', $student_id)->first();
@@ -242,6 +244,8 @@ class StudentController extends Controller
                     // Обновляем группу
                     DB::table('groups')->where('id', $grp->id)->update([ 'students_array' => json_encode($new_array) ]);
                 }
+                // УДаляем students_data если есть
+                DB::table('students_data')->where('recipient', $student->full_name)->delete();
                 // Удаляем студента с user
                 DB::table('users')->where('id', $student_id)->delete();
                 // Удаляем доп инфу студента.
