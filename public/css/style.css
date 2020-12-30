@@ -1402,7 +1402,7 @@ element.style {
     display: flex;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    justify-content: flex-start;
     padding: 110px 10px 40px
 }
 
