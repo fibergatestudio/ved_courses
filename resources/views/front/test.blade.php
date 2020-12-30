@@ -150,7 +150,6 @@
                                     <div class="test_b-grid_wrapper" style="display:flex;">
                                         <?php 
                                         $dd_answers_json = json_decode($dragDrop->answers_json);
-
                                         $text_fields = [];
                                         $fixed_test_fields = [];
                                         //dd($dd_answers_json);
@@ -160,11 +159,9 @@
                                             array_push($fixed_test_fields, $text_field);
                                         }
                                         //dd($fixed_test_fields);
-
                                         $answer_fields = [];
                                         preg_match_all('/\[\[(.*?)\]\]/', $dd_answers_json->question, $answer_fields);
-
-
+                                        //dd($answer_fields);
                                         $answ_curr_c = 0;
                                         $test = 0;
                                         ?>
@@ -179,7 +176,7 @@
                                                     <span id="answer{{ $dragDrop->id }}">{{ $dd_counter }}</span>
                                                 </div>  -->
 
-                                                <input type="hidden" id="q_count" name="q_count{{ $dragDrop->id }}" value="<?php echo count($answer_fields[1]); ?>">
+                                                <input type="hidden" id="q_count{{ $dragDrop->id }}" name="q_count{{ $dragDrop->id }}" value="<?php echo count($answer_fields[1]); ?>">
                                                     <?php
                                                     $ng_test_value = 1;
                                                     foreach($answer_fields[1] as $answ_field){ 
@@ -214,11 +211,9 @@
                                             </div>
                                         </div>
                                         <script>
-
                                             var id = {{ json_encode($dragDrop->id) }};
                                             var answer = 'answer' + id;
                                             var answers = 'answers' + id;
-
                                             var answers_el = document.getElementById(answers);
                                             var sortable = Sortable.create(answers_el, {
                                             group: {
@@ -233,12 +228,15 @@
                                             animation: 100
                                             });
                                             //$(document).ready(function(){
-                                                var ans_count = document.getElementById('q_count').value;
+                                                var q_count = 'q_count' + id;
+                                                console.log(q_count);
+                                                var ans_count = document.getElementById(q_count).value;
+                                                console.log(ans_count);
                                                 var ans_current_count = 0;
                                                 for (i = 0; i < ans_count; i++) {
                                                     ans_current_count++;
                                                     var answer_i = 'answer'+id+ans_current_count;
-                                                    console.log(answer_i, id );
+                                                    console.log(answer_i, id, ans_current_count );
                                                     var answer_el = document.getElementById(answer_i);
                                                     Sortable.create(answer_el, {
                                                     group: {
@@ -247,21 +245,18 @@
                                                             var from_id = from.el.id.replace(/\D+/g, '');
                                                             var to_id = to.el.id.replace(/\D+/g, '');
                                                             // Спилитим число
-                                                            var to_id_split = to_id.split('');
+                                                            //var to_id_split = to_id.split('');
+                                                            var to_id_split = splitStringBySegmentLength(to_id, from_id.length);
                                                             
-                                                            console.log(from_id, to_id_split[0]);
+                                                            console.log(from_id, to_id_split, to_id);
                                                             //console.log(answer_el);
                                                             if(from_id == to_id_split[0]){
                                                                 var true_answer = '#true_answer' + to_id;
                                                                 console.log(true_answer);
                                                                 setTimeout(function(){
                                                                     var new_passed_el = to.el.getElementsByClassName('answer_id').item(0).value;
-
                                                                     $(true_answer).val(new_passed_el);
-
                                                                 }, 100);
-
-
                                                                 return to.el.children.length < 1;
                                                             } 
                                                         }
@@ -270,7 +265,6 @@
                                                     });
                                                 }
                                             //});
-
                                             // var answer_el = document.getElementById("answer1");
                                             // Sortable.create(answer_el, {
                                             // group: {
@@ -282,26 +276,19 @@
                                             //         console.log(answer_el);
                                             //         console.log(ans_count);
                                             //         if(from_id == to_id){
-
                                             //             var true_answer = '#true_answer' + to_id;
                                             //            /* console.log(true_answer);
                                             //             console.log(to.el); */
                                                         
-
                                             //             /* var answer_id = '#answer' + id;
                                             //             var test = $(answer_id).find("input").val(); */
-
                                             //             setTimeout(function(){
                                             //                 var new_passed_el = to.el.getElementsByClassName('answer_id').item(0).value;
                                             //                 //console.log(new_passed_el);
                                             //                 //var passed_answer = answer_el.getElementsByClassName('answer_id').item(0).value;
                                             //                 //console.log(passed_answer);
-
                                             //                 $(true_answer).val(new_passed_el);
-
                                             //             }, 300);
-
-
                                             //             return to.el.children.length < 1;
                                             //         }
                                             //     }
@@ -309,15 +296,21 @@
                                             // animation: 100
                                             // });
 
-
+                                            function splitStringBySegmentLength(source, segmentLength) {
+                                                if (!segmentLength || segmentLength < 1) throw Error('Segment length must be defined and greater than/equal to 1');
+                                                const target = [];
+                                                for (
+                                                    const array = Array.from(source);
+                                                    array.length;
+                                                    target.push(array.splice(0,segmentLength).join('')));
+                                                return target;
+                                            }
                                         </script>
 
                                         <script>
-
                                         var id = {{ json_encode($dragDrop->id) }};
                                         var answer = 'answer' + id;
                                         /* testresponse.push(answer);*/
-
                                         </script>
                                         <?php $dd_counter++; ?>
                                         <?php $n_answers++; ?>
@@ -351,10 +344,8 @@
 
 
 <script>
-
     $('#test_send').click(function(){
         $('#course_test_form').submit();
     });
-
 </script>
 @endsection
