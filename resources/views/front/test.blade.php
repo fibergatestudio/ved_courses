@@ -84,12 +84,12 @@
                                     <div class="answer-wrapper">
                                         <input type="hidden" name="true_false_id[]" value="{{ $trueFalse->id }}">
                                         <div class="answer-radio">
-                                                <input type="radio" class="answer-radio_input" id="answer_true" name="answer_truefalse[]" value="1">
-                                                <label class="answer-radio_label" for="answer_true">Вірно</label>
+                                                <input type="radio" class="answer-radio_input" id="answer_true{{ $trueFalse->id }}" name="answer_truefalse[]{{ $trueFalse->id }}" value="1">
+                                                <label class="answer-radio_label" for="answer_true{{ $trueFalse->id }}">Вірно</label>
                                         </div>
                                         <div class="answer-radio">
-                                                <input type="radio" class="answer-radio_input" id="answer_false" name="answer_truefalse[]" value="0">
-                                                <label class="answer-radio_label" for="answer_false">Не вірно</label>
+                                                <input type="radio" class="answer-radio_input" id="answer_false{{ $trueFalse->id }}" name="answer_truefalse[]{{ $trueFalse->id }}" value="0">
+                                                <label class="answer-radio_label" for="answer_false{{ $trueFalse->id }}">Не вірно</label>
                                         </div>
                                     </div>
                                 </div>

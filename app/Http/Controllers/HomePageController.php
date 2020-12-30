@@ -469,6 +469,7 @@ class HomePageController extends Controller
                 // Верный ответ
                 $right_answer = $true_false_db->right_answer;
                 $tf_array['right_answer'] = $right_answer;
+                //dd($request->all());
                 // Проверяем верно ли ответил
                 if($current_answers[$key] == $right_answer){
                     // Ответил верно
@@ -484,6 +485,7 @@ class HomePageController extends Controller
 
             array_push($test_questions_json, $true_false_q);
         }
+        
         //dd($test_questions_json);
         // Множественный выбор
         if(isset($multiply_ids)){
