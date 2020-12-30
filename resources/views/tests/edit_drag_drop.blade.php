@@ -117,7 +117,7 @@
                         <!-- changeling block mobile-btn (start) -->
                         <div class="sidebar-top_mobile-btn">
                             <div class="sidebar-top_mobile-img">
-                                <img src="assets/img/teacher-mobileMenu-2.png" alt="icon">
+                                <img src="/img/teacher-mobileMenu-2.png" alt="icon">
                             </div>
                             <div class="sidebar-top_mobile-name">
                                 Управління курсами
