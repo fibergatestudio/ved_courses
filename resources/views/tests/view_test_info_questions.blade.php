@@ -194,8 +194,8 @@
                                 <div class="newTest-quest-wrapper">
                                     <select class="newTest-quest-select" name="availability">
                                         <option value="1" @if($test_view_info->availability == 1) selected @endif>Показати на сторінці курсу</option>
-                                        <option value="2" @if($test_view_info->availability == 2) selected @endif>Опция 2</option>
-                                        <option value="3" @if($test_view_info->availability == 3) selected @endif>Опция 3</option>
+                                        <!-- <option value="2" @if($test_view_info->availability == 2) selected @endif>Опция 2</option>
+                                        <option value="3" @if($test_view_info->availability == 3) selected @endif>Опция 3</option> -->
                                     </select>
                                     <div class="newTest-quest_arrowBlock"></div>
                                     </div>

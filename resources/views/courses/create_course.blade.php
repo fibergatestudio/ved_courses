@@ -49,6 +49,7 @@
                                     </div>
 
                                     <div class="courseAdd-info-wrapper">
+                                        <img src="" id="imgprev" heigth="150" width="150">
                                         <a class="courseAdditional-docName docName-restyling" id="img_upload_name" href="##">
                                             Довга назва фото
                                         </a>
@@ -95,21 +96,35 @@
                 'insertfile link image media pageembed template ' ,
             content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
         });
-    </script>
+    </script> 
     <script>
         $(document).ready(function() {
             $('input[type="file"]').change(function(e) {
                 var geekss = e.target.files[0].name; 
                 //var filetype = e.target.files[0];
                 var fileExtension = ['jpeg', 'jpg', 'png'];
+
+
                 if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                     alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
                 } else {
+                    readURL(this);
                     alert("Фото "+ geekss + " успішно додано!");
                     $("#img_upload_name").text(geekss);
                 }
             });
         });
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var reader = new FileReader();
+                
+                reader.onload = function (e) {
+                    $('#imgprev').attr('src', e.target.result);
+                }
+                
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
 
         function submitForm(){
 

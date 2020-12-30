@@ -46,13 +46,14 @@
                                 <div class="courseAdd-grid_item">
 
                                     <div class="courseAdditional-input-wrapper">
-                                        <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу" id="img_upload_name">
+                                        <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу" >
                                         <input class="courseAdditional-input_button" type="file" name="course_image">
                                         <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                     </div>
 
                                     <div class="courseAdd-info-wrapper">
-                                        <a class="courseAdditional-docName docName-restyling" href="{{ route('delete_photo', ['course_id' => $course_info->id ] )}}">
+                                        <img src="/images/{{ $course_info->course_image_path }}" id="imgprev" heigth="150" width="150">
+                                        <a class="courseAdditional-docName docName-restyling" id="img_upload_name" href="{{ route('delete_photo', ['course_id' => $course_info->id ] )}}">
                                             {{ $course_info->course_image_path }}
                                         </a>
                                     </div>
@@ -257,7 +258,7 @@
                                             </a>
                                         @endif
                                     </div>
-                                    <div class="courseEdit-hidden">
+                                    {{--<div class="courseEdit-hidden">
                                         <div class="courseEdit-underline"></div>
                                         <table class="hidden-menu">
                                             <tbody >
@@ -268,7 +269,7 @@
                                                 </tr>
                                             </tbody>
                                         </table>
-                                    </div>
+                                    </div> --}}
                                 </div>
                             </div>
                         </div>
@@ -354,6 +355,18 @@
         });
 
 
+    } 
+
+    function readURL(input) {
+        if (input.files && input.files[0]) {
+            var reader = new FileReader();
+            
+            reader.onload = function (e) {
+                $('#imgprev').attr('src', e.target.result);
+            }
+            
+            reader.readAsDataURL(input.files[0]);
+        }
     }
 
     function arrayRemove(arr, value) {
@@ -371,12 +384,15 @@
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                 alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
             } else {
+                readURL(this);
                 alert("Фото "+ geekss + " успішно додано!");
                 $("#img_upload_name").text(geekss);
+                //$( "#edit_course_form" ).submit();
             }
 
         });
     });
+    
 
 
 $( "#submit_button" ).click(function() {

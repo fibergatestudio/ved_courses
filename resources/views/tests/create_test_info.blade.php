@@ -579,8 +579,8 @@
                                 <div class="newTest-quest-wrapper">
                                     <select class="newTest-quest-select" name="availability">
                                         <option value="1" selected="">Показати на сторінці курсу</option>
-                                        <option value="2">Опция 2</option>
-                                        <option value="3">Опция 3</option>
+                                        <!-- <option value="2">Опция 2</option>
+                                        <option value="3">Опция 3</option> -->
                                     </select>
                                     <div class="newTest-quest_arrowBlock"></div>
                                     </div>
