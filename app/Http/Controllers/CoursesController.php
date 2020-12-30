@@ -33,6 +33,32 @@ class CoursesController extends Controller
         return view('courses.index', compact('courses') );
     }
 
+
+    public function all_courses(){
+
+        $courses = DB::table('courses')->get();
+        //dd("test");
+        //dd($courses);
+        foreach($courses as $course){
+            // Получаем имя создателя
+            $creator = DB::table('users')->where('id', $course->creator_id)->first();
+            $course->creator_name = $creator->name;
+            // Получаем кол-во просмотров курса
+            $course_views = DB::table('course_views')->where('course_name', $course->name)->count();
+            if($course_views){
+                $course->views = $course_views;
+            } else {
+                $course->views = 0;
+            }
+            //для превью обрезаем тэги
+            $clear_descr = str_replace("&nbsp;", '', $course->description);
+            $course->description =  strip_tags($clear_descr);
+        }
+        // dd($courses);
+
+        return view('courses.all_courses', compact('courses') );
+    }
+
     public function new_course(){
 
         return view('courses.create_course');
@@ -714,6 +740,23 @@ class CoursesController extends Controller
 
     //     return view('courses.course_view', compact('course_id'));
     // }
+
+
+    public function popular_course(Request $request){
+
+        if ($request->popular === 'true') {
+            DB::table('courses')->where('id',$request->course_id)->update([
+                'popularity' => 'popular'
+            ]);
+        }
+        else if($request->popular === 'false'){
+            DB::table('courses')->where('id',$request->course_id)->update([
+                'popularity' => null
+            ]);
+        }
+
+        return $request->course_id;
+    }
 
 
 }

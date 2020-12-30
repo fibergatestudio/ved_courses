@@ -16,7 +16,10 @@
                     <div class="header-text-middle">
                         Пізнай світ по-новому
                     </div>
-                    <a class="header-btn" href="{{ route('simulator') }}">
+                    {{--<a class="header-btn" href="{{ route('simulator') }}">
+                        <span>перейти до курсів</span>
+                    </a>--}}
+                    <a class="header-btn" href="{{ route('all_courses') }}">
                         <span>перейти до курсів</span>
                     </a>
                 </div>
@@ -152,7 +155,7 @@
 <!--Popular section-->
 @include('layouts.front.includes.popular')
 <!-- End Popular Section -->
-<section class="main">
+{{--<section class="main">
     <div class="container">
         <h3 class="main-title_top">Назва розділу</h3>
 
@@ -685,7 +688,7 @@
             </div>
         </div>
     </div>
-</section>
+</section>--}}
 <!--Partners section-->
 @include('layouts.front.includes.partners')
 <!-- End Partners Section -->

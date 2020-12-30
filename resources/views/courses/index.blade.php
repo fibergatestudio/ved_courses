@@ -29,6 +29,7 @@
                             <div class="flexTable-topTitle_inner">Пройдено разів</div>
                             <div class="flexTable-topTitle_inner">Творець (id)</div>
                             <div class="flexTable-topTitle_inner">Управління</div>
+                            <div class="flexTable-topTitle_inner">Додати в популярні</div>
                         </div>
                         @foreach($courses as $course)
                             <div class="flexTable-string">
@@ -52,6 +53,13 @@
                                         'modalPath' => route('delete_course', ['course_id' => $course->id ]),
                                         'target' => $course->name
                                     ])
+                                </div>
+                                <div class="flexTable-string_inner">
+                                    @if($course->popularity)
+                                    <input type="checkbox" name="popularity" value="{{ $course->id }}" checked>
+                                    @else
+                                    <input type="checkbox" name="popularity" value="{{ $course->id }}">
+                                    @endif
                                 </div>
                             </div>
                         @endforeach
@@ -108,4 +116,34 @@
             </div>
         </div>
     </section>
+@endsection
+
+@section('js')
+<script type="text/javascript">
+    
+    $('[name="popularity"]').change((e)=>{
+        
+        const courseId = $(e.target).val();
+        let popular = '';
+        
+        if ($(e.target).prop("checked")) {
+            popular = 'true';
+        }
+        else{
+            popular = 'false';
+        }
+
+        axios.post("{{ route('popular_course') }}", {
+            course_id: courseId,
+            popular: popular
+        })
+        .then(function (response) {
+            console.log(response);                    
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+    })
+   
+</script>
 @endsection
