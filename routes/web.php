@@ -215,7 +215,10 @@ use Illuminate\Support\Facades\Auth;
         // Удаление курса
         Route::get('/courses_controll/{course_id}/delete', 'CoursesController@delete_course')->name('delete_course')->middleware('auth','role:admin');
 
-
+        // Все курсы
+        Route::get('/all_courses', 'CoursesController@all_courses')->name('all_courses')->middleware('auth');
+        // Добавление в популярные
+        Route::post('/popular_course', 'CoursesController@popular_course')->name('popular_course')->middleware('auth','role:admin');
 //////////
 
 // Тесты

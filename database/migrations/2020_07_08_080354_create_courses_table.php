@@ -23,6 +23,7 @@ class CreateCoursesTable extends Migration
             $table->string('creator_id')->nullable();
             $table->json('assigned_teacher_id')->nullable();
             $table->string('visibility')->nullable();
+            $table->string('popularity')->nullable();
             $table->timestamps();
         });
     }

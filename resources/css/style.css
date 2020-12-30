@@ -3803,16 +3803,21 @@ element.style {
 
 .flexTable-topTitle_inner:nth-child(5) {
     text-align: center;
-    width: 14.8%
+    width: 14.3%
 }
 
 .flexTable-topTitle_inner:nth-child(6) {
-    width: 16.5%
+    width: 13.5%
 }
 
 .flexTable-topTitle_inner:nth-child(7) {
     text-align: center;
-    width: 16.6%
+    width: 13.3%
+}
+
+.flexTable-topTitle_inner:nth-child(8) {
+    text-align: end;
+    width: 6.6%
 }
 
 .flexTable-string {
@@ -3868,17 +3873,27 @@ element.style {
 
 .flexTable-string_inner:nth-child(5) {
     text-align: center;
-    width: 14.8%
+    width: 14.3%
 }
 
 .flexTable-string_inner:nth-child(6) {
-    width: 16.5%
+    width: 13.5%
 }
 
 .flexTable-string_inner:nth-child(7) {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
-    width: 16.6%
+    width: 13.3%
+}
+
+.flexTable-string_inner:nth-child(8) {
+    -ms-flex-wrap: wrap;
+    flex-wrap: wrap;
+    width: 6.6%
+}
+
+.flexTable-string_inner:nth-child(8) input{
+    margin: 25px;
 }
 
 .flexTable-btn_edit,
