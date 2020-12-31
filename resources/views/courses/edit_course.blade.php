@@ -134,8 +134,8 @@
                                     @endif
                                 </div>
                                 <div class="teachers-grid_item">
-                                        <div class="teachers-item_name d-flex justify-content-between">{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}
-                                            <a class="courseAdditional-docName justify-content-end" href="##" onclick="deleteTeacher({{ $teacher->id }});" style="width: 0px;"></a>
+                                        <div class="teachers-item_name d-flex">
+                                        <a class="courseAdditional-docName justify-content-end" href="##" onclick="deleteTeacher({{ $teacher->id }});" style="width: 0px;"></a>{{ $teacher->surname }} {{ $teacher->name }} {{ $teacher->patronymic }}
                                         </div>
                                     <div class="courseEdit-item_position teachers-item_position col">Професор наук</div>
                                 </div>

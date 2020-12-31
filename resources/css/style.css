@@ -4722,7 +4722,7 @@ element.style {
     font-family: SegoeUIRegular, sans-serif;
     font-weight: 400;
     font-size: 16px;
-    padding-right: 145px;
+    /* padding-right: 145px; */
     line-height: 1.333em;
     color: #000;
     width: 268px

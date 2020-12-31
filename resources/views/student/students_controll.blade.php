@@ -38,7 +38,7 @@
                     Файли з розширенням xlsx або xlsx. <br> Максимальний розмір - 5 Мб.
                 </p>
             </div>
-            <p><a href="##" data-toggle="modal" data-target="#showUploadedStud">Текущие загруженные студенты</a></p>
+            <p><a href="##" data-toggle="modal" data-target="#showUploadedStud">Поточні завантажені студенти</a></p>
                         <div class="bootstrap-restylingStudent modal fade" id="showUploadedStud" tabindex="-1" role="dialog"
                             aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog  modal-dialog_restyle">

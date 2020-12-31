@@ -176,7 +176,7 @@ class StudentController extends Controller
 
         // Если Админ - берем и показываем всех студентов
         if($user_id == 1){
-            $students = DB::table('students')->paginate(10);
+            $students = DB::table('students')->paginate(6);
         } else {
             // Если не админ
             // Получаем айдишники доступных студентов
@@ -194,7 +194,7 @@ class StudentController extends Controller
             }
 
             // Берем айдишник доступные ему
-            $students = DB::table('students')->where('assigned_teacher_id', $user_id)->paginate(10);
+            $students = DB::table('students')->where('assigned_teacher_id', $user_id)->paginate(6);
         }
 
         foreach($students as $student){
