@@ -268,7 +268,7 @@
                                                     <div class="newTest-quest_arrowBlock"></div>
                                                 </div>
                                                 <div class="newTest-quest-wrapper" style="width: 70%;">
-                                                    <select class="newTest-quest-select" :name="'answer_grade'+index"> 
+                                                    <select class="newTest-quest-select" :id="'answer_grade'+index" :name="'answer_grade'+index"> 
                                                         <option value="1" selected>Не вибрано</option> 
                                                         <option value="0">0%</option>
                                                         <option value="20">20%</option>
@@ -316,18 +316,19 @@
                     </div>
             </form>
     </section>  
-
+    
     <?php
 
     $answer_arr = [];
+    $asnwer_plusminus = [];
     $grade_arr = [];
     $comment_arr = [];
-
         if(isset($t_question_info)){
             if(is_countable (json_decode($t_question_info->answers_json) )){
                 $decoded_arr = json_decode($t_question_info->answers_json);
                 foreach($decoded_arr as $dec){
                     $answer_arr[] = $dec->answer;
+                    $asnwer_plusminus[] = $dec->answer_plusminus;
                     $grade_arr[] = $dec->answer_grade;
                     $comment_arr[] = $dec->answer_comment;
                 }
@@ -366,11 +367,15 @@
             var i;
 
             const answerArr = [];
+            const plusminArr = [];
             const gradeArr = [];
             const commentArr = [];
 
             @foreach($answer_arr as $answ)
                 answerArr.push('{!! $answ !!}');
+            @endforeach
+            @foreach($asnwer_plusminus as $plusminus)
+                plusminArr.push('{!! $plusminus !!}');
             @endforeach
             @foreach($grade_arr as $grade)
                 gradeArr.push('{!! $grade !!}');
@@ -379,9 +384,9 @@
                 commentArr.push('{!! $comment !!}');
             @endforeach
 
-            console.log(answerArr);
+            //console.log(plusminArr);
             for (i = 0; i < q_count; i++) {
-                app1.addNewEntryWithText(answerArr[i], gradeArr[i], commentArr[i]);
+                app1.addNewEntryWithText(answerArr[i], gradeArr[i], commentArr[i], plusminArr[i]);
             }
 
         });
@@ -438,13 +443,23 @@
 
                     
                 },
-                addNewEntryWithText(answer, grade, comment){
+                addNewEntryWithText(answer, grade, comment, plusminus){
                     currentCounter = currentCounter + 1;
                     var answer_id = '#answer' + currentCounter;
                     var answer_comment = '#answer_comment' + currentCounter;
 
+                    //new
+                    var answer_plusminus = '#answer_plusminus' + (currentCounter) + ' option[value="' + plusminus + '"]';
+                    var answer_grade = '#answer_grade' + (currentCounter) + ' option[value="' +grade+'"]';
+                    console.log(answer_grade);
+
                     setTimeout(function(){ 
                         //$(answer_id).val(answer);
+
+                        
+                        var set_plusminus = $(answer_plusminus).prop('selected', true);
+                        var set_grade = $(answer_grade).prop('selected', true);
+                        console.log(set_plusminus, set_grade);
 
                         tinymce.init({  selector: answer_id,
                         menubar: false,
