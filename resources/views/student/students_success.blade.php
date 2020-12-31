@@ -151,7 +151,7 @@
                                     </div>
                                     <div class="ss__grid_item">
                                         <div class="programs-item_text">
-                                            {!! $lesson->course_description !!}
+                                            {!! strip_tags($lesson->course_description) !!}
                                         </div>
                                     </div>
                                     <div class="ss__protocol direction-change">
@@ -168,8 +168,9 @@
                                             <div class="wwl__circle-mark"></div>
                                             @endif
                                             <div class="description">
-                                                <p class="descr descr_rest">
-                                                    <span>{{ strip_tags($lesson->course_protocol_descr) ?? '' }}</span>
+                                                <p class="descr descr_rest"> 
+                                                    <?php $clear_descr = str_replace("&nbsp;", '', $lesson->course_description); ?> 
+                                                    <span>{{ strip_tags($clear_descr ) ?? '' }}</span>
                                                 </p>
                                             </div>
                                         </div>

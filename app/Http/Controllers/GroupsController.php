@@ -136,30 +136,37 @@ class GroupsController extends Controller
             $courses = DB::table('courses')->get();
             $id_arr = [];
             foreach ($courses as $value) {
+                //dd($value);
                 // + Доп проверка есть ли привязанный учитель к группе
                 if($value->assigned_teacher_id){
+                    
                    $temp_arr = json_decode($value->assigned_teacher_id);
+                   //dd($temp_arr);
                     //dd($temp_arr);
                     if (in_array($teacher_id, $temp_arr)) {
                         $id_arr[] = $value->id;
                     }
                 }
             }
+            //dd($id_arr);
             $courses= DB::table('courses')->whereIn('id', $id_arr)->get();
-
+            //dd($id_arr);
             // Собираем доступных учителей
             $id_arr = [];
             foreach ($courses as $value) {
                 $temp_arr = json_decode($value->assigned_teacher_id);
                 $id_arr = array_merge($id_arr, $temp_arr);
             }
-
-            $teachers = DB::table('users')->whereIn('id', $id_arr)->get();
+            //dd($temp_arr);
+            //dd($group_info->assigned_teacher_id);
+            array_push($id_arr, $group_info->assigned_teacher_id);
+            $teachers = DB::table('users')->where('role', 'teacher')->whereNotIn('id', $id_arr)->get();
+            //dd($teachers);
 
             $role = Auth::user()->role;
             $user_id = Auth::user()->id;
             $auth_teacher = Auth::user();
-            $course_for_js = []; 
+            $course_for_js = [];
 
             if ($role === 'teacher') {
                 $id_arr = [];

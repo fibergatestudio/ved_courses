@@ -188,7 +188,7 @@
                                     </div>
                                 </div>
                                 <div class="courseEdit-grid_item">
-                                    <?php $clear_descr = str_replace("&nbsp;", '', $lesson->course_description); ?>
+                                    <?php $clear_descr = str_replace("&nbsp;", '', $lesson->course_description); ?> 
                                     <div class="programs-item_text">{{ strip_tags($clear_descr) }}</div>
                                 </div>
                                 <div class="courseEdit-grid_item">
