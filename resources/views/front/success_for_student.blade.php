@@ -67,7 +67,7 @@
                                         </div>
                                     </div>
                                     <div class="ss__protocol direction-change">
-                                        <a href="##">Протокол </a>
+                                        <a href="##">Протокол</a>
                                         <div class="gray-separator gray-separator_restyle ss__gray-septr"></div>
                                         <p class="program_wwl-protocol ">Теоретичний матеріал</p>
                                         <div class="time-and-reslts">
@@ -89,18 +89,21 @@
 
                                                 @if ($course_protocols[$loop->index])
                                                 <p class="text-p">
-                                                    <a href="{{ route('protocol.show', ['course_id' => $course_info->id, 'lesson_id' => $lesson->id, 'user_id' => $student_id]) }}">Протокол</a>
                                                     @if ($course_protocols[$loop->index]->raiting)
                                                     <p class="is-result">
                                                         <span class="ss__test-decoration">Бали за протокол</span>
                                                         <span>{{$course_protocols[$loop->index]->raiting}}</span>
                                                     </p>
                                                     @else
-                                                        <p class="no-result">Немає балів за виконання у цьому розділі</p>
+                                                        <p class="no-result">Протокол на перевірці</p>
                                                     @endif
                                                 </p>
                                                 @else
-                                                    <p>Протокол в уроці відсутній</p>
+                                                    @if ($course_protocols[$loop->index] === false)
+                                                        <a href="{{ route('protocol.show', ['course_id' => $course_info->id, 'lesson_id' => $lesson->id, 'user_id' => $student_id]) }}">Протокол не заповнено</a>
+                                                    @else
+                                                        <p>Протокол в занятті відсутній</p>
+                                                    @endif
                                                 @endif
                                             <p class="is-result hide">Тест
                                                 (<span id="correctAnswers">0</span>/<span
@@ -118,8 +121,8 @@
                                         <div class="gray-separator gray-separator_restyle"></div>
                                         <div class="time-and-reslts">
                                             <div class="time">
-                                                @if(isset($lesson->test_info)) 
-                                                    {{ $lesson->test_info->time_limit }} хв. 
+                                                @if(isset($lesson->test_info))
+                                                    {{ $lesson->test_info->time_limit }} хв.
                                                 @endif
                                             </div>
                                             <div class="wwl__circle-mark"></div>

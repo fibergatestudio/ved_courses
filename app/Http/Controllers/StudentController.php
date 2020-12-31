@@ -408,7 +408,7 @@ class StudentController extends Controller
             return redirect()->back()->with('message_error', 'Неправильний формат файлу! Вірний формат - XLSX');
         }
 
-        return redirect()->back()->with('message_success', 'Імпорт успішний!'); 
+        return redirect()->back()->with('message_success', 'Імпорт успішний!');
     }
 
 
@@ -493,11 +493,9 @@ class StudentController extends Controller
                 array_push($course_protocols, $current_protocol);
             }
             else {
-                array_push($course_protocols, null);
+                array_push($course_protocols, false);
             }
         }
-
-
 
         // Определяем следующего студента для кнопки
         $role = Auth::user()->role;
