@@ -447,11 +447,27 @@ class StudentController extends Controller
             if($lesson->test_id != null){
                 $lesson->test_exist = true;
                 // Берем инфу о законченных тестах
+                 //TEST $finished_test_info_t = DB::table('finished_tests_info')->where(['user_id' => $student_id, 'test_id' => $lesson->test_id, 'course_id' => $course_id, ])->orderBy('total_score', 'desc')->first();
+                $finished_test_info_t = DB::table('finished_tests_info')->where([
+                    'user_id' => $student_id,
+                    'test_id' => $lesson->test_id,
+                    'course_id' => $course_id,
+                ])->orderBy('total_score', 'desc')->get();
+                $max_score = 0;
+                foreach($finished_test_info_t as $test_info){
+                    $test_info->total_score = intval($test_info->total_score);
+                    if($max_score <= $test_info->total_score){
+                        $max_score = $test_info->total_score;
+                    } 
+                }
+                 // ENDTEST
                 $finished_test_info = DB::table('finished_tests_info')->where([
                     'user_id' => $student_id,
                     'test_id' => $lesson->test_id,
                     'course_id' => $course_id,
-                ])->orderBy('total_score', 'desc')->first();
+                    'total_score' => $max_score,
+                ])->first();
+                //dd($max_score, $finished_test_info);
                 // Аррей с инфой о результатах
                 $test_results = [];
                 // Проверяем есть ли результаты

@@ -81,7 +81,7 @@
                                             @endif
                                             <div class="description">
                                                 <p class="descr descr_rest">
-                                                    <span>{{ $lesson->course_protocol_descr ?? '' }}</span>
+                                                    <span>{{ strip_tags($lesson->course_protocol_descr) ?? '' }}</span>
                                                 </p>
                                             </div>
                                         </div>

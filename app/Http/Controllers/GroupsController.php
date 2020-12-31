@@ -159,7 +159,7 @@ class GroupsController extends Controller
             $role = Auth::user()->role;
             $user_id = Auth::user()->id;
             $auth_teacher = Auth::user();
-            $course_for_js = [];
+            $course_for_js = []; 
 
             if ($role === 'teacher') {
                 $id_arr = [];
