@@ -50,7 +50,7 @@
 
                                     <div class="courseAdd-info-wrapper">
                                         <img src="" id="imgprev" heigth="150" width="150">
-                                        <a class="courseAdditional-docName docName-restyling" id="img_upload_name" href="##">
+                                        <a class="courseAdditional-docName docName-restyling" style="padding-right: 145px;" id="img_upload_name" href="##">
                                             Нема фото
                                         </a>
                                     </div>

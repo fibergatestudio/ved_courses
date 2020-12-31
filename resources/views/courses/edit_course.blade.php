@@ -53,7 +53,7 @@
 
                                     <div class="courseAdd-info-wrapper">
                                         <img @if(!empty($course_info->course_image_path)) src="/images/{{ $course_info->course_image_path }}" @endif id="imgprev" heigth="150" width="150">
-                                        <a class="courseAdditional-docName docName-restyling" id="img_upload_name" href="{{ route('delete_photo', ['course_id' => $course_info->id ] )}}">
+                                        <a class="courseAdditional-docName docName-restyling" id="img_upload_name" style="padding-right: 145px;"  href="{{ route('delete_photo', ['course_id' => $course_info->id ] )}}">
                                             @if(!empty($course_info->course_image_path))
                                                 {{ $course_info->course_image_path }}
                                             @else
