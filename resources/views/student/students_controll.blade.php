@@ -157,6 +157,7 @@
                     </div>
                 @endforeach
             </div>
+            {{ $students->onEachSide(0)->links('vendor.pagination.vrst_pagination') }}
             {{-- <div class="groups-footer groups-footer_style sc-footer-pagination_restyle">
                 <div class="groops-pagination">
                     <div class="groops-pagination__btn-previous"><a class="groops-pagination__btn-previous_not-active"

@@ -170,12 +170,13 @@ class StudentController extends Controller
     // Управление студентами
     public function students_controll(){
 
+        //dd("here");
         // Получаем айди текущего юзера
         $user_id = Auth::user()->id;
 
         // Если Админ - берем и показываем всех студентов
         if($user_id == 1){
-            $students = DB::table('students')->get();
+            $students = DB::table('students')->paginate(10);
         } else {
             // Если не админ
             // Получаем айдишники доступных студентов
@@ -193,7 +194,7 @@ class StudentController extends Controller
             }
 
             // Берем айдишник доступные ему
-            $students = DB::table('students')->where('assigned_teacher_id', $user_id)->get();
+            $students = DB::table('students')->where('assigned_teacher_id', $user_id)->paginate(10);
         }
 
         foreach($students as $student){
