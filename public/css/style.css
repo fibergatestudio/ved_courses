@@ -1410,7 +1410,8 @@ element.style {
     -webkit-box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
     box-shadow: 0 3px 6px rgba(0, 0, 0, .16);
     margin: 5px;
-    max-width: 267px
+    max-width: 267px;
+    background: #fff;
 }
 
 .popular-inner:hover .popular-inner_img {
@@ -1422,7 +1423,7 @@ element.style {
 .popular-inner_top {
     overflow: hidden;
     max-width: 267px;
-    max-height: 208px;
+    height: 208px;
     position: relative
 }
 
