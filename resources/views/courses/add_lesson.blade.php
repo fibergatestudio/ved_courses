@@ -190,7 +190,7 @@
                                         </div>
                                         <div class="courseAdditional-flexbox_item">
                                             <div class="courseAdditional-flexbox_text">
-                                                URL повенен бути типу: https://www.youtube.com/
+                                                URL повинен бути типу: https://www.youtube.com/
                                             </div>
                                         </div>
                                     </div>
@@ -309,7 +309,7 @@
             /* alert(fileName); */
         }
 
-        function submitForm(){ 
+        function submitForm(){
 
             // Получаем кол-во видео
             var video_counter = $('#videos_counter').val();
@@ -349,7 +349,7 @@
                             //var name = $.trim( $(v_name).val() );
                             //var length = $.trim( $(v_lenght).val() );
                             var link = $.trim( $(v_link).val() );
-                            
+
                                 if (link  === '') {
                                     alert('Ссылка видео '+ number +' пустая.');
                                     return false;
@@ -363,7 +363,7 @@
                             document.getElementById('add_lesson_form').submit();
                     }
 
-            } 
+            }
                 //document.getElementById('add_lesson_form').submit();
             // Перебираем поля каждого видео
         }
