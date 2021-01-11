@@ -245,7 +245,7 @@
                                     </div>
                                 </div>
                                 <div class="multipleChoice-inner_right">
-                                    <input class="multipleChoice-input course-faq--input courseAdditional--input" type="text" name="question_name"  placeholder="Приклад: Питання 1, або 1">
+                                    <input class="multipleChoice-input course-faq--input courseAdditional--input" type="text" id="question_name" name="question_name"  placeholder="Приклад: Питання 1, або 1">
                                 </div>
                             </div>
                             
@@ -256,7 +256,7 @@
                                     </div>
                                 </div>
                                 <div class="multipleChoice-inner_right">
-                                        <textarea class="tinyMCE-area" name="question_text" ></textarea>
+                                        <textarea class="tinyMCE-area" id="question_text" name="question_text" ></textarea>
                                 </div>
                             </div> 
                             
@@ -325,7 +325,7 @@
 
                     </div>
                     <div class="multipleChoice-btn-wrapper btn-wrapper-restyling">                   
-                        <a class="multipleChoice-btn-center btn-center_restyling" href="##" onclick="document.getElementById('true_false_form').submit();">
+                        <a class="multipleChoice-btn-center btn-center_restyling" href="##" onclick="submitForm(event);">
                             <span>Зберегти питання</span>
                         </a>
                         <a class="multipleChoice-btn-right" href="{{ URL::previous() }}">
@@ -347,6 +347,35 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+    
+        
+    function submitForm(event){
+        event.preventDefault();
+        // Получаем инфу
+        var name = $.trim( $('#question_name').val() );
+
+        // var myContent = tinymce.activeEditor.getContent();
+        var description = tinymce.get('question_text').getContent();
+        //alert(myContent);
+
+        if (name  === '') {
+            alert('Введіть назву питання!');
+            return false;
+        } else if(description == ""){
+            alert('Введіть текст питання!');
+            return false;
+        } else {
+            //document.getElementById('create_course').submit();
+        // $( "#edit_course_form" ).submit();
+            $( "#test_form" ).submit();
+        // document.getElementById('create_test_form').submit()
+        }
+
+    }
+
+    </script>
 
     <script>
         tinymce.init({

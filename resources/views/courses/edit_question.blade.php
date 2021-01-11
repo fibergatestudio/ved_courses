@@ -55,7 +55,7 @@
                     </div>
 
                     <div class="courseEdit-btn-watch_wrapper">
-                        <a onclick="document.getElementById('add_question_form').submit();" class="courseEdit-btn-watch btn-watch--more courseAdd-btn"><span style="color:white;">Зберегти</span></a>
+                        <a onclick="submitForm(event);" class="courseEdit-btn-watch btn-watch--more courseAdd-btn"><span style="color:white;">Зберегти</span></a>
                     </div>
 
                 </form>
@@ -70,6 +70,59 @@
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script type="text/javascript" src="{{ asset('js/tinymce/tinymce.min.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    <script>
+    
+        
+    function submitForm(event){
+        event.preventDefault();
+        // Получаем инфу
+        //var name = $.trim( $('#question_name').val() );
+
+        // var myContent = tinymce.activeEditor.getContent();
+        //var description = tinymce.get('question_text').getContent();
+        //alert(myContent);
+        var qa_nums = $('#questions_counter').val();
+        var valid_nums = 1;
+        console.log(qa_nums);
+
+        for(var i = 1; i < qa_nums; i++){
+            var q_name = '#course_question' + i;
+            var q_answer = 'question_text' + i;
+            console.log(q_name, q_answer);
+            var q_name_val = $.trim( $(q_name).val() );
+            var q_description_val = tinymce.get(q_answer).getContent();
+
+            if(q_name_val == ""){
+                alert("Введіть питання " + i);
+            } else if (q_description_val == ""){
+                alert("Введіть відповідь " + i);
+            } else {
+                valid_nums++;
+                console.log(valid_nums);
+                if(valid_nums == qa_nums){
+                    $( "#add_question_form" ).submit();
+                }
+            }
+        }
+        
+
+        // if (name  === '') {
+        //     alert('Введіть назву питання!');
+        //     return false;
+        // } else if(description == ""){
+        //     alert('Введіть текст питання!');
+        //     return false;
+        // } else {
+        //     //document.getElementById('create_course').submit();
+        // // $( "#edit_course_form" ).submit();
+        //     $( "#drag_drop_form" ).submit();
+        // // document.getElementById('create_test_form').submit()
+        // }
+
+    }
+
+    </script>
 
     <script>
         $( document ).ready(function() {
@@ -126,7 +179,7 @@
 
                     currentCounter = currentCounter + 1;
                     this.ids.push({id: currentCounter});
-                    document.getElementById("counter").value = currentCounter;
+                    document.getElementById("questions_counter").value = currentCounter;
 
 
                 },

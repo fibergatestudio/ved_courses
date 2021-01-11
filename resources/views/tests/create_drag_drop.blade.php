@@ -1,108 +1,6 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div style="display:none;" class="container">
-    @if(session()->has('message_success'))
-        <div class="alert alert-success">
-            {{ session()->get('message_success') }}
-        </div>
-    @endif
-    <div class="row justify-content-center">
-        <div class="col-md-3">
-            @if(Auth::user()->role == "admin")
-                @include('layouts.admin_sidebar')
-            @elseif(Auth::user()->role == "teacher")
-               @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
-            @endif
-        </div>
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">{{ __('Добавление вопроса "Перетаскивае в тексте" к тесту') }} </div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form action="{{ route('create_drag_drop',['test_info_id' => $test_info_id]) }}" id="test_form" method="POST" >
-                        @csrf
-                    <!-- Множественный выбор -->
-                        <div class="form-group">
-                            <label>Название вопроса</label>
-                            <input type="text" class="form-control" name="question_name" required>
-                        </div>
-                        <div class="form-group">
-                            <label>Текст вопроса</label>
-                            <textarea id="question_text" class="question_text" name="question_text">Введите текст вопроса</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Бал по умолчанию</label>
-                            <input type="text" class="form-control" name="default_score">
-                        </div>
-                        <div class="form-group">
-                            <label>Коментарий ко всему тесту</label>
-                            <textarea id="question_text" class="question_text" name="test_comment">Введите текст коментария</textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Один или несколько верных ответов</label>
-                            <select class="form-control" name="answers_type">
-                                <option value="Допускается несколько верных ответов">Допускается несколько верных ответов</option>
-                                <option value="Только один верный ответ">Только один верный ответ</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label>Нумеровать ответы?</label>
-                            <select class="form-control" name="number_answers"> 
-                                <option value="Без нумерации">Без нумерации</option>
-                                <option value="a, b, c">a, b, c, ...</option>
-                                <option value="A, B, C">A, B, C, ...</option>
-                                <option value="1, 2, 3">1, 2, 3, ...</option>
-                            </select>
-                        </div>
-                        <hr>
-                        <h1>Варианты ответов </h1>
-                        <div id="app12">
-                            <div class="form-group">
-                                <label>Вариант ответа 1</label>
-                                <textarea id="question_text" class="question_text" name="answer">Введите ответ</textarea>
-                            </div>
-                            <div class="form-group">
-                                <label>Оценка</label>
-                                <select class="form-control" name="answer_grade">
-                                    <option value="Не выбрано">Не выбрано</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Комментарий</label>
-                                <textarea id="question_text" class="question_text" name="answer_comment">Введите комментарий</textarea>
-                            </div>
-                        </div>
-                        <button type="submit" class="btn btn-warning">Сохранить вопрос</button>
-                    </form>
-                    <!-- Верно\Не верно -->
-
-                    <!-- Краткий ответ -->
-                    <!-- Перетаскивание в тексте -->
-
-                        <a href="">
-                            <button type="submit" class="btn btn-success">Добавить ответ</button>
-                        </a>
-
-                        <a href="{{ route('tests_controll') }}">
-                            <button type="submit" class="btn btn-danger">Удалить вопрос</button>
-                        </a>
-
-                        <a href="{{ route('tests_controll') }}">
-                            <button class="btn btn-danger">Назад</button>
-                        </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
 <body>
 
     <!-- Burger-menu (begin)-->
@@ -261,7 +159,7 @@
                                     </div>
                                 </div>
                                 <div class="multipleChoice-inner_right">
-                                    <input class="multipleChoice-input course-faq--input courseAdditional--input" name="question_name"
+                                    <input class="multipleChoice-input course-faq--input courseAdditional--input" id="question_name" name="question_name"
                                         type="text" placeholder="Приклад: Питання 1, або 1">
                                 </div>
                             </div>
@@ -273,7 +171,7 @@
                                     </div>
                                 </div>
                                 <div class="multipleChoice-inner_right">
-                                        <textarea class="tinyMCE-area" name="question_text"></textarea>
+                                        <textarea class="tinyMCE-area" id="question_text" name="question_text"></textarea>
                                 </div>
                             </div>
 
@@ -352,7 +250,7 @@
                     <a class="multipleChoice-btn-left" href="##" onclick="app1.addNewEntry()">
                         <span>Додати відповідь</span>
                     </a>
-                    <a class="multipleChoice-btn-center" href="##" onclick="document.getElementById('drag_drop_form').submit();">
+                    <a class="multipleChoice-btn-center" href="##" onclick="submitForm(event);">
                         <span>Зберегти питання</span>
                     </a>
                     <a class="multipleChoice-btn-right" href="{{ URL::previous() }}">
@@ -369,6 +267,36 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.7.1/js/bootstrap-datepicker.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+    
+    <script>
+    
+        
+    function submitForm(event){
+        event.preventDefault();
+        // Получаем инфу
+        var name = $.trim( $('#question_name').val() );
+
+        // var myContent = tinymce.activeEditor.getContent();
+        var description = tinymce.get('question_text').getContent();
+        //alert(myContent);
+
+        if (name  === '') {
+            alert('Введіть назву питання!');
+            return false;
+        } else if(description == ""){
+            alert('Введіть текст питання!');
+            return false;
+        } else {
+            //document.getElementById('create_course').submit();
+        // $( "#edit_course_form" ).submit();
+            $( "#drag_drop_form" ).submit();
+        // document.getElementById('create_test_form').submit()
+        }
+
+    }
+
+    </script>
 
     <script>
 

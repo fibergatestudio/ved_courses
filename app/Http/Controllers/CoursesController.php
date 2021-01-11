@@ -615,8 +615,10 @@ class CoursesController extends Controller
             // Редиректим на создание теста
             return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $lesson_id ]);
         } else {
+            return \Redirect::route('edit_course', $course_id)->with('message', 'Заняття успішно змінено'); 
+            //return redirect()->back();
             // Редиректим на список курсов
-            return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
+            //return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
         }
 
     }

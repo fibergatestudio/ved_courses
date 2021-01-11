@@ -7,8 +7,13 @@
         <div class="courseControl-container sticky-container container">
 
             @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
-
+ 
             <div class="cource-container--mobile">
+            @if(session()->has('message'))
+                <div class="alert alert-success">
+                    {{ session()->get('message') }}
+                </div>
+            @endif
                 <form action="{{ route('edit_course_apply', ['course_id' => $course_info->id ]) }}" id="edit_course_form" method="POST" enctype="multipart/form-data">
                     @csrf
                     <h3 class="courseEdit-title courseControl-title">Редагування курсу</h3>
@@ -22,7 +27,7 @@
                                 </div>
                                 <div class="courseAdd-inner_right">
                                     <input class="course-faq--input courseAdditional--input"
-                                        name="name" value="{{ $course_info->name }}" type="text">
+                                        name="name" id="course_name" value="{{ $course_info->name }}" type="text">
                                 </div>
                             </div>
 
@@ -31,7 +36,7 @@
                                     <div class="courseAdd_left--name">Опис<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdd-inner_right">
-                                        <textarea class="tinyMCE-area" name="description"
+                                        <textarea class="tinyMCE-area" name="description" id="description"
                                             value="">{{ $course_info->description }}</textarea>
                                 </div>
                             </div>
@@ -309,7 +314,7 @@
                         </div>
                     </div>
                     <div class="courseEdit-btn-watch_wrapper">
-                        <a class="courseEdit-btn-watch btn-watch--more" id="submit_button" href="##"><span>Зберегти курс</span></a>
+                        <a class="courseEdit-btn-watch btn-watch--more" id="submit_button" onclick="submitForm()" href="##"><span>Зберегти курс</span></a>
                     </div>
                 </form>
             </div>
@@ -397,11 +402,32 @@
         });
     });
     
+    function submitForm(){
+
+        // Получаем инфу
+        var name = $.trim( $('#course_name').val() );
+
+        // var myContent = tinymce.activeEditor.getContent();
+        var description = tinymce.get('description').getContent();
+        //alert(myContent);
+
+        if (name  === '') {
+            alert('Введіть назву курсу!');
+            return false;
+        } else if(description == ""){
+            alert('Введіть опис курсу!');
+            return false;
+        } else {
+            //document.getElementById('create_course').submit();
+            $( "#edit_course_form" ).submit();
+        }
+
+    }
 
 
-$( "#submit_button" ).click(function() {
-    $( "#edit_course_form" ).submit();
-});
+    // $( "#submit_button" ).click(function() {
+    //     $( "#edit_course_form" ).submit();
+    // });
 
 
     tinymce.init({

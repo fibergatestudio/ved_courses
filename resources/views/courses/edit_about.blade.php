@@ -1,70 +1,6 @@
 @extends('layouts.front.front_child')
 
 @section('content')
-<div class="container" style="display:none;">
-    @if(session()->has('message_success'))
-        <div class="alert alert-success">
-            {{ session()->get('message_success') }}
-        </div>
-    @endif
-    <div class="row justify-content-center">
-        <div class="col-md-3">
-            @if(Auth::user()->role == "admin")
-                @include('layouts.admin_sidebar')
-            @elseif(Auth::user()->role == "teacher")
-               @include('layouts.teacher_sidebar', ['status' => Auth::user()->status] )
-            @endif
-        </div>
-        <div class="col-md-9">
-            <div class="card">
-                <div class="card-header">{{ __('Изменить "про курс"') }}</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    <form action="{{ route('edit_about_apply', ['course_id' => $course_info->id ]) }}" id="test_form" method="POST" >
-                        @csrf
-
-                        <div class="form-group">
-                            <label>Описание</label>
-                            <textarea id="question_text" class="question_text" name="course_description">
-
-                            @if(isset($course_i->course_description))
-                                {{ $course_i->course_description }}
-                            @endif
-
-                            </textarea>
-                        </div>
-                        <div class="form-group">
-                            <label>Чего вы научитесь</label>
-                        </div>
-
-                        <input type="hidden" id="counter2" name="questions_counter2" value="">
-                        <div id="app2">
-                            <div v-for="(id,index) in ids" >
-                                <div class="form-group">
-                                    <label>Пункт @{{ index + 1}}</label>
-                                    <textarea :id="'question_text'+index" class="question_text" name="course_learn[]">Введите текст коментария</textarea>
-                                </div>
-                            </div>
-                            <div onclick="app1.addNewEntry()" class="btn btn-success">Добавить Вопрос</div>
-                        </div>
-
-                        <button type="submit" class="btn btn-success">Применить</button>
-                    </form>
-
-                        <a href="{{ route('courses_controll') }}">
-                            <button class="btn btn-danger">Назад</button>
-                        </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
 
 
 <body>
@@ -162,37 +98,7 @@
 
             <!-- sidebar-menu (start) -->
 
-            {{-- <div class="sidebar">
-
-                <div class="sidebar-sticky">
-
-                    <div class="sidebar-top_wrapper">
-                        <div class="sidebar-top_burger-btn">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                        </div>
-
-                        <!-- changeling block mobile-btn (start) -->
-                        <div class="sidebar-top_mobile-btn">
-                            <div class="sidebar-top_mobile-img">
-                                <img src="/img/teacher-mobileMenu-2.png" alt="icon">
-                            </div>
-                            <div class="sidebar-top_mobile-name">
-                                Управління курсами
-                            </div>
-                        </div>
-                        <!-- changeling block mobile-btn (end) -->
-
-                    </div> --}}
-
                     @include('layouts.front.includes.admin_sidebar_vrst', ['headTitle' => 'Управління курсами', 'imgPath' => 'img/teacher-mobileMenu-2.png'])
-
-
-                {{-- </div>
-
-            </div> --}}
             <!-- sidebar-menu (end) -->
 
             <div class="cource-container--mobile">
@@ -278,7 +184,7 @@
                     </div>
 
                     <div class="courseEdit-btn-watch_wrapper">
-                        <a id="form_submit" class="courseEdit-btn-watch btn-watch--more courseAdd-btn"><span style="color:white;">Зберегти</span></a>
+                        <a class="courseEdit-btn-watch btn-watch--more courseAdd-btn" onclick="submitForm(event);"><span style="color:white;">Зберегти</span></a>
                     </div>
                 </form>
 
@@ -310,6 +216,48 @@
 
     });
 
+    function submitForm(event){
+        event.preventDefault();
+        // Получаем инфу
+        //var name = $.trim( $('#question_name').val() );
+
+        // var myContent = tinymce.activeEditor.getContent();
+        var description = tinymce.get('question_text').getContent();
+        //alert(myContent);
+
+        if(description == ""){
+            alert('Введіть опис курсу!');
+            return false;
+        } else {
+            //document.getElementById('create_course').submit();
+            // $( "#edit_course_form" ).submit();
+            //$( "#drag_drop_form" ).submit();
+            // document.getElementById('create_test_form').submit()
+            // var question_count = $('#counter').val();
+            // var not_empty_count = 0;
+            // console.log(question_count);
+            // if(question_count <= 2){
+            //     alert("Додайте 4 обов'язкових пунктів!");
+            // } else if (question_count == 4){
+            //     for(var i = 1; i < question_count; i++){
+            //         var question_text = 'question_text' + i;
+            //         console.log(question_text);
+            //         var description_f = tinymce.get(question_text).getContent();
+            //         if(description_f == ""){
+            //             alert('Пустое поле ' + question_text);
+            //         } else {
+            //             not_empty_count++;
+            //             console.log(not_empty_count);
+            //         }
+            //         //alert(question_text);
+            //     }
+            //     //alert("4p");
+            // } else if(question_count == 4 && not_empty_count == 4){
+                $( "#edit_about_form" ).submit();
+            //}
+        }
+
+    }
 
     $( "#form_submit" ).click(function(event ) {
         event.preventDefault();
