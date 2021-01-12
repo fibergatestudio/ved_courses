@@ -158,6 +158,7 @@
                                     </div>
                                     <div v-else>
                                         <div class="courseAdd-inner courseAdd-inner_margbottom">
+                                            <!-- <a class="" href="##" @click="removeNewEntry(index)" style="color:red;">Х</a> -->
                                             <div class="courseAdd-inner_left">
                                                 <div class="courseAdd_left--name">
                                                     Пункт @{{ index }}<sup>*</sup>
@@ -171,6 +172,13 @@
                                         </div>
                                     </div>
                                 </div>
+                                <a href="##" class="courseEdit-btn"
+                                    style="padding: .4em 1em;
+                                    max-width: 300px;
+                                    color: lightcoral;
+                                    border: 1px solid lightcoral;" @click="removeNewEntry(index)">
+                                    <span>Видалити останній</span>
+                                </a>
                             </div>
 
 
@@ -233,28 +241,29 @@
             // $( "#edit_course_form" ).submit();
             //$( "#drag_drop_form" ).submit();
             // document.getElementById('create_test_form').submit()
-            // var question_count = $('#counter').val();
-            // var not_empty_count = 0;
-            // console.log(question_count);
-            // if(question_count <= 2){
-            //     alert("Додайте 4 обов'язкових пунктів!");
-            // } else if (question_count == 4){
-            //     for(var i = 1; i < question_count; i++){
-            //         var question_text = 'question_text' + i;
-            //         console.log(question_text);
-            //         var description_f = tinymce.get(question_text).getContent();
-            //         if(description_f == ""){
-            //             alert('Пустое поле ' + question_text);
-            //         } else {
-            //             not_empty_count++;
-            //             console.log(not_empty_count);
-            //         }
-            //         //alert(question_text);
-            //     }
+            var question_count = $('#counter').val();
+            var not_empty_count = 0;
+            if(question_count <= 2){
+                alert("Додайте 4 обов'язкових пунктів!");
+            } else if (question_count >= 4){
+                for(var i = 1; i <= question_count; i++){
+                    var question_text = 'question_text' + i;
+                    console.log(question_text);
+                    var description_f = tinymce.get(question_text).getContent();
+                        if(description_f == ""){
+                            alert('Пустое поле ' + question_text);
+                        } else {
+                            not_empty_count++;
+                            console.log(not_empty_count);
+                        }
+                     //alert(question_text);
+                }
             //     //alert("4p");
-            // } else if(question_count == 4 && not_empty_count == 4){
+            } 
+            console.log(question_count + " " + not_empty_count);
+            if(question_count == not_empty_count){
                 $( "#edit_about_form" ).submit();
-            //}
+            }
         }
 
     }
@@ -344,6 +353,14 @@
                     document.getElementById("counter").value = currentCounter;
 
 
+                },
+                removeNewEntry: function(index){
+                    var id_t = '#question_text' + (currentCounter);
+                    tinymce.remove(id_t);
+                    currentCounter = currentCounter - 1;
+                    this.ids.splice(index, 1);
+                    //console.log(this.ids.splice(index, 1) + " " + index);
+                    document.getElementById("counter").value = currentCounter;
                 },
             }
         });

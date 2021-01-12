@@ -51,20 +51,19 @@
                                 <div class="courseAdd-grid_item">
 
                                     <div class="courseAdditional-input-wrapper">
-                                        <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу" >
+                                        <input class="courseAdditional-input_input" type="text" id="img_upload_field" placeholder="Назва файлу" >
                                         <input class="courseAdditional-input_button" type="file" name="course_image">
                                         <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                     </div>
 
                                     <div class="courseAdd-info-wrapper">
+
                                         <img @if(!empty($course_info->course_image_path)) src="/images/{{ $course_info->course_image_path }}" @endif id="imgprev" heigth="150" width="150">
-                                        <a class="courseAdditional-docName docName-restyling" id="img_upload_name" style="padding-right: 145px;"  href="{{ route('delete_photo', ['course_id' => $course_info->id ] )}}">
-                                            @if(!empty($course_info->course_image_path))
-                                                {{ $course_info->course_image_path }}
-                                            @else
-                                                Нема фото
-                                            @endif
-                                        </a>
+
+                                        @if(!empty($course_info->course_image_path))
+                                        <a class="courseAdditional-docName docName-restyling" id="img_upload_name" style="padding-right: 145px;"  href="{{ route('delete_photo', ['course_id' => $course_info->id ] )}}">{{ $course_info->course_image_path }}</a>
+                                        @endif
+                                        
                                     </div>
 
                                 </div>
@@ -392,9 +391,12 @@
             var fileExtension = ['jpeg', 'jpg', 'png'];
             if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                 alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
+            } else if(e.target.files[0].size >= 5000000){
+                alert("Файл перевищує 5мб!");
             } else {
                 readURL(this);
                 alert("Фото "+ geekss + " успішно додано!");
+                $("#img_upload_field").val(geekss);
                 $("#img_upload_name").text(geekss);
                 //$( "#edit_course_form" ).submit();
             }

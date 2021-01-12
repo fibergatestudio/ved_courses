@@ -31,7 +31,7 @@
                                     <div class="courseAdd_left--name">Назва<sup>*</sup></div>
                                 </div>
                                 <div class="courseAdditional-bottom_right">
-                                    <input class="courseAdditional--input" id="course_name" name="course_name" type="text">
+                                    <input class="courseAdditional--input" id="course_name" name="course_name" maxlength="250" type="text">
                                 </div>
                             </div><br>
 
@@ -85,22 +85,23 @@
                             </div>
 
                             <div class="courseAdditional-flexbox">
-
-                                <div class="courseAdditional-flexbox_item">
-                                    <div class="courseAdditional-left_text">Додати документ</div>
-                                </div>
-                                <div class="courseAdditional-flexbox_item courseAdditional-mobile-only">
-                                    Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
-                                </div>
-                                <div class="courseAdditional-flexbox_item">
-                                    <div class="courseAdditional-input-wrapper">
-                                        <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
-                                        <input class="courseAdditional-input_button" type="file" :name="'add_document' + index" onchange="showFile(this)">
-                                        <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
-                                    </div>
-                                </div>
+                                <input type="hidden" id="docs_counter" name="docs_counter" value="0">
                                 <div id="docs">
                                     <div v-for="(id,index) in ids" class="courseAdditional-flexbox">
+                                    
+                                        <div class="courseAdditional-flexbox_item">
+                                            <div class="courseAdditional-left_text">Додати документ</div>
+                                        </div>
+                                        <div class="courseAdditional-flexbox_item courseAdditional-mobile-only">
+                                            Файли з розширенням PDF, DOC або DOCХ. Максимальний розмір - 20 Мб.
+                                        </div>
+                                        <div class="courseAdditional-flexbox_item">
+                                            <div class="courseAdditional-input-wrapper">
+                                                <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
+                                                <input class="courseAdditional-input_button" type="file" :name="'add_document' + index" onchange="showFile(this)">
+                                                <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
+                                            </div>
+                                        </div> 
                                         <div class="courseAdditional-flexbox_item">
                                             <a class="courseAdditional-docName" href="##" @click="removeNewEntry(index)">
 
@@ -109,7 +110,6 @@
                                     </div>
                                 </div>
                                 <!-- <div onclick="docs.addNewEntry()" class="btn btn-success">Добавить След. Док.</div> -->
-                                <input type="hidden" id="docs_counter" name="docs_counter" value="0">
                                 <!-- <input type="file" class="form-control" :name="'add_document' + index" value=""> -->
                             </div>
                             <a class="courseAdditional-btn" href="##" onclick="docs.addNewEntry()">
@@ -198,6 +198,13 @@
                                         Довга назва посилання або завантаженого відео
                                     </a> -->
                                 </div>
+                                <a href="##" class="courseEdit-btn"
+                                    style="padding: .4em 1em;
+                                    max-width: 300px;
+                                    color: lightcoral;
+                                    border: 1px solid lightcoral;" @click="removeNewEntry(index)">
+                                    <span>Видалити останнє відео</span>
+                                </a>
                             </div>
 
                             <a class="courseAdditional-btn" href="##" onclick="app1.addNewEntry()">
@@ -288,7 +295,12 @@
     <script type="text/javascript">
         function show(input) {
             var fileName = input.files[0].name;
-            if(input.files[0].size >= 300000000){
+
+            var fileExtension = ['mp4'];
+
+            if ($.inArray($(input).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
+            } else if(input.files[0].size >= 300000000){
                 alert("Файл перевищує 300мб!");
             } else {
                 var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
@@ -299,7 +311,12 @@
 
         function showFile(input){
             var fileName = input.files[0].name;
-            if(input.files[0].size >= 20000000){
+
+            var fileExtension = ['doc', 'docs', 'pdf'];
+
+            if ($.inArray($(input).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
+            } else if(input.files[0].size >= 20000000){
                 alert("Файл перевищує 20мб!");
             } else {
                 var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
@@ -388,6 +405,16 @@
                     $('#videos_counter').val(currentCounter);
 
                 },
+                removeNewEntry: function(index){
+                    //var id_t = '#question_text' + (currentCounter);
+                    //tinymce.remove(id_t);
+                    if(currentCounter >= 1){
+                        currentCounter = currentCounter - 1;
+                        this.ids.splice(index, 1);
+                        document.getElementById("videos_counter").value = currentCounter;
+                    }
+                    
+                },
 
             }
         });
@@ -411,12 +438,14 @@
                     //tinymce.init({ selector: id_t });
                     this.ids.push({id: docsCounter});
                     //document.getElementById("docs_counter").value = docsCounter;
-                    $('#docs_counter').val(currentCounter);
+                    var test = document.getElementById("docs_counter").value;
+                    console.log(test);
+                    $('#docs_counter').val(docsCounter);
                 },
                 removeNewEntry: function(index){
-                    currentCounter = currentCounter - 1;
+                    docsCounter = docsCounter - 1;
                     this.ids.splice(index, 1);
-                    document.getElementById("docs_counter").value = currentCounter;
+                    document.getElementById("docs_counter").value = docsCounter;
                 },
 
             }

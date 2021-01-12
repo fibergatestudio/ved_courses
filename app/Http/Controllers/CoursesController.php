@@ -393,6 +393,7 @@ class CoursesController extends Controller
         $docs_arr = [];
         // Количество документов
         $docs_counter = $request->docs_counter;
+        //dd($request->hasFile('add_document0'),$request->hasFile('add_document1') );
         // Перебираем и берем информацию о каждом доке
         for($a = 0; $a <= $docs_counter; $a++){
             // Реквест имени дока
@@ -400,8 +401,9 @@ class CoursesController extends Controller
 
             // Получаем доку, формируем имя и переносим файл
             if($request->hasFile($r_add_document)){
-                $filename_doc = time().'.'.request()->$r_add_document->getClientOriginalExtension();
-                request()->$r_add_document->move(public_path('docs'), $filename);
+                $filename_doc = time().$a.'.'.request()->$r_add_document->getClientOriginalExtension();
+                //dd($filename_doc);
+                request()->$r_add_document->move(public_path('docs'), $filename_doc);
             }else{
                 $filename_doc = null;
             }
@@ -409,6 +411,7 @@ class CoursesController extends Controller
             if($filename_doc == null){ $docs_arr = null; } else { array_push($docs_arr, $filename_doc); }
             //array_push($docs_arr, $filename);
         }
+        //dd($docs_arr);
         // show prot
         if($request->show_protocol){
             $protocol = $request->show_protocol;
@@ -555,8 +558,8 @@ class CoursesController extends Controller
             //dd($request->hasFile($r_add_document));
             // Получаем доку, формируем имя и переносим файл
             if($request->hasFile($r_add_document)){
-                $filename_doc = time().'.'.request()->$r_add_document->getClientOriginalExtension();
-                request()->$r_add_document->move(public_path('docs'), $filename);
+                $filename_doc = time().$a.'.'.request()->$r_add_document->getClientOriginalExtension();
+                request()->$r_add_document->move(public_path('docs'), $filename_doc);
             }else{
                 $filename_doc = null;
                 $r_add_doc_name = 'add_document_name' . $a;

@@ -366,7 +366,7 @@
                                             Оцінка
                                         </div>
                                         <div class="multipleChoice-string_right" style="display:flex;"> 
-                                            <div class="newTest-quest-wrapper" style="width: 30%;">
+                                            <div class="newTest-quest-wrapper mr-2" style="width: 30%;">
                                                 <select class="newTest-quest-select" :id="'answer_plusminus'+index" :name="'answer_plusminus'+index"> 
                                                     <option value="+">+</option>
                                                     <option value="-">-</option>

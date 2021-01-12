@@ -160,7 +160,7 @@
                                 </div>
                             </div>
                             <div class="courseAdditional-bottom_right">
-                                <input class="courseAdditional--input" name="course_name" type="text" value="{{ $lesson_info->course_name }}">
+                                <input class="courseAdditional--input" name="course_name" type="text" maxlength="250" value="{{ $lesson_info->course_name }}">
                             </div>
                         </div><br>
 
@@ -237,7 +237,7 @@
                                         $docs_is_count = is_countable($docs_arr);
                                     ?>
                                     @if($docs_is_count)
-                                        <input type="hidden" id="docs_count" name="docs_counter" value="<?php echo count($docs_arr); ?>">
+                                        <input type="hidden" id="docs_counter" name="docs_counter" value="<?php echo count($docs_arr); ?>">
                                     @else
                                         <input type="hidden" id="docs_counter" name="docs_counter" value="0">
                                     @endif
@@ -380,6 +380,13 @@
                                     Довга назва посилання або завантаженого відео
                                 </a> -->
                             </div>
+                            <a href="##" class="courseEdit-btn"
+                                    style="padding: .4em 1em;
+                                    max-width: 300px;
+                                    color: lightcoral;
+                                    border: 1px solid lightcoral;" @click="removeNewEntry(index)">
+                                    <span>Видалити останнє відео</span>
+                            </a>
 
                         </div>
 
@@ -472,7 +479,12 @@
     <script type="text/javascript">
         function show(input) {
             var fileName = input.files[0].name;
-            if(input.files[0].size >= 300000000){
+            
+            var fileExtension = ['mp4'];
+
+            if ($.inArray($(input).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
+            } else if(input.files[0].size >= 300000000){
                 alert("Файл перевищує 300мб!");
             } else {
                 var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName); 
@@ -484,7 +496,12 @@
 
         function showFile(input){
             var fileName = input.files[0].name;
-            if(input.files[0].size >= 20000000){
+            
+            var fileExtension = ['doc', 'docs', 'pdf'];
+
+            if ($.inArray($(input).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
+                alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
+            } else if(input.files[0].size >= 20000000){
                 alert("Файл перевищує 20мб!");
             } else {
                 var test = $(input).closest('.courseAdditional-input-wrapper').find('.courseAdditional-input_input').val(fileName);
@@ -588,6 +605,16 @@
                     
                     this.ids.push({id: currentCounter});
                     $('#videos_counter').val(currentCounter);
+                },
+                removeNewEntry: function(index){
+                    //var id_t = '#question_text' + (currentCounter);
+                    //tinymce.remove(id_t);
+                    if(currentCounter >= 1){
+                        currentCounter = currentCounter - 1;
+                        this.ids.splice(index, 1);
+                        document.getElementById("videos_counter").value = currentCounter;
+                    }
+                    
                 }
 
             }
@@ -611,12 +638,12 @@
                     //tinymce.init({ selector: id_t });
                     this.ids.push({id: docsCounter});
                     //document.getElementById("docs_counter").value = docsCounter;
-                    $('#docs_counter').val(currentCounter);
+                    $('#docs_counter').val(docsCounter);
                 },
                 removeNewEntry: function(index){
-                    currentCounter = currentCounter - 1;
+                    docsCounter = docsCounter - 1;
                     this.ids.splice(index, 1);
-                    document.getElementById("docs_counter").value = currentCounter;
+                    document.getElementById("docs_counter").value = docsCounter;
                 },
                 addNewEntryWithText(value){
                     var doc_input_name = '#add_document_name' + docsCounter;
@@ -624,7 +651,7 @@
                     docsCounter = docsCounter + 1;
 
                     this.ids.push({id: docsCounter});
-                    $('#docs_counter').val(currentCounter);
+                    $('#docs_counter').val(docsCounter);
                 }
 
             }
