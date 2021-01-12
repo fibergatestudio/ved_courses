@@ -43,7 +43,7 @@
                                 <div class="courseAdd-grid_item">Додати фото</div>
                                 <div class="courseAdd-grid_item">
                                     <div class="courseAdditional-input-wrapper">
-                                        <input class="courseAdditional-input_input" type="text" placeholder="Назва файлу">
+                                        <input class="courseAdditional-input_input" type="text" id="img_upload_field" placeholder="Назва файлу">
                                         <input class="courseAdditional-input_button" type="file" name="course_image">
                                         <a class="courseAdditional-input_FakeButton" href="##">Завантажити</a>
                                     </div>
@@ -99,17 +99,23 @@
     </script> 
     <script>
         $(document).ready(function() {
+            $('#img_upload_name').hide();
             $('input[type="file"]').change(function(e) {
                 var geekss = e.target.files[0].name; 
                 //var filetype = e.target.files[0];
                 var fileExtension = ['jpeg', 'jpg', 'png'];
 
+                //var fileName = e.files[0].name;
 
                 if ($.inArray($(this).val().split('.').pop().toLowerCase(), fileExtension) == -1) {
                     alert("Неправильний формат файлу! Доступнi формати: "+fileExtension.join(', '));
+                } else if(e.target.files[0].size >= 5000000){
+                    alert("Файл перевищує 5мб!");
                 } else {
                     readURL(this);
+                    $('#img_upload_name').show();
                     alert("Фото "+ geekss + " успішно додано!");
+                    $("#img_upload_field").val(geekss);
                     $("#img_upload_name").text(geekss);
                 }
             });
