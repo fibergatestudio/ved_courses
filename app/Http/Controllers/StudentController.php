@@ -202,7 +202,10 @@ class StudentController extends Controller
             $teacher_id = $student->assigned_teacher_id;
             if($teacher_id != null){
                 $teacher_info = DB::table('users')->where('id',$teacher_id)->first();
-                $student->assigned_teacher_id = $teacher_info->surname.' '.$teacher_info->name.' '.$teacher_info->patronymic;
+                if(isset($teacher_info->surname)){
+                    $student->assigned_teacher_id = $teacher_info->surname.' '.$teacher_info->name.' '.$teacher_info->patronymic;
+                }
+                //$student->assigned_teacher_id = $teacher_info->surname.' '.$teacher_info->name.' '.$teacher_info->patronymic;
             }
         }
         // Загруженные студенты
