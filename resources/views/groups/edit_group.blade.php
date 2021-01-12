@@ -1,33 +1,5 @@
 @extends('layouts.front.front_child')
 
-
-@section('style')
-
-<style>
-
-.dropdown-menu-list{
-    position: absolute !important;
-    top: 133px;
-    left: 20px;
-    z-index: 1000;
-    float: left;
-    min-width: 10rem;
-    padding: 0.5rem 0;
-    margin: 0.125rem 0 0;
-    font-size: 0.9rem;
-    color: #212529;
-    text-align: left;
-    list-style: none;
-    background-color: #fff;
-    background-clip: padding-box;
-    border: 1px solid rgba(0, 0, 0, 0.15);
-    border-radius: 0.25rem;
-}
-
-</style>
-
-@endsection
-
 @section('content')
     <section class="courseControl">
         <div class="courseControl-separator direction-separator">
@@ -92,7 +64,7 @@
                                 <input class='eg-input add-style ccec__input' id="student" type="text" name="student_name"
                                     placeholder="Іванов Іван Іванович" autocomplete="off">
                                 <a id="addstudent" class="add-student ccec__button ge__m-button">Додати</a>
-                                <ul class="dropdown-menu-list" style="display:block" id="studentList"></ul>
+                                <ul class="dropdown-menu" id="studentList"></ul>
                             </div>
                         </div>
                     </div>
@@ -249,16 +221,22 @@
                 })
                 .then(function (response) {
                     // console.log(response.data);
-                    $('#studentList').empty().fadeIn();
-                    response.data.forEach(function callback(currentValue, index, array) {
-                        $('#studentList').append("\
-                            <li><a href='#'>"+currentValue.full_name+"</a></li>\
-                        ");
-                    });
+                    if(response.data.length == 0){
+                        $('#studentList').fadeOut();
+                    }else{
+                        $('#studentList').empty().fadeIn();
+                        response.data.forEach(function callback(currentValue, index, array) {
+                            $('#studentList').append("\
+                                <li class='dropdown-item dropdown-item-ved'><a href='#'>"+currentValue.full_name+"</a></li>\
+                            ");
+                        });
+                    }
                 })
                 .catch(function (error) {
                     console.log(error);
                 });
+            }else{
+                $('#studentList').fadeOut();
             }
         });
 

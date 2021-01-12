@@ -102,7 +102,7 @@
                     $('#studentList').empty().fadeIn();
                     response.data.forEach(function callback(currentValue, index, array) {
                         $('#studentList').append("\
-                            <li class='dropdown-item'><a href='#'>"+currentValue.full_name+"</a></li>\
+                            <li class='dropdown-item dropdown-item-ved'><a href='#'>"+currentValue.full_name+"</a></li>\
                         ");
                     });
                 }
@@ -110,6 +110,8 @@
             .catch(function (error) {
                 console.log(error);
             });
+        }else{
+            $('#studentList').fadeOut();
         }
     });
 

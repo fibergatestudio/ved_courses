@@ -9563,7 +9563,7 @@ border: 0 !important;
 		font-size: inherit;
 	}
 	.add-style{
-		width: 70%;
+		width: 80%;
 		border-top-right-radius: 0px;
 		border-bottom-right-radius: 0px;
 	}
@@ -11844,6 +11844,14 @@ input[type="text"]::placeholder{
 .curs-teacher-del-btn{
     right: 15px;
     top: -17px;
+}
+.dropdown-item-ved:hover,
+.dropdown-item-ved:focus,
+.dropdown-item-ved:hover > a,
+.dropdown-item-ved:focus > a {
+  color: #ffffff !important;
+  text-decoration: none;
+  background-color: #8a4f9f !important;
 }
 
 /* protocol form block start*/

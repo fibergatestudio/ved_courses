@@ -145,3 +145,11 @@ input[type="text"]::placeholder{
     right: 15px;
     top: -17px;
 }
+.dropdown-item-ved:hover,
+.dropdown-item-ved:focus,
+.dropdown-item-ved:hover > a,
+.dropdown-item-ved:focus > a {
+  color: #ffffff !important;
+  text-decoration: none;
+  background-color: #8a4f9f !important;
+}
