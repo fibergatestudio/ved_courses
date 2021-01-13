@@ -40,11 +40,11 @@
                 <p class="groups-edit__group-name uge_row_text-style">Роль</p>
                 <input type="hidden" class="form-control" name="role" value="{{ $user->role }}">
                 <div class="select uge__select_block">
-                    <select name="select-teacher"
+                    <select name="selected_role"
                         class="select-teacher select-teacher_sce_restyle uge__select_style" id="selectTeacher">
-                        <option value="role-1" {{ $user->role == 'admin'  ? 'selected="selected"' : ''}}>Адмiн</option>
-                        <option value="role-2" {{ $user->role == 'teacher'  ? 'selected="selected"' : ''}}>Викладач</option>
-                        <option value="role-3" {{ $user->role == 'student'  ? 'selected="selected"' : ''}}>Студент</option>
+                        <option value="admin" {{ $user->role == 'admin'  ? 'selected="selected"' : ''}}>Адмiн</option>
+                        <option value="teacher" {{ $user->role == 'teacher'  ? 'selected="selected"' : ''}}>Викладач</option>
+                        <option value="student" {{ $user->role == 'student'  ? 'selected="selected"' : ''}}>Студент</option>
                     </select>
                 </div>
             </div>

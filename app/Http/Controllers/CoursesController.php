@@ -691,6 +691,7 @@ class CoursesController extends Controller
         // Получаем кол-во вопросов
         $q_counter = $request->questions_counter;
         // Для каждого вопроса
+        dd($request->all());
         //dd($q_counter);
         for($i = 0; $i <= $q_counter; $i++){
             // Формируем название полей реквеста
@@ -716,14 +717,18 @@ class CoursesController extends Controller
                         'course_answer' => $request->$c_course_answer,
                     ]); 
                 }
-
-                 
-
             }
-            
         }
         // Возвращаем назад
         return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ'); 
+    }
+
+    public function delete_question($course_id, Request $request){
+        dd( request()->course_id );
+        DB::table('courses_faq')->where([
+            'id' => $question_id,
+            'course_id' => $course_id
+            ])->delete(); 
     }
 
 

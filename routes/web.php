@@ -210,6 +210,9 @@ use Illuminate\Support\Facades\Auth;
                 // Редактировать вопрос POST
                 Route::post('/courses_controll/edit_course/{course_id}/edit_question/apply', 'CoursesController@edit_question_apply')->name('edit_question_apply')->middleware('auth','role:admin');
 
+                // Удалить вопрос
+                Route::get('/courses_controll/edit_course/{course_id}/delete_question/', 'CoursesController@delete_question')->name('delete_question')->middleware('auth','role:admin');
+
             // Удалить препода с курса
             Route::get('/courses_controll/edit_course/{course_id}/delete_teacher/{teacher_id}', 'CoursesController@delete_teacher_course')->name('delete_teacher')->middleware('auth','role:admin');
         // Удаление курса

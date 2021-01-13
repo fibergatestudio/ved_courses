@@ -54,6 +54,64 @@ class AdminController extends Controller
             ]);
         //}
 
+        $complete_name = $user_info_checker->surname . " " .  $user_info_checker->name . " " . $user_info_checker->patronymic;
+        //dd($request->selected_role, $user_info_checker->role);
+        // Если разница роей
+        if($request->selected_role != $user_info_checker->role){
+            // Если роль админ
+            if( $user_info_checker->role == "admin"){
+                //Если выбранная роль учитель
+                if($request->selected_role == "teacher"){
+                    // Добавляем данные о учителе
+                    DB::table('teachers')->insert([
+                        'user_id' => $user_id,
+                        'full_name' => $complete_name,
+                    ]);
+                //Если выбранная роль студент
+                } else if ($request->selected_role == "student"){
+                    // Добавляем данные о студенте
+                    DB::table('students')->insert([
+                        'user_id' => $user_id,
+                        'full_name' => $complete_name,
+                    ]);
+                }
+            // Если роль учитель
+            } else if( $user_info_checker->role == "teacher"){
+                // Удаляем инфу о учителе
+                DB::table('teachers')->where('user_id', $user_id)->delete();
+                    // Удаляем инфу с групп
+                    DB::table('groups')->where('assigned_teacher_id', $user_id)->update([
+                        'assigned_teacher_id' => null,
+                        'assigned_teacher_name' => null,
+                    ]);
+                // Если выбранная роль студент
+                if ($request->selected_role == "student"){
+                    // Добавляем данные о студенте
+                    DB::table('students')->insert([
+                        'user_id' => $user_id,
+                        'full_name' => $complete_name,
+                    ]);
+                }
+            // Если роль студент
+            } else if ( $user_info_checker->role == "student"){
+                // Удаляем инфу о студенте
+                DB::table('students')->where('user_id', $user_id)->delete();
+                // Если выбранная роль учитель
+                if($request->selected_role == "teacher"){
+                    // Добавляем данные о учителе
+                    DB::table('teachers')->insert([
+                        'user_id' => $user_id,
+                        'full_name' => $complete_name,
+                    ]);
+                } 
+            }
+            DB::table('users')->where('id', $user_id)->update([
+                'role' => $request->selected_role,
+            ]);
+        }
+
+        //dd()
+
         // Если пользователь студент - обновить
         if($request->role == "student"){
             //проверка на несоотвествие полного имени

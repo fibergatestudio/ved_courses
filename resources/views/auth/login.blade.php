@@ -86,7 +86,7 @@
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                <label class="entrance-label p-0" for="remember">Запам'ятати мене</label>
+                                <label class="entrance-label p-0" style="font-size: 15px;" for="remember">Запам'ятати мене</label>
                             </div>
                             <p> <a class="btn btn-link" href="{{ route('password.request') }}">
                                 Забули пароль?
