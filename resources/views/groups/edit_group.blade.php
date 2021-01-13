@@ -29,7 +29,7 @@
                                 <span class="ccec-header_style" id="currentTeacher">{{ $group_info->assigned_teacher_name ?? 'Немає' }}</span>
                             </p>
                             <p class="groups-edit__current-teacher eg-text-style">
-                                <span class="ccec-header_style">Назва курсу :&nbsp;</span>
+                                <span class="ccec-header_style">Назва курсу :&nbsp;</span> </p>
                                 <select class='eg-input uge__input_style' name="course_number" style="height: 50px">
                                     <option value="">Повна назва курсу студента</option>
                                         @if($courses)
@@ -43,7 +43,7 @@
                                         @endif
                                 </select>
                                 <!-- <span class="ccec-header_style" id="courseNamer"></span> -->
-                            </p>
+                            <!-- </p> -->
                         </div>
                         <div class="groups-edit__group ccec__add-student-block_style inputs-row">
                             <p class="groups-edit__group-name eg-text-style ge__m-input-header">Назва групи</p>

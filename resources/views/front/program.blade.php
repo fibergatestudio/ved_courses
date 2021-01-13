@@ -74,7 +74,7 @@
                     <table class="hidden-menu">
                         @forelse (collect(json_decode($lesson->video_name)) as $video_name)
                             <tr class="hidden-menu_string">
-                                @if(null !== collect(json_decode($lesson->video_length))->get($loop->index)))
+                                @if(null !== collect(json_decode($lesson->video_length))->get($loop->index))
                                 <td class="hidden-menu_column">
                                     {{ collect(json_decode($lesson->video_length))->get($loop->index) }} хв.
                                 </td>
