@@ -11816,9 +11816,10 @@ p.program_wwl-protocol{
         flex-direction: column;
         justify-content: start;
         align-items: start;
+        display: none;
     }
     .mer-studlist{
-        display: none;
+        /* display: none; */
     }
     .mer-sel-wth{
         padding-left: 0px;

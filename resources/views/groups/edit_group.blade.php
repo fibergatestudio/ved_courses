@@ -179,7 +179,7 @@
                 </div>
 
                 <div class="groups-edit__buttons-block ccec__back-save-btns">
-                    <a href="{{ url()->previous() }}"
+                    <a href="{{ route('groups_controll') }}"
                         class="groups-edit__back-to-groups sce__buttons-restyle uge__buttons-style ugea__button_style ccec__btn"
                         id="backToUsers" style="text-align: center;">Назад</a>
                     <button type="submit"
