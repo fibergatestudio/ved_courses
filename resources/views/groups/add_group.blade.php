@@ -201,9 +201,62 @@
         students_array.splice( $.inArray(curr_stud,students_array) ,1 );
         var div_name = "#name" + curr_stud;
         // console.log(div_name);
-        setTimeout(function(){ $( div_name ).remove(); count_t--; }, 500);
+        setTimeout(function(){ $( div_name ).remove(); count_t--; rebuildingStud()}, 500);
         // console.log(students_array);
         // console.log("RemoveStud " + curr_stud);
+    }
+
+    function rebuildingStud(){
+        $('.col.mer-studlist .w-100').remove();
+        $('.col.mer-studlist [name="student_name[]"]').remove();
+        
+        count_t = 1;
+        col_id = 1;
+        for (let i = students_array.length - 1; i >= 0; i--) {
+            
+            $('#studentsAdd'+col_id+', #studentsAdd').append("\
+                <div class='w-100' id='name"+count_t+"'>\
+                    <div class='groups-edit__student-row mw-100 "+cust_even(count_t)+"'>\
+                        <p class='student-number student-number-mer'>"+count_t+". &nbsp;</p>\
+                        <p class='groups-edit__student groups-edit__student-mer'>"+students_array[i]+"</p>\
+                        <a class='delete-student delete-student-mer' href='' data-toggle='modal' data-target='#deleteModal"+ count_t +"'>X</a>\
+                    </div>\
+                    <div class='bootstrap-restylingStudent modal fade' id='deleteModal"+count_t+"' tabindex='-1' role='dialog' aria-labelledby='exampleModalLabel' aria-hidden='true'>\
+                        <div class='modal-dialog  modal-dialog_restyle'>\
+                            <div class='modal-content'>\
+                                <div class='deleteMenu-wrapper'>\
+                                    <div class='deleteMenu-topImg'>\
+                                        <img src='/img/basket.png' alt='icon'>\
+                                    </div>\
+                                    <div class='deleteMenu-text'>\
+                                        Ви дійсно бажаєте видалити <br> студента "+students_array[i]+" зі списку?\
+                                    </div>\
+                                    <div class='deleteMenu-btn'>\
+                                        <a class='flexTable-btn_delete' id='removeStudent' data-dismiss='modal' aria-label='Close' onclick='removeStud("+count_t+")'>\
+                                            <span>Видалити</span>\
+                                        </a>\
+                                    </div>\
+                                </div>\
+                            </div>\
+                        </div>\
+                    </div>\
+                </div>\
+            ");
+            
+            $('#studentsAdd'+col_id).append("\
+                <input type='hidden' name='student_name[]' value='" + students_array[i] +"'>\
+            ");
+
+            count_t++;
+            /*Проверка столбца для ввода*/
+            if (col_id == 1){
+                col_id = 2;
+            } else if (col_id == 2){
+                col_id = 3;
+            } else if (col_id == 3){
+                col_id = 1;
+            }            
+        }
     }
 
     $('#createGroup').click(function(e){

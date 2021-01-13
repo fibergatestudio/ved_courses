@@ -1147,7 +1147,11 @@ element.style {
     color: #000
 }
 
-.header-text {
+header.header .header-text{
+    margin-top: 35px;
+}
+
+.header-text {   
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
