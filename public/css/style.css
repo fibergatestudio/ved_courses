@@ -1147,7 +1147,11 @@ element.style {
     color: #000
 }
 
-.header-text {
+header.header .header-text{
+    margin-top: 35px;
+}
+
+.header-text {   
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -9563,7 +9567,7 @@ border: 0 !important;
 		font-size: inherit;
 	}
 	.add-style{
-		width: 70%;
+		width: 80%;
 		border-top-right-radius: 0px;
 		border-bottom-right-radius: 0px;
 	}
