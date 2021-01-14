@@ -509,12 +509,13 @@ class CoursesController extends Controller
             $video_name = $request->$r_video_name;
             $video_length = $request->$r_video_length;
 
-
+            //dd('video_file0', $r_video_file);
             //$video_file = $request->$r_video_file;
-
-            if($request->hasFile($r_video_file)){
-                $filename = time().'.'.request()->$r_video_file->getClientOriginalExtension();
+            //dd($r_video_file, $request->file($r_video_file));
+            if($request->file($r_video_file)){
+                $filename = time().$i.'.'.request()->$r_video_file->getClientOriginalExtension();
                 request()->$r_video_file->move(public_path('video_files'), $filename);
+                //dd($filename);
             }else{
                 $filename = null;
                 $r_add_video_name = 'video_file_name' . $i;
