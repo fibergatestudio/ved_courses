@@ -251,7 +251,7 @@
                     console.log(question_text);
                     var description_f = tinymce.get(question_text).getContent();
                         if(description_f == ""){
-                            alert('Пустое поле ' + question_text);
+                            alert('Пусте поле Пункт - ' + i);
                         } else {
                             not_empty_count++;
                             console.log(not_empty_count);
