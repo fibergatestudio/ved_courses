@@ -42,6 +42,13 @@
                                                     <textarea class="tinyMCE-area" :id="'question_text'+index" :name="'course_answer'+index"></textarea>
                                             </div>
                                         </div>
+                                        <a href="" class="courseEdit-btn" :id="'course_delete'+index"
+                                                style="padding: .4em 1em;
+                                                max-width: 300px;
+                                                color: lightcoral;
+                                                border: 1px solid lightcoral;" @click="removeNewEntry(index)">
+                                                <span>Видалити</span>
+                                        </a>
                                     </div>
                                 </div>
                             </div>
@@ -73,7 +80,11 @@
 
     <script>
     
-        
+    function deleteQuestion(event,index){
+        event.preventDefault();
+        console.log(index);
+    }
+
     function submitForm(event){
         event.preventDefault();
         // Получаем инфу
@@ -188,9 +199,14 @@
                     var answer_id = '#question_text' + currentCounter;
                     var qa_id = '#qa_id' + currentCounter;
 
+                    var course_delete = '#course_delete' + currentCounter;
+
                     setTimeout(function(){ 
                         $(question_id).val(question);
                         $(qa_id).val(id);
+                        var link = "{{ route('delete_question')}}/?question_id=" +id;
+                        $(course_delete).attr('href', link);
+
                         tinymce.init({  
                             selector: answer_id,
                             menubar: false,
