@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\Students_data;
+use App\StudentsData
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
@@ -19,7 +19,7 @@ class StudentsImport implements ToCollection,WithHeadingRow
     {
         //dd($row);
 
-        return new Students_data([ 
+        return new StudentsData([ 
                 'upload_date' => $row[0],
                 'status_from' => $row[0],
                 'ID_FO' => $row[0],

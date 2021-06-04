@@ -7,11 +7,14 @@ use Socialite;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Students;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Session;
+use App\Teachers;
 
 class SocialiteController extends Controller
 {
+    // Редирект
     public function redirect($provider, $signup = null)
     {
         if ($signup == 'signup') {
@@ -65,7 +68,7 @@ class SocialiteController extends Controller
             }
 
             // Создаем для него запись в стундентах
-            $student_id = DB::table('students')->insertGetId(
+            $student_id = Students::insertGetId(
                 ['user_id' => $user->id, 'full_name' => $studen_fio, 'status' => 'confirmed',]
             );
             return redirect()->route('login.role', ['user_id' => $user->id, 'student_id' => $student_id]);
@@ -96,8 +99,8 @@ class SocialiteController extends Controller
                 $user->role = 'teacher';
                 $user->status = 'unconfirmed';
                 $user->save();
-                $student = DB::table('students')->where('id', $student_id)->delete();
-                DB::table('teachers')->insert(
+                $student = Students::where('id', $student_id)->delete();
+                Teachers::insert(
                     [
                         'user_id' => $user_id,
                         'status' => 'unconfirmed',

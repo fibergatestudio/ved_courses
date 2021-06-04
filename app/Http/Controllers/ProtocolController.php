@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Protocols;
 
 class ProtocolController extends Controller
 {
@@ -26,7 +27,7 @@ class ProtocolController extends Controller
                 $protocol['p_add_photo'.$i] = $savedFile;
             }
         }
-        DB::table('protocols')->updateOrInsert(['course_id' => $courseId, 'lesson_id' => $lessonId, 'user_id' => $userId], $protocol);
+        Protocols::updateOrInsert(['course_id' => $courseId, 'lesson_id' => $lessonId, 'user_id' => $userId], $protocol);
         return redirect()->back()->with('success', 'Протокол успішно збережено.');
     }
 
@@ -39,7 +40,7 @@ class ProtocolController extends Controller
     public function show($course_id, $lesson_id, $user_id, Request $request)
     {
         $referer = route('students_success', ['student_id' => $user_id]);
-        $protocol = DB::table('protocols')->where([
+        $protocol = Protocols::where([
             'course_id' => $course_id,
             'lesson_id' => $lesson_id,
             'user_id' => $user_id,

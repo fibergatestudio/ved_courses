@@ -6,14 +6,26 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Redirect;
+use App\CoursesProgram;
+use App\Groups;
+use App\TestsInfo;
+use App\TestsQuestions;
+
+use App\TestsMultipleChoice;
+use App\TestsTrueFalse;
+use App\TestsDragDrop;
+use App\TestsLog;
+use App\Tests;
+use App\TestsShortAnswer;
+use App\SimpleTests;
 
 class TestsController extends Controller
 {
     public function index(){
 
-        $tests_info = DB::table('tests_info')->get();
-        $simple_tests = DB::table('simple_tests')->get();
-        //$test_info = DB::table('tests_info')->get();
+        $tests_info = TestsInfo::get();
+        $simple_tests = SimpleTests::get();
+        //$test_info = TestsInfo::get();
 
         return view('tests.index', compact('tests_info','simple_tests') );
     }
@@ -31,7 +43,7 @@ class TestsController extends Controller
         $course_id = request()->course_id;
         $courses_program_id = request()->courses_program_id;
 
-        $groups = DB::table('groups')->get();
+        $groups = Groups::get();
 
         return view('tests.create_test_info', compact('course_id', 'courses_program_id', 'groups'));
     }
@@ -86,7 +98,7 @@ class TestsController extends Controller
         //dd($extended_feedback);
 
 
-        $test_info_id = DB::table('tests_info')->insertGetId([
+        $test_info_id = TestsInfo::insertGetId([
             // Общее
             'name'                      => $request->name,
             'description'               => $request->description,
@@ -116,7 +128,7 @@ class TestsController extends Controller
         //dd($courses_program_id);
         // Если айди существует, добавляем текущий текст к курсу
         if($course_id){
-            DB::table('courses_program')->where('id', $courses_program_id)->update([
+            CoursesProgram::where('id', $courses_program_id)->update([
                 'test_id' => $test_info_id,
             ]);
         }
@@ -201,7 +213,7 @@ class TestsController extends Controller
             $answers_json = json_encode($answers_arr);
 
             // Добавляем вопроса в базу
-            $insrt_id = DB::table('tests_multiple_choice')->insertGetId([
+            $insrt_id = TestsMultipleChoice::insertGetId([
                 'question_name'         => $request->question_name,
                 'question_text'         => $request->question_text,
                 'default_score'         => $request->default_score,
@@ -212,7 +224,7 @@ class TestsController extends Controller
             ]);
 
             // Добавляем таблицу вопроса
-            DB::table('tests_questions')->insert([
+            TestsQuestions::insert([
                 'test_id'               => $test_info_id,
                 'question_type'         => $q_type,
                 'test_answers_id'       => $insrt_id,
@@ -244,7 +256,7 @@ class TestsController extends Controller
         $answers_json = json_encode($a_data);
 
         // Добавляем вопроса в базу
-        $insrt_id = DB::table('tests_true_false')->insertGetId([
+        $insrt_id = TestsTrueFalse::insertGetId([
             'question_name'         => $request->question_name,
             'question_text'         => $request->question_text,
             'default_score'         => $request->default_score,
@@ -255,7 +267,7 @@ class TestsController extends Controller
         ]);
 
         // Добавляем таблицу вопроса
-        DB::table('tests_questions')->insert([
+        TestsQuestions::insert([
             'test_id'               => $test_info_id,
             'question_type'         => $q_type,
             'test_answers_id'       => $insrt_id,
@@ -281,7 +293,7 @@ class TestsController extends Controller
         $answers_json = json_encode($a_data);
 
         // Добавляем вопроса в базу
-        $insrt_id = DB::table('tests_short_answer')->insertGetId([
+        $insrt_id = TestsShortAnswer::insertGetId([
             'question_name'         => $request->question_name,
             'question_text'         => $request->question_text,
             'default_score'         => $request->default_score,
@@ -292,7 +304,7 @@ class TestsController extends Controller
         ]);
 
         // Добавляем таблицу вопроса
-        DB::table('tests_questions')->insert([
+        TestsQuestions::insert([
             'test_id'               => $test_info_id,
             'question_type'         => $q_type,
             'test_answers_id'       => $insrt_id,
@@ -339,7 +351,7 @@ class TestsController extends Controller
         $answers_json = json_encode($answers_arr);
 
         // Добавляем вопроса в базу
-        $insrt_id = DB::table('tests_drag_drop')->insertGetId([
+        $insrt_id = TestsDragDrop::insertGetId([
             'question_name'         => $request->question_name,
             'question_text'         => $request->question_text,
             'default_score'         => $request->default_score,
@@ -350,7 +362,7 @@ class TestsController extends Controller
         ]);
 
         // Добавляем таблицу вопроса
-        DB::table('tests_questions')->insert([
+        TestsQuestions::insert([
             'test_id'               => $test_info_id,
             'question_type'         => $q_type,
             'test_answers_id'       => $insrt_id,
@@ -364,14 +376,14 @@ class TestsController extends Controller
     public function view_test_info_questions($test_info_id){
 
         // Получаем информацию о тесте.
-        $test_view_info = DB::table('tests_info')->where('id', $test_info_id)->first();
-        $test_question_answers = DB::table('tests_questions')->where('test_id', $test_info_id)->get();
+        $test_view_info = TestsInfo::where('id', $test_info_id)->first();
+        $test_question_answers = TestsQuestions::where('test_id', $test_info_id)->get();
 
         // Подтяжка вопросов\ответов
         foreach($test_question_answers as $t_quest){
             // Если тип вопроса множественнный выбор
             if($t_quest->question_type == "Множинний вибір"){
-                $answer_info = DB::table('tests_multiple_choice')->where('id', $t_quest->test_answers_id)->first();
+                $answer_info = TestsMultipleChoice::where('id', $t_quest->test_answers_id)->first();
                 if($answer_info->question_name){
                     $t_quest->question_name = $answer_info->question_name;
                 } else {
@@ -380,7 +392,7 @@ class TestsController extends Controller
                 
             }
             if($t_quest->question_type == "Правильно/неправильно"){
-                $answer_info = DB::table('tests_true_false')->where('id', $t_quest->test_answers_id)->first();
+                $answer_info = TestsTrueFalse::where('id', $t_quest->test_answers_id)->first();
                 if($answer_info->question_name){
                     $t_quest->question_name = $answer_info->question_name;
                 } else {
@@ -388,11 +400,11 @@ class TestsController extends Controller
                 }
             }
             // if($t_quest->question_type == "Краткий ответ"){
-            //     $answer_info = DB::table('tests_short_answer')->where('id', $t_quest->test_answers_id)->first();
+            //     $answer_info = TestsShortAnswer::where('id', $t_quest->test_answers_id)->first();
             //     $t_quest->question_name = $answer_info->question_name;
             // }
             if($t_quest->question_type == "Перетягування в тексті"){
-                $answer_info = DB::table('tests_drag_drop')->where('id', $t_quest->test_answers_id)->first();
+                $answer_info = TestsDragDrop::where('id', $t_quest->test_answers_id)->first();
                 if($answer_info->question_name){
                     $t_quest->question_name = $answer_info->question_name;
                 } else {
@@ -402,7 +414,7 @@ class TestsController extends Controller
 
         }
 
-        $groups = DB::table('groups')->get();
+        $groups = Groups::get();
         //dd($test_question_answers);
 
         return view('tests.view_test_info_questions', compact('test_info_id', 'test_view_info', 'test_question_answers', 'groups'));
@@ -418,7 +430,7 @@ class TestsController extends Controller
             $max_score = 0;
         }
 
-        DB::table('tests_info')->where('id', $test_info_id)->update([
+        TestsInfo::where('id', $test_info_id)->update([
             'max_score' => $max_score,
             // Общее
             'name'                      => $request->name,
@@ -440,7 +452,7 @@ class TestsController extends Controller
             'operating_mode'            => $request->operating_mode,
         ]);
 
-        $info = DB::table('tests_questions')->where('id', $test_info_id)->first();
+        $info = TestsQuestions::where('id', $test_info_id)->first();
         // dd($info);
         // return \Redirect::route('add_lesson', $info->test_id);
         return back();
@@ -454,16 +466,16 @@ class TestsController extends Controller
             // Если тип вопроса равен = опр. типу
             if($question_type == "Правильно/неправильно"){
                 // Удаляем вопрос
-                $tf = DB::table('tests_true_false')->where('id', $test_info_id)->delete();
+                $tf = TestsTrueFalse::where('id', $test_info_id)->delete();
             }
             if($question_type == "Множинний вибір"){
-                $mc = DB::table('tests_multiple_choice')->where('id', $test_info_id)->delete();
+                $mc = TestsMultipleChoice::where('id', $test_info_id)->delete();
             }
             if($question_type == "Перетягування в тексті"){
-                $dd = DB::table('tests_drag_drop')->where('id', $test_info_id)->delete();
+                $dd = TestsDragDrop::where('id', $test_info_id)->delete();
             }
             // Удаляем вопрос из вопросов теста
-            DB::table('tests_questions')->where('id', $question_id)->delete();
+            TestsQuestions::where('id', $question_id)->delete();
 
         // Возвращаем назад
         return back();
@@ -504,7 +516,7 @@ class TestsController extends Controller
         //Формируем джсон
         $insert_data = json_encode($data);
 
-        DB::table('tests')->insert([
+        Tests::insert([
             'name' => $request->name,
             'description' => $request->description,
             'test_info' => $insert_data,
@@ -520,7 +532,7 @@ class TestsController extends Controller
 
         //dd($test_id);
 
-        $test_info = DB::table('tests')->where('id', $test_id)->first();
+        $test_info = Tests::where('id', $test_id)->first();
 
         return view('tests.edit_test', compact('test_id', 'test_info') );
     }
@@ -529,7 +541,7 @@ class TestsController extends Controller
 
         //dd($request->all());
         
-        DB::table('tests')->where('id', $test_id)->update([
+        Tests::where('id', $test_id)->update([
             'name' => $request->name,
             'description' => $request->description,
             'is_enabled' => $request->is_enabled,
@@ -575,7 +587,7 @@ class TestsController extends Controller
         //Формируем джсон
         $insert_data = json_encode($data);
 
-        DB::table('simple_tests')->insert([
+        SimpleTests::insert([
             'name' => $request->name,
             'description' => $request->description,
             'test_info' => $insert_data,
@@ -589,11 +601,11 @@ class TestsController extends Controller
 
     function view_simple_test($test_id){
 
-        $test_info = DB::table('simple_tests')->where('id', $test_id)->first();
+        $test_info = SimpleTests::where('id', $test_id)->first();
 
         // Плюс к просмотру теста
         $views = $test_info->finished_count + 1;
-        DB::table('simple_tests')->where('id', $test_id)->update([
+        SimpleTests::where('id', $test_id)->update([
             'views' => $views,
         ]);
         //
@@ -606,11 +618,11 @@ class TestsController extends Controller
 
     function view_test($test_id){
 
-        $test_info = DB::table('tests')->where('id', $test_id)->first();
+        $test_info = Tests::where('id', $test_id)->first();
         
         // Плюс к просмотру теста
         $views = $test_info->finished_count + 1;
-        DB::table('tests')->where('id', $test_id)->update([
+        Tests::where('id', $test_id)->update([
             'views' => $views,
         ]);
         //
@@ -627,17 +639,17 @@ class TestsController extends Controller
         $all_info = $request->all();
         //dd($all_info);
 
-        $current_test = DB::table('tests')->where('id', $test_id)->first();
+        $current_test = Tests::where('id', $test_id)->first();
         $finished_count = $current_test->finished_count + 1;
         //dd($finished_count);
 
         // Обновляем кол-во сданных тестов
-        DB::table('tests')->where('id', $test_id)->update([
+        Tests::where('id', $test_id)->update([
             'finished_count' => $finished_count,
         ]);
 
         // Записываем в ЛОГ данные о сданном тесте
-        DB::table('tests_log')->insert([
+        TestsLog::insert([
             'user_id' => Auth::user()->id,
             'test_id' => $test_id,
             'completed' => 'true',
@@ -648,11 +660,11 @@ class TestsController extends Controller
 
     function view_sort($test_id){
 
-        $test_info = DB::table('tests')->where('id', $test_id)->first();
+        $test_info = Tests::where('id', $test_id)->first();
         
         // Плюс к просмотру теста
         $views = $test_info->finished_count + 1;
-        DB::table('tests')->where('id', $test_id)->update([
+        Tests::where('id', $test_id)->update([
             'views' => $views,
         ]);
         //
@@ -667,31 +679,31 @@ class TestsController extends Controller
         //dd($test_info_id);
 
         //Удаляем test_info
-        //DB::table('tests_info')->where('id', $test_info_id)->delete();
+        //TestsInfo::where('id', $test_info_id)->delete();
 
 
-        $questions = DB::table('tests_questions')->where('test_id', $test_info_id)->get();
+        $questions = TestsQuestions::where('test_id', $test_info_id)->get();
         //dd($questions);
 
         foreach($questions as $question){
             if($question->question_type == "Множинний вибір"){
-                DB::table('tests_multiple_choice')->where('id', $question->test_answers_id)->delete();
+                TestsMultipleChoice::where('id', $question->test_answers_id)->delete();
             } else if($question->question_type == "Правильно/неправильно"){
-                DB::table('tests_true_false')->where('id', $question->test_answers_id)->delete();
+                TestsTrueFalse::where('id', $question->test_answers_id)->delete();
             } else if($question->question_type == "Краткий ответ"){
-                DB::table('tests_short_answer')->where('id', $question->test_answers_id)->delete();
+                TestsShortAnswer::where('id', $question->test_answers_id)->delete();
             } else if($question->question_type == "Перетягування в тексті"){ 
-                DB::table('tests_drag_drop')->where('id', $question->test_answers_id)->delete();
+                TestsDragDrop::where('id', $question->test_answers_id)->delete();
             }
         }
         //Удаляем test_info
-        DB::table('tests_info')->where('id', $test_info_id)->delete();
+        TestsInfo::where('id', $test_info_id)->delete();
 
-        DB::table('tests_questions')->where('test_id', $test_info_id)->delete();
+        TestsQuestions::where('test_id', $test_info_id)->delete();
         //
 
         // Обновляем урок курса там где был тест
-        DB::table('courses_program')->where('test_id', $test_info_id)->update([
+        CoursesProgram::where('test_id', $test_info_id)->update([
             'test_id' => null,
         ]);
 
@@ -702,21 +714,21 @@ class TestsController extends Controller
 
         //dd($test_info_id, $test_question_id);
 
-        $test_t = DB::table('tests_questions')->where([
+        $test_t = TestsQuestions::where([
             'id' => $test_question_id,
             'test_id' => $test_info_id
         ])->first();
 
         if($test_t->question_type == "Множинний вибір"){
-            $t_question_info = DB::table('tests_multiple_choice')->where('id', $test_t->test_answers_id)->first();
+            $t_question_info = TestsMultipleChoice::where('id', $test_t->test_answers_id)->first();
 
             return view('tests.edit_multiple_choice', compact('test_info_id', 'test_question_id','t_question_info'));
         } else if($test_t->question_type == "Правильно/неправильно"){
-            $t_question_info = DB::table('tests_true_false')->where('id', $test_t->test_answers_id)->first();
+            $t_question_info = TestsTrueFalse::where('id', $test_t->test_answers_id)->first();
 
             return view('tests.edit_true_false', compact('test_info_id', 'test_question_id','t_question_info'));
         } else if($test_t->question_type == "Перетягування в тексті"){
-            $t_question_info = DB::table('tests_drag_drop')->where('id', $test_t->test_answers_id)->first();
+            $t_question_info = TestsDragDrop::where('id', $test_t->test_answers_id)->first();
 
             return view('tests.edit_drag_drop', compact('test_info_id', 'test_question_id','t_question_info'));
         }
@@ -728,7 +740,7 @@ class TestsController extends Controller
         //dd($request->all());
         $all_info = $request->all();
         //dd($all_info);
-        $test_t = DB::table('tests_questions')->where([
+        $test_t = TestsQuestions::where([
             'id' => $test_question_id,
             'test_id' => $test_info_id
         ])->first();
@@ -761,7 +773,7 @@ class TestsController extends Controller
             // Енкод инфы
             $answers_json = json_encode($answers_arr);
             
-            DB::table('tests_multiple_choice')->where('id', $test_t->test_answers_id)->update([
+            TestsMultipleChoice::where('id', $test_t->test_answers_id)->update([
                 'question_name'         => $request->question_name,
                 'question_text'         => $request->question_text,
                 'default_score'         => $request->default_score,
@@ -771,7 +783,7 @@ class TestsController extends Controller
                 'answers_json'          => $answers_json,
             ]);
         }else if($test_t->question_type == "Правильно/неправильно"){
-            DB::table('tests_true_false')->where('id', $test_t->test_answers_id)->update([
+            TestsTrueFalse::where('id', $test_t->test_answers_id)->update([
                 'question_name' => $request->question_name,
                 'question_text' => $request->question_text,
                 'default_score' => $request->default_score,
@@ -808,7 +820,7 @@ class TestsController extends Controller
             //dd($answers_arr);
             $answers_json = json_encode($answers_arr);
 
-            DB::table('tests_drag_drop')->where('id', $test_t->test_answers_id)->update([                
+            TestsDragDrop::where('id', $test_t->test_answers_id)->update([                
                 'question_name'         => $request->question_name,
                 'question_text'         => $request->question_text,
                 'default_score'         => $request->default_score,
@@ -823,20 +835,20 @@ class TestsController extends Controller
     // Удаление вопроса теста
     public function edit_test_question_delete($test_info_id, $test_question_id){
 
-        $test_t = DB::table('tests_questions')->where([
+        $test_t = TestsQuestions::where([
             'id' => $test_question_id,
             'test_id' => $test_info_id
         ])->first();
 
         if($test_t->question_type == "Множинний вибір"){
-            DB::table('tests_multiple_choice')->where('id', $test_t->test_answers_id)->delete();
+            TestsMultipleChoice::where('id', $test_t->test_answers_id)->delete();
         }else if($test_t->question_type == "Правильно/неправильно"){
-            DB::table('tests_true_false')->where('id', $test_t->test_answers_id)->delete();
+            TestsTrueFalse::where('id', $test_t->test_answers_id)->delete();
         }else if($test_t->question_type == "Перетягування в тексті"){
-            DB::table('tests_drag_drop')->where('id', $test_t->test_answers_id)->delete();
+            TestsDragDrop::where('id', $test_t->test_answers_id)->delete();
         }
 
-        DB::table('tests_questions')->where([
+        TestsQuestions::where([
             'id' => $test_question_id,
             'test_id' => $test_info_id
         ])->delete();

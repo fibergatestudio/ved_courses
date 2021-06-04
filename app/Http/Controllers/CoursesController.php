@@ -5,20 +5,30 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use DB;
 use Auth;
+use App\Courses;
+use App\User;
+use App\CourseViews;
+use App\CoursesFaq;
+use App\CoursesProgram;
+use App\Teachers;
+use App\CoursesInformation;
+use App\TestsInfo;
 
 class CoursesController extends Controller
 {
+    // Индекс
     public function index(){
 
-        $courses = DB::table('courses')->get();
-        //dd("test");
-        //dd($courses);
+        // Получаем все курсы
+        $courses = Courses::get();
+
+        // Перебираем курсы 
         foreach($courses as $course){
             // Получаем имя создателя
-            $creator = DB::table('users')->where('id', $course->creator_id)->first();
+            $creator = User::where('id', $course->creator_id)->first();
             $course->creator_name = $creator->name;
             // Получаем кол-во просмотров курса
-            $course_views = DB::table('course_views')->where('course_name', $course->name)->count();
+            $course_views = CourseViews::where('course_name', $course->name)->count();
             if($course_views){
                 $course->views = $course_views;
             } else {
@@ -28,23 +38,23 @@ class CoursesController extends Controller
             $clear_descr = str_replace("&nbsp;", '', $course->description);
             $course->description =  strip_tags($clear_descr);
         }
-        // dd($courses);
 
         return view('courses.index', compact('courses') );
     }
 
-
+    // Страница всех курсов
     public function all_courses(){
 
-        $courses = DB::table('courses')->get();
-        //dd("test");
-        //dd($courses);
+        // Получаем все курсы
+        $courses = Courses::get();
+
+        // Перебираем курсы 
         foreach($courses as $course){
             // Получаем имя создателя
-            $creator = DB::table('users')->where('id', $course->creator_id)->first();
+            $creator = User::where('id', $course->creator_id)->first();
             $course->creator_name = $creator->name;
             // Получаем кол-во просмотров курса
-            $course_views = DB::table('course_views')->where('course_name', $course->name)->count();
+            $course_views = CourseViews::where('course_name', $course->name)->count();
             if($course_views){
                 $course->views = $course_views;
             } else {
@@ -59,19 +69,19 @@ class CoursesController extends Controller
         return view('courses.all_courses', compact('courses') );
     }
 
+    // Страница создания курса
     public function new_course(){
 
         return view('courses.create_course');
     }
 
-
+    // Создаем курс POST
     public function create_course(Request $request){
 
+        // Получаем всю инфу с запроса
         $all_info = $request->all();
-        // dd($all_info);
-        //dd($request->course_image);
-        //$img_path = $request->course_image;
 
+        // Проверяем есть ли изображение
         if($request->hasFile('course_image')){
             $filename = time().'.'.request()->course_image->getClientOriginalExtension();
             request()->course_image->move(public_path('images'), $filename);
@@ -79,10 +89,8 @@ class CoursesController extends Controller
             $filename = "";
         }
 
-        //$user->image=$filename;
-        //$user->save();
-
-        DB::table('courses')->insert([
+        // Инсертим в базу
+        Courses::insert([
             'name' => $request->name,
             'description' => $request->description,
             'course_image_path' => $filename,
@@ -93,19 +101,22 @@ class CoursesController extends Controller
         return redirect('courses_controll')->with('message_success', 'Курс успешно создан!');
     }
 
+    // Редактирование курса
     public function edit_course($course_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
+        // Получаем текущий курс
+        $course_info = Courses::where('id', $course_id)->first();
 
-        $courses_question_answers = DB::table('courses_faq')->where('course_id', $course_id)->get();
-        //dd($courses_question_answers);
+        // Получаем FAQ
+        $courses_question_answers = CoursesFaq::where('course_id', $course_id)->get();
 
-        $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
-        //dd($course_lessons);
-        //$videos_arr = [];
+        // Получаем программу курса
+        $course_lessons = CoursesProgram::where('course_id', $course_id)->get();
+
+        // Перебираем уроки курса
         foreach($course_lessons as $lesson){
 
-            //dd(json_decode($lesson->video_name));
+            // Берем кол-во видео + проверка
             if($lesson->video_name == null || $lesson->video_name == "null" ){
                 $lesson->video_count = 0;
             } else {
@@ -114,14 +125,14 @@ class CoursesController extends Controller
 
             $video_arr = [];
             $i = 0;
-            //dd(json_decode($lesson->video_name));
+            // Заносим видео в аррей
             if($lesson->video_name != "[]" && $lesson->video_name != ""){
                 foreach(json_decode($lesson->video_name) as $video){
                     $video_arr[$i]["video_name"] = $video;
                     $i++;
                 }
             }
-            //dd($lesson->video_length);
+            // Заносим продолжительность видео в аррей
             if($lesson->video_length != "[]" && $lesson->video_length != ""){
                 $a = 0;
                 foreach(json_decode($lesson->video_length) as $video_l){
@@ -130,20 +141,19 @@ class CoursesController extends Controller
                 }
             }
 
-            //dd($video_arr);
             $lesson->video_arr = $video_arr;
 
         }
 
-
+        // Декодим подвязанных учитилей
         $teacher_arr = json_decode($course_info->assigned_teacher_id);
-        //dd($teacher_arr);
+        // Получаем инфу учитилей
         if($teacher_arr){
-            $assigned_teachers =  DB::table('users')->whereIn('id', $teacher_arr)->get();
-            $teachers = DB::table('users')->where('role', 'teacher')->whereNotIn('id', $teacher_arr)->get();
+            $assigned_teachers =  User::whereIn('id', $teacher_arr)->get();
+            $teachers = User::where('role', 'teacher')->whereNotIn('id', $teacher_arr)->get();
 
             foreach($assigned_teachers as $teacher){
-                $t_descr = DB::table('teachers')->where('user_id', $teacher->id)->first();
+                $t_descr = Teachers::where('user_id', $teacher->id)->first();
                 if(isset($t_descr->descr)){
                     $teacher->descr = $t_descr->descr;
                 } else {
@@ -152,59 +162,60 @@ class CoursesController extends Controller
             }
         } else {
             $assigned_teachers = [];
-            $teachers = DB::table('users')->where('role', 'teacher')->get();
+            $teachers = User::where('role', 'teacher')->get();
         }
-        //dd($assigned_teachers);
-        $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
+        // Получаем информацию курса
+        $course_information = CoursesInformation::where('course_id', $course_id)->first();
 
-        //dd($course_info);
         return view('courses.edit_course', compact('course_info', 'courses_question_answers', 'course_lessons', 'teachers', 'assigned_teachers', 'course_information') );
     }
 
+    // Удаление курса
     public function delete_course($course_id){
 
-        //dd($course_id);
-
-        DB::table('courses')->where('id', $course_id)->delete();
-        DB::table('courses_faq')->where('course_id', $course_id)->delete();
-        DB::table('courses_information')->where('course_id', $course_id)->delete();
-        DB::table('courses_program')->where('course_id', $course_id)->delete();
+        // Удаляем курс и всю доп. инфу.
+        Courses::where('id', $course_id)->delete();
+        CoursesFaq::where('course_id', $course_id)->delete();
+        CoursesInformation::where('course_id', $course_id)->delete();
+        CoursesProgram::where('course_id', $course_id)->delete();
 
         return back();
     }
 
+    // Удаляем учителя с курса
     public function delete_teacher_course($course_id, $teacher_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
-        // Берем аррей учителей - декодим
+        // Получаем инфу курса
+        $course_info = Courses::where('id', $course_id)->first();
+        // Декодим аррей с учителями
         $teacher_arr = json_decode($course_info->assigned_teacher_id);
 
         // Убираем лишнее значение
         $new_arr = array_splice($teacher_arr, array_search($teacher_id, $teacher_arr ), 1);
 
-        DB::table('courses')->where('id', $course_id)->update([
+        // Обновляем курс
+        Courses::where('id', $course_id)->update([
             'assigned_teacher_id' => json_encode($teacher_arr),
         ]);
-
-
 
         return redirect()->back();
     }
 
+    // Удаляем фотографию курса
     public function delete_photo($course_id){
-        //dd($course_id);
-        DB::table('courses')->where('id',$course_id)->update([
+
+        Courses::where('id',$course_id)->update([
             'course_image_path' => null,
         ]);
+
         return back();
     }
 
+    // Применяем редактирование курса
     public function edit_course_apply($course_id, Request $request){
 
-        //dd($request->all());
-
         // Таблица курсов
-        $current_course = DB::table('courses')->where('id', $course_id)->first();
+        $current_course = Courses::where('id', $course_id)->first();
 
         // Получаем картинку // Если картинка есть
         if($request->hasFile('course_image')){
@@ -212,20 +223,19 @@ class CoursesController extends Controller
             request()->course_image->move(public_path('images'), $filename);
 
             // Обновляем картинку в базе
-            DB::table('courses')->where('id',$course_id)->update([
+            Courses::where('id',$course_id)->update([
                 'course_image_path' => $filename,
             ]);
         }
-
+        // Проверяем есть ли учитель у курса
         if($current_course->assigned_teacher_id){
-            //array_push($teachers_arr, )
+            // Если есть - декодим аррей
             $teacher_arr = json_decode($current_course->assigned_teacher_id);
-            //dd($teachers_arr);
         } else {
             $teacher_arr = [];
         }
 
-
+        // Получаем айди учителя с запроса
         $t_id = $request->assigned_teacher_id;
         if($t_id != "Выберите"){
             array_push($teacher_arr, $t_id);
@@ -234,8 +244,8 @@ class CoursesController extends Controller
             $teachers = $teacher_arr;
         }
 
-
-        DB::table('courses')->where('id',$course_id)->update([
+        // Обновляем курс
+        Courses::where('id',$course_id)->update([
             'name' => $request->name,
             'description' => $request->description,
             'visibility' => $request->visibility,
@@ -245,104 +255,83 @@ class CoursesController extends Controller
         return redirect()->back();
     }
 
+    // Аджакс запрос на удаление учителя
     public function ajax_remove_teacher(Request $request){
 
+        // Получаем айди курса с запроса
         $course_id = $request->course_id;
+        // Декодим учитилей с запроса
         $teachers = json_encode($request->teachers);
-
-        DB::table('courses')->where('id', $course_id)->update([
+        // Обновляем учитилей в курсе
+        Courses::where('id', $course_id)->update([
             'assigned_teacher_id' => $teachers,
         ]);
 
         echo 'Teachers updated';
     }
 
-    // edit_about
+    // Редактирование описания Страница
     public function edit_about($course_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
-
-        $course_i = DB::table('courses_information')->where('course_id', $course_id)->first();
-        //dd($course_i);
-
-
+        // Получаем данные курса
+        $course_info = Courses::where('id', $course_id)->first();
+        // Получаем информацию курса
+        $course_i = CoursesInformation::where('course_id', $course_id)->first();
 
         return view('courses.edit_about', compact('course_info', 'course_i'));
     }
-    // edit_about_apply
+
+    // Применяем редактирование описания
     public function edit_about_apply($course_id, Request $request){
 
-        //dd($request->questions_counter);
-        //dd($request->all());
-        // Делаем аррей из пунктов
-        //$courses_arr = json_encode($request->course_learn, JSON_UNESCAPED_UNICODE);
-
+        // Получаем кол-во вопросов
         $q_c = $request->questions_counter;
+
+        // Формируем неймы для запросов и заносим в аррей
         $course_lrn_arr = [];
         for($i = 1; $i <= $q_c; $i++){
             $c = "course_learn" . $i;
-            //dd($c);
-            array_push($course_lrn_arr, $request->$c);//strip_tags ($request->$c));
+            array_push($course_lrn_arr, $request->$c);
         }
-        //dd($course_lrn_arr);
 
+        // Енкодим аррей с запросами
         $courses_arr = json_encode($course_lrn_arr, JSON_UNESCAPED_UNICODE);
 
         // Берем информацию описания курса
-        $about_check = DB::table('courses_information')->where('course_id', $course_id)->first();
+        $about_check = CoursesInformation::where('course_id', $course_id)->first();
         // Если инфа есть
         if(isset($about_check)){
             // Обновляем
-            DB::table('courses_information')->where('course_id', $course_id)->update([
+            CoursesInformation::where('course_id', $course_id)->update([
                 'course_description' => $request->course_description,
                 'course_learn_arr' => $courses_arr,
             ]);
         } else {
             // Если нет, создаем
-            DB::table('courses_information')->insert([
+            CoursesInformation::insert([
                 'course_id' => $course_id,
                 'course_description' => $request->course_description,
                 'course_learn_arr' => $courses_arr,
             ]);
         }
 
-        //return redirect()->back();
         return \Redirect::route('edit_course', $course_id)->with('message', 'ІНФОРМАЦІЯ ПРО КУРС ОНОВЛЕНА');
-        //return redirect()->route('');
-        //return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
-    // add_lesson
+
+    // Добавить урок Страница
     public function add_lesson($course_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
-
-        $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
-        //dd($courses_program);
-        // if(!$courses_program->isEmpty()){
-        //     // Аррей айдишников тестов
-        //     $test_ids_arr = [];
-        //     // Берем все айди и заносим в аррей
-        //     foreach($courses_program as $course_program){
-        //         array_push($test_ids_arr, $course_program->test_id);
-        //     }
-        //     //dd($test_ids_arr);
-        //     $course_tests = DB::table('tests_info')->whereIn('id', $test_ids_arr)->get();
-        // } else {
-        //     $course_tests = [];
-        // }
-        //dd($course_tests);
-        //dd($tests);
-
+        // Получаем инфу курса
+        $course_info = Courses::where('id', $course_id)->first();
+        // Получаем программу курса
+        $courses_program = CoursesProgram::where('course_id', $course_id)->get();
         $course_tests = [];
-
 
         return view('courses.add_lesson', compact('course_info', 'course_tests'));
     }
 
-    // add_lesson_apply
+    // Добавить урок POST
     public function add_lesson_apply($course_id, Request $request){
-
-        //dd($request->all());
 
         // Количество видео
         $video_counter = $request->videos_counter;
@@ -387,18 +376,15 @@ class CoursesController extends Controller
                 if($video_link == null){ array_push($video_link_arr, null); } else { array_push($video_link_arr, $video_link); }
             }
         }
-        //dd($video_file_arr);
 
         // Аррей документов
         $docs_arr = [];
         // Количество документов
         $docs_counter = $request->docs_counter;
-        //dd($request->hasFile('add_document0'),$request->hasFile('add_document1') );
         // Перебираем и берем информацию о каждом доке
         for($a = 0; $a <= $docs_counter; $a++){
             // Реквест имени дока
             $r_add_document = 'add_document' . $a;
-
             // Получаем доку, формируем имя и переносим файл
             if($request->hasFile($r_add_document)){
                 $filename_doc = time().$a.'.'.request()->$r_add_document->getClientOriginalExtension();
@@ -409,10 +395,9 @@ class CoursesController extends Controller
             }
             // Передача инфы в аррей
             if($filename_doc == null){ $docs_arr = null; } else { array_push($docs_arr, $filename_doc); }
-            //array_push($docs_arr, $filename);
         }
-        //dd($docs_arr);
-        // show prot
+
+        // Показать протокол
         if($request->show_protocol){
             $protocol = $request->show_protocol;
         } else {
@@ -420,7 +405,7 @@ class CoursesController extends Controller
         }
 
         // Инсерт в базу
-        $courses_program_id = DB::table('courses_program')->insertGetId([
+        $courses_program_id = CoursesProgram::insertGetId([
             'course_id' => $course_id,
             'course_name' => $request->course_name,
             'course_description' => $request->course_description,
@@ -438,7 +423,7 @@ class CoursesController extends Controller
 
         // Проверяем есть ли запрос на создание теста
         $redirect_to_test = $request->redirect_to_test;
-        //dd($redirect_to_test);
+
         if(isset($redirect_to_test)){
             // Редиректим на создание теста
             return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
@@ -446,48 +431,33 @@ class CoursesController extends Controller
             // Редиректим на список курсов
             return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
         }
-        //return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
+
     }
 
-    // edit lesson
+    // Редактирование урока Страница
     public function edit_lesson($course_id, $lesson_id){
 
-        // Инфо курса
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
-
-        $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
-        // if(!$courses_program->isEmpty()){
-        //     // Аррей айдишников тестов
-        //     $test_ids_arr = [];
-        //     // Берем все айди и заносим в аррей
-        //     foreach($courses_program as $course_program){
-        //         array_push($test_ids_arr, $course_program->test_id);
-        //     }
-        //     //dd($test_ids_arr);
-        //     $course_tests = DB::table('tests_info')->whereIn('id', $test_ids_arr)->get();
-        // } else {
-        //     $course_tests = [];
-        // }
-
-        $course_tests_id = DB::table('courses_program')->where([
+        // Получаем инфу курса
+        $course_info = Courses::where('id', $course_id)->first();
+        // Получаем программу курса
+        $courses_program = CoursesProgram::where('course_id', $course_id)->get();
+        $course_tests_id = CoursesProgram::where([
             'id' => $lesson_id,
             'course_id' => $course_id
         ])->first();
-
-        $course_tests = DB::table('tests_info')->where('id', $course_tests_id->test_id)->get();
-
-        // Инфо урока
-        $lesson_info = DB::table('courses_program')->where('id', $lesson_id)->first();
+        // Получаем инфу тестов
+        $course_tests = TestsInfo::where('id', $course_tests_id->test_id)->get();
+        // Получаем инфо урока
+        $lesson_info = CoursesProgram::where('id', $lesson_id)->first();
 
         return view('courses.edit_lesson', compact('course_info', 'course_tests', 'lesson_info'));
 
     }
 
-    // edit lesson apply
+    // Редактирование урока POST
     public function edit_lesson_apply($course_id, $lesson_id, Request $request){
 
-        //dd($request->all());
-
+        // Получаем кол-во видео
         $video_counter = $request->videos_counter;
 
         // Арреи под инфу видео
@@ -509,23 +479,25 @@ class CoursesController extends Controller
             $video_name = $request->$r_video_name;
             $video_length = $request->$r_video_length;
 
-            //dd('video_file0', $r_video_file);
-            //$video_file = $request->$r_video_file;
-            //dd($r_video_file, $request->file($r_video_file));
+            // Получаем файл видео
+            // Если в запросе есть файл
             if($request->file($r_video_file)){
+                // Формируем имя файла
                 $filename = time().$i.'.'.request()->$r_video_file->getClientOriginalExtension();
+                // Перемещаем файл
                 request()->$r_video_file->move(public_path('video_files'), $filename);
-                //dd($filename);
             }else{
+                // Если в запросе нет файла
                 $filename = null;
                 $r_add_video_name = 'video_file_name' . $i;
+                // Проверка есть ли старео видео
                 $old_video_name = $request->$r_add_video_name;
-                //dd($old_file_name);
+                // Если видео есть - заносим в аррей
                 if($old_video_name != null){
                     array_push($old_video_names, $old_video_name);
                 }
             }
-
+            // Проверка если ли ссылка видео
             $video_link = $request->$r_video_link;
             // Заносим информацию в аррей
                 // Если все поля пустые
@@ -574,21 +546,11 @@ class CoursesController extends Controller
             if($filename_doc == null){  } else { array_push($docs_arr, $filename_doc); }
             //array_push($docs_arr, $filename_doc);
         }
-        // Перебираем старые имена файлов
-        // for($b = 0; $b <= $docs_counter; $b++){
-        //     // Получаем имя старого файла (если есть)
-        //     $r_add_doc_name = 'add_document_name' . $b;
-        //     $old_file_name = $request->$r_add_doc_name;
-        //     //dd($old_file_name);
-        //     if($old_file_name != null){
-        //         array_push($docs_names_arr, $old_file_name);
-        //     }
-        // }
 
         // Мерджим старые и новые имена
         $docs_arr = array_merge($docs_arr, $docs_names_arr);
-        //dd($docs_arr);
-        // show prot
+
+        // Показать протокол
         if($request->show_protocol){
             $protocol = $request->show_protocol;
         } else {
@@ -596,7 +558,7 @@ class CoursesController extends Controller
         }
 
         // Инсерт в базу
-        $courses_program_id = DB::table('courses_program')->where('id', $lesson_id)->update([
+        $courses_program_id = CoursesProgram::where('id', $lesson_id)->update([
             'course_id' => $course_id,
             'course_name' => $request->course_name,
             'course_description' => $request->course_description,
@@ -614,47 +576,36 @@ class CoursesController extends Controller
 
         // Проверяем есть ли запрос на создание теста
         $redirect_to_test = $request->redirect_to_test;
-        //dd($redirect_to_test);
+
         if(isset($redirect_to_test)){
             // Редиректим на создание теста
             return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $lesson_id ]);
         } else {
             return \Redirect::route('edit_course', $course_id)->with('message', 'Заняття успішно змінено'); 
-            //return redirect()->back();
-            // Редиректим на список курсов
-            //return redirect('courses_controll')->with(['message_success' => 'Курс успешно обновлен!', 'courses_program_id' => $courses_program_id]);
         }
 
     }
 
-    // add_ lesson
+    // Добавить урок редирект
     public function addLessonRedirect($course_id, Request $request){
 
         // Добавляем урок перед редиректом
         $this->add_lesson_apply($course_id, $request);
         $courses_program_id = session()->get('courses_program_id');
-        //dd($courses_program_id);
+
         // Редиректим с айдишником
         return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
     }
 
-    // public function add_lesson_edit_redirect($course_id, $lesson_id){
 
-    //     //dd($course_id, $lesson_id, $request->all());
-    //     //$courses_program_id = session()->get('courses_program_id');
-    //     $courses_program_id = $lesson_id;
-    //     //dd($courses_program_id);
-
-    //     return redirect()->route('new_test_info', ['course_id' => $course_id, 'courses_program_id' => $courses_program_id ]);
-    // }
-
-    // add_question
+    // Добавить вопрос Страница
     public function add_question($course_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
+        $course_info = Courses::where('id', $course_id)->first();
 
         return view('courses.add_question', compact('course_info'));
     }
+
     // Добавление вопроса - применить
     public function add_question_apply($course_id, Request $request){
 
@@ -666,7 +617,7 @@ class CoursesController extends Controller
             $c_course_question = 'course_question' . $i;
             $c_course_answer = 'course_answer' . $i;
             // И добавляем их в базу.
-            DB::table('courses_faq')->insert([
+            CoursesFaq::insert([
                 'course_id' => $course_id,
                 'course_question' => $request->$c_course_question,
                 'course_answer' => $request->$c_course_answer,
@@ -674,45 +625,44 @@ class CoursesController extends Controller
         }
         // Возвращаем назад
         return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ'); 
-        //return redirect()->back();
-        //return redirect('courses_controll')->with('message_success', 'Курс успешно обновлен!');
     }
 
+    // Редактирование вопроса Страница
     public function edit_question($course_id){
 
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
+        $course_info = Courses::where('id', $course_id)->first();
 
-        $faq_info = DB::table('courses_faq')->where('course_id', $course_id)->get();
+        $faq_info = CoursesFaq::where('course_id', $course_id)->get();
 
         return view('courses.edit_question', compact('course_info', 'faq_info'));
     }
 
+    // Редактирование вопроса POST
     public function edit_question_apply($course_id, Request $request){
 
         // Получаем кол-во вопросов
         $q_counter = $request->questions_counter;
+
         // Для каждого вопроса
-        //dd($request->all());
-        //dd($q_counter);
         for($i = 0; $i <= $q_counter; $i++){
             // Формируем название полей реквеста
             $c_course_question = 'course_question' . $i;
             $c_course_answer = 'course_answer' . $i;
             $c_course_id = 'qa_id' . $i;
+
             // И добавляем их в базу.
-            //dd($request->all());
             if($request->$c_course_question != null && $request->$c_course_answer != null){
 
-                $check_current = DB::table('courses_faq')->where('id', $request->$c_course_id)->first();
+                $check_current = CoursesFaq::where('id', $request->$c_course_id)->first();
 
                 if($check_current){
-                    DB::table('courses_faq')->where('id',$check_current->id)->update([
+                    CoursesFaq::where('id',$check_current->id)->update([
                         'course_id' => $course_id,
                         'course_question' => $request->$c_course_question,
                         'course_answer' => $request->$c_course_answer,
                     ]); 
                 } else {
-                    DB::table('courses_faq')->insert([
+                    CoursesFaq::insert([
                         'course_id' => $course_id,
                         'course_question' => $request->$c_course_question,
                         'course_answer' => $request->$c_course_answer,
@@ -724,46 +674,38 @@ class CoursesController extends Controller
         return \Redirect::route('edit_course', $course_id)->with('message', 'ПОШИРЕНІ ЗАПИТАННЯ ДОДАНІ'); 
     }
 
+    // Удалить вопрос
     public function delete_question(){
-        //dd( request()->question_id );
+
         $question_id = request()->question_id;
-        DB::table('courses_faq')->where([
+        CoursesFaq::where([
             'id' => $question_id,
             ])->delete(); 
 
         return back();
     }
 
-
+    // Удаление урока
     public function delete_lesson($course_id, $lesson_id){
 
-        //dd($course_id, $lesson_id);
-
-        DB::table('courses_program')->where([
+        CoursesProgram::where([
             'id' => $lesson_id,
             'course_id' => $course_id,
         ])->delete();
 
         return back();
     }
-    // // Просмотр курса
-    // public function course_view($course_id){
 
-    //     dd($course_id);
-
-    //     return view('courses.course_view', compact('course_id'));
-    // }
-
-
+    // Возвращаем популярные курсы
     public function popular_course(Request $request){
 
         if ($request->popular === 'true') {
-            DB::table('courses')->where('id',$request->course_id)->update([
+            Courses::where('id',$request->course_id)->update([
                 'popularity' => 'popular'
             ]);
         }
         else if($request->popular === 'false'){
-            DB::table('courses')->where('id',$request->course_id)->update([
+            Courses::where('id',$request->course_id)->update([
                 'popularity' => null
             ]);
         }

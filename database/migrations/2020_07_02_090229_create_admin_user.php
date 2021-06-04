@@ -4,6 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+use App\User;
+
 class CreateAdminUser extends Migration
 {
     /**
@@ -23,7 +25,7 @@ class CreateAdminUser extends Migration
             ]
         ];
 
-        DB::table('users')->insert($demo_values);
+        User::insert($demo_values);
     
     }
 
@@ -34,6 +36,6 @@ class CreateAdminUser extends Migration
      */
     public function down()
     {
-        DB::table('users')->where('name', '=', 'admin')->delete();
+        User::where('name', '=', 'admin')->delete();
     }
 }

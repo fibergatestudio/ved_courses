@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+use App\Teachers;
+use App\Students;
 use DB;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
@@ -86,7 +88,7 @@ class RegisterController extends Controller
             $studen_fio = $data['surname'] . " " . $data['name'] . " " . $data['patronymic'];
 
             // Создаем для него запись в стундентах
-            DB::table('students')->insert(
+            Students::insert(
                 ['user_id' => $user->id,'full_name' => $studen_fio, 'status' => 'confirmed',]
             );
         // Если пользователь - учитель
@@ -103,7 +105,7 @@ class RegisterController extends Controller
                 'status' => 'unconfirmed',
             ]);
             // Создаем для него запись в учителях
-            DB::table('teachers')->insert(
+            Teachers::insert(
                 ['user_id' => $user->id,
                 'status' => 'unconfirmed',]
             );

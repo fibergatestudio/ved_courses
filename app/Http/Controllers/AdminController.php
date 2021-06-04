@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use DB;
+use App\User;
+use App\Students;
+use App\Teachers;
+use App\Courses;
+use App\Groups;
 
 class AdminController extends Controller
 {
@@ -14,10 +19,10 @@ class AdminController extends Controller
         return view('admin.index');
     }
 
-    // Управление пользователями
+    // Управление пользователями cnhfybwf
     public function users_controll(){
 
-        $users = DB::table('users')->paginate(6);
+        $users = User::paginate(6);
 
         return view('admin.users_controll', compact('users'));
     }
@@ -25,15 +30,15 @@ class AdminController extends Controller
     // Редактирование пользователя страница
     public function user_edit($user_id){
 
-        $user = DB::table('users')->where('id', $user_id)->first();
+        $user = User::where('id', $user_id)->first();
 
         if($user->role == "student"){
-            $student_info = DB::table('students')->where('user_id', $user->id)->first();
+            $student_info = Students::where('user_id', $user->id)->first();
         } else {
             $student_info = '';
         }
 
-        $courses = DB::table('courses')->get();
+        $courses = Courses::get();
 
         return view('admin.user_edit', compact('user', 'student_info', 'courses'));
     }
@@ -41,21 +46,20 @@ class AdminController extends Controller
     public function user_edit_apply($user_id, Request $request){
         //Получаем всю информацию с запроса
         $all_info = $request->all();
-        // dd($all_info);
 
-        $user_info_checker = DB::table('users')->where('id', $user_id)->first();
-        //dd($user_info_checker);
-        //if($user_info_checker->email != $request->email){
-            DB::table('users')->where('id', $user_id)->update([
-                'name' => $request->name,
-                'surname' => $request->surname,
-                'patronymic' => $request->patronymic,
-                'email' => $request->email,
-            ]);
-        //}
+        $user_info_checker = User::where('id', $user_id)->first();
 
+        // Обновление юзера
+        User::where('id', $user_id)->update([
+            'name' => $request->name,
+            'surname' => $request->surname,
+            'patronymic' => $request->patronymic,
+            'email' => $request->email,
+        ]);
+
+        // Полное имя пользователя
         $complete_name = $user_info_checker->surname . " " .  $user_info_checker->name . " " . $user_info_checker->patronymic;
-        //dd($request->selected_role, $user_info_checker->role);
+
         // Если разница роей
         if($request->selected_role != $user_info_checker->role){
             // Если роль админ
@@ -63,14 +67,14 @@ class AdminController extends Controller
                 //Если выбранная роль учитель
                 if($request->selected_role == "teacher"){
                     // Добавляем данные о учителе
-                    DB::table('teachers')->insert([
+                    Teachers::insert([
                         'user_id' => $user_id,
                         'full_name' => $complete_name,
                     ]);
                 //Если выбранная роль студент
                 } else if ($request->selected_role == "student"){
                     // Добавляем данные о студенте
-                    DB::table('students')->insert([
+                    Teachers::insert([
                         'user_id' => $user_id,
                         'full_name' => $complete_name,
                     ]);
@@ -78,16 +82,16 @@ class AdminController extends Controller
             // Если роль учитель
             } else if( $user_info_checker->role == "teacher"){
                 // Удаляем инфу о учителе
-                DB::table('teachers')->where('user_id', $user_id)->delete();
+                Teachers::where('user_id', $user_id)->delete();
                     // Удаляем инфу с групп
-                    DB::table('groups')->where('assigned_teacher_id', $user_id)->update([
+                    Groups::where('assigned_teacher_id', $user_id)->update([
                         'assigned_teacher_id' => null,
                         'assigned_teacher_name' => null,
                     ]);
                 // Если выбранная роль студент
                 if ($request->selected_role == "student"){
                     // Добавляем данные о студенте
-                    DB::table('students')->insert([
+                    Students::insert([
                         'user_id' => $user_id,
                         'full_name' => $complete_name,
                     ]);
@@ -95,22 +99,20 @@ class AdminController extends Controller
             // Если роль студент
             } else if ( $user_info_checker->role == "student"){
                 // Удаляем инфу о студенте
-                DB::table('students')->where('user_id', $user_id)->delete();
+                Students::where('user_id', $user_id)->delete();
                 // Если выбранная роль учитель
                 if($request->selected_role == "teacher"){
                     // Добавляем данные о учителе
-                    DB::table('teachers')->insert([
+                    Teachers::insert([
                         'user_id' => $user_id,
                         'full_name' => $complete_name,
                     ]);
                 } 
             }
-            DB::table('users')->where('id', $user_id)->update([
+            User::where('id', $user_id)->update([
                 'role' => $request->selected_role,
             ]);
         }
-
-        //dd()
 
         // Если пользователь студент - обновить
         if($request->role == "student"){
@@ -120,7 +122,7 @@ class AdminController extends Controller
             if($request->full_name !== $fio){
                 $full_name = $fio;
             }
-            DB::table('students')->where('user_id', $user_id)->update([
+            Students::where('user_id', $user_id)->update([
                 'full_name' => $full_name,
                 'university_name' => $request->university_name,
                 'course_number' => $request->course_number,
@@ -128,12 +130,6 @@ class AdminController extends Controller
                 'student_number' => $request->student_number,
                 'student_phone_number' => $request->student_phone_number,
             ]);
-        // Если пользователь учитель - обновить
-        } else if ($request->role == "teacher"){
-            //dd("Techer");
-            // DB::table('teachers')->where('user_id', $user_id)->update([
-            //     'status'
-            // ]);
         }
 
         return redirect()->back()->with('message_success', 'Користувача змінено!');
@@ -142,7 +138,7 @@ class AdminController extends Controller
     // Подтверждение учителя(перевод из сутдентов)
     public function teacher_apply($user_id){
 
-        DB::table('users')->where('id', $user_id)->update([
+        User::where('id', $user_id)->update([
             'status' => 'confirmed',
         ]);
 
@@ -151,9 +147,9 @@ class AdminController extends Controller
     // Удаление пользователя
     public function user_delete($user_id){
 
-        DB::table('users')->where('id', $user_id)->delete();
-        DB::table('students')->where('user_id', $user_id)->delete();
-        DB::table('teachers')->where('user_id', $user_id)->delete();
+        User::where('id', $user_id)->delete();
+        Students::where('user_id', $user_id)->delete();
+        Teachers::where('user_id', $user_id)->delete();
 
         return redirect()->back()->with('message_success', 'Користувач був видалений!');
     }

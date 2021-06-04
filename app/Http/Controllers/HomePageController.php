@@ -8,13 +8,29 @@ use Illuminate\Http\Request;
 use DB;
 use Auth;
 use Carbon\Carbon;
+use App\CoursesProgram;
+use App\CoursesInformation;
+use App\Groups;
+use App\Students;
+use App\Courses;
+use App\TestsInfo;
+use App\FinishedTestsInfo;
+use App\Protocols;
+use App\CoursesFaq;
+use App\TestsQuestions;
+
+use App\TestsMultipleChoice;
+use App\TestsTrueFalse;
+use App\TestsDragDrop;
+use App\TestsLog;
+use App\TestTime;
 
 class HomePageController extends Controller
 {
 
     public function welcome(){
 
-        $courses = DB::table('courses')->get();
+        $courses = Courses::get();
 
         return view('front.main', compact('courses'));
     }
@@ -31,26 +47,26 @@ class HomePageController extends Controller
 
     public function student_courses_main()
     {
-        $courses = DB::table('courses')->get();
+        $courses = Courses::get();
         return view('front.student_courses_main', compact('courses'));
     }
 
     public function student_courses()
     {
         $user_id = Auth::user()->id;
-        $student = DB::table('students')->where('user_id', $user_id)->first();
-        $course = DB::table('courses')->where('name', $student->course_number)->first();
+        $student = Students::where('user_id', $user_id)->first();
+        $course = Courses::where('name', $student->course_number)->first();
 
         return view('front.student_courses', compact('course', 'user_id'));
     }
 
     public function success_for_student($course_id, $student_id)
     { 
-        $course_info = DB::table('courses')->where('id', $course_id)->first();
-        $courses_program = DB::table('courses_program')->where('course_id', $course_id)->get();
+        $course_info = Courses::where('id', $course_id)->first();
+        $courses_program = CoursesProgram::where('course_id', $course_id)->get();
 
         foreach($courses_program as $course_program){
-            $course_test_info = DB::table('finished_tests_info')->where([
+            $course_test_info = FinishedTestsInfo::where([
                 'user_id' => $student_id,
                 'test_id' => $course_program->test_id,
                 'course_id' => $course_id,
@@ -59,28 +75,22 @@ class HomePageController extends Controller
             $course_program->finished_test_info = $course_test_info;
         }
 
-        //dd($course_id);
-        // $student_finished_tests = DB::table('finished_tests_info')->where([
-        //     'user_id' => $student_id,
-        //     'course_id' => $course_id,
-        // ])->orderBy('total_score', 'desc')->get();
-        //dd($student_finished_tests);
 
-        $student = DB::table('students')->where('user_id', $student_id)->first();
-        $email = DB::table('users')->where('id', $student_id)->first()->email;
+        $student = Students::where('user_id', $student_id)->first();
+        $email = User::where('id', $student_id)->first()->email;
         $student->email = $email;
 
         $course_id = null;
         $course_lessons = (object)[];
         $lesson_count = null;
-        $course_info = DB::table('courses')->where('name', $student->course_number)->first();
+        $course_info = Courses::where('name', $student->course_number)->first();
         if (is_object($course_info)) {
             $course_id = $course_info->id;
         }
 
         // Программа курса
         if ($course_id) {
-            $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->get();
+            $course_lessons = CoursesProgram::where('course_id', $course_id)->get();
             $lesson_count = $course_lessons->count();
         }
 
@@ -92,15 +102,13 @@ class HomePageController extends Controller
                 $lesson->video_count = count(json_decode($lesson->video_name));
             }
 
-            //$mm = DB::table('finished_tests_info')->get();
-            //dd($mm, "Stud_id: " . $student_id, "Lesson_id: " . $lesson->test_id, "Course_id: " . $course_id, $lesson);
 
             // Результаты теста по курсу
             if($lesson->test_id != null){
                 $lesson->test_exist = true;
                 // Берем инфу о законченных тестах
-                    //TEST $finished_test_info_t = DB::table('finished_tests_info')->where(['user_id' => $student_id, 'test_id' => $lesson->test_id, 'course_id' => $course_id, ])->orderBy('total_score', 'desc')->first();
-                    $finished_test_info_t = DB::table('finished_tests_info')->where([
+                    //TEST $finished_test_info_t = FinishedTestsInfo::where(['user_id' => $student_id, 'test_id' => $lesson->test_id, 'course_id' => $course_id, ])->orderBy('total_score', 'desc')->first();
+                    $finished_test_info_t = FinishedTestsInfo::where([
                         'user_id' => $student_id,
                         'test_id' => $lesson->test_id,
                         'course_id' => $course_id,
@@ -113,7 +121,7 @@ class HomePageController extends Controller
                         } 
                     }
                         // ENDTEST
-                    $finished_test_info = DB::table('finished_tests_info')->where([
+                    $finished_test_info = FinishedTestsInfo::where([
                         'user_id' => $student_id,
                         'test_id' => $lesson->test_id,
                         'course_id' => $course_id,
@@ -133,14 +141,11 @@ class HomePageController extends Controller
                             ( ( ($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score']) ) * 100 ) - 100
                         )
                     );
-                    //$test_results['completion_percent'] = (1 - $test_results['max_score'] / $test_results['final_score']) * 100;
-                    //app('App\Http\Controllers\HomePageController')->get_percentage($test_results['final_score'], $test_results['max_score']);
-                    //(($test_results['max_score'] - $test_results['final_score']) / ($test_results['max_score'])) * 100%;
                 }
                 // По результатам - передаем инфу в общий аррей урока
                 $lesson->test_results = $test_results;
 
-                $test_info = DB::table('tests_info')->where('id', $lesson->test_id)->first();
+                $test_info = TestsInfo::where('id', $lesson->test_id)->first();
                 $lesson->test_info = $test_info;
                 //dd($finished_test_info);
             } else {
@@ -152,7 +157,7 @@ class HomePageController extends Controller
         $course_protocols = [];
         //Протоколы для курса
         foreach($course_lessons as $lesson){
-            $current_protocol = DB::table('protocols')->where([
+            $current_protocol = Protocols::where([
                                                             ['course_id', '=', $course_id],
                                                             ['lesson_id', '=', $lesson->id],
                                                             ['user_id', '=', $student_id],
@@ -178,18 +183,18 @@ class HomePageController extends Controller
     public function student_profile()
     {
         $student_id = Auth::user()->id;
-        $student_info = DB::table('users')->where('id', $student_id)->first();
-        $student_full_info = DB::table('students')->where('user_id', $student_id)->first();
+        $student_info = User::where('id', $student_id)->first();
+        $student_full_info = Students::where('user_id', $student_id)->first();
         $student_info->full_name = trim($student_info->surname . ' ' . $student_info->name . ' ' . $student_info->patronymic);
         return view('front.student_profile', compact('student_info', 'student_full_info'));
     }
 
     public function view_course($course_id, $tab = null) {
         $user = Auth::user();
-        $course = DB::table('courses')->where('id', $course_id)->first();
-        $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
-        $course_lessons = DB::table('courses_program')->where('course_id', $course_id)->orderBy('id')->get();
-        $course_faq = DB::table('courses_faq')->where('course_id', $course_id)->orderBy('id')->get();
+        $course = Courses::where('id', $course_id)->first();
+        $course_information = CoursesInformation::where('course_id', $course_id)->first();
+        $course_lessons = CoursesProgram::where('course_id', $course_id)->orderBy('id')->get();
+        $course_faq = CoursesFaq::where('course_id', $course_id)->orderBy('id')->get();
 
         // Добавляем просмотр курса
         //$check_dup_ip = CourseViews::where('ip', \Request::getClientIp() )->first();
@@ -203,8 +208,7 @@ class HomePageController extends Controller
             abort(404);
         }
         if ($course->assigned_teacher_id) {
-            $course_teachers = DB::table('users')
-            ->join('teachers', 'users.id', '=', 'teachers.user_id')
+            $course_teachers = User::join('teachers', 'users.id', '=', 'teachers.user_id')
             //->leftJoin('media', 'media.model_id' , '=', 'teachers.user_id')
             ->whereIn('users.id', json_decode($course->assigned_teacher_id))
             ->get();
@@ -231,20 +235,20 @@ class HomePageController extends Controller
     public function view_lesson($course_id, $lesson_id = null, $tab = null) {
         $user = Auth::user();
 
-        $course = DB::table('courses')->where('id', $course_id)->first();
+        $course = Courses::where('id', $course_id)->first();
 
-        $course_information = DB::table('courses_information')->where('course_id', $course_id)->first();
+        $course_information = CoursesInformation::where('course_id', $course_id)->first();
 
         if (is_null($course)) {
             abort(404);
         }
         if (isset($lesson_id)) {
-            $lesson = DB::table('courses_program')->where([['course_id', '=', $course_id], ['id', '=', $lesson_id]])->first();
-            $prevLesson = DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '<', $lesson->id]])->orderBy('id','desc')->first();
-            $nextLesson = DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->first();
-            $lessonNumber = DB::table('courses_program')->where('course_id', '=', $course->id)->count() - DB::table('courses_program')->where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->count();
+            $lesson = CoursesProgram::where([['course_id', '=', $course_id], ['id', '=', $lesson_id]])->first();
+            $prevLesson = CoursesProgram::where([['course_id', '=', $course->id], ['id', '<', $lesson->id]])->orderBy('id','desc')->first();
+            $nextLesson = CoursesProgram::where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->first();
+            $lessonNumber = CoursesProgram::where('course_id', '=', $course->id)->count() - CoursesProgram::where([['course_id', '=', $course->id], ['id', '>', $lesson->id]])->count();
         } else {
-            $lesson = DB::table('courses_program')->where('course_id', '=', $course_id)->orderBy('id','asc')->first();
+            $lesson = CoursesProgram::where('course_id', '=', $course_id)->orderBy('id','asc')->first();
         }
 
         if (is_null($lesson)) {
@@ -252,31 +256,31 @@ class HomePageController extends Controller
         }
 
         if (is_null($user)) {
-            $first_lesson_in_course = DB::table('courses_program')->where('course_id', '=', $course_id)->orderBy('id','asc')->first();
+            $first_lesson_in_course = CoursesProgram::where('course_id', '=', $course_id)->orderBy('id','asc')->first();
             if ($lesson->id > $first_lesson_in_course->id) {
                return view('front.guest');
             }
         }
 
         // Тесты
-        $test_id = DB::table('courses_program')->where([
+        $test_id = CoursesProgram::where([
             'id' => $lesson_id,
             'course_id' => $course_id,
             ])->first();
         //dd("Course_id: " . $course_id . "Lesson_id: " . $lesson_id);
         if(isset($test_id->id)){
-            $testInfo = DB::table('tests_info')->where('id', $test_id->test_id)->first();
+            $testInfo = TestsInfo::where('id', $test_id->test_id)->first();
         }
             // Вопросы теста
             if(isset($testInfo)){
-                $testQuestions = DB::table('tests_questions')->where('test_id', $testInfo->id)->get();
+                $testQuestions = TestsQuestions::where('test_id', $testInfo->id)->get();
                 //dd($testQuestions);
                 $testMultiplyIDS = [];
                 $testTrueFalseIDS = [];
                 $testDragDropIDS = [];
                 foreach($testQuestions as $testQuest){
                     if($testQuest->question_type == "Множинний вибір"){
-                        //$testMultiplyOne = DB::table('tests_multiple_choice')->where('id', $testQuest->test_answers_id)->first();
+                        //$testMultiplyOne = TestsMultipleChoice::where('id', $testQuest->test_answers_id)->first();
                         array_push($testMultiplyIDS, $testQuest->test_answers_id);
                         //dd($testMultiply);
                     } else { $testMultiplyOne = ""; }
@@ -293,7 +297,7 @@ class HomePageController extends Controller
                 //dd($testInfo->operating_mode);
                 if($testInfo->operating_mode != '0'){
 
-                    $group_students = DB::table('groups')->where('id', $testInfo->operating_mode)->first();
+                    $group_students = Groups::where('id', $testInfo->operating_mode)->first();
 
                     $access_list = json_decode($group_students->students_array);
 
@@ -311,14 +315,14 @@ class HomePageController extends Controller
                 } else {
                     $testInfo->test_access = true;
                 }
-                $testMultiply = DB::table('tests_multiple_choice')->whereIn('id', $testMultiplyIDS)->get();
-                $testTrueFalse = DB::table('tests_true_false')->whereIn('id', $testTrueFalseIDS)->get();
-                $testDragDrop = DB::table('tests_drag_drop')->whereIn('id', $testDragDropIDS)->get();
+                $testMultiply = TestsMultipleChoice::whereIn('id', $testMultiplyIDS)->get();
+                $testTrueFalse = TestsTrueFalse::whereIn('id', $testTrueFalseIDS)->get();
+                $testDragDrop = TestsDragDrop::whereIn('id', $testDragDropIDS)->get();
 
                 // Макс попыток
                 $max_tries = 3;
                 // Получаем кол-во пройденых раз
-                $current_tries = DB::table('tests_log')->where(['user_id' => $user->id, 'test_id' => $test_id->id])->get();
+                $current_tries = TestsLog::where(['user_id' => $user->id, 'test_id' => $test_id->id])->get();
                 $current_tries_count = count($current_tries);
                 //dd( $current_tries_count);
                 // Кол-во оставшихся попытк
@@ -352,7 +356,7 @@ class HomePageController extends Controller
             if(isset($testInfo)){
 
                 // Проверяем есть ли уже счетки времени теста
-                $test_time_check = DB::table('test_time')->where([
+                $test_time_check = TestTime::where([
                     'user_id' => $user->id,
                     'test_id' => $testInfo->id,
                     'course_id' => $course_id,
@@ -370,7 +374,7 @@ class HomePageController extends Controller
                     // Если разинца 2 часа или больше
                     if($hours_diff >= 2){
                         // Обновляем статус времени
-                        DB::table('test_time')->where(['id' => $test_time_check->id, 'status' => 'active'])->update([
+                        TestTime::where(['id' => $test_time_check->id, 'status' => 'active'])->update([
                             'status' => 'inactive',
                         ]);
                         // Перисваеваем значение времени - просрочено
@@ -384,7 +388,7 @@ class HomePageController extends Controller
                     // 
                     $testInfo->expired_time = false;
                     // Создаем запись с началом времени теста
-                    DB::table('test_time')->insert([
+                    TestTime::insert([
                         'user_id' => $user->id,
                         'test_id' => $testInfo->id,
                         'course_id' => $course_id,
@@ -425,12 +429,8 @@ class HomePageController extends Controller
         $drag_drop_ids = $request->drag_drop_id;
         $drag_drop_q = [];
         // Получаем инфу о тесте (берем макс оценку)
-        $test_info = DB::table('tests_info')->where('id', $test_id)->first();
+        $test_info = TestsInfo::where('id', $test_id)->first();
 
-        // if($test_info->max_score){
-        //     $test_questions_json['max_score'] = $test_info->max_score;
-        //     $max_score = $test_info->max_score;
-        // } else { $test_questions_json['max_score'] = 0; $max_score = 0;}
         $test_questions_json['max_score'] = 0;
         // Создаем финальную оценку
         $test_questions_json['final_score'] = 0;
@@ -438,19 +438,14 @@ class HomePageController extends Controller
         // Макс попыток
         $max_tries = 3;
         // Получаем кол-во пройденых раз
-        $current_tries = DB::table('tests_log')->where(['user_id' => $user_id, 'test_id' => $course_id])->get();
+        $current_tries = TestsLog::where(['user_id' => $user_id, 'test_id' => $course_id])->get();
         $current_tries_count = count($current_tries) + 1;
-        //dd($current_tries_count);
-        // if($current_tries_count == 0){
-        //     $current_tries_count = 1;
-        // }
+
         // Кол-во оставшихся попытк
         if($current_tries_count >= $max_tries){
             $test_questions_json['tries_left'] = 0; 
         } else {
-            // if( $current_tries_count == 0){
-            //     $current_tries_count = 1;
-            // }
+
             $test_questions_json['tries_left'] = $max_tries - $current_tries_count;
         }
 
@@ -467,15 +462,13 @@ class HomePageController extends Controller
             foreach($drag_drop_ids as $key=>$drag_drop_id){$q_num++;}
         }
 
-        // Получаем оценку за вопрос.
-        //$grade_per_quest = floor($max_score / $q_num);
         // Верно \ не верно
         // Перебираем и берем данные о них с базы
         if(isset($true_false_ids)){
             foreach($true_false_ids as $key=>$true_false_id){
                 $tf_array = [];
                 // Строка с базы
-                $true_false_db = DB::table('tests_true_false')->where('id', $true_false_id)->first();
+                $true_false_db = TestsTrueFalse::where('id', $true_false_id)->first();
                 $tf_array['question_id'] = $true_false_id;
                 $tf_array['question_type'] = "Правильно/неправильно";
                 $tf_array['question_text'] = $true_false_db->question_text;
@@ -507,13 +500,12 @@ class HomePageController extends Controller
             array_push($test_questions_json, $true_false_q);
         }
         
-        //dd($test_questions_json);
         // Множественный выбор
         if(isset($multiply_ids)){
             foreach($multiply_ids as $key=>$multiply_id){
                 $multi_array = [];
                 // Строка с базы
-                $multiply_db = DB::table('tests_multiple_choice')->where('id', $multiply_id)->first();
+                $multiply_db = TestsMultipleChoice::where('id', $multiply_id)->first();
                 // Макс оценка за тест
                 $max_multi_grade = $multiply_db->default_score;
                 // Текущая оценка за тест
@@ -529,11 +521,8 @@ class HomePageController extends Controller
                 $current_answers = $request->$request_name;
                 // Декодим ответы
                 $answers_json = json_decode($multiply_db->answers_json);
-                //dd($answers_json, $current_answers);
-                //$m_q_num = count($answers_json);
-                //dd($answers_json);
+
                 foreach($answers_json as $answer_info){
-                    //dd($answer_info, $current_answers);
                     // Проверяем если ответ не пустой и если ответ есть в арррее
                     if($current_answers != null && in_array($answer_info->answer, $current_answers)){
                         // Если оценка +вая - то добавляем 
@@ -543,13 +532,8 @@ class HomePageController extends Controller
                         } else if($answer_info->answer_plusminus == "-") {
                             $curr_multi_grade = $curr_multi_grade - round($this->get_percentage($max_multi_grade, $answer_info->answer_grade), 1);
                         }
-                        //$curr_multi_grade = $curr_multi_grade + round($this->get_percentage($max_multi_grade, $answer_info->answer_grade), 0);
-
                     } 
-                    // if($answer_info->answer_grade == 0 && in_array($answer_info->answer, $current_answers)){
-                    //     //dd("Wrong answer");
-                    //     $curr_multi_grade = 0;
-                    // }
+
                     // Если оценка не указана - ставим 0
                     //dd($curr_multi_grade);
                     if($answer_info->answer){
@@ -570,14 +554,14 @@ class HomePageController extends Controller
             }
             array_push($test_questions_json, $multiply_q);
         }
-        //dd($test_questions_json);
+
         // Петераскивание
         if(isset($drag_drop_ids)){
             // Перебираем и берем данные о них с базы
             foreach($drag_drop_ids as $key=>$drag_drop_id){
                 $dd_array = [];
                 // Строка с базы
-                $drag_drop_db = DB::table('tests_drag_drop')->where('id', $drag_drop_id)->first();
+                $drag_drop_db = TestsDragDrop::where('id', $drag_drop_id)->first();
                 $dd_array['question_id'] = $drag_drop_id;
                 $dd_array['question_type'] = "Перетягування в тексті";
                 $dd_array['question_text'] = $drag_drop_db->question_text;
@@ -590,30 +574,16 @@ class HomePageController extends Controller
                 //dd($current_answers);
                 $dd_array['selected_answers'] = $current_answers;
                 $test_answers_count = 'test_answers_count' . $drag_drop_id;
-                //dd($test_answers_count);
                 $dd_array['answers_count'] = $request->$test_answers_count;
-                //dd($dd_array);
+
                 // Аррей с вопросами - разбираем
                 $answers_json = json_decode($drag_drop_db->answers_json);
                 // Берем айди верного ответа
-                //dd($answers_json);
-                //dd($current_answers, $answers_json);
-                $all_answers_names = $answers_json->answers; //$right_answer_id = $answers_json->right_answer; // answer_dragdrop
-                //dd($right_answers_names, $current_answers);
-                // Берем верный овтвет
-                //dd($answers_json->answers[$right_answer_id]);
-                // if($right_answer_id == "Выберите верный ответ"){
-                //     $right_answer_id = 0;
-                // } else {
-                //     $right_answer_id = $right_answer_id -1;
-                // }
-                // $right_answer = $answers_json->answers[$right_answer_id];
-                //dd($grade_per_quest);
+                $all_answers_names = $answers_json->answers; 
+
                 $dd_array['all_answers_names'] = $all_answers_names;
                 // Верные ответы
-                //$dd_array['right_answers'] = array_slice($dd_array['all_answers_names'], 0, $dd_array['answers_count']);
                 $right_answers= [];
-                    //
                 // Аррей с данными
                 $text_fields = [];
                 // Убираем лишнее с текста
@@ -625,26 +595,13 @@ class HomePageController extends Controller
                     $clear_string = str_replace(array('[[',']]'),'',$answer_clear);
                     $dd_array['right_answers'] = $clear_string;
                     array_push($right_answers, $clear_string - 1);
-                    //dd($clear_string);
                 }
                 $dd_array['right_answers'] = $right_answers;
 
-                //dd($dd_array['all_answers_names'], $dd_array['right_answers'], $dd_array['selected_answers'], $dd_array['answers_count']);
 
                 $right_count = 0;
                 $grade_per_dragdrop = $dd_array['max_score'] / $dd_array['answers_count'];
 
-
-                // for($i = 0; $i < $dd_array['answers_count']; $i++){
-
-                //     if($dd_array['selected_answers'][$i] == $dd_array['right_answers'][$i]){
-                //         $right_count++;
-                //         //$dd_array['q_count'] = $right_count;
-                //         $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop; //$grade_per_quest;
-                //         $dd_array['score'] = $dd_array['score'] + $grade_per_dragdrop;
-                //     }
-
-                // }
                 // Аррей с верными ответами
                 $right_answers_names = [];
                 // Заносим данные в аррей
@@ -661,58 +618,38 @@ class HomePageController extends Controller
                         $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_dragdrop;
                     }
                 }
-                //dd($grade_per_dragdrop, $dd_array, $right_answers_names, $dd_array['all_answers_names'], $dd_array['selected_answers']);
 
-                //dd($dd_array);
-                // Проверяем верно ли ответил
-                // if($right_answer == $current_answers[$key]){
-                //     // Ответил верно
-                //     $dd_array['answered_right'] = "Так";
-                //     $test_questions_json['final_score'] = $test_questions_json['final_score'] + $grade_per_quest;
-                // } else {
-                //     // Ответил не верно
-                //     $dd_array['answered_right'] = "Ні";
-                // }
-                //dd($test_questions_json);
                 array_push($drag_drop_q, $dd_array);
             }
             array_push($test_questions_json, $drag_drop_q);
         }
         $test_questions_json['final_score'] = round($test_questions_json['final_score'], 0); // |0 abs()
-        //dd($test_questions_json);
-        //Общее кол-во баллов
+        //dd($test_questions_json);        //Общее кол-во баллов
         //$t_score = 100;
 
         // Записываем в ЛОГ данные о сданном тесте
-        DB::table('tests_log')->insert([
+        TestsLog::insert([
             'user_id' => Auth::user()->id,
             'test_id' => $course_id,
             'completed' => 'true',
         ]);
 
         // Записывает к курсу + пройденных раз.
-        $course_info = DB::table('courses')->where('id', $test_id)->first();
+        $course_info = Courses::where('id', $test_id)->first();
         $finised_c = $course_info->finished_count;
         if($finised_c){
             $f_count = $finised_c + 1;
         } else {
             $f_count = 1;
         }
-        DB::table('courses')->where('id', $course_id)->update([
+        Courses::where('id', $course_id)->update([
             'finished_count' => $f_count,
         ]);
 
-        // 
-        //dd($test_id, $course_id);
-        //$test_questions_json['final_score'] = 
-        //dd($test_questions_json);
-        //dd($q_num);
-
         $encoded_results = json_encode($test_questions_json);
 
-        //dd($test_questions_json, "Coutse_id " . $course_id, "Test_id " . $test_id, "Lesson_id " . $lesson_id);
         // Записываем данны в пройденные тесты.
-        DB::table('finished_tests_info')->insert([
+        FinishedTestsInfo::insert([
             'user_id' => Auth::user()->id,
             'test_id' => $lesson_id, //$test_id,
             'course_id' => $test_id, //$course_id,
@@ -725,12 +662,12 @@ class HomePageController extends Controller
             'success' => 'Завдання успішно збережено.',
             'test_results' => $encoded_results
         ]);
-        //return back();
     }
 
+    // Страница результатов теста
     public function view_test_result($course_id, $test_id, $user_id){
 
-        $f_test_info = DB::table('finished_tests_info')->where([
+        $f_test_info = FinishedTestsInfo::where([
             'user_id' => $user_id,
             'test_id' => $test_id,
             'course_id' => $course_id,
@@ -739,6 +676,7 @@ class HomePageController extends Controller
         return view('front.test_result', compact('f_test_info'));
     }
 
+    // Тестовые страницы START
     public function guest()
     {
         return view('front.guest');
@@ -758,7 +696,9 @@ class HomePageController extends Controller
     {
         return view('front.test_c');
     }
+    // Тестовые страницы END
 
+    // Получить процент
     public function get_percentage($total, $number)
     {
       if ( $total > 0 ) {
