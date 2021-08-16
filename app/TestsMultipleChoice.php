@@ -7,5 +7,5 @@ use Illuminate\Database\Eloquent\Model;
 class TestsMultipleChoice extends Model
 {
     //
-    protected $table = "tests_mltiple_choice";
+    protected $table = "tests_multiple_choice";
 }

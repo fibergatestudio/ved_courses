@@ -2508,9 +2508,11 @@
             <div class="string-menu_inner">
                 <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'video']) }}"><span>Відеолекція</span></a>
             </div>
+            @if(isset($lesson->model3d_link))
             <div class="string-menu_inner">
                 <a class="string-menu_btn" href="{{ route('view_lesson', [$course->id, $lesson->id, 'model']) }}"><span>3D модель</span></a>
             </div>
+            @endif
             <div class="string-menu_inner">
                 <a class="string-menu_btn  active" href="{{ route('view_lesson', [$course->id, $lesson->id, 'protocol']) }}"><span>Протокол</span></a>
             </div>

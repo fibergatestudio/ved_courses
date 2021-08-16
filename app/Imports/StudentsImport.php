@@ -2,7 +2,7 @@
 
 namespace App\Imports;
 
-use App\StudentsData
+use App\StudentsData;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToCollection;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;

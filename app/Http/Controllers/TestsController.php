@@ -224,7 +224,7 @@ class TestsController extends Controller
             ]);
 
             // Добавляем таблицу вопроса
-            TestsQuestions::insert([
+            $testQuest_id = TestsQuestions::insertGetId([
                 'test_id'               => $test_info_id,
                 'question_type'         => $q_type,
                 'test_answers_id'       => $insrt_id,
@@ -232,12 +232,14 @@ class TestsController extends Controller
 
         //} 
 
-
-        //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
-        //return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
-        return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');
+        $redirect = $request->redirect;
+        if($redirect == 'false'){
+            return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');
+        } else {
+            return \Redirect::route('edit_test_question', [$test_info_id, $testQuest_id])->with('message_success', 'Питання успішно додано');
+        }
     }
-
+    
     public function true_false($test_info_id){
 
         return view('tests.create_true_false', compact('test_info_id'));
@@ -267,14 +269,21 @@ class TestsController extends Controller
         ]);
 
         // Добавляем таблицу вопроса
-        TestsQuestions::insert([
+        $testQuest_id = TestsQuestions::insertGetId([
             'test_id'               => $test_info_id,
             'question_type'         => $q_type,
             'test_answers_id'       => $insrt_id,
         ]);     
 
         //return redirect('tests_controll')->with('message_success', 'Вопрос успешно добавлен!');
-        return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');   
+        //return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');   
+
+        $redirect = $request->redirect;
+        if($redirect == 'false'){
+            return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');   
+        } else {
+            return \Redirect::route('edit_test_question', [$test_info_id, $testQuest_id])->with('message_success', 'Питання успішно додано');
+        }
     }
 
     public function short_answer($test_info_id){
@@ -362,14 +371,19 @@ class TestsController extends Controller
         ]);
 
         // Добавляем таблицу вопроса
-        TestsQuestions::insert([
+        $testQuest_id = TestsQuestions::insertGetId([
             'test_id'               => $test_info_id,
             'question_type'         => $q_type,
             'test_answers_id'       => $insrt_id,
         ]);
 
         //return redirect('courses_controll')->with('message_success', 'Вопрос успешно добавлен!');
-        return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');
+        $redirect = $request->redirect;
+        if($redirect == 'false'){
+            return \Redirect::route('view_test_info_questions', [$test_info_id])->with('message_success', 'Питання успішно додано');   
+        } else {
+            return \Redirect::route('edit_test_question', [$test_info_id, $testQuest_id])->with('message_success', 'Питання успішно додано');
+        }
     }
 
     // Просмотр теста вопросов\ответов 

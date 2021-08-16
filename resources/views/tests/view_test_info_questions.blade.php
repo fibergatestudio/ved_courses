@@ -153,8 +153,8 @@
                                 <div class="newTest-mark-wrapper">
                                     <select class="newTest-mark-select" name="available_attempts" >
                                         <option value="1" @if($test_view_info->available_attempts == 1) selected @endif>Одна спроба</option>
-                                        <option value="2" @if($test_view_info->available_attempts == 2) selected @endif>Перша спроба</option>
-                                        <option value="3" @if($test_view_info->available_attempts == 3) selected @endif>Остання спроба</option>
+                                        <option value="2" @if($test_view_info->available_attempts == 2) selected @endif>Дві спроби</option>
+                                        <option value="3" @if($test_view_info->available_attempts == 3) selected @endif>Необмежено</option>
                                     </select>
                                     <div class="newTest-mark_arrowBlock"></div>
                                     </div>

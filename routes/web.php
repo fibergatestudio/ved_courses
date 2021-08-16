@@ -266,6 +266,8 @@ use Illuminate\Support\Facades\Auth;
             Route::get('/new_test_info/{test_info_id}/multiple_choice', 'TestsController@multiple_choice')->name('multiple_choice')->middleware('auth','role:admin,teacher');
                 // Сохранить вопрос "Множественный выбор" (POST)
                 Route::post('/new_test_info/{test_info_id}/multiple_choice/create', 'TestsController@create_multiple_choice')->name('create_multiple_choice')->middleware('auth','role:admin,teacher');
+                // Сохранить и редирект на редактирование
+                //Route::post('/new_test_info/{test_info_id}/multiple_choice/create_redirect', 'TestsController@create_redirect_multiple_choice')->name('create_redirect_multiple_choice')->middleware('auth','role:admin,teacher');
 
             // Добавление вопроса "Верно\Не верно" (Страница)
             Route::get('/new_test_info/{test_info_id}/true_false', 'TestsController@true_false')->name('true_false')->middleware('auth','role:admin,teacher');

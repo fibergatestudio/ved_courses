@@ -146,8 +146,8 @@
                                 <div class="newTest-mark-wrapper">
                                     <select class="newTest-mark-select" name="available_attempts" >
                                         <option value="1" selected>Одна спроба</option>
-                                        <option value="2">Перша спроба</option>
-                                        <option value="3">Остання спроба</option>
+                                        <option value="2">Дві спроби</option>
+                                        <option value="3">Необмежено</option>
                                     </select>
                                     <div class="newTest-mark_arrowBlock"></div>
                                     </div>

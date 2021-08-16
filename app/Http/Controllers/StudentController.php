@@ -401,6 +401,7 @@ class StudentController extends Controller
                         $upld_stud_id = User::insertGetId([
                             'surname' => $fio_expld[0],
                             'name' => $fio_expld[1],
+                            'role_id' => 0,
                             'patronymic' => $fio_expld[2],
                             'email' => $column_data['email'],
                             'password' => Hash::make($column_data['parol']),

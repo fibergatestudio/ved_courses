@@ -407,10 +407,14 @@
 
 
                     </div>
+                    <input type="hidden" id="redirect_inpt" name="redirect" value="">
                     <div class="multipleChoice-btn-wrapper">
                         <a class="multipleChoice-btn-left" href="##" onclick="app1.addNewEntry()">
                             <span>Додати відповідь</span>
                         </a>
+                        <button class="multipleChoice-btn-center" onclick="submitRedirectForm(event);">
+                            <span>Зберегти</span>
+                        </button>
                         <button class="multipleChoice-btn-center" onclick="submitForm(event);">
                             <span>Зберегти питання</span>
                         </button>
@@ -449,6 +453,32 @@
             alert('Введіть текст питання!');
             return false;
         } else {
+            $('#redirect_inpt').val('false');
+            //document.getElementById('create_course').submit();
+        // $( "#edit_course_form" ).submit();
+            $( "#test_form" ).submit();
+        // document.getElementById('create_test_form').submit()
+        }
+
+    }
+
+    function submitRedirectForm(event){
+        event.preventDefault();
+        // Получаем инфу
+        var name = $.trim( $('#question_name').val() );
+
+        // var myContent = tinymce.activeEditor.getContent();
+        var description = tinymce.get('question_text').getContent();
+        //alert(myContent);
+
+        if (name  === '') {
+            alert('Введіть назву питання!');
+            return false;
+        } else if(description == ""){
+            alert('Введіть текст питання!');
+            return false;
+        } else {
+            $('#redirect_inpt').val('true');
             //document.getElementById('create_course').submit();
         // $( "#edit_course_form" ).submit();
             $( "#test_form" ).submit();
