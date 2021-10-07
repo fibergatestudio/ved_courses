@@ -468,7 +468,8 @@ class TestsController extends Controller
 
         $info = TestsQuestions::where('id', $test_info_id)->first();
         // dd($info);
-        // return \Redirect::route('add_lesson', $info->test_id);
+        //return \Redirect::route('add_lesson', $info->test_id);
+        //return \Redirect::route('edit_lesson');
         return back();
     }
 

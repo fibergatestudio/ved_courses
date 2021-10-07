@@ -519,6 +519,12 @@
 
     <script>
         $('.datepicker').datepicker({
+                beforeShow: function(input, inst) {
+                    inst.dpDiv.css({
+                        marginTop: 60 + 'px', 
+                        marginLeft: 60 + 'px'
+                    });
+                },
                 weekStart: 1,
                 minDate: new Date(),
                 startDate: new Date(),

@@ -35,7 +35,9 @@
                             <div class="flexTable-string">
                                 <div class="flexTable-string_inner">{{ $loop->iteration }}.</div>
                                 <div class="flexTable-string_inner">{{ $course->name ?? 'Немає' }}</div>
-                                <div class="flexTable-string_inner">{{ $course->description ?? 'Немає' }}</div>
+                                <div class="flexTable-string_inner">
+                                    {{ html_entity_decode($course->description) ?? 'Немає' }}
+                                </div>
                                 <div class="flexTable-string_inner">{{ $course->views ?? 'Немає' }}</div>
                                 <div class="flexTable-string_inner">{{ $course->finished_count ?? 'Немає' }}</div>
                                 <div class="flexTable-string_inner">{{ $course->creator_name ?? 'Немає' }} ({{ $course->creator_id ?? 'Немає' }})</div>

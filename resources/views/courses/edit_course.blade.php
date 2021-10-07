@@ -120,7 +120,7 @@
                                         <select class="newTest-mark-select" name="assigned_teacher_id">
                                             <option>Выберите</option>
                                             @foreach($teachers as $teacher)
-                                                <option value="{{ $teacher->id }}" @if($teacher->id == $course_info->assigned_teacher_id ) selected @endif>{{ $teacher->name }}</option>
+                                                <option value="{{ $teacher->id }}" @if($teacher->id == $course_info->assigned_teacher_id ) selected @endif>{{ $teacher->name }} {{ $teacher->surname }}</option>
                                             @endforeach
                                         </select>
                                         <div class="newTest-mark_arrowBlock"></div>
@@ -196,7 +196,24 @@
                                     <div class="programs-item_text">{{ strip_tags($clear_descr) }}</div>
                                 </div>
                                 <div class="courseEdit-grid_item">
-                                    <div class="programs-item_hours"><a href="##">{{ $lesson->learning_time }} години на завершення</a> </div>
+                                    <div class="programs-item_hours">
+                                        <a href="##">
+                                            @if($lesson->learning_time != NULL)
+    
+                                                @if($lesson->learning_time <= 59)
+                                                    {{ $lesson->learning_time }} хвилини на завершення
+                                                @elseif($lesson->learning_time > 59)
+                                                    <?php
+                                                        $hours = floor($lesson->learning_time / 60).' год. '.($lesson->learning_time -   floor($lesson->learning_time / 60) * 60) . ' хв. на завершення';
+                                                    ?>
+                                                    {{ $hours }} 
+                                                @else
+                                                @endif
+                                            @else
+                                                Час не вказан
+                                            @endif
+                                        </a> 
+                                    </div>
                                 </div>
                                 <div class="courseEdit-grid_item">
                                     <div class="courseEdit-item_faq courseEdit-item_button">

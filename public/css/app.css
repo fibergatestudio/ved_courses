@@ -3437,6 +3437,7 @@ input[type=button].btn-block {
   z-index: 1000;
   display: none;
   float: left;
+  margin-left: 751px !important;
   min-width: 10rem;
   padding: 0.5rem 0;
   margin: 0.125rem 0 0;
