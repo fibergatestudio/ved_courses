@@ -17,7 +17,7 @@ class CreateTestsInfoTable extends Migration
             $table->id();
             // Общее
             $table->string('name')->nullable();
-            $table->string('description')->nullable();
+            $table->text('description')->nullable();
             // Выбор времени
             $table->string('start_date_time')->nullable();
             $table->string('end_date_time')->nullable();

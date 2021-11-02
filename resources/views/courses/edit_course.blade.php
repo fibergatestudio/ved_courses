@@ -120,7 +120,7 @@
                                         <select class="newTest-mark-select" name="assigned_teacher_id">
                                             <option>Выберите</option>
                                             @foreach($teachers as $teacher)
-                                                <option value="{{ $teacher->id }}" @if($teacher->id == $course_info->assigned_teacher_id ) selected @endif>{{ $teacher->name }} {{ $teacher->surname }}</option>
+                                                <option value="{{ $teacher->id }}" @if($teacher->id == $course_info->assigned_teacher_id ) selected @endif>{{ $teacher->name }} {{ $teacher->surname }} {{ $teacher->patronymic }}</option>
                                             @endforeach
                                         </select>
                                         <div class="newTest-mark_arrowBlock"></div>

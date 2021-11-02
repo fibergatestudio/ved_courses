@@ -4730,7 +4730,10 @@ header.header .header-text{
     /* padding-right: 145px; */
     line-height: 1.333em;
     color: #000;
-    width: 268px
+    width: 268px;
+    display: block;
+    overflow-wrap: break-word;
+    width: auto;
 }
 
 .courseAdditional-docName span {
